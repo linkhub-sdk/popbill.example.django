@@ -11,50 +11,50 @@
                     <li>Response.message : {{ message }}</li>
                 </ul>
             {% else %}
-                <li> writeDate (작성일자) :</li>
-                <li> chargeDirection (과금방향) :</li>
-                <li> issueType (발행형태) :</li>
-                <li> issueTiming (발행시점) :</li>
-                <li> taxType (과세형태) :</li>
-                <li> supplyCostTotal (공급가액 합계) :</li>
-                <li> taxTotal (세액 합계) :</li>
-                <li> totalAmount (합계금액) :</li>
-                <li> ntsconfirmNum (국세청승인번호) :</li>
+                <li> writeDate (작성일자) : {{ taxinvoice.writeDate }}</li>
+                <li> chargeDirection (과금방향) :{{ taxinvoice.chargeDirection }}</li>
+                <li> issueType (발행형태) :{{ taxinvoice.issueType }}</li>
+                <li> issueTiming (발행시점) :{{ taxinvoice.issueTiming }}</li>
+                <li> taxType (과세형태) :{{ taxinvoice.taxType }}</li>
+                <li> supplyCostTotal (공급가액 합계) :{{ taxinvoice.supplyCostTotal  }}</li>
+                <li> taxTotal (세액 합계) :{{ taxinvoice.taxTotal }}</li>
+                <li> totalAmount (합계금액) :{{ taxinvoice.totalAmount }}</li>
+                <li> ntsconfirmNum (국세청승인번호) :{{ taxinvoice.ntsconfirmNum  }}</li>
 
-                <li> invoicerCorpNum (공급자 사업자번호) :</li>
-                <li> invoicerMgtKey (공급자 문서관리번호) :</li>
-                <li> invoicerCorpName (공급자 상호) :</li>
-                <li> invoicerCEOName (공급자 대표자명) :</li>
-                <li> invoicerAddr (공급자 주소) :</li>
-                <li> invoicerContactName (공급자 담당자명) :</li>
-                <li> invoicerTEL (공급자 담당자 연락처) :</li>
-                <li> invoicerHP (공급자 담당자 휴대폰) :</li>
-                <li> invoicerEmail (공급자 담당자 메일) :</li>
-                <li> invoicerSMSSendYN (발행안내문자 전송여부) :</li>
+                <li> invoicerCorpNum (공급자 사업자번호) :{{ taxinvoice.invoicerCorpNum }}</li>
+                <li> invoicerMgtKey (공급자 문서관리번호) :{{  taxinvoice.invoicerMgtKey }}</li>
+                <li> invoicerCorpName (공급자 상호) :{{ taxinvoice.invoicerCorpName }}</li>
+                <li> invoicerCEOName (공급자 대표자명) :{{ taxinvoice.invoicerCEOName }}</li>
+                <li> invoicerAddr (공급자 주소) :{{ taxinvoice.invoicerAddr }}</li>
+                <li> invoicerContactName (공급자 담당자명) :{{ taxinvoice.invoicerContactName }}</li>
+                <li> invoicerTEL (공급자 담당자 연락처) :{{ taxinvoice.invoicerTEL }}</li>
+                <li> invoicerHP (공급자 담당자 휴대폰) :{{ taxinvoice.invoicerHP }}</li>
+                <li> invoicerEmail (공급자 담당자 메일) :{{ taxinvoice.invoicerEmail }}</li>
+                <li> invoicerSMSSendYN (발행안내문자 전송여부) :{{ taxinvoice.invoicerSMSSendYN }}</li>
 
-                <li> invoiceeCorpNum (공급받는자 사업자번호) :</li>
-                <li> invoiceeType (공급받는자 구분) :</li>
-                <li> invoiceeMgtKey (공급받는자 문서관리번호) :</li>
-                <li> invoiceeCorpName (공급받는자 상호) :</li>
-                <li> invoiceeCEOName (공급받는자 대표자명) :</li>
-                <li> invoiceeAddr (공급받는자 주소) :</li>
-                <li> invoiceeContactName1 (공급받는자 담당자명) :</li>
-                <li> invoiceeTEL1 (공급받는자 담당자 연락처) :</li>
-                <li> invoiceeHP1 (공급받는자 담당자 휴대폰) :</li>
-                <li> invoiceeEmail1 (공급받는자 담당자 메일) :</li>
-                <li> invoiceeSMSSendYN (역발행안내문자 전송여부) :</li>
-                <li> closeDownState (공급받는자 휴폐업상태) :</li>
-                <li> closeDownStateDate (공급받는자 휴폐업일자) :</li>
+                <li> invoiceeCorpNum (공급받는자 사업자번호) :{{ taxinvoice.invoiceeCorpNum }}</li>
+                <li> invoiceeType (공급받는자 구분) :{{ taxinvoice.invoiceeType }}</li>
+                <li> invoiceeMgtKey (공급받는자 문서관리번호) :{{ taxinvoice.invoiceeMgtKey }}</li>
+                <li> invoiceeCorpName (공급받는자 상호) :{{ taxinvoice.invoiceeCorpName }}</li>
+                <li> invoiceeCEOName (공급받는자 대표자명) :{{ taxinvoice.invoiceeCEOName }}</li>
+                <li> invoiceeAddr (공급받는자 주소) :{{ taxinvoice.invoiceeAddr }}</li>
+                <li> invoiceeContactName1 (공급받는자 담당자명) :{{ taxinvoice.invoiceeContactName1 }}</li>
+                <li> invoiceeTEL1 (공급받는자 담당자 연락처) :{{ taxinvoice.invoiceeTEL1 }}</li>
+                <li> invoiceeHP1 (공급받는자 담당자 휴대폰) :{{ taxinvoice.invoiceeHP1 }}</li>
+                <li> invoiceeEmail1 (공급받는자 담당자 메일) :{{ taxinvoice.invoiceeEmail1 }}</li>
+                <li> invoiceeSMSSendYN (역발행안내문자 전송여부) :{{ taxinvoice.invoiceeSMSSendYN }}</li>
+                <li> closeDownState (공급받는자 휴폐업상태) :{{ taxinvoice.closeDownState}}</li>
+                <li> closeDownStateDate (공급받는자 휴폐업일자) :{{ taxinvoice.closeDownStateDate }}</li>
 
-                <li> purposeType (영수/청구) :</li>
-                <li> serialNum (일련번호) :</li>
-                <li> remark1 (비고1) :</li>
-                <li> remark2 (비고2) :</li>
-                <li> remark3 (비고3) :</li>
-                <li> kwon (권) :</li>
-                <li> ho(호) :</li>
-                <li> businessLicenseYN (사업자등록증 이미지 첨부여부) :</li>
-                <li> bankBookYN (통장사본이미지 첨부여부) :</li>
+                <li> purposeType (영수/청구) :{{ taxinvoice.purposeType }}</li>
+                <li> serialNum (일련번호) :{{ taxinvoice.serialNum }}</li>
+                <li> remark1 (비고1) :{{ taxinvoice.remark1 }}</li>
+                <li> remark2 (비고2) :{{ taxinvoice.remark2 }}</li>
+                <li> remark3 (비고3) :{{ taxinvoice.remark3 }}</li>
+                <li> kwon (권) :{{ taxinvoice.kwon }}</li>
+                <li> ho(호) :{{ taxinvoice.ho }}</li>
+                <li> businessLicenseYN (사업자등록증 이미지 첨부여부) :{{ taxinvoice.businessLicenseYN }}</li>
+                <li> bankBookYN (통장사본이미지 첨부여부) :{{ taxinvoice.bankBookYN }}</li>
             {% endif %}
 
 
@@ -64,14 +64,14 @@
                     <legend>상세항목(품목) 정보 [ {{ forloop.counter }} ]</legend>
                     <ul>
                         <li> serialNum (일련번호) : {{ detailList.serialNum }}</li>
-                        <li> purchaseDT (거래일자) :</li>
-                        <li> itemName (품명) :</li>
-                        <li> spec (규격) :</li>
-                        <li> qty (수량) :</li>
-                        <li> unitCost (단가) :</li>
-                        <li> supplyCost (공급가액) :</li>
-                        <li> tax (세액) :</li>
-                        <li> remark (비고) :</li>
+                        <li> purchaseDT (거래일자) :{{ detailList.purchaseDT  }}</li>
+                        <li> itemName (품명) :{{ detailList.itemName }}</li>
+                        <li> spec (규격) :{{ detailList.spec }}</li>
+                        <li> qty (수량) :{{ detailList.qty }}</li>
+                        <li> unitCost (단가) :{{ detailList.unitCost }}</li>
+                        <li> supplyCost (공급가액) :{{ detailList.supplyCost }}</li>
+                        <li> tax (세액) :{{ detailList.tax }}</li>
+                        <li> remark (비고) :{{ detailList.remark }}</li>
                     </ul>
                 </fieldset>
             {% endfor %}
@@ -84,7 +84,7 @@
                     <ul>
                         <li> serialNum (일련번호) : {{ addContactList.serialNum }} </li>
                         <li> email (담당자 이메일) : {{ addContactList.email }} </li>
-                        <li> contactName (담당자 성명) :</li>
+                        <li> contactName (담당자 성명) :{{ addContactList.contactName  }}</li>
                     </ul>
                 </fieldset>
             {% endfor %}
