@@ -1158,7 +1158,7 @@ def getInfos(request):
 
         InfoList = taxinvoiceService.getInfos(CorpNum, MgtKeyType, MgtKeyList)
 
-        return render(request, 'Taxinvoice/Getinfos.html', {'InfoList': InfoList})
+        return render(request, 'Taxinvoice/GetInfos.html', {'InfoList': InfoList})
     except PopbillException as PE:
         return render(request, 'Taxinvoice/GetInfos.html', {'code': PE.code, 'message': PE.message})
 
@@ -1177,7 +1177,7 @@ def getDetailInfo(request):
         MgtKeyType = "SELL"
 
         # 문서 관리번호
-        MgtKey = "20180110-001"
+        MgtKey = "2018-01-16-01"
 
         taxinvoice = taxinvoiceService.getDetailInfo(CorpNum, MgtKeyType, MgtKey)
 
@@ -1509,7 +1509,7 @@ def sendEmail(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20161122-06"
+        MgtKey = "20180104qwe"
 
         # 수신메일주소
         ReceiverMail = "test@test.com"
@@ -1538,7 +1538,7 @@ def sendSMS(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20161122-06"
+        MgtKey = "20180104qwe"
 
         # 발신번호
         Sender = "070-4304-2991"
@@ -1575,7 +1575,7 @@ def sendFAX(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20161122-06"
+        MgtKey = "20180104qwe"
 
         # 발신번호
         Sender = "070-4304-2991"
@@ -1680,8 +1680,10 @@ def getPopbillURL(request):
         CorpNum = settings.testCorpNum
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
-        # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
+        # TOGO : LOGIN-팝빌 로그인 URL,
+        # CHRG-팝빌 포인트 충전 URL,
+        # CERT-공인인증서 등록,
+        # SEAL-인감 및 첨부문서 등록
         TOGO = "TOGO"
         url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
         return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
@@ -1804,8 +1806,8 @@ def checkIsMember(request):
     """
     try:
         # 중복확인할 아이디
-        targetID = "1q2w3e4r5t"
-        response = taxinvoiceService.checkID(targetID)
+        targetID = "testkorea"
+        response = taxinvoiceService.checkIsMember(targetID)
         return render(request, 'Taxinvoice/CheckIsMember.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'Taxinvoice/CheckIsMember.html', {'code': PE.code, 'message': PE.message})
@@ -1817,7 +1819,7 @@ def checkID(request):
     """
     try:
         # 중복확인할 아이디
-        targetID = "khjzzm123"
+        targetID = "testkorea"
         response = taxinvoiceService.checkID(targetID)
         return render(request, 'Taxinvoice/CheckID.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
