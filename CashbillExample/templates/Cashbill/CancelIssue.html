@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">Response</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>발행예정 세금계산서 승인</legend>
+            <ul>
+                <li>Result.code : {{ code }}</li>
+                <li>Result.message : {{ message }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

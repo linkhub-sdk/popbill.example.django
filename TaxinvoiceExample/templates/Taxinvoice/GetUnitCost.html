@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">Response</p>
+        <br/>
+        <fieldset class="fieldset1">
+				<legend>세금계산서 발행 단가 확인</legend>
+            <ul>
+                {% if unitCost %}
+                    <li>unitCost(발행단가) : {{ unitCost }}</li>
+                {% else %}
+                    <li>Response.code : {{ code }}</li>
+                    <li>Response.message : {{ message }}</li>
+                {% endif %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

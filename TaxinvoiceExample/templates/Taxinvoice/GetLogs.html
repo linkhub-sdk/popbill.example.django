@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">Response</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>세금계산서 상태변경 이력</legend>
+            <ul>
+                {% if code %}
+                    <li>Response.code : {{ code }}</li>
+                    <li>Response.message : {{ message }}</li>
+                {% else %}
+                    {% for LogList in LogList %}
+                        <fieldset class="fieldset2">
+                            <legend> 세금계산서 상태변경 이력 [ {{ forloop.counter }} ]</legend>
+                            <ul>
+                                <li>log : {{ LogList.log }}</li>
+                                <li>procType : {{ LogList.procType }}</li>
+                                <li>procCorpName : {{ LogList.procCorpName }}</li>
+                                <li>procMemo : {{ LogList.procMemo }}</li>
+                                <li>regDT : {{ LogList.regDT }}</li>
+                                <li>ip : {{ LogList.ip }}</li>
+                                <li>docLogType : {{ LogList.docLogType }}</li>
+                            </ul>
+                        </fieldset>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
