@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.conf.urls import url
 
 from . import views
@@ -59,7 +57,6 @@ urlpatterns = [
     url(r'^GetPopbillURL_CERT$', views.getPopbillURL_CERT, name='getPopbillURL_CERT'),
     url(r'^GetCertificateExpireDate$', views.getCertificateExpireDate, name='GetCertificateExpireDate'),
 
-
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
     url(r'^getPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopUpURL_CHRG'),
@@ -78,4 +75,3 @@ urlpatterns = [
     url(r'^ListContact$', views.listContact, name='ListContact'),
     url(r'^UpdateContact$', views.updateContact, name='UpdateContact'),
 ]
-
