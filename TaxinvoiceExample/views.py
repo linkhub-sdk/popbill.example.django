@@ -1670,9 +1670,9 @@ def getEmailPublicKeys(request):
         return render(request, 'Taxinvoice/GetEmailPublicKeys.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopbillURL(request):
+def getPopbillURL_LOGIN(request):
     """
-    팝빌 관련 팝업 URL을 반환합니다.
+    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인 URL)
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -1680,12 +1680,29 @@ def getPopbillURL(request):
         CorpNum = settings.testCorpNum
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        # TOGO : LOGIN-팝빌 로그인 URL,
-        # CHRG-팝빌 포인트 충전 URL,
-        # CERT-공인인증서 등록,
-        # SEAL-인감 및 첨부문서 등록
-        TOGO = "TOGO"
+
+        TOGO = "LOGIN"
         url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
+
+        return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'Taxinvoice/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
+
+
+def getPopbillURL_SEAL(request):
+    """
+    팝빌 관련 팝업 URL을 반환합니다. (인감 및 첨부문서 등록 URL)
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        TOGO = "SEAL"
+        url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
+
         return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'Taxinvoice/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
@@ -1708,6 +1725,25 @@ def getCertificateExpireDate(request):
         return render(request, 'Taxinvoice/GetCertificateExpireDate.html', {'code': PE.code, 'message': PE.message})
 
 
+def getPopbillURL_CERT(request):
+    """
+    팝빌 관련 팝업 URL을 반환합니다. (공인인증서 등록 URL)
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        TOGO = "CERT"
+        url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
+
+        return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'Taxinvoice/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
+
+
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
@@ -1723,6 +1759,25 @@ def getBalance(request):
         return render(request, 'Taxinvoice/GetBalance.html', {'balance': balance})
     except PopbillException as PE:
         return render(request, 'Taxinvoice/GetBalance.html', {'code': PE.code, 'message': PE.message})
+
+
+def getPopbillURL_CHRG(request):
+    """
+    팝빌 관련 팝업 URL을 반환합니다. (팝빌 포인트 충전 URL)
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        TOGO = "CHRG"
+        url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
+
+        return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'Taxinvoice/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPartnerBalance(request):
