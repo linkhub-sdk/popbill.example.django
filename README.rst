@@ -9,7 +9,7 @@ popbill.sdk.example.django
 
   * Python 2.7+
   * Django 1.11+
-  * popbill [ https://github.com/linkhub-sdk/]
+  * popbill [ https://github.com/linkhub-sdk/popbill.py ]
 
 
 * Python versions available in Django
