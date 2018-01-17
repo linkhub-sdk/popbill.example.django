@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
 from django.shortcuts import render
 from popbill import TaxinvoiceService, PopbillException, Taxinvoice, TaxinvoiceDetail, Contact, ContactInfo, JoinForm, \
     CorpInfo
@@ -8,6 +7,7 @@ from config import settings
 
 # config/settings.py 작성한 LinkID, SecretKey를 이용해 TaxinvoiceService 객체 생성
 taxinvoiceService = TaxinvoiceService(settings.LinkID, settings.SecretKey)
+
 # 연동환경 설정값, 개발용(True), 상업용(False)
 taxinvoiceService.IsTest = settings.IsTest
 
@@ -1325,7 +1325,7 @@ def getPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서 관리번호
-        MgtKey = "20161122-06"
+        MgtKey = "2018-01-16-5555"
 
         url = taxinvoiceService.getPrintURL(CorpNum, MgtKeyType, MgtKey)
         return render(request, 'Taxinvoice/GetPrintURL.html', {'url': url})
@@ -1346,7 +1346,7 @@ def getEPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서 관리번호
-        MgtKey = "20161122-06"
+        MgtKey = "2018-01-16-5555"
 
         url = taxinvoiceService.getEPrintURL(CorpNum, MgtKeyType, MgtKey)
         return render(request, 'Taxinvoice/GetEPrintURL.html', {'url': url})
@@ -1434,10 +1434,10 @@ def attachFile(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180112001"
+        MgtKey = "20180115-00003"
 
         # 파일경로
-        FilePath = "uploadtest.png"
+        FilePath = "./TaxinvoiceExample/static/image/uploadtest.png"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1463,10 +1463,10 @@ def deleteFile(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180112001"
+        MgtKey = "20180115-00003"
 
         # 첨부파일 아이디, GetFiles API의 응답항목(AtachedFile) 확인.
-        FileID = "6BDFF006-F9BD-48CD-80BB-6BFF1925E56F.PBF"
+        FileID = "C1D1ACC4-C20D-4E1D-85E7-A9D79AC94BDE.PBF"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1492,7 +1492,7 @@ def getFiles(request):
         MgtKeyType = "SELL"
 
         # 문서 관리번호
-        MgtKey = "20180112001"
+        MgtKey = "20180115-00003"
 
         fileList = taxinvoiceService.getFiles(CorpNum, MgtKeyType, MgtKey)
 
@@ -1609,13 +1609,13 @@ def attachStatement(request):
         MgtKeyType = "SELL"
 
         # 세금계산서 문서관리번호
-        MgtKey = "20161122-06"
+        MgtKey = "2018-01-16-5555"
 
         # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         ItemCode = "121"
 
         # 전자명세서 문서관리번호
-        StmtMgtKey = "20161116-01"
+        StmtMgtKey = "2018-01-16-5555"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1640,13 +1640,13 @@ def detachStatement(request):
         MgtKeyType = "SELL"
 
         # 문서 관리번호
-        MgtKey = "20161122-06"
+        MgtKey = "2018-01-16-001"
 
         # 전자명세서 종류코드, 121-거래명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
-        ItemCode = "121"
+        ItemCode = "126"
 
         # 전자명세서 문서관리번호
-        StmtMgtKey = "20161116-01"
+        StmtMgtKey = "2018-01-16-001"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1682,6 +1682,7 @@ def getPopbillURL_LOGIN(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
@@ -1703,6 +1704,7 @@ def getPopbillURL_SEAL(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
@@ -1741,6 +1743,7 @@ def getPopbillURL_CERT(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
@@ -1779,6 +1782,7 @@ def getPopbillURL_CHRG(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
