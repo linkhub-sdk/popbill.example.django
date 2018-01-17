@@ -1391,7 +1391,7 @@ def getMailURL(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20161122-06"
+        MgtKey = "20180103006"
 
         url = taxinvoiceService.getMailURL(CorpNum, MgtKeyType, MgtKey)
         return render(request, 'Taxinvoice/GetMailURL.html', {'url': url})
@@ -1609,13 +1609,13 @@ def attachStatement(request):
         MgtKeyType = "SELL"
 
         # 세금계산서 문서관리번호
-        MgtKey = "2018-01-16-5555"
+        MgtKey = "20180115-00003"
 
         # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
-        ItemCode = "121"
+        ItemCode = "126"
 
         # 전자명세서 문서관리번호
-        StmtMgtKey = "2018-01-16-5555"
+        StmtMgtKey = "2018-01-16-888"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1640,13 +1640,13 @@ def detachStatement(request):
         MgtKeyType = "SELL"
 
         # 문서 관리번호
-        MgtKey = "2018-01-16-001"
+        MgtKey = "20180115-00003"
 
         # 전자명세서 종류코드, 121-거래명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         ItemCode = "126"
 
         # 전자명세서 문서관리번호
-        StmtMgtKey = "2018-01-16-001"
+        StmtMgtKey = "2018-01-16-888"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
