@@ -4,7 +4,7 @@ from popbill import CashbillService, PopbillException, Cashbill, ContactInfo, Co
 
 from config import settings
 
-# config/settings.py 작성한 LinkID, SecretKey를 이용해 TaxinvoiceService 객체 생성
+# config/settings.py 작성한 LinkID, SecretKey를 이용해 CashbillService 객체 생성
 cashbillService = CashbillService(settings.LinkID, settings.SecretKey)
 
 # 연동환경 설정값, 개발용(True), 상업용(False)
@@ -476,7 +476,7 @@ def revokeRegistIssue_part(request):
         serviceFee = "0"
 
         # [취소] 합계거래금액, 공급가액+세액+봉사료
-        # 취소 공급가액이 원본 현금영수증의 공급가액 이하만 발행 가능
+        # 원본 현금영수증의 공급가액 이하만 가능
         totalAmount = "11000"
 
         result = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
