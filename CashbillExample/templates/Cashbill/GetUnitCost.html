@@ -4,10 +4,14 @@
         <p class="heading1">Response</p>
         <br/>
         <fieldset class="fieldset1">
-            <legend>발행예정 세금계산서 승인</legend>
+				<legend>현금영수증 발행 단가 확인</legend>
             <ul>
-                <li>Result.code : {{ code }}</li>
-                <li>Result.message : {{ message }}</li>
+                {% if unitCost %}
+                    <li>unitCost(발행단가) : {{ unitCost }}</li>
+                {% else %}
+                    <li>Response.code : {{ code }}</li>
+                    <li>Response.message : {{ message }}</li>
+                {% endif %}
             </ul>
         </fieldset>
     </div>

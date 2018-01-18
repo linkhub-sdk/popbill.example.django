@@ -39,14 +39,14 @@ urlpatterns = [
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
 
     # 부가 기능
-    url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL'),
+    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='getPopbillURL_LOGIN'),
     url(r'^SendEmail$', views.sendEmail, name='SendEmail'),
     url(r'^SendSMS$', views.sendSMS, name='SendSMS'),
     url(r'^SendFAX$', views.sendFAX, name='SendFAX'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^GetPopbillURL$', views.getPopbillURL, name='getPopbillURL'),
+    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='getPopbillURL_CHRG'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),

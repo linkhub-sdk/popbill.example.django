@@ -4,10 +4,29 @@
         <p class="heading1">Response</p>
         <br/>
         <fieldset class="fieldset1">
-            <legend>발행예정 세금계산서 승인</legend>
+            <legend>담당자 목록 확인</legend>
             <ul>
-                <li>Result.code : {{ code }}</li>
-                <li>Result.message : {{ message }}</li>
+                {% if code %}
+                    <li>Response.code : {{ code }}</li>
+                    <li>Response.message : {{ message }}</li>
+                {% else %}
+                    {% for listContact in response %}
+                        <fieldset class="fieldset2">
+                            <legend>담당자 정보 [{{ forloop.counter }}]</legend>
+                            <ul>
+                                <li>id : {{ listContact.id }}</li>
+                                <li>email : {{ listContact.email }}</li>
+                                <li>hp : {{ listContact.hp }}</li>
+                                <li>personName : {{ listContact.personName }}</li>
+                                <li>searchAllAllowYN : {{ listContact.searchAllAllowYN }}</li>
+                                <li>tel : {{ listContact.tel }}</li>
+                                <li>fax : {{ listContact.fax }}</li>
+                                <li>mgrYN : {{ listContact.mgrYN }}</li>
+                                <li>regDT : {{ listContact.regDT }}</li>
+                            </ul>
+                        </fieldset>
+                    {% endfor %}
+                {% endif %}
             </ul>
         </fieldset>
     </div>

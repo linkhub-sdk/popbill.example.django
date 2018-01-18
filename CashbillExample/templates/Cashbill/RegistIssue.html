@@ -1,16 +1,10 @@
-        return render(request, 'Cashbill/RegistIssue.html', {'code': result.code, 'message': result.message})
-    except PopbillException as PE:
-        return render(request, 'Cashbill/RegistIssue.html', {'code': PE.code, 'message': PE.message})        return render(request, 'Cashbill/GetURL.html', {'url': url})
-    except PopbillException as PE:
-        return render(request, 'Cashbill/GetURL.html', {'code': PE.code, 'message': PE.message})        return render(request, 'Cashbill/GetURL.html', {'url': url})
-    except PopbillException as PE:
-        return render(request, 'Cashbill/GetURL.html', {'code': PE.code, 'message': PE.message}){% extends "base.html" %}
+{% extends "base.html" %}
 {% block contents %}
     <div id="content">
         <p class="heading1">Response</p>
         <br/>
         <fieldset class="fieldset1">
-            <legend>발행예정 세금계산서 승인</legend>
+            <legend>현금영수증 즉시 발행</legend>
             <ul>
                 <li>Result.code : {{ code }}</li>
                 <li>Result.message : {{ message }}</li>

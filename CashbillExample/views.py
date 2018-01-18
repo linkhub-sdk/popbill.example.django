@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.shortcuts import render
 from popbill import CashbillService, PopbillException, Cashbill, ContactInfo, CorpInfo, JoinForm
 
 from config import settings
 
+# config/settings.py 작성한 LinkID, SecretKey를 이용해 TaxinvoiceService 객체 생성
 cashbillService = CashbillService(settings.LinkID, settings.SecretKey)
+
+# 연동환경 설정값, 개발용(True), 상업용(False)
 cashbillService.IsTest = settings.IsTest
 
 
@@ -23,14 +24,14 @@ def checkMgtKeyInUse(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 공급자별 고유번호 생성
+        # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 공급자별 고유번호 생성
         MgtKey = "20161122-01"
 
         bIsInUse = cashbillService.checkMgtKeyInUse(CorpNum, MgtKey)
         if bIsInUse:
-            result = '사용중'
+            result = "사용중"
         else:
-            result = '미사용중'
+            result = "미사용중"
         return render(request, 'Cashbill/CheckMgtKeyInUse.html', {'result': result})
     except PopbillException as PE:
         return render(request, 'Cashbill/CheckMgtKeyInUse.html', {'code': PE.code, 'message': PE.message})
@@ -57,10 +58,10 @@ def registIssue(request):
         # 현금영수증 정보
         cashbill = Cashbill(
 
-            # 문서관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 사업자별로 중복되지 않도록 구성
-            mgtKey="20170718-09",
+            # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+            mgtKey="20180118-001",
 
-            # 현금영수증 형태, '승인거래'/'취소거래'
+            # [필수] 현금영수증 형태, [승인거래 / 취소거래]
             tradeType="승인거래",
 
             # [취소거래시 필수] 원본 현금영수증 국세청승인번호
@@ -69,27 +70,28 @@ def registIssue(request):
             # [취소거래시 필수] 원본 현금영수증 거래일자
             orgTradeDate="",
 
-            # 과세형태, '과세'/'비과세'
+            # [필수] 과세형태, [과세 / 비과세]
             taxationType="과세",
 
-            # 거래유형, '소득공제용'/'지출증빙용'
+            # [필수] 거래유형, [소득공제용 /지출증빙용]
             tradeUsage="소득공제용",
 
-            # 거래처 식별번호
+            # [필수] 거래처 식별번호
             # 거래유형이 '지출증빙용' - [휴대폰/카드/주민등록/사업자] 번호 입력
             # 거래유형이 '소득공제용' - [휴대폰/카드/주민등록] 번호 입력
             # 자진발급 "010-000-1234" 의 경우 "소득공제용"으로만 발급 가능
-            identityNum="0101112222",
+            identityNum="010-000-1234",
 
-            # 공급가액
+            # [필수] 공급가액
             supplyCost="10000",
 
-            # 세액
+            # [필수] 세액
             tax="1000",
+
             # 봉사료
             serviceFee="0",
 
-            # 거래금액, 공급가액+세액+봉사료
+            # [필수] 거래금액, 공급가액+세액+봉사료
             totalAmount="11000",
 
             # 발행자 사업자번호
@@ -105,7 +107,7 @@ def registIssue(request):
             franchiseAddr="발행자 주소",
 
             # 발행자 연락처
-            franchiseTEL="07043042991",
+            franchiseTEL="07012345678",
 
             # 고객명
             customerName="고객명",
@@ -150,10 +152,10 @@ def register(request):
         # 현금영수증 정보
         cashbill = Cashbill(
 
-            # 문서관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 사업자별로 중복되지 않도록 구성
-            mgtKey="20180112001",
+            # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 공급자별 고유번호 생성
+            mgtKey="20180118-114",
 
-            # 현금영수증 형태, '승인거래'/'취소거래'
+            # [필수] 현금영수증 형태, [승인거래 / 취소거래]
             tradeType="승인거래",
 
             # [취소거래시 필수] 원본 현금영수증 국세청승인번호
@@ -162,28 +164,29 @@ def register(request):
             # [취소거래시 필수] 원본 현금영수증 거래일자
             orgTradeDate="",
 
-            # 과세형태, '과세'/'비과세'
+            # [필수] 과세형태, [과세 / 비과세]
             taxationType="과세",
 
-            # 거래유형, '소득공제용'/'지출증빙용'
+            # [필수] 거래유형, [소득공제용 /지출증빙용]
             tradeUsage="소득공제용",
 
-            # 거래처 식별번호
+            # [필수] 거래처 식별번호
             # 거래유형이 '지출증빙용' - [휴대폰/카드/주민등록/사업자] 번호 입력
             # 거래유형이 '소득공제용' - [휴대폰/카드/주민등록] 번호 입력
             # 자진발급 "010-000-1234" 의 경우 "소득공제용"으로만 발급 가능
-            identityNum="0100001234",
+            identityNum="010-000-1234",
 
-            # 공급가액
-            supplyCost="15000",
+            # [필수] 공급가액
+            supplyCost="10000",
 
             # 세액
-            tax="5000",
+            tax="1000",
+
             # 봉사료
             serviceFee="0",
 
-            # 거래금액, 공급가액+세액+봉사료
-            totalAmount="20000",
+            # [필수] 거래금액, 공급가액+세액+봉사료
+            totalAmount="11000",
 
             # 발행자 사업자번호
             franchiseCorpNum="1234567890",
@@ -198,7 +201,7 @@ def register(request):
             franchiseAddr="발행자 주소",
 
             # 발행자 연락처
-            franchiseTEL="07043042991",
+            franchiseTEL="07012345678",
 
             # 고객명
             customerName="고객명",
@@ -213,7 +216,7 @@ def register(request):
             email="test@test.com",
 
             # 고객 휴대폰번호
-            hp="01043255117",
+            hp="010111222",
 
             # 발행안내문자 전송여부
             smssendYN=False
@@ -237,40 +240,47 @@ def update(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 수정하고자하는 현금영수증 문서관리번호
-        MgtKey = '20161123-03'
+        # [필수] 수정하고자하는 현금영수증 문서관리번호
+        MgtKey = '20180118-003'
 
         # 현금영수증 정보
         cashbill = Cashbill(
 
-            # 문서관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 사업자별로 중복되지 않도록 구성
-            mgtKey="20161123-01",
+            # [필수] 문서관리번호
+            mgtKey=MgtKey,
 
-            # 현금영수증 형태, '승인거래'/'취소거래'
+            # [필수] 현금영수증 형태, [승인거래 / 취소거래]
             tradeType="승인거래",
 
-            # 과세형태, '과세'/'비과세'
+            # [취소거래시 필수] 원본 현금영수증 국세청승인번호
+            orgConfirmNum="",
+
+            # [취소거래시 필수] 원본 현금영수증 거래일자
+            orgTradeDate="",
+
+            # [필수] 과세형태, [과세 / 비과세]
             taxationType="과세",
 
-            # 거래유형, '소득공제용'/'지출증빙용'
-            tradeUsage="지출증빙용",
+            # [필수] 거래유형, [소득공제용 /지출증빙용]
+            tradeUsage="소득공제용",
 
-            # 거래처 식별번호
+            # [필수] 거래처 식별번호
             # 거래유형이 '지출증빙용' - [휴대폰/카드/주민등록/사업자] 번호 입력
             # 거래유형이 '소득공제용' - [휴대폰/카드/주민등록] 번호 입력
             # 자진발급 "010-000-1234" 의 경우 "소득공제용"으로만 발급 가능
-            identityNum="6798700433",
+            identityNum="010-000-1234",
 
-            # 공급가액
-            supplyCost="15000",
+            # [필수] 공급가액
+            supplyCost="20000",
 
             # 세액
-            tax="5000",
+            tax="2000",
+
             # 봉사료
             serviceFee="0",
 
-            # 거래금액, 공급가액+세액+봉사료
-            totalAmount="20000",
+            # [필수] 거래금액, 공급가액+세액+봉사료
+            totalAmount="22000",
 
             # 발행자 사업자번호
             franchiseCorpNum="1234567890",
@@ -285,7 +295,7 @@ def update(request):
             franchiseAddr="발행자 주소",
 
             # 발행자 연락처
-            franchiseTEL="07043042991",
+            franchiseTEL="07012345678",
 
             # 고객명
             customerName="고객명",
@@ -324,17 +334,17 @@ def issue(request):
         # 팝빌회원 사업자버놓
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
-        MgtKey = "20180112001"
+        # 문서관리번호
+        MgtKey = "20180118-004"
 
         # 메모
         Memo = "발행 메모"
 
         result = cashbillService.issue(CorpNum, MgtKey, Memo)
 
-        return render(request, 'Cashbill/RegistIssue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'Cashbill/Issue.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/RegistIssue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'Cashbill/Issue.html', {'code': PE.code, 'message': PE.message})
 
 
 def cancelIssue(request):
@@ -349,16 +359,16 @@ def cancelIssue(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180112001"
+        MgtKey = "20180118-004"
 
         # 메모
         Memo = "발행취소 메모"
 
         result = cashbillService.cancelIssue(CorpNum, MgtKey, Memo)
 
-        return render(request, 'Cashbill/Issue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'Cashbill/CancelIssue.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/Issue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'Cashbill/CancelIssue.html', {'code': PE.code, 'message': PE.message})
 
 
 def delete(request):
@@ -373,7 +383,7 @@ def delete(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20161122-01"
+        MgtKey = "20180118-004"
 
         result = cashbillService.delete(CorpNum, MgtKey)
 
@@ -397,14 +407,14 @@ def revokeRegistIssue(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 문서관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 사업자별로 중복되지 않도록 구성
-        mgtKey = "20170817-42"
+        # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+        mgtKey = "20180118-005"
 
-        # 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "820116333"
+        # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
+        orgConfirmNum = "315234938"
 
-        # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20170711"
+        # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
+        orgTradeDate = "20180117"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -435,14 +445,14 @@ def revokeRegistIssue_part(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 문서관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 사업자별로 중복되지 않도록 구성
-        mgtKey = "20171115-04"
+        # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+        mgtKey = "20180118-019"
 
-        # 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "820116333"
+        # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
+        orgConfirmNum = "315234938"
 
-        # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20170711"
+        # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
+        orgTradeDate = "20180117"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -457,16 +467,17 @@ def revokeRegistIssue_part(request):
         cancelType = 1
 
         # [취소] 공급가액
-        supplyCost = "4000"
+        supplyCost = "10000"
 
         # [취소] 세액
-        tax = "400"
+        tax = "1000"
 
         # [취소] 봉사료
         serviceFee = "0"
 
-        # [취소] 합계금액
-        totalAmount = "4400"
+        # [취소] 합계거래금액, 공급가액+세액+봉사료
+        # 취소 공급가액이 원본 현금영수증의 공급가액 이하만 발행 가능
+        totalAmount = "11000"
 
         result = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
                                                    UserID,
@@ -475,6 +486,40 @@ def revokeRegistIssue_part(request):
         return render(request, 'Cashbill/RevokeRegistIssue_part.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
         return render(request, 'Cashbill/RevokeRegistIssue_part.html', {'code': PE.code, 'message': PE.message})
+
+
+def revokeRegister(request):
+    """
+    1건의 취소현금영수증을 임시저장 합니다.
+    - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
+    - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
+    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책"을
+      참조하시기 바랍니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 공급자별 고유번호 생성
+        mgtKey = "20180118-43A"
+
+        # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
+        orgConfirmNum = "315234938"
+
+        # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
+        orgTradeDate = "20180117"
+
+        # 발행안내문자 전송여부
+        smssendYN = False
+
+        result = cashbillService.revokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID)
+
+        return render(request, 'Cashbill/RevokeRegister.html', {'code': result.code, 'message': result.message})
+    except PopbillException as PE:
+        return render(request, 'Cashbill/RevokeRegister.html', {'code': PE.code, 'message': PE.message})
 
 
 def revokeRegister_part(request):
@@ -492,14 +537,14 @@ def revokeRegister_part(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 문서관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 사업자별로 중복되지 않도록 구성
-        mgtKey = "20171115-06"
+        # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+        mgtKey = "20180118-1233"
 
-        # 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "820116333"
+        # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
+        orgConfirmNum = "315234938"
 
         # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20170711"
+        orgTradeDate = "20180117"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -530,40 +575,6 @@ def revokeRegister_part(request):
         return render(request, 'Cashbill/RevokeRegister_part.html', {'code': PE.code, 'message': PE.message})
 
 
-def revokeRegister(request):
-    """
-    1건의 취소현금영수증을 임시저장 합니다.
-    - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
-    - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책"을
-      참조하시기 바랍니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # 문서관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 사업자별로 중복되지 않도록 구성
-        mgtKey = "20170817-43"
-
-        # 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "820116333"
-
-        # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20170711"
-
-        # 발행안내문자 전송여부
-        smssendYN = False
-
-        result = cashbillService.revokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID)
-
-        return render(request, 'Cashbill/RegistIssue.html', {'code': result.code, 'message': result.message})
-    except PopbillException as PE:
-        return render(request, 'Cashbill/RegistIssue.html', {'code': PE.code, 'message': PE.message})
-
-
 def getInfo(request):
     """
     1건의 현금영수증 상태/요약 정보를 확인합니다.
@@ -575,35 +586,9 @@ def getInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20170718-04"
+        MgtKey = "20180104001"
 
         cashbillInfo = cashbillService.getInfo(CorpNum, MgtKey)
-
-        print("itemKey (아이템키) : %s" % (cashbillInfo.itemKey))
-        print("mgtKey (문서관리번호) : %s" % (cashbillInfo.mgtKey))
-        print("tradeDate (거래일자) : %s" % (cashbillInfo.tradeDate))
-        print("issueDT (발행일시) : %s" % (cashbillInfo.issueDT))
-        print("regDT (등록일시) : %s" % (cashbillInfo.regDT))
-        print("taxationType (과세형태) : %s" % (cashbillInfo.taxationType))
-        print("totalAmount (거래금액) : %s" % (cashbillInfo.totalAmount))
-        print("tradeUsage (거래용도) : %s" % (cashbillInfo.tradeUsage))
-        print("tradeType (현금영수증형태) : %s" % (cashbillInfo.tradeType))
-        print("stateCode (상태코드) : %s" % (cashbillInfo.stateCode))
-        print("stateDT (상태변경일시) : %s" % (cashbillInfo.stateDT))
-
-        print("identityNum (거래처 식별번호) : %s" % (cashbillInfo.identityNum))
-        print("itemName (상품명) : %s" % (cashbillInfo.itemName))
-        print("customerName (고객명) : %s" % (cashbillInfo.customerName))
-
-        print("confirmNum (국세청 승인번호) : %s" % (cashbillInfo.confirmNum))
-        print("ntssendDT (국세청 전송일시) : %s" % (cashbillInfo.ntssendDT))
-        print("ntsresultDT (국세청 처리결과 수신일시) : %s" % (cashbillInfo.ntsresultDT))
-        print("ntsresultCode (국세청 처리결과 상태코드) : %s" % (cashbillInfo.ntsresultCode))
-        print("customerName (고객명) : %s" % (cashbillInfo.customerName))
-        print("orgConfirmNum (원본 현금영수증 국세청 승인번호) : %s" % (cashbillInfo.orgConfirmNum))
-        print("orgTradeDate (원본 현금영수증 거래일자) : %s" % (cashbillInfo.orgTradeDate))
-
-        print("printYN (인쇄여부) : %s" % (cashbillInfo.printYN))
 
         return render(request, 'Cashbill/GetInfo.html', {'cashbillInfo': cashbillInfo})
     except PopbillException as PE:
@@ -628,33 +613,6 @@ def getInfos(request):
 
         InfoList = cashbillService.getInfos(CorpNum, MgtKeyList)
 
-        for cashbillInfo in InfoList:
-            print("itemKey (아이템키) : %s" % (cashbillInfo.itemKey))
-            print("mgtKey (문서관리번호) : %s" % (cashbillInfo.mgtKey))
-            print("tradeDate (거래일자) : %s" % (cashbillInfo.tradeDate))
-            print("issueDT (발행일시) : %s" % (cashbillInfo.issueDT))
-            print("regDT (등록일시) : %s" % (cashbillInfo.regDT))
-            print("taxationType (과세형태) : %s" % (cashbillInfo.taxationType))
-            print("totalAmount (거래금액) : %s" % (cashbillInfo.totalAmount))
-            print("tradeUsage (거래용도) : %s" % (cashbillInfo.tradeUsage))
-            print("tradeType (현금영수증형태) : %s" % (cashbillInfo.tradeType))
-            print("stateCode (상태코드) : %s" % (cashbillInfo.stateCode))
-            print("stateDT (상태변경일시) : %s" % (cashbillInfo.stateDT))
-
-            print("identityNum (거래처 식별번호) : %s" % (cashbillInfo.identityNum))
-            print("itemName (상품명) : %s" % (cashbillInfo.itemName))
-            print("customerName (고객명) : %s" % (cashbillInfo.customerName))
-
-            print("confirmNum (국세청 승인번호) : %s" % (cashbillInfo.confirmNum))
-            print("ntssendDT (국세청 전송일시) : %s" % (cashbillInfo.ntssendDT))
-            print("ntsresultDT (국세청 처리결과 수신일시) : %s" % (cashbillInfo.ntsresultDT))
-            print("ntsresultCode (국세청 처리결과 상태코드) : %s" % (cashbillInfo.ntsresultCode))
-            print("customerName (고객명) : %s" % (cashbillInfo.customerName))
-            print("orgConfirmNum (원본 현금영수증 국세청 승인번호) : %s" % (cashbillInfo.orgConfirmNum))
-            print("orgTradeDate (원본 현금영수증 거래일자) : %s" % (cashbillInfo.orgTradeDate))
-
-            print("printYN (인쇄여부) : %s\n" % (cashbillInfo.printYN))
-
         return render(request, 'Cashbill/Getinfos.html', {'InfoList': InfoList})
     except PopbillException as PE:
         return render(request, 'Cashbill/GetInfos.html', {'code': PE.code, 'message': PE.message})
@@ -671,37 +629,9 @@ def getDetailInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20171115-01"
+        MgtKey = "20180118-019"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
-
-        print("mgtKey (현금영수증 문서관리번호) : %s" % (cashbill.mgtKey))
-        print("confirmNum (국세청승인번호) : %s" % (cashbill.confirmNum))
-        print("tradeDate (거래일자): %s" % (cashbill.tradeDate))
-        print("tradeUsage (거래유형) : %s" % (cashbill.tradeUsage))
-        print("tradeType (현금영수증 형태) : %s" % (cashbill.tradeType))
-        print("taxationType (과세형태) : %s" % (cashbill.taxationType))
-        print("supplyCost (공급가액) : %s" % (cashbill.supplyCost))
-        print("tax (세액) : %s" % (cashbill.tax))
-        print("serviceFee (봉사료) : %s" % (cashbill.serviceFee))
-        print("totalAmount (거래금액) : %s" % (cashbill.totalAmount))
-
-        print("franchiseCorpNum (발행자 사업자번호) : %s" % (cashbill.franchiseCorpNum))
-        print("franchiseCorpName (발행자 상호) : %s" % (cashbill.franchiseCorpName))
-        print("franchiseCEOName (발행자 대표자 성명) : %s" % (cashbill.franchiseCEOName))
-        print("franchiseAddr (발행자 주소) : %s" % (cashbill.franchiseAddr))
-        print("franchiseTEL (발행자 연락처) : %s" % (cashbill.franchiseTEL))
-
-        print("identityNum (거래처 식별번호) : %s" % (cashbill.identityNum))
-        print("customerName (고객명) : %s" % (cashbill.customerName))
-        print("itemName (상품명) : %s" % (cashbill.itemName))
-        print("orderNumber (주문번호) : %s" % (cashbill.orderNumber))
-        print("email (고객 이메일) : %s" % (cashbill.email))
-        print("hp (고객 휴대폰번호) : %s" % (cashbill.hp))
-        print("smssendYN (알림문자 전송여부) : %s" % (cashbill.smssendYN))
-        print("orgConfirmNum (원본현금영수증 승인번호) : %s" % (cashbill.orgConfirmNum))
-        print("orgTradeDate (원본현금영수증 거래일자) : %s" % (cashbill.orgTradeDate))
-        print("cancelType (취소사유) : %s" % (cashbill.cancelType))
 
         return render(request, 'Cashbill/GetDetailInfo.html', {'cashbill': cashbill})
     except PopbillException as PE:
@@ -725,10 +655,10 @@ def search(request):
         DType = "R"
 
         # 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20170701"
+        SDate = "20171201"
 
         # 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20170801"
+        EDate = "20180131"
 
         # 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용 가능
         State = ["3**", "4**"]
@@ -757,40 +687,6 @@ def search(request):
         response = cashbillService.search(CorpNum, DType, SDate, EDate, State, TradeType,
                                           TradeUsage, TaxationType, Page, PerPage, Order, UserID, QString)
 
-        print("code (응답코드) : %s " % response.code)
-        print("message (응답메시지) : %s " % response.message)
-        print("total (검색결과 건수) : %s " % response.total)
-        print("perPage (페이지당 검색개수) : %s " % response.perPage)
-        print("pageNum (페에지 번호) : %s " % response.pageNum)
-        print("pageCount (페이지 개수) : %s \n" % response.pageCount)
-
-        for cashbillInfo in response.list:
-            print("itemKey (아이템키) : %s" % (cashbillInfo.itemKey))
-            print("mgtKey (문서관리번호) : %s" % (cashbillInfo.mgtKey))
-            print("tradeDate (거래일자) : %s" % (cashbillInfo.tradeDate))
-            print("issueDT (발행일시) : %s" % (cashbillInfo.issueDT))
-            print("regDT (등록일시) : %s" % (cashbillInfo.regDT))
-            print("taxationType (과세형태) : %s" % (cashbillInfo.taxationType))
-            print("totalAmount (거래금액) : %s" % (cashbillInfo.totalAmount))
-            print("tradeUsage (거래용도) : %s" % (cashbillInfo.tradeUsage))
-            print("tradeType (현금영수증형태) : %s" % (cashbillInfo.tradeType))
-            print("stateCode (상태코드) : %s" % (cashbillInfo.stateCode))
-            print("stateDT (상태변경일시) : %s" % (cashbillInfo.stateDT))
-
-            print("identityNum (거래처 식별번호) : %s" % (cashbillInfo.identityNum))
-            print("itemName (상품명) : %s" % (cashbillInfo.itemName))
-            print("customerName (고객명) : %s" % (cashbillInfo.customerName))
-
-            print("confirmNum (국세청 승인번호) : %s" % (cashbillInfo.confirmNum))
-            print("ntssendDT (국세청 전송일시) : %s" % (cashbillInfo.ntssendDT))
-            print("ntsresultDT (국세청 처리결과 수신일시) : %s" % (cashbillInfo.ntsresultDT))
-            print("ntsresultCode (국세청 처리결과 상태코드) : %s" % (cashbillInfo.ntsresultCode))
-            print("customerName (고객명) : %s" % (cashbillInfo.customerName))
-            print("orgConfirmNum (원본 현금영수증 국세청 승인번호) : %s" % (cashbillInfo.orgConfirmNum))
-            print("orgTradeDate (원본 현금영수증 거래일자) : %s" % (cashbillInfo.orgTradeDate))
-
-            print("printYN (인쇄여부) : %s\n" % (cashbillInfo.printYN))
-
         return render(request, 'Cashbill/Search.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'Cashbill/Search.html', {'code': PE.code, 'message': PE.message})
@@ -802,20 +698,9 @@ def getLogs(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20161118-01"
+        MgtKey = "20180104001"
 
         LogList = cashbillService.getLogs(CorpNum, MgtKey)
-
-        i = 1
-        for f in LogList:
-            print("%d:" % i)
-            print("    docLogType(이력유형) : %s" % f.docLogType)
-            print("    log(문서이력 설명) : %s" % f.log)
-            print("    procType(처리유형) : %s" % f.procType)
-            print("    procCorpName(회사명) : %s" % f.procCorpName)
-            print("    procMemo(처리메모) : %s" % f.procMemo)
-            print("    regDT(처리일시) : %s" % f.regDT)
-            i += 1
 
         return render(request, 'Cashbill/GetLogs.html', {'LogList': LogList})
     except PopbillException as PE:
@@ -844,6 +729,25 @@ def getURL(request):
         return render(request, 'Cashbill/GetURL.html', {'code': PE.code, 'message': PE.message})
 
 
+def getPopUpURL(request):
+    """
+    1건의 현금영수증 보기 팝업 URL을 반환합니다.
+    - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 현금영수증 문서관리번호
+        MgtKey = "20180104001"
+
+        url = cashbillService.getPopUpURL(CorpNum, MgtKey)
+
+        return render(request, 'Cashbill/GetPopUpURL.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'Cashbill/GetPopUpURL.html', {'code': PE.code, 'message': PE.message})
+
+
 def getPrintURL(request):
     """
     1건의 현금영수증 인쇄팝업 URL을 반환합니다.
@@ -854,7 +758,7 @@ def getPrintURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20180104001"
 
         url = cashbillService.getPrintURL(CorpNum, MgtKey)
 
@@ -892,9 +796,9 @@ def getMassPrintURL(request):
 
         # 문서관리번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20161118-01")
-        MgtKeyList.append("20161118-02")
-        MgtKeyList.append("20161118-03")
+        MgtKeyList.append("20180118-019")
+        MgtKeyList.append("20180118-005")
+        MgtKeyList.append("20180116-03")
 
         url = cashbillService.getMassPrintURL(CorpNum, MgtKeyList)
         return render(request, 'Cashbill/GetMassPrintURL.html', {'url': url})
@@ -912,31 +816,33 @@ def getMailURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20161118-01"
+        MgtKey = "20180118-019"
 
         url = cashbillService.getMailURL(CorpNum, MgtKey)
         return render(request, 'Cashbill/GetMailURL.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'Cashbill/GetMailURL.html', {'code': PE.code, 'message': PE.message})
 
-
-def getPopUpURL(request):
+def getPopbillURL_LOGIN(request):
     """
-    1건의 현금영수증 보기 팝업 URL을 반환합니다.
-    - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    팝빌 관련 팝업 URL을 반환합니다.
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
-        MgtKey = "20150326-01"
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
 
-        url = cashbillService.getPopUpURL(CorpNum, MgtKey)
+        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        TOGO = "LOGIN"
 
-        return render(request, 'Cashbill/GetPopUpURL.html', {'url': url})
+        url = cashbillService.getPopbillURL(CorpNum, UserID, TOGO)
+
+        return render(request, 'Cashbill/GetPopbillURL.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetPopUpURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'Cashbill/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
 
 
 def sendEmail(request):
@@ -948,7 +854,7 @@ def sendEmail(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20180118-019"
 
         # 수신 메일주소
         Receiver = "test@test.com"
@@ -974,10 +880,10 @@ def sendSMS(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20180118-019"
 
         # 발신번호
-        Sender = "07043042991"
+        Sender = "07012345678"
 
         # 수신번호
         Receiver = "010111222"
@@ -999,18 +905,17 @@ def sendFAX(request):
     """
     현금영수증을 팩스전송합니다.
     - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역]
-      메뉴에서 전송결과를 확인할 수 있습니다.
+    - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20180118-019"
 
         # 발신번호
-        Sender = "07043042991"
+        Sender = "07012345678"
 
         # 수신팩스번호
         Receiver = "070111222"
@@ -1027,7 +932,8 @@ def sendFAX(request):
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를 통해 확인하시기 바랍니다.
+    - 과금방식이 연동과금이 아닌 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를
+      통해 확인하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1040,7 +946,7 @@ def getBalance(request):
         return render(request, 'Cashbill/GetBalance.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopbillURL(request):
+def getPopbillURL_CHRG(request):
     """
     팝빌 관련 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
@@ -1126,11 +1032,7 @@ def getChargeInfo(request):
 
         response = cashbillService.getChargeInfo(CorpNum, UserID)
 
-        print(" unitCost (발행단가) : %s" % response.unitCost)
-        print(" chargeMethod (과금유형) : %s" % response.chargeMethod)
-        print(" rateSystem (과금제도) : %s" % response.rateSystem)
-
-        return render(request, 'Cashbill/GetChargeInfo.html', {'response':response})
+        return render(request, 'Cashbill/GetChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'Cashbill/GetChargeInfo.html', {'code': PE.code, 'message': PE.message})
 
@@ -1201,7 +1103,7 @@ def joinMember(request):
             ContactName="담당자성명",
 
             # 담당자 연락처
-            ContactTEL="070-4304-2991",
+            ContactTEL="070-1111-1234",
 
             # 담당자 휴대폰번호
             ContactHP="010-2222-3333",
@@ -1233,14 +1135,7 @@ def getCorpInfo(request):
 
         response = cashbillService.getCorpInfo(CorpNum, UserID)
 
-        tmp = "ceoname(대표자성명) : " + response.ceoname + "\n"
-        tmp += "corpName(상호) : " + response.corpName + "\n"
-        tmp += "addr(주소) : " + response.addr + "\n"
-        tmp += "bizType(업태) : " + response.bizType + "\n"
-        tmp += "bizClass(종목) : " + response.bizClass + "\n"
-
-        print(tmp);
-        return render(request, 'Cashbill/GetCorpInfo.html', {'response': response })
+        return render(request, 'Cashbill/GetCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'Cashbill/GetCorpInfo.html', {'code': PE.code, 'message': PE.message})
 
@@ -1260,19 +1155,19 @@ def updateCorpInfo(request):
         corpInfo = CorpInfo(
 
             # 대표자성명
-            ceoname="대표자성명",
+            ceoname="대표자성명_수정",
 
             # 상호
-            corpName="상호",
+            corpName="상호_수정",
 
             # 주소
-            addr="주소",
+            addr="주소_수정",
 
             # 업태
-            bizType="업태",
+            bizType="업태_수정",
 
             # 종목
-            bizClass="종목"
+            bizClass="종목_수"
         )
 
         result = cashbillService.updateCorpInfo(CorpNum, corpInfo, UserID)
@@ -1296,25 +1191,25 @@ def registContact(request):
         newContact = ContactInfo(
 
             # 아이디
-            id="testkorea_1117",
+            id="testkorea_cash",
 
             # 비밀번호
-            pwd="thisispassword",
+            pwd="thisispassword_cash",
 
             # 담당자명
-            personName="정대리",
+            personName="신규담당자",
 
             # 연락처
-            tel="010-4304-2991",
+            tel="010-1234-1234",
 
             # 휴대폰번호
-            hp="010-4304-2991",
+            hp="010-1234-1234",
 
             # 팩스번호
-            fax="070-4324-2991",
+            fax="070-1234-1234",
 
             # 메일주소
-            email="dev@linkhub.co.kr",
+            email="test@test.comr",
 
             # 회사조회 권한여부, True(회사조회) False(개인조회)
             searchAllAllowYN=True
@@ -1337,14 +1232,6 @@ def listContact(request):
 
         response = cashbillService.listContact(CorpNum, UserID)
 
-        i = 1
-        for info in response:
-            print("담당자정보 : [" + str(i) + "]")
-            for key, value in info.__dict__.items():
-                print("%s : %s" % (key, value))
-            print("")
-            i += 1
-
         return render(request, 'Cashbill/Listcontact.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'Cashbill/ListContact.html', {'code': PE.code, 'message': PE.message})
@@ -1365,22 +1252,22 @@ def updateContact(request):
         updateInfo = ContactInfo(
 
             # 담당자 아이디
-            id=UserID,
+            id="testkorea_cash",
 
             # 담당자 성명
-            personName="담당자 성명",
+            personName="담당자 성명_수정",
 
             # 연락처
-            tel="070-4304-2991",
+            tel="010-1234-1234",
 
             # 휴대폰번호
-            hp="010-4324-4324",
+            hp="010-8888-7777",
 
             # 팩스번호
-            fax="02-6442-9700",
+            fax="070-1234-1234",
 
             # 메일주소
-            email="dev@linkhub.co.kr",
+            email="test@test.com",
 
             # 회사조회 여부, True-회사조회, False-개인조회
             searchAllAllowYN=True
