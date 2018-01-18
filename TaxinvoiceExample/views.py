@@ -34,9 +34,9 @@ def checkMgtKeyInUse(request):
         keyInUse = taxinvoiceService.checkMgtKeyInUse(CorpNum, MgtKeyType, MgtKey)
 
         if keyInUse:
-            result = '사용중'
+            result = "사용중"
         else:
-            result = '미사용중'
+            result = "미사용중"
 
         return render(request, 'Taxinvoice/CheckMgtKeyInUse.html', {'result': result})
     except PopbillException as PE:
@@ -54,7 +54,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # 세금계산서 문서관리번호
-        mgtKey = "2018-01-16-001"
+        MgtKey = "2018-01-16-001"
 
         # 지연발행 강제여부
         # 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
@@ -79,43 +79,44 @@ def registIssue(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20180116
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
             writeDate="20180116",
 
-            # 과금방향, '정과금(공급자)', '역과금(공급받는자)'중 기재
+            # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
 
-            # 발행영태, '정발행','역발행','위수탁' 중 기재
+            # [필수] 발행영태, [정발행, 역발행, 위수탁] 중 기재
             issueType="정발행",
 
-            # '영수'/'청구' 중 기재
+            # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
 
-            # 발행시점, '직접발행', '승인시자동발행' '중 기재
-            # 발행예정(Send API) 프로세스를 구현하지 않는경우 '직접발행' 기재
+            # [필수] 발행시점, [직접발행, 승인시자동발행] '중 기재
+            # 발행예정(Send API) 프로세스를 구현하지 않는경우 "직접발행' 기재
             issueTiming="직접발행",
 
-            # 과세형태, '과세'/'영세'/'면세' 중 기재
+            # [필수] 과세형태, [과세, 영세, 면세] 중 기재
             taxType="과세",
 
             ######################################################################
             #                             공급자 정보
             ######################################################################
 
-            # 공급자 사업자번호 , '-' 없이 10자리 기재.
+            # [필수] 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
 
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            # [필수] 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
 
-            # 공급자 상호
+            # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # 공급자 문서관리번호, 1~24자리, 영문, 숫자, -, _ 조합으로 사업자별로 중복되지 않도록 구성
-            invoicerMgtKey=mgtKey,
+            # [필수] 공급자 문서관리번호, 1~24자리, 영문, 숫자, -, _ 조합으로
+            # 사업자별로 중복되지 않도록 구성
+            invoicerMgtKey=MgtKey,
 
-            # 공급자 대표자 성명
+            # [필수] 공급자 대표자 성명
             invoicerCEOName="공급자 대표자 성명",
 
             # 공급자 주소
@@ -134,10 +135,10 @@ def registIssue(request):
             invoicerEmail="test@test.com",
 
             # 공급자 담당자 연락처
-            invoicerTEL="070-4304-2991",
+            invoicerTEL="070-111-222",
 
             # 공급자 담당자 휴대폰 번호
-            invoicerHP='010-1111-2222',
+            invoicerHP='010-111-222',
 
             # 정발행시 공급받는자에게 발행안내문자 전송여부
             invoicerSMSSendYN=False,
@@ -146,19 +147,19 @@ def registIssue(request):
             #                            공급받는자 정보
             ######################################################################
 
-            # 공급받는자 구분 '사업자'/'개인'/'외국인' 중 기재
-            invoiceeType='사업자',
+            # [필수] 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
+            invoiceeType="사업자",
 
-            # 공급받는자 사업자번호, '-' 제외 10자리
-            invoiceeCorpNum='8888888888',
+            # [필수] 공급받는자 사업자번호, '-' 제외 10자리
+            invoiceeCorpNum="8888888888",
 
-            # 공급받는자 상호
+            # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
             # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 1~24자리 (숫자, 영문, '-', '_') 조합으로
             invoiceeMgtKey=None,
 
-            # 공급받는자 대표자 성명
+            # [필수] 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
 
             # 공급받는자 주소
@@ -180,10 +181,10 @@ def registIssue(request):
             invoiceeTEL1="070-111-222",
 
             # 공급받는자 담당자 휴대폰번호
-            invoiceeHP1="010-2222-1111",
+            invoiceeHP1="010-111-222",
 
             # 공급받는자 담당자 팩스번호
-            invoiceeFAX1="070-4304-2991",
+            invoiceeFAX1="070-111-222",
 
             # 역발행시 공급자에게 발행안내문자 전송여부
             invoiceeSMSSendYN=False,
@@ -192,17 +193,17 @@ def registIssue(request):
             #                          세금계산서 기재정보
             ######################################################################
 
-            # 공급가액 합계
+            # [필수] 공급가액 합계
             supplyCostTotal="100000",
 
-            # 세액 합계
+            # [필수] 세액 합계
             taxTotal="10000",
 
-            # 합계금액, 공급가액 합계 + 세액 합계
+            # [필수] 합계금액, 공급가액 합계 + 세액 합계
             totalAmount="110000",
 
             # 기재상 '일련번호' 항목
-            serialNum='123',
+            serialNum="123",
 
             # 기재상 '현금' 항목
             cash=None,
@@ -214,12 +215,12 @@ def registIssue(request):
             note=None,
 
             # 기재상 '외상미수금' 항목
-            credit='',
+            credit="",
 
             # 기재 상 '비고' 항목
-            remark1='비고1',
-            remark2='비고2',
-            remark3='비고3',
+            remark1="비고1",
+            remark2="비고2",
+            remark3="비고3",
 
             # 기재상 '권' 항목, 최대값 32767
             kwon=1,
@@ -236,7 +237,7 @@ def registIssue(request):
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
-            # - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.co.kr/650
+            # - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.com/650
             ######################################################################
 
             # 수정세금계산서 정보 수정사유별로 1~6중 선택기재
@@ -256,25 +257,25 @@ def registIssue(request):
         taxinvoice.detailList = [
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT='20161118',  # 거래일자, yyyyMMdd
+                purchaseDT="20180116",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
-                spec='규격',  # 규격
+                spec="규격",  # 규격
                 qty=1,  # 수량
-                unitCost='50000',  # 단가
-                supplyCost='50000',  # 공급가액
-                tax='5000',  # 세액
-                remark='품목비고'  # 비고
+                unitCost="50000",  # 단가
+                supplyCost="50000",  # 공급가액
+                tax="5000",  # 세액
+                remark="품목비고"  # 비고
             ),
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT='20161118',  # 거래일자, yyyyMMdd
+                purchaseDT="20180116",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
-                spec='규격',  # 규격
+                spec="규격",  # 규격
                 qty=1,  # 수량
-                unitCost='50000',  # 단가
-                supplyCost='50000',  # 공급가액
-                tax='5000',  # 세액
-                remark='품목비고'  # 비고
+                unitCost="50000",  # 단가
+                supplyCost="50000",  # 공급가액
+                tax="5000",  # 세액
+                remark="품목비고"  # 비고
             )
         ]
 
@@ -288,13 +289,13 @@ def registIssue(request):
         taxinvoice.addContactList = [
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                contactName='추가담당자 성명',
-                email='test1@test.com'
+                contactName="추가담당자 성명",  # 담당자명
+                email="test1@test.com"  # 메일주소
             ),
             Contact(
-                serialNum=2,
-                contactName='추가담당자2',
-                email='test2@test.com'
+                serialNum=2,  # 일련번호, 1부터 순차기재
+                contactName="추가담당자 성명",  # 담당자명
+                email="test1@test.com"  # 메일주소
             )
         ]
 
@@ -330,40 +331,41 @@ def register(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20180116
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
             writeDate="20180116",
 
-            # 과금방향, '정과금(공급자)', '역과금(공급받는자)'중 기재
+            # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
 
-            # 발행영태, '정발행','역발행','위수탁' 중 기재
+            # [필수] 발행영태, [정발행, 역발행, 위수탁] 중 기재
             issueType="정발행",
 
-            # '영수'/'청구' 중 기재
+            # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
 
-            # 발행시점, '직접발행', '승인시자동발행' '중 기재
+            # [필수] 발행시점, [직접발행, 승인시자동발행] '중 기재
             # 발행예정(Send API) 프로세스를 구현하지 않는경우 '직접발행' 기재
             issueTiming="직접발행",
 
-            # 과세형태, '과세'/'영세'/'면세' 중 기재
+            # [필수] 과세형태, [과세, 영세, 면세] 중 기재
             taxType="과세",
 
             ######################################################################
             #                             공급자 정보
             ######################################################################
 
-            # 공급자 사업자번호 , '-' 없이 10자리 기재.
+            # [필수] 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
 
-            # 공급자 종사업장 식별번호
+            # [필수] 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
 
-            # 공급자 상호
+            # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # 공급자 문서관리번호, 1~24자리, 영문, 숫자, -, _ 조합으로 사업자별로 중복되지 않도록 구성
+            # [필수] 공급자 문서관리번호, 1~24자리, 영문, 숫자, -, _ 조합으로
+            # 사업자별로 중복되지 않도록 구성
             invoicerMgtKey=MgtKey,
 
             # 공급자 대표자 성명
@@ -385,10 +387,10 @@ def register(request):
             invoicerEmail="test@test.com",
 
             # 공급자 담당자 연락처
-            invoicerTEL="070-4304-2991",
+            invoicerTEL="070-111-222",
 
             # 공급자 담당자 휴대폰 번호
-            invoicerHP='010-1111-2222',
+            invoicerHP='010-111-222',
 
             # 정발행시 공급받는자에게 발행안내문자 전송여부
             invoicerSMSSendYN=False,
@@ -397,19 +399,19 @@ def register(request):
             #                            공급받는자 정보
             ######################################################################
 
-            # 공급받는자 구분 '사업자'/'개인'/'외국인' 중 기재
-            invoiceeType='사업자',
+            # [필수] 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
+            invoiceeType="사업자",
 
-            # 공급받는자 사업자번호, '-' 제외 10자리
-            invoiceeCorpNum='8888888888',
+            # [필수] 공급받는자 사업자번호, '-' 제외 10자리
+            invoiceeCorpNum="8888888888",
 
-            # 공급받는자 상호
+            # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
-            # 공급받는자 문서관리번호
+            # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 1~24자리 (숫자, 영문, '-', '_') 조합으로
             invoiceeMgtKey=None,
 
-            # 공급받는자 대표자 성명
+            # [필수] 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
 
             # 공급받는자 주소
@@ -431,10 +433,10 @@ def register(request):
             invoiceeTEL1="070-111-222",
 
             # 공급받는자 담당자 휴대폰번호
-            invoiceeHP1="010-2222-1111",
+            invoiceeHP1="010-111-222",
 
             # 공급받는자 담당자 팩스번호
-            invoiceeFAX1="070-4304-2991",
+            invoiceeFAX1="070-111-222",
 
             # 역발행시 공급자에게 발안내문자 전송여부
             invoiceeSMSSendYN=False,
@@ -443,17 +445,17 @@ def register(request):
             #                          세금계산서 기재정보
             ######################################################################
 
-            # 공급가액 합계
+            # [필수] 공급가액 합계
             supplyCostTotal="100000",
 
-            # 세액 합계
+            # [필수] 세액 합계
             taxTotal="10000",
 
-            # 합계금액, 공급가액 합계 + 세액 합계
+            # [필수] 합계금액, 공급가액 합계 + 세액 합계
             totalAmount="110000",
 
             # 기재상 '일련번호' 항목
-            serialNum='123',
+            serialNum="123",
 
             # 기재상 '현금' 항목
             cash=None,
@@ -465,12 +467,12 @@ def register(request):
             note=None,
 
             # 기재상 '외상미수금' 항목
-            credit='',
+            credit="",
 
             # 기재 상 '비고' 항목
-            remark1='비고1',
-            remark2='비고2',
-            remark3='비고3',
+            remark1="비고1",
+            remark2="비고2",
+            remark3="비고3",
 
             # 기재상 '권' 항목, 최대값 32767
             kwon=1,
@@ -487,7 +489,7 @@ def register(request):
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
-            # - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.co.kr/650
+            # - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.com/650
             ######################################################################
 
             # 수정세금계산서 정보
@@ -507,25 +509,25 @@ def register(request):
         taxinvoice.detailList = [
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT='20161118',  # 거래일자, yyyyMMdd
+                purchaseDT="20180116",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
-                spec='규격',  # 규격
+                spec="규격",  # 규격
                 qty=1,  # 수량
-                unitCost='50000',  # 단가
-                supplyCost='50000',  # 공급가액
-                tax='5000',  # 세액
-                remark='품목비고'  # 비고
+                unitCost="50000",  # 단가
+                supplyCost="50000",  # 공급가액
+                tax="5000",  # 세액
+                remark="품목비고"  # 비고
             ),
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT='20161118',  # 거래일자, yyyyMMdd
+                purchaseDT="20180116",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
-                spec='규격',  # 규격
+                spec="규격",  # 규격
                 qty=1,  # 수량
-                unitCost='50000',  # 단가
-                supplyCost='50000',  # 공급가액
-                tax='5000',  # 세액
-                remark='품목비고'  # 비고
+                unitCost="50000",  # 단가
+                supplyCost="50000",  # 공급가액
+                tax="5000",  # 세액
+                remark="품목비고"  # 비고
             )
         ]
 
@@ -539,13 +541,13 @@ def register(request):
         taxinvoice.addContactList = [
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                contactName='추가담당자 성명',
-                email='test1@test.com'
+                contactName="추가담당자 성명",  # 담당자명
+                email="test1@test.com"  # 메일주소
             ),
             Contact(
-                serialNum=2,
-                contactName='추가담당자2',
-                email='test2@test.com'
+                serialNum=2,  # 일련번호, 1부터 순차기재
+                contactName="추가담당자 성명",  # 담당자명
+                email="test1@test.com"  # 메일주소
             )
         ]
 
@@ -572,53 +574,51 @@ def update(request):
         # 문서관리번호
         MgtKey = "2018-01-16-003"
 
-        # 거래명세서 동시작성여부
-        writeSpecification = False
-
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20180116
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
             writeDate="20180116",
 
-            # 과금방향, '정과금(공급자)', '역과금(공급받는자)'중 기재
+            # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
 
-            # 발행영태, '정발행','역발행','위수탁' 중 기재
+            # [필수] 발행영태, [정발행, 역발행, 위수탁] 중 기재
             issueType="정발행",
 
-            # '영수'/'청구' 중 기재
+            # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
 
-            # 발행시점, '직접발행', '승인시자동발행' '중 기재
+            # [필수] 발행시점, [직접발행, 승인시자동발행] '중 기재
             # 발행예정(Send API) 프로세스를 구현하지 않는경우 '직접발행' 기재
             issueTiming="직접발행",
 
-            # 과세형태, '과세'/'영세'/'면세' 중 기재
+            # [필수] 과세형태, [과세, 영세, 면세] 중 기재
             taxType="과세",
 
             ######################################################################
             #                             공급자 정보
             ######################################################################
 
-            # 공급자 사업자번호 , '-' 없이 10자리 기재.
+            # [필수] 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
 
-            # 공급자 종사업장 식별번호
+            # [필수] 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
 
-            # 공급자 상호
+            # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # 공급자 문서관리번호, 1~24자리, 영문, 숫자, -, _ 조합으로 사업자별로 중복되지 않도록 구성
+            # [필수] 공급자 문서관리번호, 1~24자리, 영문, 숫자, -, _ 조합으로
+            # 사업자별로 중복되지 않도록 구성
             invoicerMgtKey=MgtKey,
 
-            # 공급자 대표자 성명
-            invoicerCEOName="공급자 대표자 성명_수정",
+            # [필수] 공급자 대표자 성명
+            invoicerCEOName="공급자 대표자 성명",
 
             # 공급자 주소
             invoicerAddr="공급자 주소_수정",
@@ -636,10 +636,10 @@ def update(request):
             invoicerEmail="test@test.com",
 
             # 공급자 담당자 연락처
-            invoicerTEL="070-4304-2991",
+            invoicerTEL="070-111-222",
 
             # 공급자 담당자 휴대폰 번호
-            invoicerHP='010-1111-2222',
+            invoicerHP="010-111-222",
 
             # 정발행시 공급받는자에게 발행안내문자 전송여부
             invoicerSMSSendYN=False,
@@ -648,19 +648,19 @@ def update(request):
             #                            공급받는자 정보
             ######################################################################
 
-            # 공급받는자 구분 '사업자'/'개인'/'외국인' 중 기재
+            # [필수] 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
             invoiceeType='사업자',
 
-            # 공급받는자 사업자번호, '-' 제외 10자리
-            invoiceeCorpNum='8888888888',
+            # [필수] 공급받는자 사업자번호, '-' 제외 10자리
+            invoiceeCorpNum="8888888888",
 
-            # 공급받는자 상호
-            invoiceeCorpName="공급받는자 상호_update",
+            # [필수] 공급받는자 상호
+            invoiceeCorpName="공급받는자 상호",
 
-            # 공급받는자 문서관리번호
+            # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 1~24자리 (숫자, 영문, '-', '_') 조합으로
             invoiceeMgtKey=None,
 
-            # 공급받는자 대표자 성명
+            # [필수] 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
 
             # 공급받는자 주소
@@ -682,10 +682,10 @@ def update(request):
             invoiceeTEL1="070-111-222",
 
             # 공급받는자 담당자 휴대폰번호
-            invoiceeHP1="010-2222-1111",
+            invoiceeHP1="010-111-222",
 
             # 공급받는자 담당자 팩스번호
-            invoiceeFAX1="070-4304-2991",
+            invoiceeFAX1="070-111-222",
 
             # 역발행시 공급자에게 발행안내문자 전송여부
             invoiceeSMSSendYN=False,
@@ -694,17 +694,17 @@ def update(request):
             #                          세금계산서 기재정보
             ######################################################################
 
-            # 공급가액 합계
+            # [필수] 공급가액 합계
             supplyCostTotal="100000",
 
-            # 세액 합계
+            # [필수] 세액 합계
             taxTotal="10000",
 
-            # 합계금액, 공급가액 합계 + 세액 합계
+            # [필수] 합계금액, 공급가액 합계 + 세액 합계
             totalAmount="110000",
 
             # 기재상 '일련번호' 항목
-            serialNum='123',
+            serialNum="123",
 
             # 기재상 '현금' 항목
             cash=None,
@@ -716,7 +716,7 @@ def update(request):
             note=None,
 
             # 기재상 '외상미수금' 항목
-            credit='',
+            credit="",
 
             # 기재 상 '비고' 항목
             remark1='비고1',
@@ -738,7 +738,7 @@ def update(request):
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
-            # - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.co.kr/650
+            # - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.com/650
             ######################################################################
 
             # 수정세금계산서 정보
@@ -758,25 +758,25 @@ def update(request):
         taxinvoice.detailList = [
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT='20161118',  # 거래일자, yyyyMMdd
+                purchaseDT="20180116",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
-                spec='규격',  # 규격
+                spec="규격",  # 규격
                 qty=1,  # 수량
-                unitCost='50000',  # 단가
-                supplyCost='50000',  # 공급가액
-                tax='5000',  # 세액
-                remark='품목비고'  # 비고
+                unitCost="50000",  # 단가
+                supplyCost="50000",  # 공급가액
+                tax="5000",  # 세액
+                remark="품목비고"  # 비고
             ),
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT='20161118',  # 거래일자, yyyyMMdd
+                purchaseDT="20180116",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
-                spec='규격',  # 규격
+                spec="규격",  # 규격
                 qty=1,  # 수량
-                unitCost='50000',  # 단가
-                supplyCost='50000',  # 공급가액
-                tax='5000',  # 세액
-                remark='품목비고'  # 비고
+                unitCost="50000",  # 단가
+                supplyCost="50000",  # 공급가액
+                tax="5000",  # 세액
+                remark="품목비고"  # 비고
             )
         ]
 
@@ -790,18 +790,17 @@ def update(request):
         taxinvoice.addContactList = [
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                contactName='추가담당자 성명',
-                email='test1@test.com'
+                contactName="추가담당자 성명",  # 담당자명
+                email="test1@test.com"  # 메일주소
             ),
             Contact(
-                serialNum=2,
-                contactName='추가담당자2',
-                email='test2@test.com'
+                serialNum=2,  # 일련번호, 1부터 순차기재
+                contactName="추가담당자 성명",  # 담당자명
+                email="test1@test.com"  # 메일주소
             )
         ]
 
-        result = taxinvoiceService.update(CorpNum, MgtKeyType, MgtKey, taxinvoice,
-                                          writeSpecification, UserID)
+        result = taxinvoiceService.update(CorpNum, MgtKeyType, MgtKey, taxinvoice, UserID)
 
         return render(request, 'Taxinvoice/Update.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
@@ -1038,7 +1037,7 @@ def request(request):
         CorpNum = settings.testCorpNum
 
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "SELL"
+        MgtKeyType = "BUY"
 
         # 문서관리번호
         MgtKey = "2018-01-16-1004"
@@ -1067,7 +1066,7 @@ def cancelRequest(request):
         CorpNum = settings.testCorpNum
 
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "SELL"
+        MgtKeyType = "BUY"
 
         # 문서관리번호
         MgtKey = "2018-01-16-007"
@@ -1228,17 +1227,17 @@ def search(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 세금계산서 유형 SELL-매출, BUY-매입, TRUSTEE-위수탁
+        # [필수] 세금계산서 유형 SELL-매출, BUY-매입, TRUSTEE-위수탁
         MgtKeyType = "SELL"
 
-        # 조회일자유형, W-작성일자, R-등록일자, I-발행일자
+        # [필수] 조회일자유형, W-작성일자, R-등록일자, I-발행일자
         DType = "W"
 
-        # 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20171101"
+        # [필수] 시작일자, 표시형식(yyyyMMdd)
+        SDate = "201712101"
 
-        # 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20171231"
+        # [필수] 종료일자, 표시형식(yyyyMMdd)
+        EDate = "20180116"
 
         # 세금계산서 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용가능
         State = ["3**", "6**"]
@@ -1713,6 +1712,7 @@ def getPopbillURL_LOGIN(request):
         # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
         # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
         TOGO = "LOGIN"
+
         url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
 
         return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
@@ -1735,6 +1735,7 @@ def getPopbillURL_SEAL(request):
         # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
         # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
         TOGO = "SEAL"
+
         url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
 
         return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
@@ -1774,6 +1775,7 @@ def getPopbillURL_CERT(request):
         # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
         # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
         TOGO = "CERT"
+
         url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
 
         return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
@@ -1813,6 +1815,7 @@ def getPopbillURL_CHRG(request):
         # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
         # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
         TOGO = "CHRG"
+
         url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
 
         return render(request, 'Taxinvoice/GetPopbillURL.html', {'url': url})
@@ -1958,13 +1961,13 @@ def joinMember(request):
             ContactName="담당자성명",
 
             # 담당자 연락처
-            ContactTEL="070-4304-2991",
+            ContactTEL="070-111-222",
 
             # 담당자 휴대폰번호
-            ContactHP="010-2222-3333",
+            ContactHP="010-111-222",
 
             # 담당자 팩스번호
-            ContactFAX="070-4304-2991",
+            ContactFAX="070-111-222",
 
             # 담당자 메일주소
             ContactEmail="test@test.com"
@@ -2059,16 +2062,16 @@ def registContact(request):
             personName="담당자명",
 
             # 연락처
-            tel="010-4304-2991",
+            tel="010-111-222",
 
             # 휴대폰번호
-            hp="010-4304-2991",
+            hp="010-111-222",
 
             # 팩스번호
-            fax="070-4324-2991",
+            fax="070-111-222",
 
             # 메일주소
-            email="dev@linkhub.co.kr",
+            email="test@test.com",
 
             # 회사조회 권한여부, True(회사조회) False(개인조회)
             searchAllAllowYN=True
@@ -2120,16 +2123,16 @@ def updateContact(request):
             personName="담당자_성명",
 
             # 연락처
-            tel="010-1234-1234",
+            tel="010-111-111",
 
             # 휴대폰번호
-            hp="010-4324-4324",
+            hp="010-111-111",
 
             # 팩스번호
             fax="070-111-222",
 
             # 메일주소
-            email="pallet027@gmail.com",
+            email="test@test.com",
 
             # 회사조회 여부, True-회사조회, False-개인조회
             searchAllAllowYN=True
