@@ -63,7 +63,7 @@ STATIC_URL = '/static/'
 
 # Project level static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 '''
@@ -82,10 +82,10 @@ STATICFILES_DIRS = [
     - 공인인증서 등록 팝업 URL (GetPopbillURL API)을 이용하여 등록
 '''
 # 링크아이디
-LinkID = 'TESTER'
+LinkID = "TESTER"
 
 # 비밀키
-SecretKey = 'SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I='
+SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 
 # 연동환경 설정값, 개발용(True), 상업용(False)
 IsTest = True
