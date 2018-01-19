@@ -844,7 +844,7 @@ def issue(request):
         result = taxinvoiceService.issue(CorpNum, MgtKeyType, MgtKey, Memo,
                                          EmailSubject, ForceIssue, UserID)
 
-        return render(request, 'result.html', {'code': result.code, 'message': result.message})
+        return render(request, 'result.html', {'code': result.code})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

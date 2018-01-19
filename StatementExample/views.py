@@ -35,9 +35,10 @@ def checkMgtKeyInUse(request):
             result = "사용중"
         else:
             result = "미사용중"
-        return render(request, 'Statement/CheckMgtKeyInUse.html', {'result': result})
+
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
-        return render(request, 'Statement/CheckMgtKeyInUse.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def registIssue(request):
@@ -198,9 +199,9 @@ def registIssue(request):
 
         result = statementService.registIssue(CorpNum, statement, Memo, UserID)
 
-        return render(request, 'Statement/RegistIssue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/RegistIssue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def register(request):
@@ -356,9 +357,9 @@ def register(request):
 
         result = statementService.register(CorpNum, statement)
 
-        return render(request, 'Statement/Register.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/Register.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def update(request):
@@ -520,9 +521,9 @@ def update(request):
 
         result = statementService.update(CorpNum, ItemCode, mgtKey, statement)
 
-        return render(request, 'Statement/Update.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/Update.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def issue(request):
@@ -542,9 +543,9 @@ def issue(request):
 
         result = statementService.issue(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/Issue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/Issue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def cancel(request):
@@ -566,9 +567,9 @@ def cancel(request):
 
         result = statementService.cancel(CorpNum, ItemCode, MgtKey, Memo)
 
-        return render(request, 'Statement/Issue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/Issue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def delete(request):
@@ -589,9 +590,9 @@ def delete(request):
 
         result = statementService.delete(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/Delete.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/Delete.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getInfo(request):
@@ -754,9 +755,9 @@ def getURL(request):
 
         url = statementService.getURL(CorpNum, UserID, TOGO)
 
-        return render(request, 'Statement/GetURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPopUpURL(request):
@@ -776,9 +777,9 @@ def getPopUpURL(request):
 
         url = statementService.getPopUpURL(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/GetPopUpURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetPopUpURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPrintURL(request):
@@ -798,9 +799,9 @@ def getPrintURL(request):
 
         url = statementService.getPrintURL(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/GetPrintURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetPrintURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getEPrintURL(request):
@@ -821,9 +822,9 @@ def getEPrintURL(request):
 
         url = statementService.getEPrintURL(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/GetEPrintURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetEPrintURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getMassPrintURL(request):
@@ -846,9 +847,9 @@ def getMassPrintURL(request):
 
         url = statementService.getMassPrintURL(CorpNum, ItemCode, MgtKeyList)
 
-        return render(request, 'Statement/GetMassPrintURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetMassPrintURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getMailURL(request):
@@ -867,9 +868,10 @@ def getMailURL(request):
         MgtKey = "20161123-01"
 
         url = statementService.getMailURL(CorpNum, ItemCode, MgtKey)
-        return render(request, 'Statement/GetMailURL.html', {'url': url})
+
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetMailURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPopbillURL_LOGIN(request):
@@ -889,9 +891,9 @@ def getPopbillURL_LOGIN(request):
 
         url = statementService.getPopbillURL(CorpNum, UserID, TOGO)
 
-        return render(request, 'Statement/GetPopbillURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def attachFile(request):
@@ -918,9 +920,9 @@ def attachFile(request):
 
         result = statementService.attachFile(CorpNum, ItemCode, MgtKey, FilePath, UserID)
 
-        return render(request, 'Statement/AttachFile.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/AttachFile.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def deleteFile(request):
@@ -947,9 +949,9 @@ def deleteFile(request):
 
         result = statementService.deleteFile(CorpNum, ItemCode, MgtKey, FileID, UserID)
 
-        return render(request, 'Statement/DeleteFile.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/DeleteFile.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getFiles(request):
@@ -996,9 +998,9 @@ def sendEmail(request):
 
         result = statementService.sendEmail(CorpNum, ItemCode, MgtKey, ReceiverMail, UserID)
 
-        return render(request, 'Statement/SendEmail.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/SendEmail.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def sendSMS(request):
@@ -1031,9 +1033,9 @@ def sendSMS(request):
 
         result = statementService.sendSMS(CorpNum, ItemCode, MgtKey, Sender, Receiver, Contents, UserID)
 
-        return render(request, 'Statement/SendSMS.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/SendSMS.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def sendFAX(request):
@@ -1063,9 +1065,9 @@ def sendFAX(request):
 
         result = statementService.sendFAX(CorpNum, ItemCode, MgtKey, Sender, Receiver, UserID)
 
-        return render(request, 'Statement/SendFAX.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/SendFAX.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def FAXSend(request):
@@ -1231,9 +1233,9 @@ def FAXSend(request):
 
         result = statementService.FAXSend(CorpNum, statement, SendNum, ReceiveNum, UserID)
 
-        return render(request, 'Statement/FAXSend.html', {'result': result})
+        return render(request, 'result.html', {'code': result.code})
     except PopbillException as PE:
-        return render(request, 'Statement/FAXSend.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def attachStatement(request):
@@ -1261,9 +1263,9 @@ def attachStatement(request):
 
         result = statementService.attachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
 
-        return render(request, 'Statement/AttachStatement.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/AttachStatement.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def detachStatement(request):
@@ -1291,9 +1293,9 @@ def detachStatement(request):
 
         result = statementService.detachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
 
-        return render(request, 'Statement/DetachStatement.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/DetachStatement.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getBalance(request):
@@ -1306,11 +1308,11 @@ def getBalance(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        balance = statementService.getBalance(CorpNum)
+        result = statementService.getBalance(CorpNum)
 
-        return render(request, 'Statement/GetBalance.html', {'balance': balance})
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
-        return render(request, 'Statement/GetBalance.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPopbillURL_CHRG(request):
@@ -1330,9 +1332,9 @@ def getPopbillURL_CHRG(request):
 
         url = statementService.getPopbillURL(CorpNum, UserID, TOGO)
 
-        return render(request, 'Statement/GetPopbillURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPartnerBalance(request):
@@ -1345,11 +1347,11 @@ def getPartnerBalance(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        balance = statementService.getPartnerBalance(CorpNum)
+        result = statementService.getPartnerBalance(CorpNum)
 
-        return render(request, 'Statement/GetPartnerBalance.html', {'balance': balance})
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
-        return render(request, 'Statement/GetPartnerBalance.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPartnerURL(request):
@@ -1366,9 +1368,9 @@ def getPartnerURL(request):
 
         url = statementService.getPartnerURL(CorpNum, TOGO)
 
-        return render(request, 'Statement/GetPartnerURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Statement/GetPartnerURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getUnitCost(request):
@@ -1382,11 +1384,11 @@ def getUnitCost(request):
         # 명세서 코드 [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 123
 
-        unitCost = statementService.getUnitCost(CorpNum, ItemCode)
+        result = statementService.getUnitCost(CorpNum, ItemCode)
 
-        return render(request, 'Statement/GetUnitCost.html', {'unitCost': unitCost})
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
-        return render(request, 'Statement/GetUnitCost.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getChargeInfo(request):
@@ -1405,9 +1407,11 @@ def getChargeInfo(request):
 
         response = statementService.getChargeInfo(CorpNum, ItemCode, UserID)
 
-        return render(request, 'Statement/GetChargeInfo.html', {'response': response})
+        return render(request, 'GetChargeInfo.html',
+                      {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
+                       'rateSystem': response.rateSystem})
     except PopbillException as PE:
-        return render(request, 'Statement/GetChargeInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def checkIsMember(request):
@@ -1420,9 +1424,9 @@ def checkIsMember(request):
 
         result = statementService.checkIsMember(targetCorpNum)
 
-        return render(request, 'Statement/CheckIsMember.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
-        return render(request, 'Statement/CheckIsMember.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def checkID(request):
@@ -1435,9 +1439,9 @@ def checkID(request):
 
         response = statementService.checkID(memberID)
 
-        return render(request, 'Statement/CheckID.html', {'code': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
-        return render(request, 'Statement/CheckID.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def joinMember(request):
@@ -1490,9 +1494,9 @@ def joinMember(request):
 
         result = statementService.joinMember(newMember)
 
-        return render(request, 'Statement/JoinMember.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/JoinMember.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getCorpInfo(request):
@@ -1508,9 +1512,12 @@ def getCorpInfo(request):
 
         response = statementService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'Statement/GetCorpInfo.html', {'response': response})
+        return render(request, 'getCorpInfo.html',
+                      {'ceoname': response.ceoname, 'corpName': response.corpName,
+                       'addr': response.addr, 'bizType': response.bizType,
+                       'bizClass': response.bizClass})
     except PopbillException as PE:
-        return render(request, 'Statement/GetCorpInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def updateCorpInfo(request):
@@ -1544,9 +1551,10 @@ def updateCorpInfo(request):
         )
 
         result = statementService.updateCorpInfo(CorpNum, corpInfo, UserID)
-        return render(request, 'Statement/UpdateCorpInfo.html', {'code': result.code, 'message': result.message})
+
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/UpdateCorpInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def registContact(request):
@@ -1590,9 +1598,9 @@ def registContact(request):
 
         result = statementService.registContact(CorpNum, newContact, UserID)
 
-        return render(request, 'Statement/RegistContact.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/RegistContact.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def listContact(request):
@@ -1605,9 +1613,9 @@ def listContact(request):
 
         response = statementService.listContact(CorpNum, UserID)
 
-        return render(request, 'Statement/Listcontact.html', {'response': response})
+        return render(request, 'ListContact.html', {'listContact': listContact})
     except PopbillException as PE:
-        return render(request, 'Statement/ListContact.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def updateContact(request):
@@ -1648,6 +1656,6 @@ def updateContact(request):
 
         result = statementService.updateContact(CorpNum, updateInfo, UserID)
 
-        return render(request, 'Statement/UpdateContact.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Statement/UpdateContact.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
