@@ -32,9 +32,9 @@ def checkMgtKeyInUse(request):
             result = "사용중"
         else:
             result = "미사용중"
-        return render(request, 'Cashbill/CheckMgtKeyInUse.html', {'result': result})
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
-        return render(request, 'Cashbill/CheckMgtKeyInUse.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def registIssue(request):
@@ -130,9 +130,9 @@ def registIssue(request):
 
         result = cashbillService.registIssue(CorpNum, cashbill, Memo, UserID)
 
-        return render(request, 'Cashbill/RegistIssue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/RegistIssue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def register(request):
@@ -224,9 +224,9 @@ def register(request):
 
         result = cashbillService.register(CorpNum, cashbill)
 
-        return render(request, 'Cashbill/Register.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/Register.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def update(request):
@@ -318,9 +318,9 @@ def update(request):
 
         result = cashbillService.update(CorpNum, MgtKey, cashbill)
 
-        return render(request, 'Cashbill/Update.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/Update.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def issue(request):
@@ -342,9 +342,9 @@ def issue(request):
 
         result = cashbillService.issue(CorpNum, MgtKey, Memo)
 
-        return render(request, 'Cashbill/Issue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/Issue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def cancelIssue(request):
@@ -366,9 +366,9 @@ def cancelIssue(request):
 
         result = cashbillService.cancelIssue(CorpNum, MgtKey, Memo)
 
-        return render(request, 'Cashbill/CancelIssue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/CancelIssue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def delete(request):
@@ -387,9 +387,9 @@ def delete(request):
 
         result = cashbillService.delete(CorpNum, MgtKey)
 
-        return render(request, 'Cashbill/Delete.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/Delete.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def revokeRegistIssue(request):
@@ -425,9 +425,9 @@ def revokeRegistIssue(request):
         result = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
                                                    UserID)
 
-        return render(request, 'Cashbill/RevokeRegistIssue.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/RevokeRegistIssue.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def revokeRegistIssue_part(request):
@@ -483,9 +483,9 @@ def revokeRegistIssue_part(request):
                                                    UserID,
                                                    isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
 
-        return render(request, 'Cashbill/RevokeRegistIssue_part.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/RevokeRegistIssue_part.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def revokeRegister(request):
@@ -517,9 +517,9 @@ def revokeRegister(request):
 
         result = cashbillService.revokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID)
 
-        return render(request, 'Cashbill/RevokeRegister.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/RevokeRegister.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def revokeRegister_part(request):
@@ -570,9 +570,9 @@ def revokeRegister_part(request):
         result = cashbillService.revokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID,
                                                 isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
 
-        return render(request, 'Cashbill/RevokeRegister_part.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/RevokeRegister_part.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getInfo(request):
@@ -724,9 +724,9 @@ def getURL(request):
 
         url = cashbillService.getURL(CorpNum, UserID, TOGO)
 
-        return render(request, 'Cashbill/GetURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPopUpURL(request):
@@ -743,9 +743,9 @@ def getPopUpURL(request):
 
         url = cashbillService.getPopUpURL(CorpNum, MgtKey)
 
-        return render(request, 'Cashbill/GetPopUpURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetPopUpURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPrintURL(request):
@@ -762,9 +762,9 @@ def getPrintURL(request):
 
         url = cashbillService.getPrintURL(CorpNum, MgtKey)
 
-        return render(request, 'Cashbill/GetPrintURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetPrintURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getEPrintURL(request):
@@ -780,9 +780,10 @@ def getEPrintURL(request):
         MgtKey = "20150326-01"
 
         url = cashbillService.getEPrintURL(CorpNum, MgtKey)
-        return render(request, 'Cashbill/GetEPrintURL.html', {'url': url})
+
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetEPrintURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getMassPrintURL(request):
@@ -801,9 +802,11 @@ def getMassPrintURL(request):
         MgtKeyList.append("20180116-03")
 
         url = cashbillService.getMassPrintURL(CorpNum, MgtKeyList)
-        return render(request, 'Cashbill/GetMassPrintURL.html', {'url': url})
+
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetMassPrintURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
 
 
 def getMailURL(request):
@@ -819,9 +822,10 @@ def getMailURL(request):
         MgtKey = "20180118-019"
 
         url = cashbillService.getMailURL(CorpNum, MgtKey)
-        return render(request, 'Cashbill/GetMailURL.html', {'url': url})
+
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetMailURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPopbillURL_LOGIN(request):
@@ -841,9 +845,9 @@ def getPopbillURL_LOGIN(request):
 
         url = cashbillService.getPopbillURL(CorpNum, UserID, TOGO)
 
-        return render(request, 'Cashbill/GetPopbillURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def sendEmail(request):
@@ -865,9 +869,9 @@ def sendEmail(request):
 
         result = cashbillService.sendEmail(CorpNum, MgtKey, Receiver, UserID)
 
-        return render(request, 'Cashbill/SendEmail.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/SendEmail.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def sendSMS(request):
@@ -897,10 +901,9 @@ def sendSMS(request):
 
         result = cashbillService.sendSMS(CorpNum, MgtKey, Sender, Receiver, Contents, UserID)
 
-        return render(request, 'Cashbill/SendSMS.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/SendSMS.html', {'code': PE.code, 'message': PE.message})
-
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def sendFAX(request):
     """
@@ -925,9 +928,10 @@ def sendFAX(request):
         UserID = settings.testUserID
 
         result = cashbillService.sendFAX(CorpNum, MgtKey, Sender, Receiver, UserID)
-        return render(request, 'Cashbill/SendFAX.html', {'code': result.code, 'message': result.message})
+
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/SendFAX.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getBalance(request):
@@ -940,11 +944,11 @@ def getBalance(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        balance = cashbillService.getBalance(CorpNum)
+        result = cashbillService.getBalance(CorpNum)
 
-        return render(request, 'Cashbill/GetBalance.html', {'balance': balance})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetBalance.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPopbillURL_CHRG(request):
@@ -964,9 +968,9 @@ def getPopbillURL_CHRG(request):
 
         url = cashbillService.getPopbillURL(CorpNum, UserID, TOGO)
 
-        return render(request, 'Cashbill/GetPopbillURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetPopbillURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPartnerBalance(request):
@@ -979,11 +983,11 @@ def getPartnerBalance(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        balance = cashbillService.getPartnerBalance(CorpNum)
+        result = cashbillService.getPartnerBalance(CorpNum)
 
-        return render(request, 'Cashbill/GetPartnerBalance.html', {'balance': balance})
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetPartnerBalance.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getPartnerURL(request):
@@ -1000,9 +1004,9 @@ def getPartnerURL(request):
 
         url = cashbillService.getPartnerURL(CorpNum, TOGO)
 
-        return render(request, 'Cashbill/GetPartnerURL.html', {'url': url})
+        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetPartnerURL.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getUnitCost(request):
@@ -1013,11 +1017,11 @@ def getUnitCost(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        unitCost = cashbillService.getUnitCost(CorpNum)
+        result = cashbillService.getUnitCost(CorpNum)
 
-        return render(request, 'Cashbill/GetUnitCost.html', {'unitCost': unitCost})
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetUnitCost.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getChargeInfo(request):
@@ -1033,9 +1037,9 @@ def getChargeInfo(request):
 
         response = cashbillService.getChargeInfo(CorpNum, UserID)
 
-        return render(request, 'Cashbill/GetChargeInfo.html', {'response': response})
+        return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetChargeInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def checkIsMember(request):
@@ -1046,11 +1050,11 @@ def checkIsMember(request):
         # 조회할 사업자등록번호, '-' 제외 10자리
         targetCorpNum = "1234567890"
 
-        result = cashbillService.checkIsMember(targetCorpNum)
+        response = cashbillService.checkIsMember(targetCorpNum)
 
-        return render(request, 'Cashbill/CheckIsMember.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/CheckIsMember.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def checkID(request):
@@ -1063,9 +1067,9 @@ def checkID(request):
 
         response = cashbillService.checkID(memberID)
 
-        return render(request, 'Cashbill/CheckID.html', {'response': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/CheckID.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def joinMember(request):
@@ -1118,9 +1122,9 @@ def joinMember(request):
 
         result = cashbillService.joinMember(newMember)
 
-        return render(request, 'Cashbill/JoinMember.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/JoinMember.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getCorpInfo(request):
@@ -1136,9 +1140,12 @@ def getCorpInfo(request):
 
         response = cashbillService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'Cashbill/GetCorpInfo.html', {'response': response})
+        return render(request, 'getCorpInfo.html',
+                      {'ceoname': response.ceoname, 'corpName': response.corpName,
+                       'addr': response.addr, 'bizType': response.bizType,
+                       'bizClass': response.bizClass})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetCorpInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def updateCorpInfo(request):
@@ -1172,9 +1179,10 @@ def updateCorpInfo(request):
         )
 
         result = cashbillService.updateCorpInfo(CorpNum, corpInfo, UserID)
-        return render(request, 'Cashbill/UpdateCorpInfo.html', {'code': result.code, 'message': result.message})
+
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/UpdateCorpInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def registContact(request):
@@ -1218,9 +1226,9 @@ def registContact(request):
 
         result = cashbillService.registContact(CorpNum, newContact, UserID)
 
-        return render(request, 'Cashbill/RegistContact.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/RegistContact.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def listContact(request):
@@ -1233,9 +1241,9 @@ def listContact(request):
 
         response = cashbillService.listContact(CorpNum, UserID)
 
-        return render(request, 'Cashbill/Listcontact.html', {'response': response})
+        return render(request, 'ListContact.html', {'listContact': listContact})
     except PopbillException as PE:
-        return render(request, 'Cashbill/ListContact.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def updateContact(request):
@@ -1276,6 +1284,6 @@ def updateContact(request):
 
         result = cashbillService.updateContact(CorpNum, updateInfo, UserID)
 
-        return render(request, 'Cashbill/UpdateContact.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': result.code, 'message': result.message})
     except PopbillException as PE:
-        return render(request, 'Cashbill/UpdateContact.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
