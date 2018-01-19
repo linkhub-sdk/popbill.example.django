@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">Response</p>
+        <p class="heading1">URL</p>
         <br/>
         <fieldset class="fieldset1">
-            <legend>세금계산서 발행</legend>
+            <legend>{{ request.path }}</legend>
             <ul>
-                <li>Response.code : {{ code }}</li>
-                <li>Response.message : {{ message }}</li>
+                <li>URL : {{ url }}</li>
             </ul>
         </fieldset>
     </div>

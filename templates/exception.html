@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">Response</p>
+        <p class="heading1">Exception Occurred</p>
         <br/>
         <fieldset class="fieldset1">
-            <legend>발행취소 확인</legend>
+            <legend>{{ request.path }}</legend>
             <ul>
-                <li>Result.code : {{ code }}</li>
-                <li>Result.message : {{ message }}</li>
+                <li>Response.code : {{ code }}</li>
+                <li>Response.message : {{ message }}</li>
             </ul>
         </fieldset>
     </div>
