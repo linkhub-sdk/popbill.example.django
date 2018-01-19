@@ -7,7 +7,7 @@ from config import settings
 # config/settings.py 작성한 LinkID, SecretKey를 이용해 StatementService 객체 생성
 statementService = StatementService(settings.LinkID, settings.SecretKey)
 
-# 연동환경 설절값, 개발용(True), 상업용(False)
+# 연동환경 설정, 개발용(True), 상업용(False)
 statementService.IsTest = settings.IsTest
 
 
@@ -168,7 +168,7 @@ def registIssue(request):
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20161120",  # 거래일자
+                    purchaseDT="20160119",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -178,7 +178,7 @@ def registIssue(request):
                 StatementDetail(
                     serialNum=2,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20161120",  # 거래일자
+                    purchaseDT="20160119",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -326,7 +326,7 @@ def register(request):
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20161120",  # 거래일자
+                    purchaseDT="20160119",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -336,7 +336,7 @@ def register(request):
                 StatementDetail(
                     serialNum=2,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20161120",  # 거래일자
+                    purchaseDT="20160119",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -490,7 +490,7 @@ def update(request):
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20161120",  # 거래일자
+                    purchaseDT="20160119",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -500,7 +500,7 @@ def update(request):
                 StatementDetail(
                     serialNum=2,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20161120",  # 거래일자
+                    purchaseDT="20160119",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -985,7 +985,7 @@ def sendEmail(request):
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
-        # 현금영수증 문서관리번호
+        # 전자세금서 문서관리번호
         MgtKey = "2018-01-16-888"
 
         # 수신메일주소
