@@ -204,10 +204,10 @@ def registIssue(request):
 
 
 def register(request):
-    '''
+    """
     전자명세서 1건을 임시저장합니다.
     - 임시저장 상태의 명세서는 발행(Issue API)을 호출해야 공급받는자에게 메일이 전송됩니다.
-    '''
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -530,7 +530,6 @@ def issue(request):
     1건의 [임시저장] 상태의 전자명세서를 발행처리합니다.
     - 발행시 포인트가 차감됩니다.
     """
-
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -578,7 +577,6 @@ def delete(request):
     - 전자명세서를 삭제하면 사용된 문서관리번호(mgtKey)를 재사용할 수 있습니다.
     - 삭제가능한 문서 상태 : [임시저장], [발행취소]
     """
-
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -597,12 +595,11 @@ def delete(request):
 
 
 def getInfo(request):
-    '''
+    """
     1건의 전자명세서 상태/요약 정보를 확인합니다.
     - 응답항목에 대한 자세한 정보는 "[전자명세서 API 연동매뉴얼] > 3.3.1.
       GetInfo (상태 확인)"을 참조하시기 바랍니다.
-    '''
-
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -670,12 +667,11 @@ def getDetailInfo(request):
 
 
 def search(request):
-    '''
+    """
     검색조건을 사용하여 전자명세서 목록을 조회합니다.
-    - 응답항목에 대한 자세한 사항은 "[전자명세서 API 연동매뉴얼] > 3.3.3. Search (목록 조회)"
+    - 응답항목에 대한 자세한 사항은 "[전자명세서 API 연동매뉴얼] > 3.2.4. Search (목록 조회)"
       를 참조하시기 바랍니다.
-    '''
-
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
