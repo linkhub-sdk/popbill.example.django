@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">Response</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>회사정보 확인</legend>
+            <ul>
+                {% if code %}
+                    <li>Response.code : {{ code }}</li>
+                    <li>Response.message : {{ message }}</li>
+                {% else %}
+                    <li>ceoname(대표자성명) : {{ response.ceoname }}</li>
+                    <li>corpName(상호) : {{ response.corpName }}</li>
+                    <li>addr(주소) : {{ response.addr }}</li>
+                    <li>bizType(업태) :  {{ response.bizType }}</li>
+                    <li>bizClass(종목) : {{ response.bizClass }}</li>
+                {% endif %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

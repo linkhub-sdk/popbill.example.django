@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">Response</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>전자명세서 인쇄 URL</legend>
+            <ul>
+                {% if url %}
+                    <li>url : {{ url }}</li>
+                {% else %}
+                    <li>Response.code : {{ code }}</li>
+                    <li>Response.message : {{ message }}</li>
+                {% endif %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
