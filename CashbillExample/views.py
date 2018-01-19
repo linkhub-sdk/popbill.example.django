@@ -823,6 +823,7 @@ def getMailURL(request):
     except PopbillException as PE:
         return render(request, 'Cashbill/GetMailURL.html', {'code': PE.code, 'message': PE.message})
 
+
 def getPopbillURL_LOGIN(request):
     """
     팝빌 관련 팝업 URL을 반환합니다.
