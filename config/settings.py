@@ -27,8 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'TaxinvoiceExample',
-    'CashbillExample',
+    'TaxinvoiceExample',    # 전자세금계산서
+    'StatementExample',     # 전자명세서
+    'CashbillExample',      # 현금영수증
 ]
 
 ROOT_URLCONF = 'config.urls'

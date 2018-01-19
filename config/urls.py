@@ -7,7 +7,7 @@ from config.views import Index
 urlpatterns = [
     url(r'^$', Index.as_view(), name='index'),
     url(r'^TaxinvoiceExample/', include('TaxinvoiceExample.urls'), name='TaxinvoiceExample'),
-    # url(r'^StatementExample/', include('StatementExample.urls'), name='StatementExample'),
+    url(r'^StatementExample/', include('StatementExample.urls'), name='StatementExample'),
     url(r'^CashbillExample/', include('CashbillExample.urls'), name='CashbillExample'),
     # url(r'^MessageExample/', include('MessageExample.urls'), name='MessageExample'),
     # url(r'^FaxExample/', include('FaxExample.urls'), name='FaxExample'),
