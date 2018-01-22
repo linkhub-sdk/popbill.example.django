@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">GetXML</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>상세정보 확인 - XML</legend>
+            <ul>
+                <li> ResultCode (응답코드) :  {{ response.ResultCode }}</li>
+                <li> Message (국세청승인번호) : {{ response.Message }}</li>
+                <li> retObject (전자세금계산서 XML문서) : {{ response.retObject }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

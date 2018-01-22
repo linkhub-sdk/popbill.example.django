@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">GetflatRateState</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>정액제 서비스 상태 확인</legend>
+            <ul>
+                <li> referenceID : {{ flatRateState.referenceID }}</li>
+                <li> useEndDate : {{ flatRateState.useEndDate }}</li>
+                <li> contractDT : {{ flatRateState.contractDT }}</li>
+                <li> unPaidYN : {{ flatRateState.unPaidYN }}</li>
+                <li> closeOnExpired : {{ flatRateState.closeOnExpired }}</li>
+                <li> state : {{ flatRateState.state }}</li>
+                <li> baseDate : {{ flatRateState.baseDate }}</li>
+                <li> closeRequestYN : {{ flatRateState.closeRequestYN }}</li>
+                <li> useRestrictYN : {{ flatRateState.useRestrictYN }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

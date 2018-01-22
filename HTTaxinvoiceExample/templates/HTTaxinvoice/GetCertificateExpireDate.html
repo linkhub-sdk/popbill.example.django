@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">Response</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>공인인증서 만료일시 확인</legend>
+            <ul>
+                <li>공인인증서 만료일시 : {{ expiredate }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

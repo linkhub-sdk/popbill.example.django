@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>홈택스 전자세금계산서 매입/매출 내역 수집</legend>
+            <ul>
+                <li><a href="RequestJob">requestJob</a> (수집 요청)</li>
+                <li><a href="GetJobState">getJobState</a> (수집 상태 확인)</li>
+                <li><a href="ListActiveJob">listActiveJob</a> (수집 상태 목록 확인)</li>
+            </ul>
+        </fieldset>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>홈택스 전자세금계산서 매입/매출 내역 수집 결과 조회</legend>
+            <ul>
+                <li><a href="Search">search</a> (수집 결과 조회)</li>
+                <li><a href="Summary">summary</a> (수집 결과 요약정보 조회)</li>
+                <li><a href="GetTaxinvoice">getTaxinvoice</a> (상세정보 확인 - JSON)</li>
+                <li><a href="GetXML">getXML</a> (상세정보 확인 - XML)</li>
+            </ul>
+        </fieldset>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>홈택스연동 인증 관리</legend>
+            <ul>
+                <li><a href="GetCertificatePopUpURL">getCertificatePopUpURL</a> (홈택스연동 인증 관리 팝업 URL)</li>
+                <li><a href="GetCertificateExpireDate">getCertificateExpireDate</a> (홈택스연동 공인인증서 만료일자 확인)</li>
+            </ul>
+        </fieldset>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>포인트 관리</legend>
+            <ul>
+                <li><a href="GetBalance">getBalance</a> (연동회원 잔여포인트 확인)</li>
+                <li><a href="getPopbillURL_CHRG">getPopbillURL</a> (연동회원 포인트 충전 팝업 URL)</li>
+                <li><a href="GetPartnerBalance">getPartnerBalance</a> (파트너 잔여포인트 확인)</li>
+                <li><a href="GetPartnerURL">getPartnerURL</a> (파트너 포인트충전 URL)</li>
+                <li><a href="GetChargeInfo">getChargeInfo</a> (과금정보 확인)</li>
+                <li><a href="GetFlatRatePopUpURL">GetFlatRatePopUpURL</a> (정액제 서비스 신청 URL)</li>
+                <li><a href="GetFlatRateState">getFlatRateState</a> (정액제 서비스 상태 확인)</li>
+            </ul>
+        </fieldset>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>회원정보</legend>
+            <ul>
+                <li><a href="CheckIsMember">checkIsMember</a> (연동회원 가입여부 확인)</li>
+                <li><a href="CheckID">checkID</a> (아이디 중복 확인)</li>
+                <li><a href="JoinMember">joinMember</a> (연동회원 신규가입)</li>
+                <li><a href="GetCorpInfo">getCorpInfo</a> (회사정보 확인)</li>
+                <li><a href="UpdateCorpInfo">updateCorpInfo</a> (회사정보 수정)</li>
+                <li><a href="RegistContact">registContact</a> (담당자 등록)</li>
+                <li><a href="ListContact">listContact</a> (담당자 목록 확인)</li>
+                <li><a href="UpdateContact">updateContact</a> (담당자 정보 수정)</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
