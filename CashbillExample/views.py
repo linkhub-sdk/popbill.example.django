@@ -32,6 +32,7 @@ def checkMgtKeyInUse(request):
             result = "사용중"
         else:
             result = "미사용중"
+
         return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
@@ -689,7 +690,7 @@ def search(request):
 
         return render(request, 'Cashbill/Search.html', {'response': response})
     except PopbillException as PE:
-        return render(request, 'Cashbill/Search.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getLogs(request):
@@ -1239,7 +1240,7 @@ def listContact(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = cashbillService.listContact(CorpNum, UserID)
+        listContact = cashbillService.listContact(CorpNum, UserID)
 
         return render(request, 'ListContact.html', {'listContact': listContact})
     except PopbillException as PE:
