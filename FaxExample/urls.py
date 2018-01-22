@@ -1,2 +1,44 @@
 # -*- coding: utf-8 -*-
+from django.conf.urls import url
 
+from . import views
+
+urlpatterns = [
+    # Index Page
+    url(r'^$', views.index, name='index'),
+
+    # 발신번호 사전등록
+    url(r'^GetURL_SENDER$', views.getURL_SENDER, name='GetURL_SENDER'),
+    url(r'^GetSenderNumberList$', views.getSenderNumberList, name='GetSenderNumberList'),
+
+    # 팩스 전송
+    url(r'^SendFAX$', views.sendFAX, name='SendFAX'),
+    url(r'^SendFAX_multi$', views.sendFAX_multi, name='SendSMS_multi'),
+    url(r'^ResendFAX$', views.resendFAX, name='ResendFAX'),
+    url(r'^ResendFAX_multi$', views.resendFAX_multi, name='resendFAX_multi'),
+    url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
+
+    # 정보확인
+    url(r'^GetFaxDetail$', views.getFaxDetail, name='GetFaxDetail'),
+    url(r'^Search$', views.search, name='Search'),
+    url(r'^GetURL_BOX$', views.getURL_BOX, name='GetURL_BOX'),
+
+    # 포인트 관리
+    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='getPopbillURL_CHRG'),
+    url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
+    url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
+    url(r'^GetBalance$', views.getBalance, name='GetBalance'),
+    url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
+    url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
+
+    # 회원정보
+    url(r'^CheckIsMember$', views.checkIsMember, name='checkIsMember'),
+    url(r'^CheckID$', views.checkID, name='CheckID'),
+    url(r'^JoinMember$', views.joinMember, name='JoinMember'),
+    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='getPopbillURL_LOGIN'),
+    url(r'^RegistContact$', views.registContact, name='RegistContact'),
+    url(r'^ListContact$', views.listContact, name='ListContact'),
+    url(r'^UpdateCorpInfo$', views.updateCorpInfo, name='UpdateCorpInfo'),
+    url(r'^GetCorpInfo$', views.getCorpInfo, name='GetCorpInfo'),
+    url(r'^UpdateContact$', views.updateContact, name='UpdateContact'),
+]
