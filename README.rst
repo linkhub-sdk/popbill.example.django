@@ -41,7 +41,7 @@ how to test ?
 * Visit localhost:8000 in your web browser
 
 
-매뉴얼 목차
+연동 API 목차
 ------------------------------
 * 전자세금계산서 API
 * 전자명세서 API
