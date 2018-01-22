@@ -6,14 +6,9 @@
         <fieldset class="fieldset1">
             <legend>ASP사업자 유통메일 목록 확인</legend>
             <ul>
-                {% if code %}
-                    <li>Response.code : {{ code }}</li>
-                    <li>Response.message : {{ message }}</li>
-                {% else %}
-                    {% for aspList in aspList %}
-                        <li> 인증번호 [{{ aspList.confirmNum }}] : {{ aspList.email }}</li>
-                    {% endfor %}
-                {% endif %}
+                {% for aspList in aspList %}
+                    <li> 인증번호 [{{ aspList.confirmNum }}] : {{ aspList.email }}</li>
+                {% endfor %}
             </ul>
         </fieldset>
     </div>

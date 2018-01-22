@@ -6,12 +6,7 @@
         <fieldset class="fieldset1">
             <legend>공인인증서 만료일시 확인</legend>
             <ul>
-                {% if expiredate %}
-                    <li>공인인증서 만료일시 : {{ expiredate }}</li>
-                {% else %}
-                    <li>Response.code : {{ code }}</li>
-                    <li>Response.message : {{ message }}</li>
-                {% endif %}
+                <li>공인인증서 만료일시 : {{ expiredate }}</li>
             </ul>
         </fieldset>
     </div>

@@ -6,23 +6,18 @@
         <fieldset class="fieldset1">
             <legend>휴폐업조회 - 대량</legend>
             <ul>
-                {% if code %}
-                    <li>Response.code : {{ code }}</li>
-                    <li>Response.message : {{ message }}</li>
-                {% else %}
-                    {% for corpState in corpStateList %}
-                        <fieldset class="fieldset2">
-                            <legend>전송내역 확인 [{{ forloop.counter }}]</legend>
-                            <ul>
-                                <li> corpNum (사업자번호) : {{ corpState.corpNum }}</li>
-                                <li> type (사업자유형) : {{ corpState.type }}</li>
-                                <li> state (사업자상태) : {{ corpState.state }}</li>
-                                <li> stateDate (휴폐업일시) : {{ corpState.stateDate }}</li>
-                                <li> checkDate (최종 국세청 확인 일자) : {{ corpState.checkDate }}</li>
-                            </ul>
-                        </fieldset>
-                    {% endfor %}
-                {% endif %}
+                {% for corpState in corpStateList %}
+                    <fieldset class="fieldset2">
+                        <legend>전송내역 확인 [{{ forloop.counter }}]</legend>
+                        <ul>
+                            <li> corpNum (사업자번호) : {{ corpState.corpNum }}</li>
+                            <li> type (사업자유형) : {{ corpState.type }}</li>
+                            <li> state (사업자상태) : {{ corpState.state }}</li>
+                            <li> stateDate (휴폐업일시) : {{ corpState.stateDate }}</li>
+                            <li> checkDate (최종 국세청 확인 일자) : {{ corpState.checkDate }}</li>
+                        </ul>
+                    </fieldset>
+                {% endfor %}
             </ul>
         </fieldset>
     </div>

@@ -30,6 +30,11 @@ INSTALLED_APPS = [
     'TaxinvoiceExample',    # 전자세금계산서
     'StatementExample',     # 전자명세서
     'CashbillExample',      # 현금영수증
+    'MessageExample',       # 문자
+    'FaxExample',           # 팩스
+    'HTTaxinvoiceExample',  # 홈택스 전자(세금)계산서 연계
+    'HTCashbillExample',    # 홈택스 현금영수증 연계
+    'ClosedownExample',     # 휴폐업조회
 ]
 
 ROOT_URLCONF = 'config.urls'

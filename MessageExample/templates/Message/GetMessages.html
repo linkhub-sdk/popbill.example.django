@@ -6,32 +6,27 @@
         <fieldset class="fieldset1">
             <legend>전송내역 확인</legend>
             <ul>
-                {% if code %}
-                    <li>Response.code : {{ code }}</li>
-                    <li>Response.message : {{ message }}</li>
-                {% else %}
-                    {% for messageInfo in  resultList %}
-                        <fieldset class="fieldset2">
-                            <legend>전송내역 확인 [{{ forloop.counter }}]</legend>
-                            <ul>
-                                <li> subject (메시지 제목) : {{ messageInfo.subject }}</li>
-                                <li> content (메시지 내용) : {{ messageInfo.content }}</li>
-                                <li> sendNum (발신번호) : {{ messageInfo.sendNum }} </li>
-                                <li> receiveNum (발신자명) : {{ messageInfo.receiveNum }}</li>
-                                <li> receiveName (수신번호) : {{ messageInfo.receiveName }}</li>
-                                <li> receiveName (수신자명) : {{ messageInfo.receiveName }}</li>
-                                <li> reserveDT (예약일시) : {{ messageInfo.reserveDT }}</li>
-                                <li> receiptDT (접수일시) : {{ messageInfo.receiptDT }}</li>
-                                <li> sendDT (발송일시) : {{ messageInfo.sendDT }}</li>
-                                <li> resultDT (전송결과 수신일시) : {{ messageInfo.resultDT }}</li>
-                                <li> result (전송 결과코드) : {{ messageInfo.result }}</li>
-                                <li> state (전송 상태코드) : {{ messageInfo.state }}</li>
-                                <li> type (메시지 타입) : {{ messageInfo.type }}</li>
-                                <li> tranNet (전송처리 이동통신사명) : {{ messageInfo.tranNet }}</li>
-                            </ul>
-                        </fieldset>
-                    {% endfor %}
-                {% endif %}
+                {% for messageInfo in  resultList %}
+                    <fieldset class="fieldset2">
+                        <legend>전송내역 확인 [{{ forloop.counter }}]</legend>
+                        <ul>
+                            <li> subject (메시지 제목) : {{ messageInfo.subject }}</li>
+                            <li> content (메시지 내용) : {{ messageInfo.content }}</li>
+                            <li> sendNum (발신번호) : {{ messageInfo.sendNum }} </li>
+                            <li> receiveNum (발신자명) : {{ messageInfo.receiveNum }}</li>
+                            <li> receiveName (수신번호) : {{ messageInfo.receiveName }}</li>
+                            <li> receiveName (수신자명) : {{ messageInfo.receiveName }}</li>
+                            <li> reserveDT (예약일시) : {{ messageInfo.reserveDT }}</li>
+                            <li> receiptDT (접수일시) : {{ messageInfo.receiptDT }}</li>
+                            <li> sendDT (발송일시) : {{ messageInfo.sendDT }}</li>
+                            <li> resultDT (전송결과 수신일시) : {{ messageInfo.resultDT }}</li>
+                            <li> result (전송 결과코드) : {{ messageInfo.result }}</li>
+                            <li> state (전송 상태코드) : {{ messageInfo.state }}</li>
+                            <li> type (메시지 타입) : {{ messageInfo.type }}</li>
+                            <li> tranNet (전송처리 이동통신사명) : {{ messageInfo.tranNet }}</li>
+                        </ul>
+                    </fieldset>
+                {% endfor %}
             </ul>
         </fieldset>
     </div>

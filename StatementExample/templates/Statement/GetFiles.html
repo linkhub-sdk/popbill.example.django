@@ -6,22 +6,17 @@
         <fieldset class="fieldset1">
             <legend>세금계산서 첨부파일 목록 확인</legend>
             <ul>
-                {% if code %}
-                    <li>Response.code : {{ code }}</li>
-                    <li>Response.message : {{ message }}</li>
-                {% else %}
-                    {% for fileList in fileList %}
-                        <fieldset class="fieldset2">
-                            <legend> 첨부파일 [{{ forloop.counter }}]</legend>
-                            <ul>
-                                <li> serialNum : {{ fileList.seriaNum }} </li>
-                                <li> displayName : {{ fileList.displayName }} </li>
-                                <li> attachedFile : {{ fileList.attachedFile }}</li>
-                                <li> regDT : {{ fileList.regDT }}</li>
-                            </ul>
-                        </fieldset>
-                    {% endfor %}
-                {% endif %}
+                {% for fileList in fileList %}
+                    <fieldset class="fieldset2">
+                        <legend> 첨부파일 [{{ forloop.counter }}]</legend>
+                        <ul>
+                            <li> serialNum : {{ fileList.seriaNum }} </li>
+                            <li> displayName : {{ fileList.displayName }} </li>
+                            <li> attachedFile : {{ fileList.attachedFile }}</li>
+                            <li> regDT : {{ fileList.regDT }}</li>
+                        </ul>
+                    </fieldset>
+                {% endfor %}
             </ul>
         </fieldset>
     </div>
