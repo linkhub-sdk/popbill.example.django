@@ -29,7 +29,8 @@ popbill.sdk.example.django
 
     $ pip install -r requirements.txt
 
-* how to test ?
+how to test ?
+------------------------------
 
   * modify config/settings.py with LinkID/SecretKey issued by Linkhub.
   * And test with console like...
