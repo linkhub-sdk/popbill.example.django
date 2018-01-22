@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">GetAutoDenyList</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>080 서비스 수신거부 목록</legend>
+            <ul>
+                {% for info in response %}
+                    <fieldset class="fieldset2">
+                        <legend>등록번호: {{ info.number }}</legend>
+                        <ul>
+                            <li>regDT(등록날자): {{ info.regDT }}</li>
+                        </ul>
+                    </fieldset>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
