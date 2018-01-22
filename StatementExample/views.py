@@ -1422,7 +1422,7 @@ def checkIsMember(request):
         # 조회할 사업자등록번호, '-' 제외 10자리
         targetCorpNum = "1234567890"
 
-        result = statementService.checkIsMember(targetCorpNum)
+        response = statementService.checkIsMember(targetCorpNum)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1611,7 +1611,7 @@ def listContact(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = statementService.listContact(CorpNum, UserID)
+        listContact = statementService.listContact(CorpNum, UserID)
 
         return render(request, 'ListContact.html', {'listContact': listContact})
     except PopbillException as PE:

@@ -513,7 +513,10 @@ def revokeRegister(request):
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
         orgTradeDate = "20180117"
 
-        # 발행안내문자 전송여부
+        # 발행안내문자 전송여부    """
+        #     파트너의 연동회원으로 회원가입을 요청합니다.
+        #     아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+        #     """
         smssendYN = False
 
         result = cashbillService.revokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID)
@@ -1075,7 +1078,8 @@ def checkID(request):
 
 def joinMember(request):
     """
-    팝빌 연동회원 가입을 요청합니다.
+    파트너의 연동회원으로 회원가입을 요청합니다.
+    아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
     """
     try:
         # 회원정보

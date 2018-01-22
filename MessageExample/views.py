@@ -5,7 +5,7 @@ from popbill import CashbillService, PopbillException, Cashbill, ContactInfo, Co
 
 from config import settings
 
-# config/settings.py 작성한 LinkID, SecretKey를 이용해 CashbillService 객체 생성
+# config/settings.py 작성한 LinkID, SecretKey를 이용해 messageService 객체 생성
 messageService = MessageService(settings.LinkID, settings.SecretKey)
 
 # 연동환경 설정값, 개발용(True), 상업용(False)
@@ -62,7 +62,7 @@ def sendSMS(request):
         CorpNum = settings.testCorpNum
 
         # 발신번호
-        Sender = "01083490706"
+        Sender = "01012345678"
 
         # 수신번호
         ReceiverNum = "01012345678"
@@ -98,7 +98,7 @@ def sendSMS_multi(request):
         CorpNum = settings.testCorpNum
 
         # 발신번호(동보전송용)
-        Sender = "01083490706"
+        Sender = "01012345678"
 
         # 단문메시지 내용(동보전송용)
         Contents = "동보전송용 메시지 내용"
@@ -114,7 +114,7 @@ def sendSMS_multi(request):
         for x in range(0, 10):
             messages.append(
                 MessageReceiver(
-                    snd='01083490706',  # 발신번호
+                    snd='01012345678',  # 발신번호
                     sndnm='발신자명',  # 발신자명
                     rcv='01012345678',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
@@ -139,7 +139,7 @@ def sendLMS(request):
         CorpNum = settings.testCorpNum
 
         # 발신번호
-        Sender = "01083490706"
+        Sender = "01012345678"
 
         # 수신번호
         ReceiverNum = "01012345678"
@@ -178,7 +178,7 @@ def sendLMS_multi(request):
         CorpNum = settings.testCorpNum
 
         # 발신번호(동보전송용)
-        Sender = "01083490706"
+        Sender = "01012345678"
 
         # 장문 메시지 제목(동보전송용)
         Subject = "동보전송용 메시지 제목"
@@ -223,10 +223,10 @@ def sendMMS(request):
         CorpNum = settings.testCorpNum
 
         # 발신번호
-        Sender = "01083490706"
+        Sender = "01012345678"
 
         # 수신번호
-        ReceiverNum = "01083490706‬"
+        ReceiverNum = "01012345678‬"
 
         # 수신자명
         ReceiverName = "김현진"
@@ -287,7 +287,7 @@ def sendMMS_multi(request):
         for x in range(0, 5):
             messages.append(
                 MessageReceiver(
-                    snd='01083490706',  # 발신번호
+                    snd='01012345678',  # 발신번호
                     sndnm='발신자명',  # 발신자명
                     rcv='01012345678',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
@@ -313,7 +313,7 @@ def sendXMS(request):
         CorpNum = settings.testCorpNum
 
         # 발신번호
-        Sender = "01083490706"
+        Sender = "01012345678"
 
         # 수신번호
         ReceiverNum = "01012345678"
@@ -352,7 +352,7 @@ def sendXMS_multi(request):
         CorpNum = settings.testCorpNum
 
         # 발신번호(동보전송용)
-        Sender = "01083490706"
+        Sender = "01012345678"
 
         # 메시지제목(동보전송용)
         Subject = "동보전송용 메시지 제목"
@@ -371,7 +371,7 @@ def sendXMS_multi(request):
         for x in range(0, 10):
             messages.append(
                 MessageReceiver(
-                    snd='01083490706',  # 발신번호
+                    snd='01012345678',  # 발신번호
                     sndnm='발신자명',  # 발신자명
                     rcv='01012345678',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
@@ -653,6 +653,10 @@ def checkID(request):
 
 
 def joinMember(request):
+    """
+    파트너의 연동회원으로 회원가입을 요청합니다.
+    아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+    """
     try:
         # 회원정보
         newMember = JoinForm(
@@ -791,6 +795,9 @@ def listContact(request):
 
 
 def updateCorpInfo(request):
+    """
+    연동회원사의 회사정보를 수정 합니다.
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -846,6 +853,9 @@ def getCorpInfo(request):
 
 
 def updateContact(request):
+    """
+    연동회원의 담당자 정보를 수정합니다.
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
