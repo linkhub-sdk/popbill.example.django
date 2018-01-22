@@ -41,16 +41,18 @@ popbill.sdk.example.django
 * Visit localhost:8000 in your web browser
 
 
-* 매뉴얼 목차
-    ..[1] 전자세금계산서 API
-    ..[2] 전자명세서 API
-    ..[3] 현금영수증 API
-    ..[4] 문자메시지 API
-    ..[5] 팩스 API
-    ..[6] 홈택스 전자(세금)계산서 연계 API
-    ..[7] 홈택스 현금영수증 연계 API
-    ..[8] 휴폐업조회 API
+매뉴얼 목차
+------------------------------
+    1.전자세금계산서 API
+    2.전자명세서 API
+    3.현금영수증 API
+    4.문자메시지 API
+    5.팩스 API
+    6.홈택스 전자(세금)계산서 연계 API
+    7.홈택스 현금영수증 연계 API
+    8.휴폐업조회 API
 
-
+사이트
+-------------------------------
 `링크허브(Linkhub) <https://www.linkhub.co.kr/>`_.
 `팝빌(Popbill) <https://www.popbill.com/>`_.
