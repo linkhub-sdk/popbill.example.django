@@ -17,7 +17,7 @@ def index(request):
 
 def getURL_SENDER(request):
     """
-    문자메시지 전송내역 / 발신번호 관리 팝업 URL을 반환합니다.
+    팩스 전송내역 / 발신번호 관리 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -39,7 +39,7 @@ def getURL_SENDER(request):
 
 def getSenderNumberList(request):
     """
-    등록된 문자 발신번호 목록을 확인합니다.
+    등록된 팩스 발신번호 목록을 확인합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -362,7 +362,7 @@ def getPopbillURL_CHRG(request):
 
 def getChargeInfo(request):
     """
-    연동회원의 문자 API 서비스 과금정보를 확인합니다.
+    연동회원의 팩스 API 서비스 과금정보를 확인합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -385,16 +385,13 @@ def getChargeInfo(request):
 
 def getUnitCost(request):
     """
-    문자메시지 전송단가를 확인합니다.
+    팩스 전송단가를 확인합니다.
     """
     try:
         # 팝빌회원 아이디
         CorpNum = settings.testCorpNum
 
-        # 문자전송유형, SMS(단문) / LMS(장문) / MMS(포토)
-        MsgType = "MMS"
-
-        result = faxService.getUnitCost(CorpNum, MsgType)
+        result = faxService.getUnitCost(CorpNum)
 
         return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
