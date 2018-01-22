@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">CheckCorpNum</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>휴폐업조회 - 단건</legend>
+            <ul>
+                {% if code %}
+                    <li>Response.code : {{ code }}</li>
+                    <li>Response.message : {{ message }}</li>
+                {% else %}
+                    <li> corpNum (사업자번호) : {{ corpState.corpNum }}</li>
+                    <li> type (사업자유형) : {{ corpState.type }}</li>
+                    <li> state (사업자상태) : {{ corpState.state }}</li>
+                    <li> stateDate (휴폐업일시) : {{ corpState.stateDate }}</li>
+                    <li> checkDate (최종 국세청 확인 일자) : {{ corpState.checkDate }}</li>
+                {% endif %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
