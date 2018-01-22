@@ -31,9 +31,8 @@ popbill.sdk.example.django
 
 how to test ?
 ------------------------------
-
-  * modify config/settings.py with LinkID/SecretKey issued by Linkhub.
-  * And test with console like...
+* modify config/settings.py with LinkID/SecretKey issued by Linkhub.
+* And test with console like...
 
 ::
 
