@@ -1041,7 +1041,9 @@ def getChargeInfo(request):
 
         response = cashbillService.getChargeInfo(CorpNum, UserID)
 
-        return render(request, 'getChargeInfo.html', {'response': response})
+        return render(request, 'getChargeInfo.html',
+                      {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
+                       'rateSystem': response.rateSystem})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
