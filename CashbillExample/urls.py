@@ -31,8 +31,8 @@ urlpatterns = [
     url(r'^GetURL$', views.getURL, name='GetURL'),
 
     # 현금영수증 보기/인쇄
+    url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL'),
     url(r'^GetPrintURL$', views.getPrintURL, name='GetPrintURL'),
-    url(r'^GetEPrintURL$', views.getEPrintURL, name='GetEPrintURL'),
     url(r'^GetMassPrintURL$', views.getMassPrintURL, name='GetMassPrintURL'),
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
 

@@ -771,7 +771,7 @@ def getPrintURL(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getEPrintURL(request):
+def getPrintURL(request):
     """
     현금영수증 인쇄(공급받는자) URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
@@ -948,9 +948,9 @@ def getBalance(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        response = cashbillService.getBalance(CorpNum)
+        result = cashbillService.getBalance(CorpNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
