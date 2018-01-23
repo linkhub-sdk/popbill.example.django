@@ -27,14 +27,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'TaxinvoiceExample',    # 전자세금계산서
-    'StatementExample',     # 전자명세서
-    'CashbillExample',      # 현금영수증
-    'MessageExample',       # 문자
-    'FaxExample',           # 팩스
+    'TaxinvoiceExample',  # 전자세금계산서
+    'StatementExample',  # 전자명세서
+    'CashbillExample',  # 현금영수증
+    'MessageExample',  # 문자
+    'FaxExample',  # 팩스
     'HTTaxinvoiceExample',  # 홈택스 전자(세금)계산서 연계
-    'HTCashbillExample',    # 홈택스 현금영수증 연계
-    'ClosedownExample',     # 휴폐업조회
+    'HTCashbillExample',  # 홈택스 현금영수증 연계
+    'ClosedownExample',  # 휴폐업조회
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -72,7 +72,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-'''
+"""
  - Django SDK 연동환경 설정방법 안내 : http://blog.linkhub.co.kr/
  - 업데이트 일자 : 2018-01-16
  - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
@@ -86,7 +86,7 @@ STATICFILES_DIRS = [
  * [전자세금계산서]를 발행하기 위해서는 공인인증서를 등록하셔야합니다.
     - 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리]
     - 공인인증서 등록 팝업 URL (GetPopbillURL API)을 이용하여 등록
-'''
+"""
 # 링크아이디
 LinkID = "TESTER"
 
