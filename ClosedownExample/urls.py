@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-# -*- coding: utf-8 -*-
 from django.conf.urls import url
 
 from . import views
@@ -10,7 +8,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 
     # 휴폐업조회
-    url(r'^CheckCorpNum$', views.checkCorpNum, name='CheckCorpNum$'),
+    url(r'^CheckCorpNum$', views.checkCorpNum, name='CheckCorpNum'),
     url(r'^CheckCorpNums$', views.checkCorpNums, name='CheckCorpNums'),
 
     # 포인트 관리 / 정액제 신청

@@ -242,9 +242,9 @@ def joinMember(request):
             ContactEmail="test@test.com"
         )
 
-        result = closedownService.joinMember(newMember)
+        response = closedownService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -300,9 +300,9 @@ def updateCorpInfo(request):
             bizClass="종목"
         )
 
-        result = closedownService.updateCorpInfo(CorpNum, corpInfo, UserID)
+        response = closedownService.updateCorpInfo(CorpNum, corpInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -346,9 +346,9 @@ def registContact(request):
             searchAllAllowYN=True
         )
 
-        result = closedownService.registContact(CorpNum, newContact, UserID)
+        response = closedownService.registContact(CorpNum, newContact, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -407,9 +407,9 @@ def updateContact(request):
             searchAllAllowYN=True
         )
 
-        result = closedownService.updateContact(CorpNum, updateInfo, UserID)
+        response = closedownService.updateContact(CorpNum, updateInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

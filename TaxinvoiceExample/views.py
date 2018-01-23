@@ -28,7 +28,7 @@ def checkMgtKeyInUse(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호, 1~24자리, 영문,숫자,'-','_' 조합으로 사업자별로 중복되지 않도록 구성
+        # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별로 중복되지 않도록 구성
         MgtKey = "BIC-67890-17121309_00000"
 
         keyInUse = taxinvoiceService.checkMgtKeyInUse(CorpNum, MgtKeyType, MgtKey)
@@ -53,7 +53,7 @@ def registIssue(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # [필수] 세금계산서 문서관리번호, 1~24자리, 영문, 숫자, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+        # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
         MgtKey = "2018-01-16-021"
 
         # 지연발행 강제여부
@@ -64,7 +64,7 @@ def registIssue(request):
         # 거래명세서 동시작성여부
         writeSpecification = False
 
-        # 거래명세서 동시작성시, 명세서 관리번호, 1~24자리, 영문, 숫자, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+        # 거래명세서 동시작성시, 명세서 관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
         dealInvoiceMgtKey = ""
 
         # 메모
@@ -300,10 +300,10 @@ def registIssue(request):
             )
         ]
 
-        result = taxinvoiceService.registIssue(CorpNum, taxinvoice, writeSpecification,
+        response = taxinvoiceService.registIssue(CorpNum, taxinvoice, writeSpecification,
                                                forceIssue, dealInvoiceMgtKey, memo, emailSubject, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -551,9 +551,9 @@ def register(request):
             )
         ]
 
-        result = taxinvoiceService.register(CorpNum, taxinvoice, UserID)
+        response = taxinvoiceService.register(CorpNum, taxinvoice, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -799,9 +799,9 @@ def update(request):
             )
         ]
 
-        result = taxinvoiceService.update(CorpNum, MgtKeyType, MgtKey, taxinvoice, UserID)
+        response = taxinvoiceService.update(CorpNum, MgtKeyType, MgtKey, taxinvoice, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -844,7 +844,7 @@ def issue(request):
         result = taxinvoiceService.issue(CorpNum, MgtKeyType, MgtKey, Memo,
                                          EmailSubject, ForceIssue, UserID)
 
-        return render(request, 'result.html', {'code': result.code})
+        return render(request, 'result.html', {'code': response.code})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -873,9 +873,9 @@ def cancelIssue(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.cancelIssue(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
+        response = taxinvoiceService.cancelIssue(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
 
-        return render(request, 'result.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -906,9 +906,9 @@ def send(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.send(CorpNum, MgtKeyType, MgtKey, Memo, EmailSubject, UserID)
+        response = taxinvoiceService.send(CorpNum, MgtKeyType, MgtKey, Memo, EmailSubject, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -934,9 +934,9 @@ def cancelSend(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.cancelSend(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
+        response = taxinvoiceService.cancelSend(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -961,9 +961,9 @@ def accept(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.accept(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
+        response = taxinvoiceService.accept(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -989,9 +989,9 @@ def deny(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.deny(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
+        response = taxinvoiceService.deny(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1015,9 +1015,9 @@ def delete(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.delete(CorpNum, MgtKeyType, MgtKey, UserID)
+        response = taxinvoiceService.delete(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1047,9 +1047,9 @@ def request(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.request(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
+        response = taxinvoiceService.request(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1076,9 +1076,9 @@ def cancelRequest(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.cancelRequest(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
+        response = taxinvoiceService.cancelRequest(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1105,9 +1105,9 @@ def refuse(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.refuse(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
+        response = taxinvoiceService.refuse(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1134,9 +1134,9 @@ def sendToNTS(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.sendToNTS(CorpNum, MgtKeyType, MgtKey, UserID)
+        response = taxinvoiceService.sendToNTS(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1471,9 +1471,9 @@ def attachFile(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.attachFile(CorpNum, MgtKeyType, MgtKey, FilePath, UserID)
+        response = taxinvoiceService.attachFile(CorpNum, MgtKeyType, MgtKey, FilePath, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1500,9 +1500,9 @@ def deleteFile(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.deleteFile(CorpNum, MgtKeyType, MgtKey, FileID, UserID)
+        response = taxinvoiceService.deleteFile(CorpNum, MgtKeyType, MgtKey, FileID, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1550,9 +1550,9 @@ def sendEmail(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.sendEmail(CorpNum, MgtKeyType, MgtKey, ReceiverMail, UserID)
+        response = taxinvoiceService.sendEmail(CorpNum, MgtKeyType, MgtKey, ReceiverMail, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1585,10 +1585,10 @@ def sendSMS(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.sendSMS(CorpNum, MgtKeyType, MgtKey, Sender, Receiver,
+        response = taxinvoiceService.sendSMS(CorpNum, MgtKeyType, MgtKey, Sender, Receiver,
                                            Contents, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1618,9 +1618,9 @@ def sendFAX(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.sendFax(CorpNum, MgtKeyType, MgtKey, Sender, Receiver, UserID)
+        response = taxinvoiceService.sendFax(CorpNum, MgtKeyType, MgtKey, Sender, Receiver, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1648,10 +1648,10 @@ def attachStatement(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.attachStatement(CorpNum, MgtKeyType, MgtKey, ItemCode,
+        response = taxinvoiceService.attachStatement(CorpNum, MgtKeyType, MgtKey, ItemCode,
                                                    StmtMgtKey, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1679,10 +1679,10 @@ def detachStatement(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.detachStatement(CorpNum, MgtKeyType, MgtKey,
+        response = taxinvoiceService.detachStatement(CorpNum, MgtKeyType, MgtKey,
                                                    ItemCode, StmtMgtKey, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1977,9 +1977,9 @@ def joinMember(request):
             ContactEmail="test@test.com"
         )
 
-        result = taxinvoiceService.joinMember(newMember)
+        response = taxinvoiceService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -2035,9 +2035,9 @@ def updateCorpInfo(request):
             bizClass="종목"
         )
 
-        result = taxinvoiceService.updateCorpInfo(CorpNum, corpInfo, UserID)
+        response = taxinvoiceService.updateCorpInfo(CorpNum, corpInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -2081,9 +2081,9 @@ def registContact(request):
             searchAllAllowYN=True
         )
 
-        result = taxinvoiceService.registContact(CorpNum, newContact, UserID)
+        response = taxinvoiceService.registContact(CorpNum, newContact, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -2142,8 +2142,8 @@ def updateContact(request):
             searchAllAllowYN=True
         )
 
-        result = taxinvoiceService.updateContact(CorpNum, updateInfo, UserID)
+        response = taxinvoiceService.updateContact(CorpNum, updateInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})

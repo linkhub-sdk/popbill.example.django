@@ -247,9 +247,9 @@ def cancelReserve(request):
         # 팩스 예약전송 요청시 반환받은 접수번호
         receiptNum = "018012215391800001"
 
-        result = faxService.cancelReserve(CorpNum, receiptNum)
+        response = faxService.cancelReserve(CorpNum, receiptNum)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -528,9 +528,9 @@ def joinMember(request):
             ContactEmail="test@test.com"
         )
 
-        result = faxService.joinMember(newMember)
+        response = faxService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -596,9 +596,9 @@ def registContact(request):
             searchAllAllowYN=True
         )
 
-        result = faxService.registContact(CorpNum, newContact, UserID)
+        response = faxService.registContact(CorpNum, newContact, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -651,9 +651,9 @@ def updateCorpInfo(request):
             bizClass="종목"
         )
 
-        result = faxService.updateCorpInfo(CorpNum, corpInfo, UserID)
+        response = faxService.updateCorpInfo(CorpNum, corpInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -715,8 +715,8 @@ def updateContact(request):
             searchAllAllowYN=True
         )
 
-        result = faxService.updateContact(CorpNum, updateInfo, UserID)
+        response = faxService.updateContact(CorpNum, updateInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})

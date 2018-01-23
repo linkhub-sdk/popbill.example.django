@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">Summary</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>수집 결과 요약정보 조회</legend>
+            <ul>
+                <li> count (수집결과 건수) :  {{ response.ResultCode }}</li>
+                <li> supplayCostTotal (공급가액 합계) : {{ response.Message }}</li>
+                <li> taxTotal (세액 합계) : {{ response.retObject }}</li>
+                <li> amountTotal (합계 금액) : {{ response.retObject }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

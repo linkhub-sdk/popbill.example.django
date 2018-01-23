@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import HTTaxinvoiceService, PopbillException
+from popbill import HTTaxinvoiceService, PopbillException, JoinForm, CorpInfo, ContactInfo
 
 from config import settings
 
@@ -15,14 +15,184 @@ def index(request):
     return render(request, 'HTTaxinvoice/Index.html', {})
 
 
+def requestJob(request):
+    """
+    전자(세금)계산서 매출/매입 내역 수집을 요청합니다
+    - 매출/매입 연계 프로세스는 "[홈택스 전자(세금)계산서 연계 API 연동매뉴얼]
+      > 1.API소개 (프로세스 흐름도)" 를 참고하시기 바랍니다.
+    - 수집 요청후 반환받은 작업아이디(JobID)의 유효시간은 1시간 입니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 전자세금계산서  발행유형, SELL-매출, BUY-매입, TRUSTEE-위수탁
+        Type = "SELL"
+
+        # 일자유형, W-작성일자, I-발행일자, S-전송일자
+        DType = "W"
+
+        # 시작일자, 날짜형식(yyyyMMdd)
+        SDate = "20171201"
+
+        # 종료일자, 날짜형식(yyyyMMdd)
+        EDate = "20180131"
+
+        result = htTaxinvoiceService.requestJob(CorpNum, Type, DType, SDate, EDate, UserID)
+
+        return render(request, 'result.html', {'result': result})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def getJobState(request):
+    """
+    수집 요청 상태를 확인합니다.
+    - 응답항목 관한 정보는 "[홈택스 전자(세금)계산서 연계 API 연동매뉴얼
+      > 3.1.2. GetJobState(수집 상태 확인)" 을 참고하시기 바랍니다 .
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
 
-def getXML(request):
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 수집요청(requestJob) 호출시 발급받은 작업아이디
+        jobID = "018012311000000011"
+
+        response = htTaxinvoiceService.getJobState(CorpNum, jobID, UserID)
+
+        return render(request, 'HTTaxinvoice/GetJobState.html', {'response': response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def listActiveJob(request):
+    """
+    수집 요청건들에 대한 상태 목록을 확인합니다.
+    - 수집 요청 작업아이디(JobID)의 유효시간은 1시간 입니다.
+    - 응답항목에 관한 정보는 "[홈택스 전자(세금)계산서 연계 API 연동매뉴얼]
+      > 3.1.3. ListActiveJob (수집 상태 목록 확인)" 을 참고하시기 바랍니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        list = htTaxinvoiceService.listActiveJob(CorpNum, UserID)
+
+        return render(request, 'HTTaxinvoice/ListActiveJob.html', {'list': list})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def search(request):
+    """
+    검색조건을 사용하여 수집결과를 조회합니다.
+    - 응답항목에 관한 정보는 "[홈택스 전자(세금)계산서 연계 API 연동매뉴얼]
+      > 3.2.1. Search (수집 결과 조회)" 을 참고하시기 바랍니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 수집요청(requestJob)시 발급받은 작업아이디
+        JobID = "018012311000000011"
+
+        # 문서형태 배열, N-일반전자세금계산서, M-수정전자세금계산서
+        Type = ["N", "M"]
+
+        # 과세형태 배열, T-과세, N-면세, Z-영세
+        TaxType = ["T", "N", "Z"]
+
+        # 영수/청구, R-영수, C-청구, N-없음
+        PurposeType = ["R", "C", "N"]
+
+        # 종사업자번호 사업자 유형, S-꽁급자, B-공급받는자, T-수탁자
+        TaxRegIDType = "S"
+
+        # 종사업장번호 유무, 공백-전체조회, 0-종사업장번호 없음, 1-종사업장번호 있음
+        TaxRegIDYN = ""
+
+        # 종사업장번호, 콤마(",")로 구분하여 구성 ex) "0001", "0007"
+        TaxRegID = ""
+
+        # 페이지번호
+        Page = 1
+
+        # 페이지당 목록개수, 최대값 1000
+        PerPage = 10
+
+        # 정렬방향 D-내림차순, A-오름차순
+        Order = "D"
+
+        response = htTaxinvoiceService.search(CorpNum, JobID, Type, TaxType, PurposeType,
+                                              TaxRegIDType, TaxRegIDYN, TaxRegID, Page, PerPage, Order, UserID)
+
+        return render(request, 'HTTaxinvoice/Search.html',
+                      {'respondCode': response.code, 'message': response.message, 'total': response.total,
+                       'perPage': response.perPage, 'pageNum': response.pageNum, 'pageCount': response.pageCount,
+                       'list': response.list})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def summary(request):
+    """
+    검색조건을 사용하여 수집 결과 요약정보를 조회합니다.
+    - 응답항목에 관한 정보는 "[홈택스 전자(세금)계산서 연계 API 연동매뉴얼]
+      > 3.2.2. Summary (수집 결과 요약정보 조회)" 을 참고하시기 바랍니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 수집 요청(requestJob)시 발급받은 작업아이디
+        JobID = "016112315000000003"
+
+        # 문서형태 배열, N-일반전자세금계산서, M-수정전자세금계산서
+        Type = ["N", "M"]
+
+        # 과세형태, T-과세, N-면세, Z-영세
+        TaxType = ["T", "N", "Z"]
+
+        # 영수/청구, R-영수, C-청구, N-없음
+        PurposeType = ["R", "C", "N"]
+
+        # 종사업장번호 사업자유형, S-공급자, B-공급받는자, T-수탁자
+        TaxRegIDType = "S"
+
+        # 종사업장번호 유무,,공백 - 전체조회, 0- 종사업장번호 없음, 1-종사업장번호 있음
+        TaxRegIDYN = ""
+
+        # 종사업장번호, 콤마(",")로 구분하여 구성 Ex) "0001,0007"
+        TaxRegID = ""
+
+        response = htTaxinvoiceService.summary(CorpNum, JobID, Type, TaxType, PurposeType,
+                                               TaxRegIDType, TaxRegIDYN, TaxRegID, UserID)
+
+        return render(request, 'HTTaxinvoice/Summary.html', {'response': response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def getTaxinvoice(request):
     """
     수집된 전자(세금)계산서 1건의 상세정보를 확인합니다.
     - 응답항목에 관한 정보는 "[홈택스 전자(세금)계산서 연계 API 연동매뉴얼]
-      > 4.1.2. GetTaxinvoice 응답전문 구성" 을 참고하시기 바랍니다.
+      > 4.2.2. GetTaxinvoice 응답전문 구성" 을 참고하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -36,23 +206,9 @@ def getXML(request):
 
         taxinvoice = htTaxinvoiceService.getTaxinvoice(CorpNum, NTSConfirmNum, UserID)
 
-        for key, value in taxinvoice.__dict__.items():
-            if not key.startswith("__"):
-                if key == 'detailList' or key == 'addContactList':
-                    print("%s :" % key)
-                    i = 1
-                    for t in value:
-                        print("    %d:" % i)
-                        for k, v in t.__dict__.items():
-                            print("        %s : %s" % (k, v))
-                        i += 1
-                else:
-                    print("%s : %s" % (key, value))
-
-        return render(request, 'response.html', {'taxinvoice': taxinvoice})
+        return render(request, 'HTTaxinvoice/GetTaxinvoice.html', {'taxinvoice': taxinvoice})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 
 def getXML(request):
@@ -73,7 +229,7 @@ def getXML(request):
 
         response = htTaxinvoiceService.getXML(CorpNum, NTSConfirmNum, UserID)
 
-        return render(request, 'response.html', {'response': response})
+        return render(request, 'HTTaxinvoice/GetXML.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -199,7 +355,9 @@ def getChargeInfo(request):
 
         response = htTaxinvoiceService.getChargeInfo(CorpNum, UserID)
 
-        return render(request, 'getChargeInfo.html', {'response': response})
+        return render(request, 'GetChargeInfo.html',
+                      {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
+                       'rateSystem': response.rateSystem})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -317,9 +475,9 @@ def joinMember(request):
             ContactEmail="test@test.com"
         )
 
-        result = htTaxinvoiceService.joinMember(newMember)
+        response = htTaxinvoiceService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -385,9 +543,9 @@ def registContact(request):
             searchAllAllowYN=True
         )
 
-        result = htTaxinvoiceService.registContact(CorpNum, newContact, UserID)
+        response = htTaxinvoiceService.registContact(CorpNum, newContact, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -440,9 +598,9 @@ def updateCorpInfo(request):
             bizClass="종목"
         )
 
-        result = htTaxinvoiceService.updateCorpInfo(CorpNum, corpInfo, UserID)
+        response = htTaxinvoiceService.updateCorpInfo(CorpNum, corpInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -504,8 +662,8 @@ def updateContact(request):
             searchAllAllowYN=True
         )
 
-        result = htTaxinvoiceService.updateContact(CorpNum, updateInfo, UserID)
+        response = htTaxinvoiceService.updateContact(CorpNum, updateInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})

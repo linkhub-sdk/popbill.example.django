@@ -1,11 +1,94 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">GetXML</p>
+        <p class="heading1">GetTaxinvoice</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>상세정보 확인 - JSON</legend>
             <ul>
+                <li>writeDate (작성일자) : {{ taxinvoice.writeDate }}</li>
+                <li>issueDT (발행일시) : {{ taxinvoice.issueDT }}</li>
+                <li>invoiceType (전자세금계산서 종류) : {{ taxinvoice.invoiceType }}</li>
+                <li>taxTyoe (과세형태) : {{ taxinvoice.taxTyoe }}</li>
+                <li>taxTotal (세액 합계) : {{ taxinvoice.taxTotal }}</li>
+                <li>supplyCostTotal (공급가액 합계) : {{ taxinvoice.supplyCostTotal }}</li>
+                <li>totalAmount (합계금액) : {{ taxinvoice.totalAmount }}</li>
+                <li>purposeType (영수/청구) : {{ taxinvoice.purposeType }}</li>
+                <li>seriaNum (일련번호) : {{ taxinvoice.seriaNum }}</li>
+                <li>cash (현금) : {{ taxinvoice.cash }}</li>
+                <li>chkBill (수표) : {{ taxinvoice.chkBill }}</li>
+                <li>credit (외상) : {{ taxinvoice.credit }}</li>
+                <li>note (어음) : {{ taxinvoice.note }}</li>
+                <li>remark1 (비고1) : {{ taxinvoice.remark1 }}</li>
+                <li>remark2 (비고2): {{ taxinvoice.remark2 }}</li>
+                <li>remark3 (비고3): {{ taxinvoice.remark3 }}</li>
+                <li>ntsconfirmNum (국세청승인번호) : {{ taxinvoice.ntsconfirmNum }}</li>
+
+                <li>modifyCode (수정사유코드) : {{ taxinvoice.modifyCode }}</li>
+                <li>orgNTSConfirmNum (원본 전자세금계산서 국세청승인번호) : {{ taxinvoice.orgNTSConfirmNum }}</li>
+
+                {% if taxinvoice.detailList %}
+                    {% for detailList in taxinvoice.detailList %}
+                        <fieldset class="fieldset2">
+                            <legend>상세항목(품목) 정보 [ {{ forloop.counter }} ]</legend>
+                            <ul>
+                                <li> serialNum (일련번호) : {{ detailList.serialNum }}</li>
+                                <li> purchaseDT (거래일자) :{{ detailList.purchaseDT }}</li>
+                                <li> itemName (품명) :{{ detailList.itemName }}</li>
+                                <li> spec (규격) :{{ detailList.spec }}</li>
+                                <li> qty (수량) :{{ detailList.qty }}</li>
+                                <li> unitCost (단가) :{{ detailList.unitCost }}</li>
+                                <li> supplyCost (공급가액) :{{ detailList.supplyCost }}</li>
+                                <li> tax (세액) :{{ detailList.tax }}</li>
+                                <li> remark (비고) :{{ detailList.remark }}</li>
+                            </ul>
+                        </fieldset>
+                    {% endfor %}
+                {% endif %}
+
+                <li> invoicerCorpNum (공급자 사업자번호) :{{ taxinvoice.invoicerCorpNum }}</li>
+                <li> invoicerMgtKey (공급자 문서관리번호) :{{ taxinvoice.invoicerMgtKey }}</li>
+                <li> invoicerTaxRegID (공급자 문서관리번호) :{{ taxinvoice.invoicerMgtKey }}</li>
+                <li> invoicerCorpName (공급자 상호) :{{ taxinvoice.invoicerCorpName }}</li>
+                <li> invoicerCEOName (공급자 대표자명) :{{ taxinvoice.invoicerCEOName }}</li>
+                <li> invoicerAddr (공급자 주소) :{{ taxinvoice.invoicerAddr }}</li>
+                <li> invoicerBizType (공급자 업태) :{{ taxinvoice.invoicerAddr }}</li>
+                <li> invoicerBizClass (공급자 종목) :{{ taxinvoice.invoicerAddr }}</li>
+                <li> invoicerContactName (공급자 담당자명) :{{ taxinvoice.invoicerContactName }}</li>
+                <li> invoicerTEL (공급자 담당자 연락처) :{{ taxinvoice.invoicerTEL }}</li>
+                <li> invoicerHP (공급자 담당자 휴대폰) :{{ taxinvoice.invoicerHP }}</li>
+                <li> invoicerEmail (공급자 담당자 메일) :{{ taxinvoice.invoicerEmail }}</li>
+
+                <li> invoiceeCorpNum (공급받는자 사업자번호) :{{ taxinvoice.invoiceeCorpNum }}</li>
+                <li> invoiceeType (공급받는자 구분) :{{ taxinvoice.invoiceeType }}</li>
+                <li> invoiceeMgtKey (공급받는자 문서관리번호) :{{ taxinvoice.invoiceeMgtKey }}</li>
+                <li> invoiceeTaxRegID (공급받는자 종사업자번호) :{{ taxinvoice.invoiceeMgtKey }}</li>
+                <li> invoiceeCorpName (공급받는자 상호) :{{ taxinvoice.invoiceeCorpName }}</li>
+                <li> invoiceeCEOName (공급받는자 대표자명) :{{ taxinvoice.invoiceeCEOName }}</li>
+                <li> invoiceeAddr (공급받는자 주소) :{{ taxinvoice.invoiceeAddr }}</li>
+                <li> invoiceeBizAddr (공급받는자 업태) :{{ taxinvoice.invoiceeAddr }}</li>
+                <li> invoiceeBizClass (공급받는자 종목) :{{ taxinvoice.invoiceeAddr }}</li>
+                <li> invoiceeContactName1 (공급받는자 주)담당자명) :{{ taxinvoice.invoiceeContactName1 }}</li>
+                <li> invoiceeDeptName1 (공급받는자 주)부서명) :{{ taxinvoice.invoiceeContactName1 }}</li>
+                <li> invoiceeTEL1 (공급받는자 담당자 주)연락처) :{{ taxinvoice.invoiceeTEL1 }}</li>
+                <li> invoiceeEmail1 (공급받는자 담당자 주)이메일) :{{ taxinvoice.invoiceeEmail1 }}</li>
+                <li> invoiceeContactName2 (공급받는자 부)담당자명) :{{ taxinvoice.invoiceeContactName2 }}</li>
+                <li> invoiceeDeptName2 (공급받는자 부)부서명) :{{ taxinvoice.invoiceeContactName2 }}</li>
+                <li> invoiceeTEL2 (공급받는자 담당자 부)연락처) :{{ taxinvoice.invoiceeTEL2 }}</li>
+                <li> invoiceeEmail2 (공급받는자 담당자 부)이메일) :{{ taxinvoice.invoiceeEmail2 }}</li>
+
+                <li> trusteeCorpNum (수탁자 사업자번호) :{{ taxinvoice.trusteeCorpNum }}</li>
+                <li> trusteeMgtKey (수탁자 문서관리번호) :{{ taxinvoice.trusteeMgtKey }}</li>
+                <li> trusteeTaxRegID (수탁자 종사업자번호) :{{ taxinvoice.trusteeMgtKey }}</li>
+                <li> trusteeCorpName (수탁자 상호) :{{ taxinvoice.trusteeCorpName }}</li>
+                <li> trusteeCEOName (수탁자 대표자명) :{{ taxinvoice.trusteeCEOName }}</li>
+                <li> trusteeAddr (수탁자 주소) :{{ taxinvoice.trusteeAddr }}</li>
+                <li> trusteeBizType (수탁자 업태) :{{ taxinvoice.trusteeAddr }}</li>
+                <li> trusteeBizClass (수탁자 종목) :{{ taxinvoice.trusteeAddr }}</li>
+                <li> trusteeContactName (수탁자 담당자명) :{{ taxinvoice.trusteeContactName }}</li>
+                <li> trusteeTEL (수탁자 담당자 연락처) :{{ taxinvoice.trusteeTEL }}</li>
+                <li> trusteeHP (수탁자 담당자 휴대폰) :{{ taxinvoice.trusteeHP }}</li>
+                <li> trusteeEmail (수탁자 담당자 메일) :{{ taxinvoice.trusteeEmail }}</li>
 
             </ul>
         </fieldset>

@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">팝빌 홈택스 전자(세금)계산서 매입매출 Django Example.</p>
+        <p class="heading1">팝빌 홈택스 현금영수증 매입매출 Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
-            <legend>홈택스 전자세금계산서 매입/매출 내역 수집</legend>
+            <legend>홈택스 현금영수증 매입/매출 내역 수집</legend>
             <ul>
                 <li><a href="RequestJob">requestJob</a> (수집 요청)</li>
                 <li><a href="GetJobState">getJobState</a> (수집 상태 확인)</li>
@@ -13,12 +13,10 @@
         </fieldset>
         <br/>
         <fieldset class="fieldset1">
-            <legend>홈택스 전자세금계산서 매입/매출 내역 수집 결과 조회</legend>
+            <legend>홈택스 현금영수증 매입/매출 내역 수집 결과 조회</legend>
             <ul>
                 <li><a href="Search">search</a> (수집 결과 조회)</li>
                 <li><a href="Summary">summary</a> (수집 결과 요약정보 조회)</li>
-                <li><a href="GetTaxinvoice">getTaxinvoice</a> (상세정보 확인 - JSON)</li>
-                <li><a href="GetXML">getXML</a> (상세정보 확인 - XML)</li>
             </ul>
         </fieldset>
         <br/>
@@ -28,7 +26,7 @@
                 <li><a href="GetCertificatePopUpURL">getCertificatePopUpURL</a> (홈택스연동 인증 관리 팝업 URL)</li>
                 <li><a href="GetCertificateExpireDate">getCertificateExpireDate</a> (홈택스연동 공인인증서 만료일자 확인)</li>
             </ul>
-        </fieldset>ㅛ
+        </fieldset>
         <br/>
         <fieldset class="fieldset1">
             <legend>포인트 관리 / 정액제 신청</legend>

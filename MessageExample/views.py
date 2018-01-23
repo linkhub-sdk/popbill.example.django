@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import CashbillService, PopbillException, Cashbill, ContactInfo, CorpInfo, JoinForm, MessageService, \
+from popbill import PopbillException, ContactInfo, CorpInfo, JoinForm, MessageService, \
     MessageReceiver
 
 from config import settings
@@ -400,9 +400,9 @@ def cancelReserve(request):
         # 예약문자전송 접수번호
         receiptNum = "018012213000000035"
 
-        result = messageService.cancelReserve(CorpNum, receiptNum)
+        response = messageService.cancelReserve(CorpNum, receiptNum)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -701,9 +701,9 @@ def joinMember(request):
             ContactEmail="test@test.com"
         )
 
-        result = messageService.joinMember(newMember)
+        response = messageService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -769,9 +769,9 @@ def registContact(request):
             searchAllAllowYN=True
         )
 
-        result = messageService.registContact(CorpNum, newContact, UserID)
+        response = messageService.registContact(CorpNum, newContact, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -824,9 +824,9 @@ def updateCorpInfo(request):
             bizClass="종목"
         )
 
-        result = messageService.updateCorpInfo(CorpNum, corpInfo, UserID)
+        response = messageService.updateCorpInfo(CorpNum, corpInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -888,8 +888,8 @@ def updateContact(request):
             searchAllAllowYN=True
         )
 
-        result = messageService.updateContact(CorpNum, updateInfo, UserID)
+        response = messageService.updateContact(CorpNum, updateInfo, UserID)
 
-        return render(request, 'response.html', {'code': result.code, 'message': result.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
