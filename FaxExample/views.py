@@ -4,7 +4,7 @@ from popbill import FaxService, PopbillException, ContactInfo, JoinForm, FaxRece
 
 from config import settings
 
-# config/settings.py 작성한 LinkID, SecretKey를 이용해 faxService 객체 생성
+# config/settings.py 작성한 LinkID, SecretKey를 이용해 FaxService 객체 생성
 faxService = FaxService(settings.LinkID, settings.SecretKey)
 
 # 연동환경 설정값, 개발용(True), 상업용(False)

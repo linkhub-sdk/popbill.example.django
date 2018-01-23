@@ -4,7 +4,7 @@ from popbill import HTTaxinvoiceService, PopbillException, JoinForm, CorpInfo, C
 
 from config import settings
 
-# config/settings.py 작성한 LinkID, SecretKey를 이용해 htTaxinvoiceService 객체 생성
+# config/settings.py 작성한 LinkID, SecretKey를 이용해 HTTaxinvoiceService 객체 생성
 htTaxinvoiceService = HTTaxinvoiceService(settings.LinkID, settings.SecretKey)
 
 # 연동환경 설정값, 개발용(True), 상업용(False)

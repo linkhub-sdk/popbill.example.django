@@ -5,7 +5,7 @@ from popbill import PopbillException, ContactInfo, CorpInfo, JoinForm, MessageSe
 
 from config import settings
 
-# config/settings.py 작성한 LinkID, SecretKey를 이용해 messageService 객체 생성
+# config/settings.py 작성한 LinkID, SecretKey를 이용해 MessageService 객체 생성
 messageService = MessageService(settings.LinkID, settings.SecretKey)
 
 # 연동환경 설정값, 개발용(True), 상업용(False)
