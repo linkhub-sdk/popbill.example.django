@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import ClosedownService, PopbillException, JoinForm, ContactInfo
+from popbill import ClosedownService, PopbillException, JoinForm, ContactInfo, CorpInfo
 
 from config import settings
 
