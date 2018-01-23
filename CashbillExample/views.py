@@ -1246,7 +1246,7 @@ def listContact(request):
 
         listContact = cashbillService.listContact(CorpNum, UserID)
 
-        return render(request, 'ListContact.html', {'listContact': listContact})
+        return render(request, 'listContact.html', {'listContact': listContact})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
