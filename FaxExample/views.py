@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import FaxService, PopbillException, ContactInfo, JoinForm, FaxReceiver
+from popbill import FaxService, PopbillException, ContactInfo, JoinForm, FaxReceiver, CorpInfo
 
 from config import settings
 
@@ -64,13 +64,13 @@ def sendFAX(request):
         UserID = settings.testUserID
 
         # 발신번호
-        Sender = '07043042991'
+        Sender = '070111222'
 
         # 발신자명
         SenderName = '발신자명'
 
         # 수신번호
-        Receiver = '070-4304-2999'
+        Receiver = '070222111'
 
         # 수신자명
         ReceiverName = '수신자명'
@@ -371,10 +371,7 @@ def getChargeInfo(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 문자유형, SMS(단문)/(장문)/MMS(포토)
-        MsgType = "SMS"
-
-        response = faxService.getChargeInfo(CorpNum, MsgType, UserID)
+        response = faxService.getChargeInfo(CorpNum, UserID)
 
         return render(request, 'getChargeInfo.html',
                       {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
