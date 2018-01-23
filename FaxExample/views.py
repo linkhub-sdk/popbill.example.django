@@ -376,7 +376,7 @@ def getChargeInfo(request):
 
         response = faxService.getChargeInfo(CorpNum, MsgType, UserID)
 
-        return render(request, 'GetChargeInfo.html',
+        return render(request, 'getChargeInfo.html',
                       {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
                        'rateSystem': response.rateSystem})
     except PopbillException as PE:

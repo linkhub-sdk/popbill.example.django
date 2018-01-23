@@ -1891,7 +1891,7 @@ def getChargeInfo(request):
 
         response = taxinvoiceService.getChargeInfo(CorpNum, UserID)
 
-        return render(request, 'GetChargeInfo.html',
+        return render(request, 'getChargeInfo.html',
                       {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
                        'rateSystem': response.rateSystem})
     except PopbillException as PE:
