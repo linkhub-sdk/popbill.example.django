@@ -1233,7 +1233,7 @@ def FAXSend(request):
 
         result = statementService.FAXSend(CorpNum, statement, SendNum, ReceiveNum, UserID)
 
-        return render(request, 'result.html', {'code': result.code})
+        return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

@@ -6,15 +6,15 @@
         <fieldset class="fieldset1">
             <legend>정액제 서비스 상태 확인</legend>
             <ul>
-                <li> referenceID : {{ flatRateState.referenceID }}</li>
-                <li> useEndDate : {{ flatRateState.useEndDate }}</li>
-                <li> contractDT : {{ flatRateState.contractDT }}</li>
-                <li> unPaidYN : {{ flatRateState.unPaidYN }}</li>
-                <li> closeOnExpired : {{ flatRateState.closeOnExpired }}</li>
-                <li> state : {{ flatRateState.state }}</li>
-                <li> baseDate : {{ flatRateState.baseDate }}</li>
-                <li> closeRequestYN : {{ flatRateState.closeRequestYN }}</li>
-                <li> useRestrictYN : {{ flatRateState.useRestrictYN }}</li>
+                <li> referenceID (사업자번호) : {{ flatRateState.referenceID }}</li>
+                <li> useEndDate (정액제 서비스 시작일시) : {{ flatRateState.useEndDate }}</li>
+                <li> contractDT (정액제 서비스 종료일) : {{ flatRateState.contractDT }}</li>
+                <li> baseDate (자동연장 결제일) : {{ flatRateState.baseDate }}</li>
+                <li> state (정액제 서비스 상태 [1-사용, 2-해지]) : {{ flatRateState.state }}</li>
+                <li> closeRequestYN (정액제 서비스 해지신청 여부) : {{ flatRateState.closeRequestYN }}</li>
+                <li> useRestrictYN (정액세 서비스 사용제한 여부) : {{ flatRateState.useRestrictYN }}</li>
+                <li> closeOnExpired (정액제 서비스 만료 시 해지 여부) : {{ flatRateState.closeOnExpired }}</li>
+                <li> unPaidYN (미수금 보유 여부) : {{ flatRateState.unPaidYN }}</li>
             </ul>
         </fieldset>
     </div>
