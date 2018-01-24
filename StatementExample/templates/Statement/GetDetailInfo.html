@@ -6,59 +6,61 @@
         <fieldset class="fieldset1">
             <legend>전자명세서 상세정보 확인</legend>
             <ul>
-                <li>itemCode (문서종류코드) : {{ statement.itemCode }}</li>
-                <li>mgtKey (팝빌 관리번호) : {{ statement.mgtKey }}</li>
-                <li>invoiceNum (문서고유번호) : {{ statement.invoiceNum }}</li>
-                <li>formCode (맞춤양식 코드) : {{ statement.formCode }}</li>
-                <li>writeDate (작성일자) : {{ statement.writeDate }}</li>
-                <li>taxType (세금형태) : {{ statement.taxType }}</li>
-                <li>purposeType (영수/청구) : {{ statement.purposeType }}</li>
-                <li>serialNum (일련 번호) : {{ statement.serialNum }}</li>
-                <li>taxTotal (세액 합계) : {{ statement.taxTotal }}</li>
-                <li>supplyCostTotal (공급가액 합계) : {{ statement.supplyCostTotal }}</li>
-                <li>totalAmount (합계 금액) : {{ statement.totalAmount }}</li>
-                <li>remark1 (비고1) : {{ statement.remark1 }}</li>
-                <li>remark2 (비고2) : {{ statement.remark2 }}</li>
-                <li>remark3 (비고3) : {{ statement.remark3 }}</li>
-                <li>senderCorpNum (발신자 사업자번호) : {{ statement.senderCorpNum }}</li>
-                <li>senderTaxRegID (발신자 종사업장번호) : {{ statement.senderTaxRegID }}</li>
-                <li>senderCorpName (발신자 상호) : {{ statement.senderCorpName }}</li>
-                <li>senderCEOName (발신자 대표자 성명) : {{ statement.senderCEOName }}</li>
-                <li>senderAddr (발신자 주소) : {{ statement.senderAddr }}</li>
-                <li>senderBizType (발신자 업태) : {{ statement.senderBizType }}</li>
-                <li>senderBizClass (발신자 종목) : {{ statement.senderBizClass }}</li>
-                <li>senderContactName (발신자 성명) : {{ statement.senderContactName }}</li>
-                <li>senderDeptName (발신자 부서명) : {{ statement.senderDeptName }}</li>
-                <li>senderTEL (발신자 연락처) : {{ statement.senderTEL }}</li>
-                <li>senderHP (발신자 휴대전화) : {{ statement.senderHP }}</li>
-                <li>senderEmail (발신자 이메일주소) : {{ statement.senderEmail }}</li>
-                <li>senderFAX (발신자 팩스주소) : {{ statement.senderFAX }}</li>
-                <li>receiverCorpNum (수신자 사업자번호) : {{ statement.receiverCorpNum }}</li>
-                <li>receiverTaxRegID (수신자 종사업자번호) : {{ statement.receiverTaxRegID }}</li>
-                <li>receiverCorpName (수신자 상호) : {{ statement.receiverCorpName }}</li>
-                <li>receiverCEOName (수신자 대표자 성명) : {{ statement.receiverCEOName }}</li>
-                <li>receiverAddr (수신자 주소) : {{ statement.receiverAddr }}</li>
-                <li>receiverBizClass (수신자 업태) : {{ statement.receiverBizClass }}</li>
-                <li>receiverBizType (수신자 종목) : {{ statement.receiverBizType }}</li>
-                <li>receiverContactName (수신자 성명) : {{ statement.receiverContactName }}</li>
-                <li>receiverDeptName (수신자 부서명) : {{ statement.receiverDeptName }}</li>
-                <li>receiverTEL (수신자 연락처) : {{ statement.receiverTEL }}</li>
-                <li>receiverHP (수신자 휴대전화) : {{ statement.receiverHP }}</li>
-                <li>receiverEmail (수신자 이메일주소) : {{ statement.receiverEmail }}</li>
-                <li>receiverFAX (수신자 팩스주소) : {{ statement.receiverFAX }}</li>
+                <li> itemCode (문서종류코드) : {{ statement.itemCode }}</li>
+                <li> mgtKey (팝빌 관리번호) : {{ statement.mgtKey }}</li>
+                <li> invoiceNum (문서고유번호) : {{ statement.invoiceNum }}</li>
+                <li> formCode (맞춤양식 코드) : {{ statement.formCode }}</li>
+                <li> writeDate (작성일자) : {{ statement.writeDate }}</li>
+                <li> taxType (세금형태) : {{ statement.taxType }}</li>
+                <li> purposeType (영수/청구) : {{ statement.purposeType }}</li>
+                <li> serialNum (일련 번호) : {{ statement.serialNum }}</li>
+                <li> taxTotal (세액 합계) : {{ statement.taxTotal }}</li>
+                <li> supplyCostTotal (공급가액 합계) : {{ statement.supplyCostTotal }}</li>
+                <li> totalAmount (합계 금액) : {{ statement.totalAmount }}</li>
+                <li> remark1 (비고1) : {{ statement.remark1 }}</li>
+                <li> remark2 (비고2) : {{ statement.remark2 }}</li>
+                <li> remark3 (비고3) : {{ statement.remark3 }}</li>
+
+                <li> senderCorpNum (발신자 사업자번호) : {{ statement.senderCorpNum }}</li>
+                <li> senderTaxRegID (발신자 종사업장번호) : {{ statement.senderTaxRegID }}</li>
+                <li> senderCorpName (발신자 상호) : {{ statement.senderCorpName }}</li>
+                <li> senderCEOName (발신자 대표자 성명) : {{ statement.senderCEOName }}</li>
+                <li> senderAddr (발신자 주소) : {{ statement.senderAddr }}</li>
+                <li> senderBizType (발신자 업태) : {{ statement.senderBizType }}</li>
+                <li> senderBizClass (발신자 종목) : {{ statement.senderBizClass }}</li>
+                <li> senderContactName (발신자 성명) : {{ statement.senderContactName }}</li>
+                <li> senderDeptName (발신자 부서명) : {{ statement.senderDeptName }}</li>
+                <li> senderTEL (발신자 연락처) : {{ statement.senderTEL }}</li>
+                <li> senderHP (발신자 휴대전화) : {{ statement.senderHP }}</li>
+                <li> senderEmail (발신자 이메일주소) : {{ statement.senderEmail }}</li>
+                <li> senderFAX (발신자 팩스주소) : {{ statement.senderFAX }}</li>
+
+                <li> receiverCorpNum (수신자 사업자번호) : {{ statement.receiverCorpNum }}</li>
+                <li> receiverTaxRegID (수신자 종사업자번호) : {{ statement.receiverTaxRegID }}</li>
+                <li> receiverCorpName (수신자 상호) : {{ statement.receiverCorpName }}</li>
+                <li> receiverCEOName (수신자 대표자 성명) : {{ statement.receiverCEOName }}</li>
+                <li> receiverAddr (수신자 주소) : {{ statement.receiverAddr }}</li>
+                <li> receiverBizClass (수신자 업태) : {{ statement.receiverBizClass }}</li>
+                <li> receiverBizType (수신자 종목) : {{ statement.receiverBizType }}</li>
+                <li> receiverContactName (수신자 성명) : {{ statement.receiverContactName }}</li>
+                <li> receiverDeptName (수신자 부서명) : {{ statement.receiverDeptName }}</li>
+                <li> receiverTEL (수신자 연락처) : {{ statement.receiverTEL }}</li>
+                <li> receiverHP (수신자 휴대전화) : {{ statement.receiverHP }}</li>
+                <li> receiverEmail (수신자 이메일주소) : {{ statement.receiverEmail }}</li>
+                <li> receiverFAX (수신자 팩스주소) : {{ statement.receiverFAX }}</li>
 
                 {% for detailList in statement.detailList %}
                     <fieldset class="fieldset2">
                         <legend> 전자명세서 상세항목 [{{ forloop.counter }}]</legend>
                         <ul>
-                            <li>serialNum (일련번호) : {{ detailList.serialNum }}</li>
-                            <li>purchaseDT (거래일자) : {{ detailList.purchaseDT }}</li>
-                            <li>itemName (품목명) : {{ detailList.itemName }}</li>
-                            <li>spec (규격) : {{ detailList.spec }}</li>
-                            <li>qty (수량) : {{ detailList.qty }}</li>
-                            <li>unitCost (단가) : {{ detailList.unitCost }}</li>
-                            <li>supplyCost (공급가액) : {{ detailList.supplyCost }}</li>
-                            <li>tax (세액) : {{ detailList.tax }}</li>
+                            <li> serialNum (일련번호) : {{ detailList.serialNum }}</li>
+                            <li> purchaseDT (거래일자) : {{ detailList.purchaseDT }}</li>
+                            <li> itemName (품목명) : {{ detailList.itemName }}</li>
+                            <li> spec (규격) : {{ detailList.spec }}</li>
+                            <li> qty (수량) : {{ detailList.qty }}</li>
+                            <li> unitCost (단가) : {{ detailList.unitCost }}</li>
+                            <li> supplyCost (공급가액) : {{ detailList.supplyCost }}</li>
+                            <li> tax (세액) : {{ detailList.tax }}</li>
                         </ul>
                     </fieldset>
                 {% endfor %}
@@ -67,9 +69,9 @@
                     <fieldset class="fieldset2">
                         <legend>기본양식 추가속성</legend>
                         <ul>
-                            <li>Balance (전잔액) : {{ statement.propertyBag.Balance }}</li>
-                            <li>Deposit (입금액) : {{ statement.propertyBag.Deposit }}</li>
-                            <li>CBalance (현잔액) : {{ statement.propertyBag.CBalance }}</li>
+                            <li> Balance (전잔액) : {{ statement.propertyBag.Balance }}</li>
+                            <li> Deposit (입금액) : {{ statement.propertyBag.Deposit }}</li>
+                            <li> CBalance (현잔액) : {{ statement.propertyBag.CBalance }}</li>
                         </ul>
                     </fieldset>
                 {% endif %}

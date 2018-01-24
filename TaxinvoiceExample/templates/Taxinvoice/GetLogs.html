@@ -10,13 +10,14 @@
                     <fieldset class="fieldset2">
                         <legend> 세금계산서 상태변경 이력 [ {{ forloop.counter }} ]</legend>
                         <ul>
-                            <li>log : {{ LogList.log }}</li>
-                            <li>procType : {{ LogList.procType }}</li>
-                            <li>procCorpName : {{ LogList.procCorpName }}</li>
-                            <li>procMemo : {{ LogList.procMemo }}</li>
-                            <li>regDT : {{ LogList.regDT }}</li>
-                            <li>ip : {{ LogList.ip }}</li>
-                            <li>docLogType : {{ LogList.docLogType }}</li>
+                            <li> docLogType (로그타입) : {{ LogList.docLogType }}</li>
+                            <li> log (이력정보) : {{ LogList.log }}</li>
+                            <li> procType (처리형태) : {{ LogList.procType }}</li>
+                            <li> procCorpName (처리회사명) : {{ LogList.procCorpName }}</li>
+                            <li> procContactName (처리담당자) : {{ LogList.procCorpName }}</li>
+                            <li> procMemo (처리메모) : {{ LogList.procMemo }}</li>
+                            <li> regDT (등록일시) : {{ LogList.regDT }}</li>
+                            <li> ip (아이피) : {{ LogList.ip }}</li>
                         </ul>
                     </fieldset>
                 {% endfor %}

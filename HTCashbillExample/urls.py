@@ -22,7 +22,7 @@ urlpatterns = [
 
     # 포인트 관리 / 정액제 신청
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='getPopbillURL_CHRG'),
+    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
@@ -30,10 +30,10 @@ urlpatterns = [
     url(r'^GetFlatRateState$', views.getFlatRateState, name='GetFlatRateState'),
 
     # 회원정보
-    url(r'^CheckIsMember$', views.checkIsMember, name='checkIsMember'),
+    url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),
     url(r'^CheckID$', views.checkID, name='CheckID'),
     url(r'^JoinMember$', views.joinMember, name='JoinMember'),
-    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='getPopbillURL_LOGIN'),
+    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='GetPopbillURL_LOGIN'),
     url(r'^GetCorpInfo$', views.getCorpInfo, name='GetCorpInfo'),
     url(r'^UpdateCorpInfo$', views.updateCorpInfo, name='UpdateCorpInfo'),
     url(r'^RegistContact$', views.registContact, name='RegistContact'),

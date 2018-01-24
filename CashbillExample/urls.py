@@ -37,21 +37,21 @@ urlpatterns = [
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
 
     # 부가 기능
-    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='getPopbillURL_LOGIN'),
+    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='GetPopbillURL_LOGIN'),
     url(r'^SendEmail$', views.sendEmail, name='SendEmail'),
     url(r'^SendSMS$', views.sendSMS, name='SendSMS'),
     url(r'^SendFAX$', views.sendFAX, name='SendFAX'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='getPopbillURL_CHRG'),
+    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
 
     # 회원정보
-    url(r'^CheckIsMember$', views.checkIsMember, name='checkIsMember'),
+    url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),
     url(r'^CheckID$', views.checkID, name='CheckID'),
     url(r'^JoinMember$', views.joinMember, name='JoinMember'),
     url(r'^GetCorpInfo$', views.getCorpInfo, name='GetCorpInfo'),

@@ -35,7 +35,7 @@ urlpatterns = [
     url(r'^GetURL$', views.getURL, name='GetURL'),
 
     # 세금계산서 보기인쇄
-    url(r'^GetPopUpURL$', views.getPopUpURL, name='getPopUpURL'),
+    url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL'),
     url(r'^GetPrintURL$', views.getPrintURL, name='GetPrintURL'),
     url(r'^GetEPrintURL$', views.getEPrintURL, name='GetEPrintURL'),
     url(r'^GetMassPrintURL$', views.getMassPrintURL, name='GetMassPrintURL'),
@@ -55,19 +55,19 @@ urlpatterns = [
     url(r'^GetEmailPublicKeys$', views.getEmailPublicKeys, name='GetEmailPublicKeys'),
 
     # 공인인증서 관리
-    url(r'^GetPopbillURL_CERT$', views.getPopbillURL_CERT, name='getPopbillURL_CERT'),
+    url(r'^GetPopbillURL_CERT$', views.getPopbillURL_CERT, name='GetPopbillURL_CERT'),
     url(r'^GetCertificateExpireDate$', views.getCertificateExpireDate, name='GetCertificateExpireDate'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^getPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='getPopbillURL_CHRG'),
+    url(r'^getPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
 
     # 회원정보
-    url(r'^CheckIsMember$', views.checkIsMember, name='checkIsMember'),
+    url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),
     url(r'^CheckID$', views.checkID, name='CheckID'),
     url(r'^JoinMember$', views.joinMember, name='JoinMember'),
     url(r'^GetCorpInfo$', views.getCorpInfo, name='GetCorpInfo'),

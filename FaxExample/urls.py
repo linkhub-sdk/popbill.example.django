@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^GetURL_BOX$', views.getURL_BOX, name='GetURL_BOX'),
 
     # 포인트 관리
-    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='getPopbillURL_CHRG'),
+    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
     url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
@@ -32,10 +32,10 @@ urlpatterns = [
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
 
     # 회원정보
-    url(r'^CheckIsMember$', views.checkIsMember, name='checkIsMember'),
+    url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),
     url(r'^CheckID$', views.checkID, name='CheckID'),
     url(r'^JoinMember$', views.joinMember, name='JoinMember'),
-    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='getPopbillURL_LOGIN'),
+    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='GetPopbillURL_LOGIN'),
     url(r'^RegistContact$', views.registContact, name='RegistContact'),
     url(r'^ListContact$', views.listContact, name='ListContact'),
     url(r'^UpdateCorpInfo$', views.updateCorpInfo, name='UpdateCorpInfo'),
