@@ -97,9 +97,7 @@ SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 IsTest = True
 
 # 팝빌회원 사업자번호
-testCorpNum = "6798700433"
-# testCorpNum = "1234567890"
+testCorpNum = "1234567890"
 
 # 팝빌회원 아아디
-testUserID = "testkorea_linkhub"
-# testUserID = "testkorea"
+testUserID = "testkorea"
