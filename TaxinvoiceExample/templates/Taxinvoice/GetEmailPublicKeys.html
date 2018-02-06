@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">GetEmailPublicKeys</p>
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>ASP사업자 유통메일 목록 확인</legend>
             <ul>
-                {% for aspList in aspList %}
-                    <li> 인증번호 [{{ aspList.confirmNum }}] : {{ aspList.email }}</li>
+                {% for asp in aspList %}
+                    <li> confirmNum (유통사업자 승인번호) :  {{ asp.confirmNum }} </li>
+                    <li> email (유통사업자 이매일) : {{ asp.email }}</li>
+                    <br/>
                 {% endfor %}
             </ul>
         </fieldset>

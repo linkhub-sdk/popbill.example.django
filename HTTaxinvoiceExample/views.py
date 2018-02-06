@@ -62,7 +62,7 @@ def getJobState(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
-        jobID = "018012311000000011"
+        jobID = "018012914000000001"
 
         response = htTaxinvoiceService.getJobState(CorpNum, jobID, UserID)
 
@@ -106,7 +106,7 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018012311000000011"
+        JobID = "018012914000000001"
 
         # 문서형태 배열, N-일반전자세금계산서, M-수정전자세금계산서
         Type = ["N", "M"]
@@ -138,10 +138,7 @@ def search(request):
         response = htTaxinvoiceService.search(CorpNum, JobID, Type, TaxType, PurposeType,
                                               TaxRegIDType, TaxRegIDYN, TaxRegID, Page, PerPage, Order, UserID)
 
-        return render(request, 'HTTaxinvoice/Search.html',
-                      {'respondCode': response.code, 'message': response.message, 'total': response.total,
-                       'perPage': response.perPage, 'pageNum': response.pageNum, 'pageCount': response.pageCount,
-                       'list': response.list})
+        return render(request, 'HTTaxinvoice/Search.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -160,7 +157,7 @@ def summary(request):
         UserID = settings.testUserID
 
         # 수집 요청(requestJob)시 발급받은 작업아이디
-        JobID = "016112315000000003"
+        JobID = "018012914000000001"
 
         # 문서형태 배열, N-일반전자세금계산서, M-수정전자세금계산서
         Type = ["N", "M"]
@@ -332,7 +329,7 @@ def getPartnerURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # CHRG-포인트충전
+        # CHRG-파트너 포인트충전
         TOGO = "CHRG"
 
         url = htTaxinvoiceService.getPartnerURL(CorpNum, TOGO)
@@ -494,7 +491,7 @@ def getPopbillURL_LOGIN(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "LOGIN"
 
         url = htTaxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)

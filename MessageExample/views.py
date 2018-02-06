@@ -481,7 +481,7 @@ def getURL_BOX(request):
         UserID = settings.testUserID
 
         # BOX - 문자 전송내역 팝업, SENDER- 발신번호 관리 팝업
-        TOGO = "SENDER"
+        TOGO = "BOX"
 
         url = messageService.getURL(CorpNum, UserID, TOGO)
 
@@ -520,7 +520,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "CHRG"
 
         url = messageService.getPopbillURL(CorpNum, UserID, TOGO)
@@ -612,7 +612,7 @@ def getPartnerURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # CHRG-포인트충전
+        # CHRG-파트너 포인트충전
         TOGO = "CHRG"
 
         url = messageService.getPartnerURL(CorpNum, TOGO)

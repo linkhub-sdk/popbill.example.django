@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">Search</p>
+        <p class="heading1">팝빌 전자명세서 Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>전자명세서 목록조회</legend>
@@ -14,6 +14,7 @@
                 <li> pageCount (페이지 개수) {{ response.pageCount }}</li>
                 {% for statementInfo in  response.list %}
                     <fieldset class="fieldset2">
+                        <legend>전자명세서 요약정보 [ {{ forloop.counter }} ]</legend>
                         <ul>
                             <li> itemCode (문서종류코드) : {{ statementInfo.itemCode }}</li>
                             <li> itemkey (팝빌 관리번호) : {{ statementInfo.itemKey }}</li>
@@ -24,9 +25,10 @@
                             <li> regDT (임시저장 일시) : {{ statementInfo.regDT }}</li>
                             <li> senderCorpNum (발신자 상호) : {{ statementInfo.senderCorpNum }}</li>
                             <li> senderCorpName (발신자 사업자등록번호) : {{ statementInfo.senderCorpName }}</li>
-                            <li> receiverCorpNum (발신자 인쇄여부) : {{ statementInfo.receiverCorpNum }}</li>
+                            <li> receiverPrintYN (발신자 인쇄여부) : {{ statementInfo.receiverPrintYN }}</li>
                             <li> receiverCorpName (수신자 상호) : {{ statementInfo.receiverCorpName }}</li>
                             <li> supplyCostTotal (수신자 사업자등록번호) : {{ statementInfo.supplyCostTotal }}</li>
+                            <li> receiverPrintYN (수신자 인쇄여부) : {{ statementInfo.receiverPrintYN }}</li>
                             <li> taxTotal (세액 합계) : {{ statementInfo.taxTotal }}</li>
                             <li> purposeType (영수/청구) : {{ statementInfo.purposeType }}</li>
                             <li> isseuDT (발행일시) : {{ statementInfo.isseuDT }}</li>

@@ -424,7 +424,7 @@ def revokeRegistIssue(request):
         memo = "현금영수증 즉시발행 메모"
 
         response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
-                                                   UserID)
+                                                     UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -481,8 +481,8 @@ def revokeRegistIssue_part(request):
         totalAmount = "11000"
 
         response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
-                                                   UserID,
-                                                   isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
+                                                     UserID,
+                                                     isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -572,7 +572,7 @@ def revokeRegister_part(request):
         totalAmount = "4400"
 
         response = cashbillService.revokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID,
-                                                isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
+                                                  isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -617,7 +617,7 @@ def getInfos(request):
 
         InfoList = cashbillService.getInfos(CorpNum, MgtKeyList)
 
-        return render(request, 'Cashbill/Getinfos.html', {'InfoList': InfoList})
+        return render(request, 'Cashbill/GetInfos.html', {'InfoList': InfoList})
     except PopbillException as PE:
         return render(request, 'Cashbill/GetInfos.html', {'code': PE.code, 'message': PE.message})
 
@@ -812,7 +812,6 @@ def getMassPrintURL(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-
 def getMailURL(request):
     """
     공급받는자 메일링크 URL을 반환합니다.
@@ -844,7 +843,7 @@ def getPopbillURL_LOGIN(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "LOGIN"
 
         url = cashbillService.getPopbillURL(CorpNum, UserID, TOGO)
@@ -909,6 +908,7 @@ def sendSMS(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+
 def sendFAX(request):
     """
     현금영수증을 팩스전송합니다.
@@ -967,7 +967,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "CHRG"
 
         url = cashbillService.getPopbillURL(CorpNum, UserID, TOGO)
@@ -1003,7 +1003,7 @@ def getPartnerURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # CHRG-포인트충전
+        # CHRG-파트너 포인트충전
         TOGO = "CHRG"
 
         url = cashbillService.getPartnerURL(CorpNum, TOGO)

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">GetJobState</p>
+        <p class="heading1">팝빌 홈택스 현금영수증 매입매출 Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>수집 상태 확인</legend>
@@ -14,6 +14,7 @@
                     <li> queryStDate (시작일자) : {{ response.queryStDate }}</li>
                     <li> queryEnDate (종료일자) : {{ response.queryEnDate }}</li>
                     <li> errorCode (오류코드) : {{ response.errorCode }}</li>
+                    <li> errorReason (오류사유) : {{ response.errorReason }}</li>
                     <li> jobStartDT (작업 시작일시) : {{ response.jobStartDT }}</li>
                     <li> jobEndDT (작업 종료일시) : {{ response.jobEndDT }}</li>
                     <li> collectCount (수집개수) : {{ response.collectCount }}</li>

@@ -59,7 +59,7 @@ def getJobState(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
-        jobID = "018012311000000046"
+        jobID = "018012914000000005"
 
         response = htCashbillService.getJobState(CorpNum, jobID, UserID)
 
@@ -103,7 +103,7 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018012311000000046"
+        JobID = "018012914000000005"
 
         # 문서형태 배열, N-일반 현금영수증, M-취소 현금영수증
         TradeType = ["N", "C"]
@@ -123,10 +123,7 @@ def search(request):
         response = htCashbillService.search(CorpNum, JobID, TradeType, TradeUsage,
                                             Page, PerPage, Order, UserID)
 
-        return render(request, 'HTCashbill/Search.html',
-                      {'respondCode': response.code, 'message': response.message, 'total': response.total,
-                       'perPage': response.perPage, 'pageNum': response.pageNum, 'pageCount': response.pageCount,
-                       'list': response.list})
+        return render(request, 'HTCashbill/Search.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -145,7 +142,7 @@ def summary(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018012311000000056"
+        JobID = "018012914000000005"
 
         # 문서형태 배열, N-일반 현금영수증, M-취소 현금영수증
         TradeType = ["N", "C"]
@@ -223,7 +220,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "CHRG"
 
         url = htCashbillService.getPopbillURL(CorpNum, UserID, TOGO)
@@ -258,7 +255,7 @@ def getPartnerURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # CHRG-포인트충전
+        # CHRG-파트너 포인트충전
         TOGO = "CHRG"
 
         url = htCashbillService.getPartnerURL(CorpNum, TOGO)
@@ -420,7 +417,7 @@ def getPopbillURL_LOGIN(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "LOGIN"
 
         url = htCashbillService.getPopbillURL(CorpNum, UserID, TOGO)

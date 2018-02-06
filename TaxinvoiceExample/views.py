@@ -301,7 +301,7 @@ def registIssue(request):
         ]
 
         response = taxinvoiceService.registIssue(CorpNum, taxinvoice, writeSpecification,
-                                               forceIssue, dealInvoiceMgtKey, memo, emailSubject, UserID)
+                                                 forceIssue, dealInvoiceMgtKey, memo, emailSubject, UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1032,7 +1032,6 @@ def request(request):
     """
     try:
         # 팝빌회원 사업자번호
-        # CorpNum = settings.testCorpNum
         CorpNum = settings.testCorpNum
 
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
@@ -1282,10 +1281,7 @@ def search(request):
                                             TaxRegIDType, TaxRegID, Page, PerPage, Order, UserID,
                                             QString, InterOPYN, IssueType)
 
-        return render(request, 'Taxinvoice/Search.html',
-                      {'respondCode': response.code, 'message': response.message, 'total': response.total,
-                       'perPage': response.perPage, 'pageNum': response.pageNum, 'pageCount': response.pageCount,
-                       'list': response.list})
+        return render(request, 'Taxinvoice/Search.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1326,7 +1322,7 @@ def getURL(request):
         UserID = settings.testUserID
 
         # SBOX : 매출문서함, PBOX : 매입문서함 , TBOX : 임시문서함 , WRITE : 문서작성
-        TOGO = "WRITE"
+        TOGO = "SBOX"
 
         url = taxinvoiceService.getURL(CorpNum, UserID, TOGO)
 
@@ -1402,7 +1398,6 @@ def getMassPrintURL(request):
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 
 def getMailURL(request):
@@ -1586,7 +1581,7 @@ def sendSMS(request):
         UserID = settings.testUserID
 
         response = taxinvoiceService.sendSMS(CorpNum, MgtKeyType, MgtKey, Sender, Receiver,
-                                           Contents, UserID)
+                                             Contents, UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1649,7 +1644,7 @@ def attachStatement(request):
         UserID = settings.testUserID
 
         response = taxinvoiceService.attachStatement(CorpNum, MgtKeyType, MgtKey, ItemCode,
-                                                   StmtMgtKey, UserID)
+                                                     StmtMgtKey, UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1680,7 +1675,7 @@ def detachStatement(request):
         UserID = settings.testUserID
 
         response = taxinvoiceService.detachStatement(CorpNum, MgtKeyType, MgtKey,
-                                                   ItemCode, StmtMgtKey, UserID)
+                                                     ItemCode, StmtMgtKey, UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1701,6 +1696,7 @@ def getEmailPublicKeys(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+
 def getPopbillURL_LOGIN(request):
     """
     팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인 URL)
@@ -1713,7 +1709,7 @@ def getPopbillURL_LOGIN(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
+        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-연동회원 포인트 충전 URL,
         # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
         TOGO = "LOGIN"
 
@@ -1736,7 +1732,7 @@ def getPopbillURL_SEAL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
+        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-연동회원 포인트 충전 URL,
         # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
         TOGO = "SEAL"
 
@@ -1776,7 +1772,7 @@ def getPopbillURL_CERT(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
+        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-연동회원 포인트 충전 URL,
         # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
         TOGO = "CERT"
 
@@ -1816,7 +1812,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-팝빌 포인트 충전 URL,
+        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-연동회원 포인트 충전 URL,
         # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
         TOGO = "CHRG"
 
@@ -1853,7 +1849,7 @@ def getPartnerURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # CHRG-팝빌 포인트 충전 URL,
+        # CHRG-팝빌 파트너 포인트 충전 URL
         TOGO = "CHRG"
 
         url = taxinvoiceService.getPartnerURL(CorpNum, TOGO)

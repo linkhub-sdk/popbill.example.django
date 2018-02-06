@@ -75,8 +75,8 @@ def sendFAX(request):
         # 수신자명
         ReceiverName = '수신자명'
 
-        # 파일경로
-        FilePath = "./FaxExample/static/file/faxfile.jpg"
+        # 파일경로 (해당파일에 읽기 권한이 설정되어 있어야 함. 최대 5개)
+        FilePath = ["./FaxExample/static/file/faxfile.jpg", "./FaxExample/static/file/test.pdf"]
 
         # 예약전송일시, None처리시 즉시전송, 작성형태 'yyyyMMddHHmmss'
         ReserveDT = None
@@ -264,7 +264,7 @@ def getFaxDetail(request):
         CorpNum = settings.testCorpNum
 
         # 팩스전송 요청시 반환받은 접수번호
-        receiptNum = "017071812030700001"
+        receiptNum = "018012914050700001"
 
         resultList = faxService.getFaxResult(CorpNum, receiptNum)
 
@@ -350,7 +350,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "CHRG"
 
         url = faxService.getPopbillURL(CorpNum, UserID, TOGO)
@@ -436,7 +436,7 @@ def getPartnerURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # CHRG-포인트충전
+        # CHRG-파트너 포인트충전
         TOGO = "CHRG"
 
         url = faxService.getPartnerURL(CorpNum, TOGO)

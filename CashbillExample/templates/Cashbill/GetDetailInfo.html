@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">GetDetailInfo</p>
+        <p class="heading1">팝빌 현금영수증 SDK Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>현금영수증 상세정보 확인</legend>
@@ -21,16 +21,16 @@
                 <li> franchiseCEOName (발행자 대표자 성명) : {{ cashbill.franchiseCEOName }}</li>
                 <li> franchiseAddr (발행자 주소) : {{ cashbill.franchiseAddr }}</li>
                 <li> franchiseTEL (발행자 연락처) : {{ cashbill.franchiseTEL }}</li>
-                <li>identityNum (거래처 식별번호) : {{ cashbill.identityNum }}</li>
-                <li>customerName (고객명) : {{ cashbill.customerName }}</li>
-                <li>itemName (상품명) : {{ cashbill.itemName }}</li>
-                <li>orderNumber (주문번호) : {{ cashbill.orderNumber }}</li>
-                <li>email (고객 이메일) : {{ cashbill.email }}</li>
-                <li>hp (고객 휴대폰번호) : {{ cashbill.hp }}</li>
-                <li>smssendYN (알림문자 전송여부) : {{ cashbill.smssendYN }}</li>
-                <li>orgConfirmNum (원본현금영수증 승인번호) : {{ cashbill.orgConfirmNum }}</li>
-                <li>orgTradeDate (원본현금영수증 거래일자) : {{ cashbill.orgTradeDate }}</li>
-                <li>cancelType (취소사유) : {{ cashbill.cancelType }}</li>
+                <li> identityNum (거래처 식별번호) : {{ cashbill.identityNum }}</li>
+                <li> customerName (고객명) : {{ cashbill.customerName }}</li>
+                <li> itemName (상품명) : {{ cashbill.itemName }}</li>
+                <li> orderNumber (주문번호) : {{ cashbill.orderNumber }}</li>
+                <li> email (고객 이메일) : {{ cashbill.email }}</li>
+                <li> hp (고객 휴대폰번호) : {{ cashbill.hp }}</li>
+                <li> smssendYN (알림문자 전송여부) : {{ cashbill.smssendYN }}</li>
+                <li> orgConfirmNum (원본현금영수증 승인번호) : {{ cashbill.orgConfirmNum }}</li>
+                <li> orgTradeDate (원본현금영수증 거래일자) : {{ cashbill.orgTradeDate }}</li>
+                <li> cancelType (취소사유) : {{ cashbill.cancelType }}</li>
             </ul>
         </fieldset>
     </div>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">GetInfos</p>
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>세금계산서 요약정보 대량 확인</legend>
@@ -22,12 +22,12 @@
 
                             <li> invoicerCorpName (공급자 상호) : {{ taxinvoiceInfo.invoicerCorpName }}</li>
                             <li> invoicerCorpNum (공급자 사업자번호) : {{ taxinvoiceInfo.invoicerCorpNum }}</li>
-                            <li> invocerMgtKey (공급자 문서관리번호) : {{ taxinvoiceInfo.invoicerMgtKey }}</li>
+                            <li> invoicerMgtKey (공급자 문서관리번호) : {{ taxinvoiceInfo.invoicerMgtKey }}</li>
                             <li> invoicerPrintYN (공급자 인쇄여부) : {{ taxinvoiceInfo.invoicerPrintYN }}</li>
 
                             <li> invoiceeCorpName (공급받는자 상호) : {{ taxinvoiceInfo.invoiceeCorpName }}</li>
                             <li> invoiceeCorpNum (공급받는자 사업자번호) : {{ taxinvoiceInfo.invoiceeCorpNum }}</li>
-                            <li> invoiceeeMgtKey (공급받는자 인쇄여부) : {{ taxinvoiceInfo.invoiceeMgtKey }}</li>
+                            <li> invoiceePrintYN (공급받는자 인쇄여부) : {{ taxinvoiceInfo.invoiceeMgtKey }}</li>
                             <li> closeDownState (공급받는자 휴폐업상태) : {{ taxinvoiceInfo.closeDownState }}</li>
                             <li> closeDownStateDate (공급받는자 휴폐업일자) : {{ taxinvoiceInfo.closeDownStateDate }}</li>
 

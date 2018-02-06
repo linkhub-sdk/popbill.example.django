@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">GetDetailInfo</p>
+        <p class="heading1">팝빌 전자명세서 Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>전자명세서 상세정보 확인</legend>
@@ -29,21 +29,19 @@
                 <li> senderBizType (발신자 업태) : {{ statement.senderBizType }}</li>
                 <li> senderBizClass (발신자 종목) : {{ statement.senderBizClass }}</li>
                 <li> senderContactName (발신자 성명) : {{ statement.senderContactName }}</li>
-                <li> senderDeptName (발신자 부서명) : {{ statement.senderDeptName }}</li>
                 <li> senderTEL (발신자 연락처) : {{ statement.senderTEL }}</li>
                 <li> senderHP (발신자 휴대전화) : {{ statement.senderHP }}</li>
                 <li> senderEmail (발신자 이메일주소) : {{ statement.senderEmail }}</li>
                 <li> senderFAX (발신자 팩스주소) : {{ statement.senderFAX }}</li>
 
                 <li> receiverCorpNum (수신자 사업자번호) : {{ statement.receiverCorpNum }}</li>
-                <li> receiverTaxRegID (수신자 종사업자번호) : {{ statement.receiverTaxRegID }}</li>
+                <li> receiverTaxRegID (수신자 종사업장번호) : {{ statement.receiverTaxRegID }}</li>
                 <li> receiverCorpName (수신자 상호) : {{ statement.receiverCorpName }}</li>
                 <li> receiverCEOName (수신자 대표자 성명) : {{ statement.receiverCEOName }}</li>
                 <li> receiverAddr (수신자 주소) : {{ statement.receiverAddr }}</li>
                 <li> receiverBizClass (수신자 업태) : {{ statement.receiverBizClass }}</li>
                 <li> receiverBizType (수신자 종목) : {{ statement.receiverBizType }}</li>
                 <li> receiverContactName (수신자 성명) : {{ statement.receiverContactName }}</li>
-                <li> receiverDeptName (수신자 부서명) : {{ statement.receiverDeptName }}</li>
                 <li> receiverTEL (수신자 연락처) : {{ statement.receiverTEL }}</li>
                 <li> receiverHP (수신자 휴대전화) : {{ statement.receiverHP }}</li>
                 <li> receiverEmail (수신자 이메일주소) : {{ statement.receiverEmail }}</li>

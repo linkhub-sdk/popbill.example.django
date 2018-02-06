@@ -613,7 +613,7 @@ def getInfo(request):
 
         statementInfo = statementService.getInfo(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/Getinfo.html', {'statementInfo': statementInfo})
+        return render(request, 'Statement/GetInfo.html', {'statementInfo': statementInfo})
     except PopbillException as PE:
         return render(request, 'Statement/GetInfo.html', {'code': PE.code, 'message': PE.message})
 
@@ -639,7 +639,7 @@ def getInfos(request):
 
         InfoList = statementService.getInfos(CorpNum, ItemCode, MgtKeyList)
 
-        return render(request, 'Statement/Getinfos.html', {'InfoList': InfoList})
+        return render(request, 'Statement/GetInfos.html', {'InfoList': InfoList})
     except PopbillException as PE:
         return render(request, 'Statement/GetInfos.html', {'code': PE.code, 'message': PE.message})
 
@@ -684,10 +684,10 @@ def search(request):
         DType = "W"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20161001"
+        SDate = "20171201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20161131"
+        EDate = "20180125"
 
         # 명세서 상태코드, 2,3번째 자리에 와일드카드(*) 사용 가능
         State = ["2**", "3**"]
@@ -751,7 +751,7 @@ def getURL(request):
         UserID = settings.testUserID
 
         # TBOX-임시 문서함, SBOX-발행 문서함
-        TOGO = "SEAL"
+        TOGO = "TBOX"
 
         url = statementService.getURL(CorpNum, UserID, TOGO)
 
@@ -1327,7 +1327,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "CHRG"
 
         url = statementService.getPopbillURL(CorpNum, UserID, TOGO)
@@ -1363,7 +1363,7 @@ def getPartnerURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # CHRG-포인트충전
+        # CHRG-파트너 포인트충전
         TOGO = "CHRG"
 
         url = statementService.getPartnerURL(CorpNum, TOGO)

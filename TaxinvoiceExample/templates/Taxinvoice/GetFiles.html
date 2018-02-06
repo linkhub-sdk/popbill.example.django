@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">GetFiles</p>
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>세금계산서 첨부파일 목록 확인</legend>
@@ -10,10 +10,10 @@
                     <fieldset class="fieldset2">
                         <legend> 첨부파일 [{{ forloop.counter }}]</legend>
                         <ul>
-                            <li> serialNum : {{ fileList.seriaNum }} </li>
-                            <li> displayName : {{ fileList.displayName }} </li>
-                            <li> attachedFile : {{ fileList.attachedFile }}</li>
-                            <li> regDT : {{ fileList.regDT }}</li>
+                            <li> serialNum (첨부파일 일련번호) : {{ fileList.serialNum }} </li>
+                            <li> attachedFile (파일아이디 [첨부파일 삭제시 사용]) : {{ fileList.attachedFile }}</li>
+                            <li> displayName (첨부파일명) : {{ fileList.displayName }} </li>
+                            <li> regDT (첨부일시) : {{ fileList.regDT }}</li>
                         </ul>
                     </fieldset>
                 {% endfor %}

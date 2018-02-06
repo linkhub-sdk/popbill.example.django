@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block contents %}
     <div id="content">
-        <p class="heading1">Search</p>
+        <p class="heading1">팝빌 홈택스 전자(세금)계산서 매입매출 Django Example.</p>
         <br/>
         <fieldset class="fieldset1">
             <legend>홈택스 수집 결과 조회</legend>
@@ -12,7 +12,7 @@
                 <li> perPage (페이지당 검색개수) : {{ response.perPage }}</li>
                 <li> pageNum (페이지 번호) {{ response.pageNum }}</li>
                 <li> pageCount (페이지 개수) {{ response.pageCount }}</li>
-                {% for taxinvoiceInfo in list %}
+                {% for taxinvoiceInfo in response.list %}
                     <fieldset class="fieldset2">
                         <legend> 세금계산서 요약정보 [ {{ forloop.counter }} ]</legend>
                         <ul>
