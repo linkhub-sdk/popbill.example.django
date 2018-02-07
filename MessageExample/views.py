@@ -68,7 +68,7 @@ def sendSMS(request):
         ReceiverNum = "01012345678"
 
         # 수신자명
-        ReceiverName = "순시자명"
+        ReceiverName = "수신자명"
 
         # 단문메시지 내용, 90Byte 초과시 길이가 조정되 전송됨
         Contents = "단문메시지"
