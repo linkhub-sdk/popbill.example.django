@@ -59,6 +59,12 @@
                             <li> unitCost (단가) : {{ detailList.unitCost }}</li>
                             <li> supplyCost (공급가액) : {{ detailList.supplyCost }}</li>
                             <li> tax (세액) : {{ detailList.tax }}</li>
+                            <li> remark (비고) : {{ detailList.remark }}</li>
+                            <li> spare1 (여분1) : {{ detailList.spare1 }}</li>
+                            <li> spare2 (여분2) : {{ detailList.spare2 }}</li>
+                            <li> spare3 (여분3) : {{ detailList.spare3 }}</li>
+                            <li> spare4 (여분4) : {{ detailList.spare4 }}</li>
+                            <li> spare5 (여분5) : {{ detailList.spare5 }}</li>
                         </ul>
                     </fieldset>
                 {% endfor %}
@@ -75,6 +81,11 @@
                         </ul>
                     </fieldset>
                 {% endif %}
+
+                <li> businessLicenseYN (사업자등록증 첨부 여부) : {{ statement.businessLicenseYN }}</li>
+                <li> bankBookYN (통장사본 첨부 여부) : {{ statement.bankBookYN }}</li>
+                <li> smssendYN (문지 지덩잔성 여부) : {{ statement.smssendYN }}</li>
+                <li> autoAcceptYN (발행시 자동승인 여부) : {{ statement.autoAcceptYN }}</li>
             </ul>
         </fieldset>
     </div>
