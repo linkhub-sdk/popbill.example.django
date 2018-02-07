@@ -723,7 +723,7 @@ def getURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # SBOX : 매출문서함, PBOX : 매입문서함 , TBOX : 임시문서함 , WRITE : 문서작성
+        # TBOX : 임시문서함 , PBOX : 발행 문서함 , WRITE : 문서작성
         TOGO = "WRITE"
 
         url = cashbillService.getURL(CorpNum, UserID, TOGO)
