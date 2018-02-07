@@ -29,7 +29,7 @@ def checkMgtKeyInUse(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "BIC-67890-17121309_00000"
+        MgtKey = "2018-02-06-1"
 
         keyInUse = taxinvoiceService.checkMgtKeyInUse(CorpNum, MgtKeyType, MgtKey)
 
@@ -54,7 +54,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "2018-01-16-021"
+        MgtKey = "2018-02-07-1"
 
         # 지연발행 강제여부
         # 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
@@ -80,7 +80,7 @@ def registIssue(request):
         taxinvoice = Taxinvoice(
 
             # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
-            writeDate="20180116",
+            writeDate="20180207",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -322,7 +322,7 @@ def register(request):
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "2018-01-16-5555"
+        MgtKey = "2018-02-07-2"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -331,7 +331,7 @@ def register(request):
         taxinvoice = Taxinvoice(
 
             # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
-            writeDate="20180116",
+            writeDate="20180206",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -572,7 +572,7 @@ def update(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-003"
+        MgtKey = "2018-02-07-2"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -581,7 +581,7 @@ def update(request):
         taxinvoice = Taxinvoice(
 
             # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
-            writeDate="20180116",
+            writeDate="20180210",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -824,7 +824,7 @@ def issue(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-3004"
+        MgtKey = "2018-02-07-2"
 
         # 메모
         Memo = "발행 메모"
@@ -865,7 +865,7 @@ def cancelIssue(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-003"
+        MgtKey = "201802061080"
 
         # 메모
         Memo = "발행취소 메모"
@@ -1010,7 +1010,7 @@ def delete(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-005"
+        MgtKey = "20180112001"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1128,7 +1128,7 @@ def sendToNTS(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-010"
+        MgtKey = "201802061081"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1331,6 +1331,28 @@ def getURL(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def getPopUpURL(request):
+    """
+    1건의 전자세금계산서 보기 팝업 URL을 반환합니다.
+    - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        MgtKeyType = "SELL"
+
+        # 문서관리번호
+        MgtKey = "20180115-00001"
+
+        url = taxinvoiceService.getPopUpURL(CorpNum, MgtKeyType, MgtKey)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
 def getPrintURL(request):
     """
     1건의 전자세금계산서 인쇄팝업 URL을 반환합니다.
@@ -1422,22 +1444,46 @@ def getMailURL(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopUpURL(request):
+def getPopbillURL_LOGIN(request):
     """
-    1건의 전자세금계산서 보기 팝업 URL을 반환합니다.
-    - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인 URL)
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "SELL"
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
 
-        # 문서관리번호
-        MgtKey = "20180115-00003"
+        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-연동회원 포인트 충전 URL,
+        # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
+        TOGO = "LOGIN"
 
-        url = taxinvoiceService.getPopUpURL(CorpNum, MgtKeyType, MgtKey)
+        url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def getPopbillURL_SEAL(request):
+    """
+    팝빌 관련 팝업 URL을 반환합니다. (인감 및 첨부문서 등록 URL)
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-연동회원 포인트 충전 URL,
+        # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
+        TOGO = "SEAL"
+
+        url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -1693,52 +1739,6 @@ def getEmailPublicKeys(request):
         aspList = taxinvoiceService.getEmailPublicKeys(CorpNum)
 
         return render(request, 'Taxinvoice/GetEmailPublicKeys.html', {'aspList': aspList})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getPopbillURL_LOGIN(request):
-    """
-    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인 URL)
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-연동회원 포인트 충전 URL,
-        # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
-        TOGO = "LOGIN"
-
-        url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
-
-        return render(request, 'url.html', {'url': url})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getPopbillURL_SEAL(request):
-    """
-    팝빌 관련 팝업 URL을 반환합니다. (인감 및 첨부문서 등록 URL)
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # TOGO : LOGIN-팝빌 로그인 URL, CHRG-연동회원 포인트 충전 URL,
-        # CERT-공인인증서 등록, SEAL-인감 및 첨부문서 등록
-        TOGO = "SEAL"
-
-        url = taxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
-
-        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
