@@ -6,10 +6,11 @@
         <fieldset class="fieldset1">
             <legend>수집 결과 요약정보 조회</legend>
             <ul>
-                <li> count (수집결과 건수) :  {{ response.ResultCode }}</li>
-                <li> supplayCostTotal (공급가액 합계) : {{ response.Message }}</li>
-                <li> taxTotal (세액 합계) : {{ response.retObject }}</li>
-                <li> amountTotal (합계 금액) : {{ response.retObject }}</li>
+                <li> count (수집결과 건수) :  {{ response.count }}</li>
+                <li> supplyCostTotal (공급가액 합계) : {{ response.supplyCostTotal }}</li>
+                <li> taxTotal (세액 합계) : {{ response.taxTotal }}</li>
+                <li> serviceFeeTotal (봉사료 합계) : {{ response.serviceFeeTotal }}</li>
+                <li> amountTotal (합계 금액) : {{ response.amountTotal }}</li>
             </ul>
         </fieldset>
     </div>
