@@ -633,7 +633,7 @@ def getDetailInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180118-019"
+        MgtKey = "20161118-02"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
 
