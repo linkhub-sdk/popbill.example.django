@@ -245,7 +245,7 @@ def cancelReserve(request):
         CorpNum = settings.testCorpNum
 
         # 팩스 예약전송 요청시 반환받은 접수번호
-        receiptNum = "018012215391800001"
+        receiptNum = "018020617315000001"
 
         response = faxService.cancelReserve(CorpNum, receiptNum)
 
@@ -544,7 +544,7 @@ def getPopbillURL_LOGIN(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "LOGIN"
 
         url = faxService.getPopbillURL(CorpNum, UserID, TOGO)
