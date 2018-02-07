@@ -62,7 +62,7 @@ def getJobState(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
-        jobID = "018012914000000001"
+        jobID = "018020617000000001"
 
         response = htTaxinvoiceService.getJobState(CorpNum, jobID, UserID)
 
@@ -106,7 +106,7 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018012914000000001"
+        JobID = "018020617000000001"
 
         # 문서형태 배열, N-일반전자세금계산서, M-수정전자세금계산서
         Type = ["N", "M"]
@@ -157,7 +157,7 @@ def summary(request):
         UserID = settings.testUserID
 
         # 수집 요청(requestJob)시 발급받은 작업아이디
-        JobID = "018012914000000001"
+        JobID = "018020617000000001"
 
         # 문서형태 배열, N-일반전자세금계산서, M-수정전자세금계산서
         Type = ["N", "M"]
@@ -222,7 +222,7 @@ def getXML(request):
         UserID = settings.testUserID
 
         # 전자세금계산서 국세청승인번호
-        NTSConfirmNum = "20161121410002030000079e"
+        NTSConfirmNum = "20161121410002030000079"
 
         response = htTaxinvoiceService.getXML(CorpNum, NTSConfirmNum, UserID)
 
@@ -294,7 +294,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
+        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
         TOGO = "CHRG"
 
         url = htTaxinvoiceService.getPopbillURL(CorpNum, UserID, TOGO)
