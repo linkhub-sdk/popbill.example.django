@@ -106,7 +106,7 @@ def registIssue(request):
             # [필수] 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
 
-            # [필수] 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
 
             # [필수] 공급자 상호
@@ -152,6 +152,9 @@ def registIssue(request):
 
             # [필수] 공급받는자 사업자번호, '-' 제외 10자리
             invoiceeCorpNum="8888888888",
+
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoiceeTaxRegID=None,
 
             # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
@@ -357,7 +360,7 @@ def register(request):
             # [필수] 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
 
-            # [필수] 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
 
             # [필수] 공급자 상호
@@ -400,6 +403,9 @@ def register(request):
 
             # [필수] 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
             invoiceeType="사업자",
+
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoiceeTaxRegID=None,
 
             # [필수] 공급받는자 사업자번호, '-' 제외 10자리
             invoiceeCorpNum="8888888888",
@@ -607,7 +613,7 @@ def update(request):
             # [필수] 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
 
-            # [필수] 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
 
             # [필수] 공급자 상호
@@ -649,6 +655,9 @@ def update(request):
 
             # [필수] 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
             invoiceeType='사업자',
+
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoiceeTaxRegID=None,
 
             # [필수] 공급받는자 사업자번호, '-' 제외 10자리
             invoiceeCorpNum="8888888888",
