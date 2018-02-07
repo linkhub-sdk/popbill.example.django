@@ -322,7 +322,7 @@ def register(request):
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "2018-02-07-2"
+        MgtKey = "2018-02-07-59"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -824,7 +824,7 @@ def issue(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-02-07-2"
+        MgtKey = "2018-02-07-0509-2"
 
         # 메모
         Memo = "발행 메모"
@@ -1038,7 +1038,7 @@ def request(request):
         MgtKeyType = "BUY"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-1004"
+        MgtKey = "2018-02-07-0509-5"
 
         # 메모
         Memo = "역발행 요청 메모"
@@ -1067,7 +1067,7 @@ def cancelRequest(request):
         MgtKeyType = "BUY"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-007"
+        MgtKey = "2018-02-07-0509-4"
 
         # 메모
         Memo = "처리시 메모"
@@ -1096,7 +1096,7 @@ def refuse(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-3004"
+        MgtKey = "2018-02-07-0509-1"
 
         # 메모
         Memo = "발행 메모"
