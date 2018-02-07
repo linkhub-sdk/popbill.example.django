@@ -58,7 +58,7 @@ def registIssue(request):
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20180119",
+            writeDate="20180207",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -73,7 +73,7 @@ def registIssue(request):
             itemCode=121,
 
             # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 공급자별 고유번호 생성
-            mgtKey="20180119-111",
+            mgtKey="20180207-3",
 
             # [필수] 공급자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
@@ -191,9 +191,11 @@ def registIssue(request):
             # 추가속성정보, 명세서 종류별 추가적인 속성을{key:value}형식의 Dictionary로 정의
             # 자세한 정보는 "전자명세서 API 연동매뉴얼 > [5.2. 기본양식 추가속성 테이블] 참조
             propertyBag={
+                'StartDT': "2018-01-01",  # 청구기간 시작일자
+                'EndDT': "2018-02-06",  # 청구기간 종료일자
                 'Balance': "20000",  # 전잔액
                 'Deposit': "5000",  # 입금액
-                'CBalnce': "25000"  # 현잔액
+                'CBalance': "15000"  # 현잔액
             }
         )
 
@@ -231,7 +233,7 @@ def register(request):
             itemCode=121,
 
             # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 공급자별 고유번호 생성
-            mgtKey="20180119-100",
+            mgtKey="20180119-101",
 
             # [필수] 공급자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
@@ -351,7 +353,7 @@ def register(request):
             propertyBag={
                 'Balance': "20000",  # 전잔액
                 'Deposit': "5000",  # 입금액
-                'CBalance': "25000"  # 현잔액
+                'CBalance': "15000"  # 현잔액
             }
         )
 
@@ -658,7 +660,7 @@ def getDetailInfo(request):
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20180207-3"
 
         statement = statementService.getDetailInfo(CorpNum, ItemCode, MgtKey)
 
