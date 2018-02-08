@@ -18,7 +18,7 @@ def index(request):
 def checkMgtKeyInUse(request):
     """
     현금영수증 관리번호 중복여부를 확인합니다.
-    - 관리번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 구성할 수 있습니다.
+    - 관리번호는 1~24자리로 (숫자, 영문 '-', '_') 조합으로 구성할 수 있습니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -39,14 +39,14 @@ def checkMgtKeyInUse(request):
 
 
 def registIssue(request):
+    """
+    1건의 현금영수증을 즉시발행합니다.
+    - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
+    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을
+      참조하시기 바랍니다.
+    - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
+    """
     try:
-        """
-        1건의 현금영수증을 즉시발행합니다.
-        - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-        - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을
-          참조하시기 바랍니다.
-        - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
-        """
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
@@ -145,7 +145,6 @@ def register(request):
       참조하시기 바랍니다.
     - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
     """
-
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -186,7 +185,7 @@ def register(request):
             # 봉사료
             serviceFee="0",
 
-            # [필수] 거래금액, 공급가액+세액+봉사료
+            # [필수] 거래금액, (공급가액+세액+봉사료)
             totalAmount="11000",
 
             # 발행자 사업자번호
@@ -280,7 +279,7 @@ def update(request):
             # 봉사료
             serviceFee="0",
 
-            # [필수] 거래금액, 공급가액+세액+봉사료
+            # [필수] 거래금액, (공급가액+세액+봉사료)
             totalAmount="22000",
 
             # 발행자 사업자번호
@@ -332,7 +331,7 @@ def issue(request):
       참조하시기 바랍니다.
     """
     try:
-        # 팝빌회원 사업자버놓
+        # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
         # 문서관리번호
@@ -461,10 +460,10 @@ def revokeRegistIssue_part(request):
         # 즉시발행 메모
         memo = "현금영수증 즉시발행 메모"
 
-        # 부분취소여부, true-부분취소 / false-전체취소
+        # 부분취소여부, [true-부분취소 / false-전체취소]
         isPartCancel = True
 
-        # 취소사유, 1-거래취소, 2-오류발급취소, 3-기타
+        # 취소사유, [1-거래취소 /  2-오류발급취소 / 3-기타]
         cancelType = 1
 
         # [취소] 공급가액
@@ -476,7 +475,7 @@ def revokeRegistIssue_part(request):
         # [취소] 봉사료
         serviceFee = "0"
 
-        # [취소] 합계거래금액, 공급가액+세액+봉사료
+        # [취소] 합계거래금액, (공급가액+세액+봉사료)
         # 원본 현금영수증의 공급가액 이하만 가능
         totalAmount = "11000"
 
@@ -513,10 +512,7 @@ def revokeRegister(request):
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
         orgTradeDate = "20180117"
 
-        # 발행안내문자 전송여부    """
-        #     파트너의 연동회원으로 회원가입을 요청합니다.
-        #     아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
-        #     """
+        # 발행안내문자 전송여부
         smssendYN = False
 
         response = cashbillService.revokeRegister(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, UserID)
@@ -553,10 +549,10 @@ def revokeRegister_part(request):
         # 발행안내문자 전송여부
         smssendYN = False
 
-        # 부분취소여부, true-부분취소 / false-전체취소
+        # 부분취소여부, [true-부분취소 / false-전체취소]
         isPartCancel = True
 
-        # 취소사유, 1-거래취소, 2-오류발급취소, 3-기타
+        # 취소사유, [1-거래취소 / 2-오류발급취소 / 3-기타]
         cancelType = 1
 
         # [취소] 공급가액
@@ -655,7 +651,7 @@ def search(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 조회 일자유형, R-등록일자, T-거래일자, I-발행일자
+        # 조회 일자유형, [R-등록일자 / T-거래일자 / I-발행일자]
         DType = "R"
 
         # 시작일자, 표시형식(yyyyMMdd)
@@ -667,13 +663,13 @@ def search(request):
         # 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용 가능
         State = ["3**", "4**"]
 
-        # 현금영수증 형태, N-일반 현금영수증, C-취소 현금영수증
+        # 현금영수증 형태, [N-일반 현금영수증 / C-취소 현금영수증]
         TradeType = ["N", "C"]
 
-        # 거래용도 배열, P-소득공제용, C-지출증빙용
+        # 거래용도 배열, [P-소득공제용 / C-지출증빙용]
         TradeUsage = ["P", "C"]
 
-        # 과세형태 배열, T-과세, N-비과세
+        # 과세형태 배열, [T-과세 / N-비과세]
         TaxationType = ["T", "N"]
 
         # 페이지 번호
@@ -682,7 +678,7 @@ def search(request):
         # 페이지당 목록개수
         PerPage = 10
 
-        # 정렬방향, D-내림차순, A-오름차순
+        # 정렬방향, [D-내림차순 / A-오름차순]
         Order = "D"
 
         # 현금영수증 식별번호, 미기재시 전체조회
@@ -1182,7 +1178,7 @@ def updateCorpInfo(request):
             bizType="업태_수정",
 
             # 종목
-            bizClass="종목_수"
+            bizClass="종목_수정"
         )
 
         response = cashbillService.updateCorpInfo(CorpNum, corpInfo, UserID)
