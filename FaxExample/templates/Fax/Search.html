@@ -6,9 +6,9 @@
         <fieldset class="fieldset1">
             <legend>전송내역 목록조회</legend>
             <ul>
-                <li> code (응답코드) : {{ response.code }}</li>
-                <li> message (응답메시지) : {{ response.message }}</li>
-                <li> total (검색결과 건수) : {{ response.total }}</li>
+                <li> code (요청에 대한 응답 상태코드) : {{ response.code }}</li>
+                <li> message (요청에 대한 응답 메시지) : {{ response.message }}</li>
+                <li> total (총 검색결과 건수) : {{ response.total }}</li>
                 <li> perPage (페이지당 검색개수) : {{ response.perPage }}</li>
                 <li> pageNum (페이지 번호) {{ response.pageNum }}</li>
                 <li> pageCount (페이지 개수) {{ response.pageCount }}</li>

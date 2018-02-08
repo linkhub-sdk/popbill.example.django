@@ -290,13 +290,13 @@ def search(request):
         # 종료일자, 날짜형식(yyyyMMdd)
         EDate = "20180131"
 
-        # 팩스전송상태 배열, 1(대기), 2(성공), 3(실패), 4(취소)
+        # 팩스전송상태 배열, [1-대기 / 2-성공 / 3-실패 / 4-취소]
         State = ["1", "2", "3", "4"]
 
-        # 예약전송 검색여부, True-예약전송건 조회, False-전체조회
+        # 예약전송 검색여부, [True-예약전송건 조회 / False-전체조회]
         ReserveYN = False
 
-        # 개인조회 여부, True-개인조회, False-회사조회
+        # 개인조회 여부, [True-개인조회 / False-회사조회]
         SenderOnly = False
 
         # 페이지 번호
@@ -305,7 +305,7 @@ def search(request):
         # 페이지당 목록갯수, 기본값 500
         PerPage = 10
 
-        # 정렬방향, D-내림차순, A-오름차순
+        # 정렬방향, [D-내림차순 / A-오름차순]
         Order = "D"
 
         response = faxService.search(CorpNum, SDate, EDate, State, ReserveYN, SenderOnly,
