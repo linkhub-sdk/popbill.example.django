@@ -109,7 +109,7 @@ def sendSMS_multi(request):
         # 광고문자 전송여부
         adsYN = False
 
-        # 개별수신정보 배열(최대 10000건)
+        # 개별수신정보 배열(최대 1000건)
         messages = []
         for x in range(0, 10):
             messages.append(
@@ -541,7 +541,7 @@ def getChargeInfo(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 문자유형, SMS(단문)/(장문)/MMS(포토)
+        # 문자유형, [SMS(단문) / LMS(장문) / MMS(포토)]
         MsgType = "SMS"
 
         response = messageService.getChargeInfo(CorpNum, MsgType, UserID)
@@ -561,7 +561,7 @@ def getUnitCost(request):
         # 팝빌회원 아이디
         CorpNum = settings.testCorpNum
 
-        # 문자전송유형, SMS(단문) / LMS(장문) / MMS(포토)
+        # 문자전송유형, [SMS(단문) / LMS(장문) / MMS(포토)]
         MsgType = "MMS"
 
         result = messageService.getUnitCost(CorpNum, MsgType)

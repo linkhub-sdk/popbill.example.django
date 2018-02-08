@@ -27,7 +27,7 @@ def getURL_SENDER(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # BOX - 문자 전송내역 팝업, SENDER- 발신번호 관리 팝업
+        # BOX-팩스 전송내역 팝업, SENDER-발신번호 관리 팝업
         TOGO = "SENDER"
 
         url = faxService.getURL(CorpNum, UserID, TOGO)
@@ -64,16 +64,16 @@ def sendFAX(request):
         UserID = settings.testUserID
 
         # 발신번호
-        Sender = '070111222'
+        Sender = "070111222"
 
         # 발신자명
-        SenderName = '발신자명'
+        SenderName = "발신자명"
 
         # 수신번호
-        Receiver = '070222111'
+        Receiver = "070222111"
 
         # 수신자명
-        ReceiverName = '수신자명'
+        ReceiverName = "수신자명"
 
         # 파일경로 (해당파일에 읽기 권한이 설정되어 있어야 함. 최대 5개)
         FilePath = ["./FaxExample/static/file/faxfile.jpg", "./FaxExample/static/file/test.pdf"]
@@ -109,10 +109,10 @@ def sendFAX_multi(request):
         UserID = settings.testUserID
 
         # 발신번호
-        Sender = '07043042991'
+        Sender = "07043042991"
 
         # 발신자명
-        SenderName = '발신자명'
+        SenderName = "발신자명"
 
         # 파일경로
         FilePath = "./FaxExample/static/file/faxfile.jpg"
@@ -124,14 +124,14 @@ def sendFAX_multi(request):
         ReserveDT = None
 
         # 팩스제목
-        Title = 'Python 팩스동보전송 제목'
+        Title = "Python 팩스동보전송 제목"
 
         Receivers = []  # 수신정보 배열, 최대 1000개
         for x in range(0, 5):
             Receivers.append(
                 FaxReceiver(
-                    receiveNum='070111222',  # 수신번호
-                    receiveName='수신자명' + str(x),  # 수신자명
+                    receiveNum="070111222",  # 수신번호
+                    receiveName="수신자명" + str(x),  # 수신자명
                 )
             )
 
@@ -156,17 +156,17 @@ def resendFAX(request):
         UserID = settings.testUserID
 
         # 팩스 접수번호
-        ReceiptNum = '018012215343900001'
+        ReceiptNum = "018012215343900001"
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
-        Sender = ''
+        Sender = ""
 
         # 발신자명, 공백처리시 기존전송정보로 재전송
-        SenderName = '발신자명'
+        SenderName = "발신자명"
 
         # 수신번호/수신자명 모두 공백처리시 기존전송정보로 재전송
         # 수신번호
-        Receiver = ''
+        Receiver = ""
 
         # 수신자명
         ReceiverName = ''
@@ -175,7 +175,7 @@ def resendFAX(request):
         ReserveDT = ''
 
         # 팩스제목
-        Title = '팩스 재전송 제목'
+        Title = "팩스 재전송 제목"
 
         receiptNum = faxService.resendFax(CorpNum, ReceiptNum, Sender, SenderName,
                                           Receiver, ReceiverName, ReserveDT, UserID, Title)
@@ -198,22 +198,22 @@ def resendFAX_multi(request):
         UserID = settings.testUserID
 
         # 팩스 접수번호
-        ReceiptNum = '018012215401700001'
+        ReceiptNum = "018012215401700001"
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
-        Sender = ''
+        Sender = ""
 
         # 발신자명, 공백처리시 기존전송정보로 재전송
-        SenderName = '발신자명'
+        SenderName = "발신자명"
 
         # 예약전송시간, 공백시 즉시전송, 작성형태 yyyyMMddHHmmss
-        ReserveDT = ''
+        ReserveDT = ""
 
         # 수신정보 배열 None 처리시 기존전송정보로 전송
         Receivers = None
 
         # 팩스제목
-        Title = 'Python 팩스동보 재전송'
+        Title = "Python 팩스동보 재전송"
 
         # 수신자 정보가 기존전송정보와 다를경우 아래의 코드 참조
         """
@@ -221,8 +221,8 @@ def resendFAX_multi(request):
         for x in range(0, 10):
             Receivers.append(
             	FaxReceiver(
-                    receiveNum = '010111222', # 수신번호
-                	receiveName = '수신자명'+str(x), # 수신자명
+                    receiveNum = "010111222", # 수신번호
+                	receiveName = "수신자명"+str(x), # 수신자명
                 )
             )
         """
