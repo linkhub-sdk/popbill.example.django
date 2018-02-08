@@ -29,7 +29,7 @@ def requestJob(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 현금영수증 유형, SELL-매출 현금영수증, BUY-매입 현금영수증
+        # 현금영수증 유형, [SELL-매출 현금영수증 / BUY-매입 현금영수증]
         Type = "SELL"
 
         # 시작일자, 날짜형식(yyyyMMdd)
@@ -59,7 +59,7 @@ def getJobState(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
-        jobID = "018020617000000002"
+        jobID = "018020811000000002"
 
         response = htCashbillService.getJobState(CorpNum, jobID, UserID)
 
@@ -103,12 +103,12 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018020617000000002"
+        JobID = "018020811000000002"
 
-        # 문서형태 배열, N-일반 현금영수증, M-취소 현금영수증
+        # 문서형태 배열, [N-일반 현금영수증 / M-취소 현금영수증]
         TradeType = ["N", "C"]
 
-        # 거래용도 배열, P-소득공제용, C-지출증빙용
+        # 거래용도 배열, [P-소득공제용 / C-지출증빙용]
         TradeUsage = ["P", "C"]
 
         # 페이지번호
@@ -117,7 +117,7 @@ def search(request):
         # 페이지당 목록개수, 최대값 1000
         PerPage = 10
 
-        # 정렬방향 D-내림차순, A-오름차순
+        # 정렬방향 [D-내림차순 / A-오름차순]
         Order = "D"
 
         response = htCashbillService.search(CorpNum, JobID, TradeType, TradeUsage,
@@ -142,12 +142,12 @@ def summary(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018020617000000002"
+        JobID = "018020811000000002"
 
-        # 문서형태 배열, N-일반 현금영수증, M-취소 현금영수증
+        # 문서형태 배열, [N-일반 현금영수증 / M-취소 현금영수증]
         TradeType = ["N", "C"]
 
-        # 거래용도 배열, P-소득공제용, C-지출증빙용
+        # 거래용도 배열, [P-소득공제용 / C-지출증빙용]
         TradeUsage = ["P", "C"]
 
         response = htCashbillService.summary(CorpNum, JobID, TradeType, TradeUsage, UserID)

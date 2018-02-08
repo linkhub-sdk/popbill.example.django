@@ -6,9 +6,9 @@
         <fieldset class="fieldset1">
             <legend>홈택스 수집 결과 조회</legend>
             <ul>
-                <li> code (응답코드) : {{ response.code }}</li>
-                <li> message (응답메시지) : {{ response.message }}</li>
-                <li> total (검색결과 건수) : {{ response.total }}</li>
+                <li> code (요청에 대한 응답 상태코드) : {{ response.code }}</li>
+                <li> message (요청에 대한 응답 메시지) : {{ response.message }}</li>
+                <li> total (총 검색결과 건수) : {{ response.total }}</li>
                 <li> perPage (페이지당 검색개수) : {{ response.perPage }}</li>
                 <li> pageNum (페이지 번호) {{ response.pageNum }}</li>
                 <li> pageCount (페이지 개수) {{ response.pageCount }}</li>
@@ -17,22 +17,36 @@
                         <legend> 세금계산서 요약정보 [ {{ forloop.counter }} ]</legend>
                         <ul>
                             <li> ntsconfirmNum (국세청승인번호) : {{ cashbillInfo.ntsconfirmNum }}</li>
-                            <li> tradeDT (거래일시) : {{ cashbillInfo.tradeDT }}</li>
-                            <li> tradeUsage (거래유형) : {{ cashbillInfo.tradeUsage }}</li>
-                            <li> tradeType (현금영수증 형태) : {{ cashbillInfo.tradeType }}</li>
+                            <li> writeDate (작성일자) : {{ cashbillInfo.writeDate }}</li>
+                            <li> issueDate (발행일자) : {{ cashbillInfo.issueDate }}</li>
+                            <li> taxType (과세형태) : {{ cashbillInfo.taxType }}</li>
+                            <li> purposeType (영수/청구) : {{ cashbillInfo.purposeType }}</li>
+                            <li> modifyYN (수정 현금영수증 여부) : {{ cashbillInfo.modifyYN }}</li>
+                            <li> orgNTSConfirmNum (원본 현금영수증 국세청승인번호) : {{ cashbillInfo.orgNTSConfirmNum }}</li>
+                            <li> supplyCostTotal (공급가액 합계) : {{ cashbillInfo.supplyCostTotal }}</li>
+                            <li> itemName (품명) : {{ cashbillInfo.itemName }}</li>
+                            <li> spec (규격) : {{ cashbillInfo.spec }}</li>
+                            <li> qty (수량) : {{ cashbillInfo.qty }}</li>
+                            <li> unitCost (단가) : {{ cashbillInfo.unitCost }}</li>
                             <li> supplyCost (공급가액) : {{ cashbillInfo.supplyCost }}</li>
                             <li> tax (세액) : {{ cashbillInfo.tax }}</li>
-                            <li> serviceFee (봉사료) : {{ cashbillInfo.serviceFee }}</li>
-                            <li> totalAmount (거래금액) : {{ cashbillInfo.totalAmount }}</li>
-                            <li> franchiseCorpNum (발행자 사업자번호) : {{ cashbillInfo.franchiseCorpNum }}</li>
-                            <li> franchiseCorpName (발행자 상호) : {{ cashbillInfo.franchiseCorpName }}</li>
-                            <li> franchiseCorpType (발행자 사업자유형) : {{ cashbillInfo.franchiseCorpType }}</li>
-                            <li> identityNum (거래처 식별번호) : {{ cashbillInfo.identityNum }}</li>
-                            <li> identityNumType (식별번호유형) : {{ cashbillInfo.identityNumType }}</li>
-                            <li> customerName (고객명) : {{ cashbillInfo.customerName }}</li>
-                            <li> cardOwnerName (카드소유자명) : {{ cashbillInfo.cardOwnerName }}</li>
-                            <li> deductionType (공제유형) : {{ cashbillInfo.deductionType }}</li>
-                            <li> invoiceType (구분) : {{ cashbillInfo.invoiceType }}</li>
+                            <li> remark (비고) : {{ cashbillInfo.remark }}</li>
+                            <li> invoicerCorpNum (공급자 사업자번호) : {{ cashbillInfo.invoicerCorpNum }}</li>
+                            <li> invoicerTaxRegID (공급자 종사업장번호) : {{ cashbillInfo.invoicerTaxRegID }}</li>
+                            <li> invoicerCorpName (공급자 상호) : {{ cashbillInfo.invoicerCorpName }}</li>
+                            <li> invoicerCEOName (공급자 대표자 성명) : {{ cashbillInfo.invoicerCEOName }}</li>
+                            <li> invoicerEmail (공급자 담당자 이메일) : {{ cashbillInfo.invoicerEmail }}</li>
+                            <li> invoiceeCorpNum (공급받는자 사업자번호) : {{ cashbillInfo.invoiceeCorpNum }}</li>
+                            <li> invoiceeType (공급받는자 구분) : {{ cashbillInfo.invoiceeType }}</li>
+                            <li> invoiceeTaxRegID (공급받는자 종사업장번호) : {{ cashbillInfo.invoiceeTaxRegID }}</li>
+                            <li> invoiceeCorpName (공급받는자 상호) : {{ cashbillInfo.invoiceeCorpName }}</li>
+                            <li> invoiceeCEOName (공급받는자 대표자 성명) : {{ cashbillInfo.invoiceeCEOName }}</li>
+                            <li> invoiceeEmail1 (공급받는자 담당자 이메일) : {{ cashbillInfo.invoiceeEmail1 }}</li>
+                            <li> trusteeCorpNum (수탁자 사업자번호) : {{ cashbillInfo.trusteeCorpNum }}</li>
+                            <li> trusteeTaxRegID (수탁자 종사업장번호) : {{ cashbillInfo.trusteeTaxRegID }}</li>
+                            <li> trusteeCorpName (수탁자 상호) : {{ cashbillInfo.trusteeCorpName }}</li>
+                            <li> trusteeCEOName (수탁자 대표자 성명) : {{ cashbillInfo.trusteeCEOName }}</li>
+                            <li> trusteeEmail (수탁자 담당자 이메일) : {{ cashbillInfo.trusteeEmail }}</li>
                         </ul>
                     </fieldset>
                 {% endfor %}
