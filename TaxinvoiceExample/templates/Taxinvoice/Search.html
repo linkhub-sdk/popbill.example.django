@@ -6,9 +6,9 @@
         <fieldset class="fieldset1">
             <legend>세금계산서 목록조회</legend>
             <ul>
-                <li> code (응답코드) : {{ response.code }}</li>
-                <li> message (응답메시지) : {{ response.message }}</li>
-                <li> total (검색결과 건수) : {{ response.total }}</li>
+                <li> code (요청에 대한 응답 상태코드) : {{ response.code }}</li>
+                <li> message (요청에 대한 응답 메시지) : {{ response.message }}</li>
+                <li> total (총 검색결과 건수) : {{ response.total }}</li>
                 <li> perPage (페이지당 검색개수) : {{ response.perPage }}</li>
                 <li> pageNum (페이지 번호) {{ response.pageNum }}</li>
                 <li> pageCount (페이지 개수) {{ response.pageCount }}</li>
@@ -25,18 +25,15 @@
                             <li> lateIssueYN (지연발행 여부) : {{ taxinvoiceInfo.lateIssueYN }}</li>
                             <li> interOPYN (연동문서 여부) : {{ taxinvoiceInfo.interOPYN }}</li>
                             <li> writeDate (작성일자) : {{ taxinvoiceInfo.writeDate }}</li>
-
                             <li> invoicerCorpName (공급자 상호) : {{ taxinvoiceInfo.invoicerCorpName }}</li>
                             <li> invoicerCorpNum (공급자 사업자번호) : {{ taxinvoiceInfo.invoicerCorpNum }}</li>
                             <li> invoicerMgtKey (공급자 문서관리번호) : {{ taxinvoiceInfo.invoicerMgtKey }}</li>
                             <li> invoicerPrintYN (공급자 인쇄여부) : {{ taxinvoiceInfo.invoicerPrintYN }}</li>
-
                             <li> invoiceeCorpName (공급받는자 상호) : {{ taxinvoiceInfo.invoiceeCorpName }}</li>
                             <li> invoiceeCorpNum (공급받는자 사업자번호) : {{ taxinvoiceInfo.invoiceeCorpNum }}</li>
                             <li> invoiceePrintYN (공급받는자 인쇄여부) : {{ taxinvoiceInfo.invoiceePrintYN }}</li>
                             <li> closeDownState (공급받는자 휴폐업상태) : {{ taxinvoiceInfo.closeDownState }}</li>
                             <li> closeDownStateDate (공급받는자 휴폐업일자) : {{ taxinvoiceInfo.closeDownStateDate }}</li>
-
                             <li> supplyCostTotal (공급가액 합계) : {{ taxinvoiceInfo.supplyCostTotal }}</li>
                             <li> taxTotal (세액 합계) : {{ taxinvoiceInfo.taxTotal }}</li>
                             <li> issueDT (발행 일시) : {{ taxinvoiceInfo.issueDT }}</li>
