@@ -6,9 +6,9 @@
         <fieldset class="fieldset1">
             <legend>홈택스 수집 결과 조회</legend>
             <ul>
-                <li> code (응답코드) : {{ response.code }}</li>
-                <li> message (응답메시지) : {{ response.message }}</li>
-                <li> total (검색결과 건수) : {{ response.total }}</li>
+                <li> code (요청에 대한 응답 상태코드) : {{ response.code }}</li>
+                <li> message (요청에 대한 응답 메시지) : {{ response.message }}</li>
+                <li> total (총 검색결과 건수) : {{ response.total }}</li>
                 <li> perPage (페이지당 검색개수) : {{ response.perPage }}</li>
                 <li> pageNum (페이지 번호) {{ response.pageNum }}</li>
                 <li> pageCount (페이지 개수) {{ response.pageCount }}</li>
@@ -26,8 +26,7 @@
                             <li> taxTotal (세액 합계) : {{ taxinvoiceInfo.totalAmount }}</li>
                             <li> totalAmount (합계금액) : {{ taxinvoiceInfo.totalAmount }}</li>
                             <li> remark1 (비고) : {{ taxinvoiceInfo.remark1 }}</li>
-                            <li> invoiceType (구분) : {{ taxinvoiceInfo.invoiceType }}</li>
-
+                            <li> invoiceType (매입/매출) : {{ taxinvoiceInfo.invoiceType }}</li>
                             <li> modifyYN (수정 전자세금계산서 여부) : {{ taxinvoiceInfo.modifyYN }}</li>
                             <li> orgNTSConfirmNum (원본 전자세금계산서 국세청승인번호) : {{ taxinvoiceInfo.orgNTSConfirmNum }}</li>
                             <li> purchaseDate (거래일자) : {{ taxinvoiceInfo.purchaseDate }}</li>
@@ -38,19 +37,22 @@
                             <li> supplyCost (공급가액) : {{ taxinvoiceInfo.supplyCost }}</li>
                             <li> tax (세액) : {{ taxinvoiceInfo.tax }}</li>
                             <li> remark (비고) : {{ taxinvoiceInfo.remark }}</li>
-
                             <li> invoicerCorpNum (공급자 사업자번호) : {{ taxinvoiceInfo.invoicerCorpNum }}</li>
                             <li> invoicerTaxRegID (공급자 종사업장번호) : {{ taxinvoiceInfo.invoicerTaxRegID }}</li>
                             <li> invoicerCorpName (공급자 상호) : {{ taxinvoiceInfo.invoicerCorpName }}</li>
-                            <li> invoicerCEOName (공급자 대표자성명) : {{ taxinvoiceInfo.invoicerCEOName }}</li>
-                            <li> invoicerEmail (공급자 이메일) : {{ taxinvoiceInfo.invoicerEmail }}</li>
-
+                            <li> invoicerCEOName (공급자 대표자 성명) : {{ taxinvoiceInfo.invoicerCEOName }}</li>
+                            <li> invoicerEmail (공급자 담당자 이메일) : {{ taxinvoiceInfo.invoicerEmail }}</li>
                             <li> invoiceeCorpNum (공급받는자 사업자번호) : {{ taxinvoiceInfo.invoiceeCorpNum }}</li>
                             <li> invoiceeType (공급받는자 구분) : {{ taxinvoiceInfo.invoiceeType }}</li>
                             <li> invoiceeTaxRegID (공급받는자 종사업장번호) : {{ taxinvoiceInfo.invoiceeTaxRegID }}</li>
                             <li> invoiceeCorpName (공급받는자 상호) : {{ taxinvoiceInfo.invoiceeCorpName }}</li>
-                            <li> invoiceeCEOName (공급받는자 대표자성명) : {{ taxinvoiceInfo.invoiceeCEOName }}</li>
-                            <li> invoiceeEmail1 (공급받는자 이메일) : {{ taxinvoiceInfo.invoiceeEmail1 }}</li>
+                            <li> invoiceeCEOName (공급받는자 대표자 성명) : {{ taxinvoiceInfo.invoiceeCEOName }}</li>
+                            <li> invoiceeEmail1 (공급받는자 담당자 이메일) : {{ taxinvoiceInfo.invoiceeEmail1 }}</li>
+                            <li> trusteeCorpNum (수탁자 사업자번호) : {{ taxinvoiceInfo.trusteeCorpNum }}</li>
+                            <li> trusteeTaxRegID (수탁자 종사업장번호) : {{ taxinvoiceInfo.trusteeTaxRegID }}</li>
+                            <li> trusteeCorpName (수탁자 상호) : {{ taxinvoiceInfo.trusteeCorpName }}</li>
+                            <li> trusteeCEOName (수탁자 대표자 성명) : {{ taxinvoiceInfo.trusteeCEOName }}</li>
+                            <li> trusteeEmail (수탁자 담당자 이메일) : {{ taxinvoiceInfo.trusteeEmail }}</li>
                         </ul>
                     </fieldset>
                 {% endfor %}

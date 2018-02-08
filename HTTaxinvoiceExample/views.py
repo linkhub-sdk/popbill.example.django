@@ -29,10 +29,10 @@ def requestJob(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 전자세금계산서  발행유형, SELL-매출, BUY-매입, TRUSTEE-위수탁
+        # 전자세금계산서  발행유형, [SELL-매출 / BUY-매입 / TRUSTEE-위수탁]
         Type = "SELL"
 
-        # 일자유형, W-작성일자, I-발행일자, S-전송일자
+        # 일자유형, [W-작성일자 / I-발행일자 / S-전송일자]
         DType = "W"
 
         # 시작일자, 날짜형식(yyyyMMdd)
@@ -62,7 +62,7 @@ def getJobState(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
-        jobID = "018020617000000001"
+        jobID = "018020810000000001"
 
         response = htTaxinvoiceService.getJobState(CorpNum, jobID, UserID)
 
@@ -106,21 +106,21 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018020617000000001"
+        JobID = "018020810000000001"
 
-        # 문서형태 배열, N-일반전자세금계산서, M-수정전자세금계산서
+        # 문서형태 배열, [N-일반전자세금계산서 / M-수정전자세금계산서]
         Type = ["N", "M"]
 
-        # 과세형태 배열, T-과세, N-면세, Z-영세
+        # 과세형태 배열, [T-과세 / N-면세 / Z-영세]
         TaxType = ["T", "N", "Z"]
 
-        # 영수/청구, R-영수, C-청구, N-없음
+        # 영수/청구, [R-영수 / C-청구 / N-없음]
         PurposeType = ["R", "C", "N"]
 
-        # 종사업자번호 사업자 유형, S-꽁급자, B-공급받는자, T-수탁자
+        # 종사업자번호 사업자 유형, [S-꽁급자 / B-공급받는자 / T-수탁자]
         TaxRegIDType = "S"
 
-        # 종사업장번호 유무, 공백-전체조회, 0-종사업장번호 없음, 1-종사업장번호 있음
+        # 종사업장번호 유무, [공백-전체조회 / 0-종사업장번호 없음 / 1-종사업장번호 있음]
         TaxRegIDYN = ""
 
         # 종사업장번호, 콤마(",")로 구분하여 구성 ex) "0001", "0007"
@@ -132,7 +132,7 @@ def search(request):
         # 페이지당 목록개수, 최대값 1000
         PerPage = 10
 
-        # 정렬방향 D-내림차순, A-오름차순
+        # 정렬방향 [D-내림차순 / A-오름차순]
         Order = "D"
 
         response = htTaxinvoiceService.search(CorpNum, JobID, Type, TaxType, PurposeType,
@@ -157,21 +157,21 @@ def summary(request):
         UserID = settings.testUserID
 
         # 수집 요청(requestJob)시 발급받은 작업아이디
-        JobID = "018020617000000001"
+        JobID = "018020811000000001"
 
-        # 문서형태 배열, N-일반전자세금계산서, M-수정전자세금계산서
+        # 문서형태 배열, [N-일반전자세금계산서 / M-수정전자세금계산서]
         Type = ["N", "M"]
 
-        # 과세형태, T-과세, N-면세, Z-영세
+        # 과세형태, [T-과세 / N-면세 / Z-영세]
         TaxType = ["T", "N", "Z"]
 
-        # 영수/청구, R-영수, C-청구, N-없음
+        # 영수/청구, [R-영수 / C-청구 / N-없음]
         PurposeType = ["R", "C", "N"]
 
-        # 종사업장번호 사업자유형, S-공급자, B-공급받는자, T-수탁자
+        # 종사업장번호 사업자유형, [S-공급자 / B-공급받는자 / T-수탁자]
         TaxRegIDType = "S"
 
-        # 종사업장번호 유무,,공백 - 전체조회, 0- 종사업장번호 없음, 1-종사업장번호 있음
+        # 종사업장번호 유무, [공백-전체조회 / 0-종사업장번호 없음 / 1-종사업장번호 있음]
         TaxRegIDYN = ""
 
         # 종사업장번호, 콤마(",")로 구분하여 구성 Ex) "0001,0007"
@@ -222,7 +222,7 @@ def getXML(request):
         UserID = settings.testUserID
 
         # 전자세금계산서 국세청승인번호
-        NTSConfirmNum = "20161121410002030000079"
+        NTSConfirmNum = "20161121410002030000079e"
 
         response = htTaxinvoiceService.getXML(CorpNum, NTSConfirmNum, UserID)
 

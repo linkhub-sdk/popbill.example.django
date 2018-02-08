@@ -6,8 +6,8 @@
         <fieldset class="fieldset1">
             <legend>상세정보 확인 - XML</legend>
             <ul>
-                <li> ResultCode (응답코드) :  {{ response.ResultCode }}</li>
-                <li> Message (국세청승인번호) : {{ response.Message }}</li>
+                <li> ResultCode (요청에 대한 응답 상태코드) :  {{ response.ResultCode }}</li>
+                <li> Message (전자세금계산서 국세청승인번호) : {{ response.Message }}</li>
                 <li> retObject (전자세금계산서 XML문서) : {{ response.retObject }}</li>
             </ul>
         </fieldset>

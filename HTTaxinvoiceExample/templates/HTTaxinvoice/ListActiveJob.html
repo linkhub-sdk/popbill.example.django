@@ -5,7 +5,7 @@
         <br/>
         <fieldset class="fieldset1">
             <legend>수집 상태 목록 확인</legend>
-            {% for response in list%}
+            {% for response in list %}
                 <fieldset class="fieldset2">
                     <legend>JobID (작업아이디) : {{ response.jobID }}</legend>
                     <ul>
@@ -15,6 +15,7 @@
                         <li> queryStDate (시작일자) : {{ response.queryStDate }}</li>
                         <li> queryEnDate (종료일자) : {{ response.queryEnDate }}</li>
                         <li> errorCode (오류코드) : {{ response.errorCode }}</li>
+                        <li> errorReason (오류메시지) : {{ response.errorReason }}</li>
                         <li> jobStartDT (작업 시작일시) : {{ response.jobStartDT }}</li>
                         <li> jobEndDT (작업 종료일시) : {{ response.jobEndDT }}</li>
                         <li> collectCount (수집개수) : {{ response.collectCount }}</li>
