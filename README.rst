@@ -60,4 +60,5 @@ how to test ?
 사이트
 -------------------------------
 `링크허브(Linkhub) <https://www.linkhub.co.kr/>`_,
-`팝빌(Popbill) <https://www.popbill.com/>`_
+`팝빌(Popbill) <https://www.popbill.com/>`_,
+`Django SDK 적용방법 <http://blog.linkhub.co.kr/4311/>`_
