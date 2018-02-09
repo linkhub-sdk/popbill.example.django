@@ -29,7 +29,7 @@ popbill.sdk.example.django
 
     $ pip install -r requirements.txt
 
-* install easy_install by
+* ..or install easy_install by
 ::
 
     $ easy_install popbill django==1.11
