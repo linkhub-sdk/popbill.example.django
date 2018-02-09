@@ -14,7 +14,7 @@
                 <li> pageCount (페이지 개수) {{ response.pageCount }}</li>
                 {% for cashbillInfo in response.list %}
                     <fieldset class="fieldset2">
-                        <legend> 세금계산서 요약정보 [ {{ forloop.counter }} ]</legend>
+                        <legend> 현금영수증 요약정보 [ {{ forloop.counter }} ]</legend>
                         <ul>
                             <li> ntsconfirmNum (국세청승인번호) : {{ cashbillInfo.ntsconfirmNum }}</li>
                             <li> tradeDT (거래일시) : {{ cashbillInfo.tradeDT }}</li>
