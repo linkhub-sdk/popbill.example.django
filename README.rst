@@ -29,6 +29,11 @@ popbill.sdk.example.django
 
     $ pip install -r requirements.txt
 
+* install easy_install by
+::
+
+    $ easy_install popbill django==1.11
+
 how to test ?
 ------------------------------
 * modify config/settings.py with LinkID/SecretKey issued by Linkhub.
