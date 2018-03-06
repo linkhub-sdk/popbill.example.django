@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^HTTaxinvoiceExample/', include('HTTaxinvoiceExample.urls'), name='HTTaxinvoiceExample'),
     url(r'^HTCashbillExample/', include('HTCashbillExample.urls'), name='HTCashbillExample'),
     url(r'^ClosedownExample/', include('ClosedownExample.urls'), name='ClosedownExample'),
+    url(r'^KakaoExample/', include('KakaoExample.urls'), name='KakaoExample'),
 ]

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 카카오톡 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>발신번호 목록 확인</legend>
+                {% for senderList in senderList %}
+                    <fieldset class="fieldset2">
+                        <ul>
+                            <li> number (발신번호) : {{ senderList.number }}</li>
+                            <li> representYN (대표번호 지정여부) : {{ senderList.representYN }}</li>
+                            <li> state (등록상태) : {{ senderList.state }}</li>
+                        </ul>
+                    </fieldset>
+                {% endfor %}
+        </fieldset>
+    </div>
+{% endblock contents %}

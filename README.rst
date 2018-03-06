@@ -25,11 +25,13 @@ popbill.sdk.example.django
 +------------------+---------------------+
 
 * install pip by
+
 ::
 
     $ pip install -r requirements.txt
 
 * ..or install easy_install by
+
 ::
 
     $ easy_install popbill django==1.11
@@ -56,6 +58,7 @@ how to test ?
 * 홈택스 전자(세금)계산서 연계 API
 * 홈택스 현금영수증 연계 API
 * 휴폐업조회 API
+* 카카오톡 API
 
 사이트
 -------------------------------

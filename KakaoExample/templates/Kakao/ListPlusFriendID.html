@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 카카오톡 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>플러스친구 목록</legend>
+            {% for plusFriendID in listPlusFriendID %}
+                <fieldset class="fieldset2">
+                    <ul>
+                        <li> plusFriendID (플러스친구 아이디) : {{ plusFriendID.plusFriendID }}</li>
+                        <li> plusFriendName (플러스친구 이름) : {{ plusFriendID.plusFriendName }}</li>
+                        <li> regDT (등록일시) : {{ plusFriendID.regDT }}</li>
+                    </ul>
+                </fieldset>
+            {% endfor %}
+        </fieldset>
+    </div>
+{% endblock contents %}

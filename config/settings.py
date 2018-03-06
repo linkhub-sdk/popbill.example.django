@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'HTTaxinvoiceExample',  # 홈택스 전자(세금)계산서 연계
     'HTCashbillExample',  # 홈택스 현금영수증 연계
     'ClosedownExample',  # 휴폐업조회
+    'KakaoExample'  # 카카오톡
 ]
 
 ROOT_URLCONF = 'config.urls'
