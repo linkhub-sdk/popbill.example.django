@@ -408,13 +408,13 @@ def revokeRegistIssue(request):
         UserID = settings.testUserID
 
         # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20180118-005"
+        mgtKey = "20180305-101"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "315234938"
+        orgConfirmNum = "527489269"
 
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20180117"
+        orgTradeDate = "20180227"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -586,7 +586,7 @@ def getInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180104001"
+        MgtKey = "20180305-001"
 
         cashbillInfo = cashbillService.getInfo(CorpNum, MgtKey)
 
@@ -629,7 +629,7 @@ def getDetailInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20161118-02"
+        MgtKey = "NLJ80227-68106601"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
 
