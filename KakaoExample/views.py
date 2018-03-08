@@ -18,7 +18,7 @@ def index(request):
 
 def getURL_PLUSFRIEND(request):
     """
-    플러스친구 계정관리 / 발신번호 관리 / 알림톡 템플릿관리 / 카카오톡전송내역 URL을 반환합니다.
+    플러스친구 계정관리 URL을 반환합니다.
      - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다"
     """
     try:
@@ -58,7 +58,7 @@ def listPlusFriendID(request):
 
 def getURL_SENDER(request):
     """
-    플러스친구 계정관리 / 발신번호 관리 / 알림톡 템플릿관리 / 카카오톡전송내역 URL을 반환합니다.
+    발신번호 관리 URL을 반환합니다.
      - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -95,7 +95,7 @@ def getSenderNumberList(request):
 
 def getURL_TEMPLATE(request):
     """
-    플러스친구 계정관리 / 발신번호 관리 / 알림톡 템플릿관리 / 카카오톡전송내역 URL을 반환합니다.
+    알림톡 템플릿관리 URL을 반환합니다.
      - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -117,7 +117,7 @@ def getURL_TEMPLATE(request):
 
 def listATStemplate(request):
     """
-    알림톡 템플릿 목록을 확인 합니다.
+    (주)카카오로 부터 승인된 알림톡 템플릿 목록을 확인 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -145,6 +145,7 @@ def sendATS_one(request):
         UserID = settings.testUserID
 
         # 알림톡 템플릿코드
+        # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetURL(TEMPLATE) API, 혹은 팝빌사이트에서 확인이 가능합니다.
         templateCode = "018020000002"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
@@ -188,6 +189,7 @@ def sendATS_same(request):
         UserID = settings.testUserID
 
         # 알림톡 템플릿 코드
+        # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetURL(TEMPLATE) API, 혹은 팝빌사이트에서 확인이 가능합니다.
         templateCode = "018020000001"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
@@ -251,18 +253,8 @@ def sendATS_multi(request):
                 KakaoReceiver(
                     rcv="010456456",  # 수신번호
                     rcvnm="linkhub",  # 수신자 이름
-                    msg="[테스트] 테스트 템플릿입니다.",  # 알림톡 내용 (최대 1000자)
+                    msg="[테스트] 테스트 템플릿입니다. " + x + "번째",  # 알림톡 내용 (최대 1000자)
                     altmsg="수신번호 010-456-456 알림톡 대체문자"  # 대체문자 내용 (최대 2000byte)
-                )
-            )
-
-        for x in range(0, 2):
-            KakaoMessages.append(
-                KakaoReceiver(
-                    rcv="010123321",  # 수신번호
-                    rcvnm="linkhub",  # 수신자 이름
-                    msg="[테스트] 테스트 템플릿입니다.",  # 알림톡 내용 (최대 1000자)
-                    altmsg="수신번호 010-123-321 알림톡 대체문자"  # 대체문자 내용 (최대 2000byte)
                 )
             )
 
@@ -436,18 +428,8 @@ def sendFTS_multi(request):
                 KakaoReceiver(
                     rcv="0101234567",
                     rcvnm="김현진",
-                    msg="안녕하세요 김현진님 링크허브입니다.",
-                    altmsg="(친구톡 대체문자) 안녕하세요 김현진님 링크허브입니다."
-                )
-            )
-
-        for x in range(0, 10):
-            KakaoMessages.append(
-                KakaoReceiver(
-                    rcv="0102345678",
-                    rcvnm="kimhyunjin",
-                    msg="안녕하세요 KIMHYUNJIN님 링크허브입니다.",
-                    altmsg="(친구톡 대체문자) 안녕하세요 KIMHYUNJIN님 링크허브입니다."
+                    msg="안녕하세요 " + x + "님 링크허브입니다.",
+                    altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."
                 )
             )
 
@@ -666,18 +648,8 @@ def sendFMS_multi(request):
                 KakaoReceiver(
                     rcv="0101234567",  # 수신번호
                     rcvnm="김현진",  # 수신자 이름
-                    msg="안녕하세요 김현진님 링크허브입니다.",  # 친구톡 내용 (최대 400자)
-                    altmsg="(친구톡 대체문자) 안녕하세요 김현진님 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
-                )
-            )
-
-        for x in range(0, 10):
-            KakaoMessages.append(
-                KakaoReceiver(
-                    rcv="0102345678",   # 수신번호
-                    rcvnm="kimhyunjin",  # 수신자 이름
-                    msg="안녕하세요 KIMHYUNJIN님 링크허브입니다.",     # 친구톡 내용 (최대 400자)
-                    altmsg="(친구톡 대체문자) 안녕하세요 KIMHYUNJIN님 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
+                    msg="안녕하세요 " + x + "님 링크허브입니다.",  # 친구톡 내용 (최대 400자)
+                    altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
                 )
             )
 
@@ -766,11 +738,11 @@ def search(request):
         # 전송상태 배열 [0-대기, 1-전송중, 2-성공, 3-대체 4-실패, 5-취소]
         State = ["1", "2", "3", "4", "5"]
 
-        # 전송유형 [ATS(알림톡) / FTS(친구톡 텍스트) / FMS(친구톡 이미지)]
-        Item = ["SMS", "LMS", "MMS"]
+        # 전송유형 [ATS(알림톡) / ATS(친구톡 텍스트) / FMS(친구톡 이미지)]
+        Item = ["ATS", "ATS", "FMS"]
 
-        # 예약전송 검색여부, [0-전체조회, 1-예약전송]
-        ReserveYN = "0"
+        # 예약전송 검색여부, [공백-전체조회, 0-즉시전송조회, 1-예약전송조회]
+        ReserveYN = ""
 
         # 개인조회여부 [0-전체조회, 1-개인조회]
         SenderYN = "0"
@@ -779,7 +751,7 @@ def search(request):
         Page = 1
 
         # 페이지당 목록개수
-        PerPage = 10
+        PerPage = 1000
 
         # 정렬방향 [D-내림차순, A-오름차순]
         Order = "D"
@@ -794,7 +766,7 @@ def search(request):
 
 def getURL_BOX(request):
     """
-    플러스친구 계정관리 / 발신번호 관리 / 알림톡 템플릿관리 / 카카오톡전송내역 URL을 반환합니다.
+    카카오톡전송내역 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
 
     """
