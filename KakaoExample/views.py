@@ -253,7 +253,7 @@ def sendATS_multi(request):
                 KakaoReceiver(
                     rcv="010456456",  # 수신번호
                     rcvnm="linkhub",  # 수신자 이름
-                    msg="[테스트] 테스트 템플릿입니다. " + x + "번째",  # 알림톡 내용 (최대 1000자)
+                    msg="[테스트] 테스트 템플릿입니다. " + str(x) + "번째",  # 알림톡 내용 (최대 1000자)
                     altmsg="수신번호 010-456-456 알림톡 대체문자"  # 대체문자 내용 (최대 2000byte)
                 )
             )
@@ -428,7 +428,7 @@ def sendFTS_multi(request):
                 KakaoReceiver(
                     rcv="0101234567",
                     rcvnm="김현진",
-                    msg="안녕하세요 " + x + "님 링크허브입니다.",
+                    msg="안녕하세요 " + str(x) + "님 링크허브입니다.",
                     altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."
                 )
             )
@@ -648,7 +648,7 @@ def sendFMS_multi(request):
                 KakaoReceiver(
                     rcv="0101234567",  # 수신번호
                     rcvnm="김현진",  # 수신자 이름
-                    msg="안녕하세요 " + x + "님 링크허브입니다.",  # 친구톡 내용 (최대 400자)
+                    msg="안녕하세요 " + str(x) + "님 링크허브입니다.",  # 친구톡 내용 (최대 400자)
                     altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
                 )
             )
@@ -730,10 +730,10 @@ def search(request):
         UserID = settings.testUserID
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20180227"
+        SDate = "20180301"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20180228"
+        EDate = "20180312"
 
         # 전송상태 배열 [0-대기, 1-전송중, 2-성공, 3-대체 4-실패, 5-취소]
         State = ["1", "2", "3", "4", "5"]
@@ -751,7 +751,7 @@ def search(request):
         Page = 1
 
         # 페이지당 목록개수
-        PerPage = 1000
+        PerPage = 10
 
         # 정렬방향 [D-내림차순, A-오름차순]
         Order = "D"
