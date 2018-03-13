@@ -13,6 +13,17 @@
                         <li> templateName (템플릿 제목) : {{ template.templateName }}</li>
                         <li> template (템플릿 내용) : {{ template.template }}</li>
                         <li> plusFriendID (플러스친구 아이디) : {{ template.plusFriendID }}</li>
+                        {% for btns in template.btns %}
+                            <fieldset class="fieldset2">
+                                <legend> 버튼 [{{ forloop.counter }}]</legend>
+                                <ul>
+                                    <li> n (버튼명) : {{ btns.n }}</li>
+                                    <li> t (버튼유형) : {{ btns.t }}</li>
+                                    <li> u1 (버튼링크1) : {{ btns.u1 }}</li>
+                                    <li> u2 (버튼링크2) : {{ btns.u2 }}</li>
+                                </ul>
+                            </fieldset>
+                        {% endfor %}
                     </ul>
                 </fieldset>
             {% endfor %}
