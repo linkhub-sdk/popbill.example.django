@@ -327,6 +327,9 @@ def register(request):
         # 사업자별로 중복되지 않도록 구성
         MgtKey = "2018-02-07-59"
 
+        # 거래명세서 동시작성여부
+        writeSpecification = False
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
@@ -557,7 +560,7 @@ def register(request):
             )
         ]
 
-        response = taxinvoiceService.register(CorpNum, taxinvoice, UserID)
+        response = taxinvoiceService.register(CorpNum, taxinvoice, writeSpecification, UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
