@@ -75,7 +75,7 @@ def sendFAX(request):
         # 수신자명
         ReceiverName = "수신자명"
 
-        # 파일경로 (해당파일에 읽기 권한이 설정되어 있어야 함. 최대 5개)
+        # 파일경로 (해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개)
         FilePath = ["./FaxExample/static/file/faxfile.jpg", "./FaxExample/static/file/test.pdf"]
 
         # 예약전송일시, None처리시 즉시전송, 작성형태 'yyyyMMddHHmmss'
@@ -114,8 +114,8 @@ def sendFAX_multi(request):
         # 발신자명
         SenderName = "발신자명"
 
-        # 파일경로
-        FilePath = "./FaxExample/static/file/faxfile.jpg"
+        # 파일경로 (해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개)
+        FilePath = ["./FaxExample/static/file/faxfile.jpg", "./FaxExample/static/file/test.pdf"]
 
         # 광고팩스 전송여부
         AdsYN = False
