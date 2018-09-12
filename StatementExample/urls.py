@@ -42,6 +42,8 @@ urlpatterns = [
     url(r'^FAXSend$', views.FAXSend, name='FAXSend'),
     url(r'^AttachStatement$', views.attachStatement, name='AttachStatement'),
     url(r'^DetachStatement$', views.detachStatement, name='DetachStatement'),
+    url(r'^ListEmailConfig', views.listEmailConfig, name='ListEmailConfig'),
+    url(r'^UpdateEmailConfig', views.updateEmailConfig, name='UpdateEmailConfig'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),

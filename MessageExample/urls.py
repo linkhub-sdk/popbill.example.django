@@ -20,13 +20,21 @@ urlpatterns = [
     url(r'^SendMMS_multi$', views.sendMMS_multi, name='SendMMS_multi'),
     url(r'^SendXMS$', views.sendXMS, name='SendXMS'),
     url(r'^SendXMS_multi$', views.sendXMS_multi, name='SendXMS_multi'),
-    url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
+
 
     # 정보확인
-    url(r'^GetMessages$', views.getMessages, name='GetMessages'),
     url(r'^Search$', views.search, name='Search'),
+    url(r'^GetStates$', views.getStates, name='GetStates$'),
     url(r'^GetURL_BOX$', views.getURL_BOX, name='GetURL_BOX'),
     url(r'^GetAutoDenyList$', views.getAutoDenyList, name='GetAutoDenyList'),
+
+    # 접수번호 관련 기능 (요청번호 미할당)
+    url(r'^GetMessages$', views.getMessages, name='GetMessages'),
+    url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
+
+    # 요청번호 할당 전송건 관련 기능
+    url(r'^GetMessagesRN$', views.getMessagesRN, name='GetMessagesRN'),
+    url(r'^CancelReserveRN$', views.cancelReserveRN, name='CancelReserveRN'),
 
     # 포인트 관리
     url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),

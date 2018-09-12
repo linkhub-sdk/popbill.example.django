@@ -1298,6 +1298,54 @@ def detachStatement(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def listEmailConfig(request):
+    """
+    전자명세서 관련 메일전송 항목에 대한 전송여부를 목록으로 반환합니다
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        EmailConfig = statementService.listEmailConfig(CorpNum, UserID)
+
+        return render(request, 'Statement/ListEmailConfig.html', {'EmailConfig': EmailConfig})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def updateEmailConfig(request):
+    """
+    전자명세서 관련 메일전송 항목에 대한 전송여부를 수정합니다.
+    메일전송유형
+    SMT_ISSUE : 공급받는자에게 전자명세서가 발행 되었음을 알려주는 메일입니다.
+    SMT_ACCEPT : 공급자에게 전자명세서가 승인 되었음을 알려주는 메일입니다.
+    SMT_DENY : 공급자에게 전자명세서가 거부 되었음을 알려주는 메일입니다.
+    SMT_CANCEL : 공급받는자에게 전자명세서가 취소 되었음을 알려주는 메일입니다.
+    SMT_CANCEL_ISSUE : 공급받는자에게 전자명세서가 발행취소 되었음을 알려주는 메일입니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 메일 전송 유형
+        EmailType = 'SMT_ISSUE'
+
+        # 전송 여부 (True = 전송, False = 미전송)
+        SendYN = True
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        response = statementService.updateEmailConfig(CorpNum, EmailType, SendYN, UserID)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.

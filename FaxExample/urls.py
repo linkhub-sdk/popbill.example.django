@@ -14,12 +14,20 @@ urlpatterns = [
     # 팩스 전송
     url(r'^SendFAX$', views.sendFAX, name='SendFAX'),
     url(r'^SendFAX_multi$', views.sendFAX_multi, name='SendSMS_multi'),
+
+    # 접수번호 관련 기능 (요청번호 미할당)
+    url(r'^GetFaxDetail$', views.getFaxDetail, name='GetFaxDetail'),
+    url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
     url(r'^ResendFAX$', views.resendFAX, name='ResendFAX'),
     url(r'^ResendFAX_multi$', views.resendFAX_multi, name='resendFAX_multi'),
-    url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
 
-    # 정보확인
-    url(r'^GetFaxDetail$', views.getFaxDetail, name='GetFaxDetail'),
+    # 요청번호 할당 전송건 관련 기능
+    url(r'^GetFaxDetailRN$', views.getFaxDetailRN, name='GetFaxDetailRN'),
+    url(r'^CancelReserveRN$', views.cancelReserveRN, name='CancelReserveRN'),
+    url(r'^ResendFAXRN$', views.resendFAXRN, name='ResendFAXRN'),
+    url(r'^ResendFAXRN_multi$', views.resendFAXRN_multi, name='resendFAXRN_multi'),
+
+    # 팩스전송 목록조회
     url(r'^Search$', views.search, name='Search'),
     url(r'^GetURL_BOX$', views.getURL_BOX, name='GetURL_BOX'),
 

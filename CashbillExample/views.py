@@ -934,6 +934,51 @@ def sendFAX(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def listEmailConfig(request):
+    """
+    현금영수증 관련 메일전송 항목에 대한 전송여부를 목록으로 반환합니다
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        EmailConfig = cashbillService.listEmailConfig(CorpNum, UserID)
+
+        return render(request, 'Cashbill/ListEmailConfig.html', {'EmailConfig': EmailConfig})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def updateEmailConfig(request):
+    """
+    현금영수증 관련 메일전송 항목에 대한 전송여부를 수정합니다.
+    메일전송유형
+    CSH_ISSUE : 고객에게 현금영수증이 발행 되었음을 알려주는 메일 입니다.
+    CSH_CANCEL : 고객에게 현금영수증이 발행취소 되었음을 알려주는 메일 입니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 메일 전송 유형
+        EmailType = 'CSH_ISSUE'
+
+        # 전송 여부 (True = 전송, False = 미전송)
+        SendYN = True
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        response = cashbillService.updateEmailConfig(CorpNum, EmailType, SendYN, UserID)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.

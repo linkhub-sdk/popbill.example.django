@@ -53,6 +53,9 @@ urlpatterns = [
     url(r'^AttachStatement$', views.attachStatement, name='AttachStatement'),
     url(r'^DetachStatement$', views.detachStatement, name='DetachStatement'),
     url(r'^GetEmailPublicKeys$', views.getEmailPublicKeys, name='GetEmailPublicKeys'),
+    url(r'^AssignMgtKet', views.assignMgtKet, name='AssignMgtKet'),
+    url(r'^ListEmailConfig', views.listEmailConfig, name='ListEmailConfig'),
+    url(r'^UpdateEmailConfig', views.updateEmailConfig, name='UpdateEmailConfig'),
 
     # 공인인증서 관리
     url(r'^GetPopbillURL_CERT$', views.getPopbillURL_CERT, name='GetPopbillURL_CERT'),

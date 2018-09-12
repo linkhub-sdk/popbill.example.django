@@ -41,6 +41,8 @@ urlpatterns = [
     url(r'^SendEmail$', views.sendEmail, name='SendEmail'),
     url(r'^SendSMS$', views.sendSMS, name='SendSMS'),
     url(r'^SendFAX$', views.sendFAX, name='SendFAX'),
+    url(r'^ListEmailConfig', views.listEmailConfig, name='ListEmailConfig'),
+    url(r'^UpdateEmailConfig', views.updateEmailConfig, name='UpdateEmailConfig'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),

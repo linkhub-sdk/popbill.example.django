@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 문자 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>전송 요약정보 확인</legend>
+            <ul>
+                {% for messageInfo in  resultList %}
+                    <fieldset class="fieldset2">
+                        <legend>전송 요약정보 확인 [{{ forloop.counter }}]</legend>
+                        <ul>
+                            <li> rNum (접수번호) : {{ messageInfo.rNum }}</li>
+                            <li> sn (일련번호) : {{ messageInfo.sn }}</li>
+                            <li> stat (전송 상태코드) : {{ messageInfo.stat }} </li>
+                            <li> rlt (전송 결과코드) : {{ messageInfo.rlt }}</li>
+                            <li> sDT (전송일시) : {{ messageInfo.sDT }}</li>
+                            <li> rDT (결과코드 수신일) : {{ messageInfo.rDT }}</li>
+                            <li> net (전송 이동통신사명) : {{ messageInfo.net }}</li>
+                        </ul>
+                    </fieldset>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

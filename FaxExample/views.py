@@ -87,8 +87,13 @@ def sendFAX(request):
         # 팩스제목
         Title = "Python 팩스단건 제목"
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = faxService.sendFax(CorpNum, Sender, Receiver, ReceiverName,
-                                        FilePath, ReserveDT, UserID, SenderName, AdsYN, Title)
+                                        FilePath, ReserveDT, UserID, SenderName, AdsYN, Title, RequestNum)
 
         return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -135,8 +140,13 @@ def sendFAX_multi(request):
                 )
             )
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = faxService.sendFax_multi(CorpNum, Sender, Receivers,
-                                              FilePath, ReserveDT, UserID, SenderName, AdsYN, Title)
+                                              FilePath, ReserveDT, UserID, SenderName, AdsYN, Title, RequestNum)
 
         return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -177,8 +187,62 @@ def resendFAX(request):
         # 팩스제목
         Title = "팩스 재전송 제목"
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = faxService.resendFax(CorpNum, ReceiptNum, Sender, SenderName,
-                                          Receiver, ReceiverName, ReserveDT, UserID, Title)
+                                          Receiver, ReceiverName, ReserveDT, UserID, Title, RequestNum)
+
+        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def resendFAXRN(request):
+    """
+    전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
+    - 전송일로부터 180일이 경과된 경우 재전송할 수 없습니다.
+    - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+    - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 원본 팩스 전송시 할당한 전송요청번호
+        OrgRequestNum = '20180912105825'
+
+        # 발신번호, 공백처리시 기존전송정보로 재전송
+        Sender = '07043042991'
+
+        # 발신자명, 공백처리시 기존전송정보로 재전송
+        SenderName = '발신자명'
+
+        # 수신번호/수신자명 모두 공백처리시 기존전송정보로 재전송
+        # 수신번호
+        Receiver = ''
+
+        # 수신자명
+        ReceiverName = ''
+
+        # 예약전송시간, 공백시 즉시전송, 작성형태 yyyyMMddHHmmss
+        ReserveDT = ''
+
+        # 팩스제목
+        Title = '팩스 재전송 제목'
+
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
+        receiptNum = faxService.resendFaxRN(CorpNum, OrgRequestNum, Sender, SenderName,
+                                            Receiver, ReceiverName, ReserveDT, UserID, Title, RequestNum)
 
         return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -226,9 +290,70 @@ def resendFAX_multi(request):
                 )
             )
         """
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
 
         receiptNum = faxService.resendFax_multi(CorpNum, ReceiptNum, Sender,
-                                                SenderName, Receivers, ReserveDT, UserID, Title)
+                                                SenderName, Receivers, ReserveDT, UserID, Title, RequestNum)
+
+        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def resendFAXRN_multi(request):
+    """
+    전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
+    - 전송일로부터 180일이 경과된 경우 재전송할 수 없습니다.
+    - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+    - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 원본 팩스 전송시 할당한 전송요청번호
+        OrgRequestNum = '20180912105825'
+
+        # 발신번호, 공백처리시 기존전송정보로 재전송
+        Sender = '07043042991'
+
+        # 발신자명, 공백처리시 기존전송정보로 재전송
+        SenderName = '발신자명'
+
+        # 예약전송시간, 공백시 즉시전송, 작성형태 yyyyMMddHHmmss
+        ReserveDT = ''
+
+        # 수신정보 배열 None 처리시 기존전송정보로 전송
+        Receivers = None
+
+        # 팩스제목
+        Title = 'Python 팩스동보 재전송'
+
+        # 수신자 정보가 기존전송정보와 다를경우 아래의 코드 참조
+        """
+        Receivers = [] # 수신정보 배열, 최대 1000개
+        for x in range(0, 10):
+            Receivers.append(
+            	FaxReceiver(
+                    receiveNum = '010111222', # 수신번호
+                	receiveName = '수신자명'+str(x), # 수신자명
+                )
+            )
+        """
+
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
+        receiptNum = faxService.resendFaxRN_multi(CorpNum, OrgRequestNum, Sender,
+                                                  SenderName, Receivers, ReserveDT, UserID, Title, RequestNum)
 
         return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -254,6 +379,25 @@ def cancelReserve(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def cancelReserveRN(request):
+    """
+    팩스전송요청시 할당한 전송요청번호(requestNum)로 팩스 예약전송건을 취소합니다.
+    - 예약전송 취소는 예약전송시간 10분전까지 가능합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 예약팩스전송 요청시 할당한 전송요청번호
+        requestNum = "20180912-004"
+
+        response = faxService.cancelReserveRN(CorpNum, requestNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
 def getFaxDetail(request):
     """
     팩스 전송요청시 반환받은 접수번호(receiptNum)을 사용하여 팩스전송
@@ -267,6 +411,24 @@ def getFaxDetail(request):
         receiptNum = "018012914050700001"
 
         resultList = faxService.getFaxResult(CorpNum, receiptNum)
+
+        return render(request, 'Fax/GetFaxDetail.html', {'resultList': resultList})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def getFaxDetailRN(request):
+    """
+    팩스전송요청시 할당한 전송요청번호(requestNum)으로 전송결과를 확인합니다
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 예약팩스전송 요청시 할당한 전송요청번호
+        requestNum = "20180809162125"
+
+        resultList = faxService.getFaxResultRN(CorpNum, requestNum)
 
         return render(request, 'Fax/GetFaxDetail.html', {'resultList': resultList})
     except PopbillException as PE:

@@ -61,26 +61,37 @@ def sendSMS(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 발신번호
-        Sender = "01012345678"
+        Sender = "07043042991"
+
+        # 발신자명
+        SenderName = "발신자명"
 
         # 수신번호
-        ReceiverNum = "01012345678"
+        ReceiverNum = "010111222"
 
         # 수신자명
         ReceiverName = "수신자명"
 
         # 단문메시지 내용, 90Byte 초과시 길이가 조정되 전송됨
-        Contents = "단문메시지"
+        Contents = "문자 API 단건전송 테스트"
 
         # 예약전송시간, 형태 yyyyMMddHHmmss 공백 기재시 즉시전송
         reserveDT = ""
 
         # 광고문자 전송여부
-        adsYN = True
+        adsYN = False
+
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
 
         receiptNum = messageService.sendSMS(CorpNum, Sender, ReceiverNum, ReceiverName,
-                                            Contents, reserveDT, adsYN)
+                                            Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
 
         return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -97,8 +108,11 @@ def sendSMS_multi(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 발신번호(동보전송용)
-        Sender = "01012345678"
+        Sender = "07043042991"
 
         # 단문메시지 내용(동보전송용)
         Contents = "동보전송용 메시지 내용"
@@ -109,21 +123,26 @@ def sendSMS_multi(request):
         # 광고문자 전송여부
         adsYN = False
 
-        # 개별수신정보 배열(최대 1000건)
+        # 개별수신정보 배열(최대 10000건)
         messages = []
         for x in range(0, 10):
             messages.append(
                 MessageReceiver(
-                    snd='01012345678',  # 발신번호
+                    snd='07043042991',  # 발신번호
                     sndnm='발신자명',  # 발신자명
-                    rcv='01012345678',  # 수신번호
+                    rcv='010111222',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
                     msg='단문 문자 API TEST'  # 메시지 내용, msg값이 없는경우 동보전송 메시지로 전송됨
                 )
             )
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = messageService.sendSMS_multi(CorpNum, Sender, Contents, messages,
-                                                  reserveDT, adsYN)
+                                                  reserveDT, adsYN, UserID, RequestNum)
 
         return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -138,20 +157,26 @@ def sendLMS(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 발신번호
-        Sender = "01012345678"
+        Sender = "07043042991"
+
+        # 발신자명
+        SenderName = "발신자명"
 
         # 수신번호
-        ReceiverNum = "01012345678"
+        ReceiverNum = "010111222"
 
         # 수신자명
         ReceiverName = "수신자명"
 
         # 장문 메시지 제목
-        Subject = "장문의 문자입니다."
+        Subject = "장문 문자 제목"
 
         # 장문 메시지 내용, 길이가 2000Byte 초과시 길이가 조정되어 전송됨.
-        Contents = "LMS 장문메세지 테스"
+        Contents = "장문메시지 단건전송 테스트"
 
         # 예약전송시간, 형태 yyyyMMddHHmmss, 공백 처리시 즉시전송
         reserveDT = ""
@@ -159,8 +184,13 @@ def sendLMS(request):
         # 광고문자 전송여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = messageService.sendLMS(CorpNum, Sender, ReceiverNum, ReceiverName,
-                                            Subject, Contents, reserveDT, adsYN)
+                                            Subject, Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
 
         return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -177,8 +207,11 @@ def sendLMS_multi(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 발신번호(동보전송용)
-        Sender = "01012345678"
+        Sender = "07043042991"
 
         # 장문 메시지 제목(동보전송용)
         Subject = "동보전송용 메시지 제목"
@@ -206,8 +239,13 @@ def sendLMS_multi(request):
                 )
             )
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = messageService.sendLMS_multi(CorpNum, Sender, Subject, Contents,
-                                                  messages, reserveDT, adsYN)
+                                                  messages, reserveDT, adsYN, UserID, RequestNum)
 
         return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -222,14 +260,20 @@ def sendMMS(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 발신번호
-        Sender = "01012345678"
+        Sender = "07043042991"
+
+        # 발신자명
+        SenderName = "발신자명"
 
         # 수신번호
-        ReceiverNum = "01012345678‬"
+        ReceiverNum = "010111222"
 
         # 수신자명
-        ReceiverName = "김현진"
+        ReceiverName = "수신자명"
 
         # 장문 메시지 제목
         Subject = "멀티 문자 제목"
@@ -237,17 +281,23 @@ def sendMMS(request):
         # 장문 메시지 내용, 길이가 2000Byte 초과시 길이가 조정되어 전송됨.
         Contents = "멀티메시지 단건전송 테스트"
 
-        # 예약전송시간, 공백 처리시 즉시전송(작성형태 yyyyMMddHHmmss)
+        # 예약전송시간, 형태 yyyyMMddHHmmss, 공백 처리시 즉시전송
         reserveDT = ""
 
         # 전송할 파일경로
-        FilePath = "./MessageExample/static/image/mms.jpg"
+        FilePath = './MessageExample/static/image/test.jpg'
 
         # 광고문자 전송여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = messageService.sendMMS(CorpNum, Sender, ReceiverNum, ReceiverName,
-                                            Subject, Contents, FilePath, reserveDT, adsYN)
+                                            Subject, Contents, FilePath, reserveDT, adsYN, UserID, SenderName,
+                                            RequestNum)
 
         return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -264,6 +314,9 @@ def sendMMS_multi(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 발신번호(동보전송용)
         Sender = "07043042991"
 
@@ -277,7 +330,7 @@ def sendMMS_multi(request):
         reserveDT = ""
 
         # 전송할 파일경로
-        filePath = "./MessageExample/static/image/mms.jpg"
+        filePath = './MessageExample/static/image/test.jpg'
 
         # 광고문자 전송여부
         adsYN = False
@@ -287,17 +340,22 @@ def sendMMS_multi(request):
         for x in range(0, 5):
             messages.append(
                 MessageReceiver(
-                    snd='01012345678',  # 발신번호
+                    snd='07043042991',  # 발신번호
                     sndnm='발신자명',  # 발신자명
-                    rcv='01012345678',  # 수신번호
+                    rcv='010111222',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
                     msg='멀티 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨.
                     sjt='멀티 문자제목'  # 장문 메시지 제목
                 )
             )
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = messageService.sendMMS_Multi(CorpNum, Sender, Subject, Contents,
-                                                  messages, filePath, reserveDT, adsYN)
+                                                  messages, filePath, reserveDT, adsYN, UserID, RequestNum)
 
         return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -312,17 +370,23 @@ def sendXMS(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 발신번호
-        Sender = "01012345678"
+        Sender = "07043042991"
+
+        # 발신자명
+        SenderName = "발신자명"
 
         # 수신번호
-        ReceiverNum = "01012345678"
+        ReceiverNum = "010111222"
 
         # 수신자명
-        ReceiverName = "김현진"
+        ReceiverName = "수신자명"
 
         # 메시지 내용, 90Byte 기준으로 단/장문 자동인식
-        Contents = '자동인식하여 전송합니다.'
+        Contents = "장문메시지 단건전송 테스트"
 
         # 메시지 제목
         Subject = "장문 문자 제목"
@@ -333,8 +397,13 @@ def sendXMS(request):
         # 광고문자 전송여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = messageService.sendXMS(CorpNum, Sender, ReceiverNum, ReceiverName,
-                                            Subject, Contents, reserveDT, adsYN)
+                                            Subject, Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
 
         return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -351,8 +420,11 @@ def sendXMS_multi(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 발신번호(동보전송용)
-        Sender = "01012345678"
+        Sender = "07043042991"
 
         # 메시지제목(동보전송용)
         Subject = "동보전송용 메시지 제목"
@@ -371,17 +443,22 @@ def sendXMS_multi(request):
         for x in range(0, 10):
             messages.append(
                 MessageReceiver(
-                    snd='01012345678',  # 발신번호
+                    snd='07043042991',  # 발신번호
                     sndnm='발신자명',  # 발신자명
-                    rcv='01012345678',  # 수신번호
+                    rcv='010111222',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
                     msg='문자 API TEST',  # 90Byte를 기준으로 단/장문을 자동으로 인식하여 전송
                     sjt='장문문자제목'  # 장문메시지 제목
                 )
             )
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
         receiptNum = messageService.sendXMS_multi(CorpNum, Sender, Subject, Contents,
-                                                  messages, reserveDT, adsYN)
+                                                  messages, reserveDT, adsYN, UserID, RequestNum)
 
         return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -407,6 +484,25 @@ def cancelReserve(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def cancelReserveRN(request):
+    """
+    문자전송요청시 할당한 전송요청번호(requestNum)로 예약문자전송을 취소합니다.
+    - 예약취소는 예약전송시간 10분전까지만 가능합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 예약문자전송 요청시 할당한 전송요청번호
+        requestNum = "20180912104018"
+
+        response = messageService.cancelReserveRN(CorpNum, requestNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
 def getMessages(request):
     """
     문자전송요청에 대한 전송결과를 확인합니다.
@@ -421,6 +517,44 @@ def getMessages(request):
         resultList = messageService.getMessages(CorpNum, receiptNum)
 
         return render(request, 'Message/GetMessages.html', {'resultList': resultList})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def getMessagesRN(request):
+    """
+    문자전송요청시 할당한 전송요청번호(requestNum)로 전송상태를 확인합니다
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 문자전송 요청 시 할당한 전송요청번호(requestNum)
+        requestNum = '20180910103454'
+
+        resultList = messageService.getMessagesRN(CorpNum, requestNum)
+
+        return render(request, 'Message/GetMessages.html', {'resultList': resultList})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def getStates(request):
+    """
+    문자 전송내역 요약정보를 확인한다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 문자전송 요청시 반환받은 접수번호
+        receiptNumList = []
+        receiptNumList.append("018041717000000018")
+        receiptNumList.append("018041717000000019")
+
+        resultList = messageService.getStates(CorpNum, receiptNumList)
+
+        return render(request, 'Message/GetStates.html', {'resultList': resultList})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

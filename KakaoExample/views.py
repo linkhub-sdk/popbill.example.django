@@ -146,7 +146,7 @@ def sendATS_one(request):
 
         # 알림톡 템플릿코드
         # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetURL(TEMPLATE) API, 혹은 팝빌사이트에서 확인이 가능합니다.
-        templateCode = "018020000002"
+        templateCode = "018080000079"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
         snd = "010111222"
@@ -169,8 +169,13 @@ def sendATS_one(request):
         # 수신자 이름
         receiverName = "partner"
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendATS(CorpNum, templateCode, snd, content, altContent,
-                                          altSendType, sndDT, receiver, receiverName, UserID)
+                                          altSendType, sndDT, receiver, receiverName, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -190,7 +195,7 @@ def sendATS_same(request):
 
         # 알림톡 템플릿 코드
         # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetURL(TEMPLATE) API, 혹은 팝빌사이트에서 확인이 가능합니다.
-        templateCode = "018020000001"
+        templateCode = "018080000079"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
         snd = "010111222"
@@ -216,8 +221,13 @@ def sendATS_same(request):
                 )
             )
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendATS_multi(CorpNum, templateCode, snd, content, altContent,
-                                                altSendType, sndDT, KakaoMessages, UserID)
+                                                altSendType, sndDT, KakaoMessages, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -236,7 +246,7 @@ def sendATS_multi(request):
         UserID = settings.testUserID
 
         # 알림톡 템플릿 코드
-        templateCode = "018020000001"
+        templateCode = "018080000079"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
         snd = "010111222"
@@ -258,8 +268,13 @@ def sendATS_multi(request):
                 )
             )
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendATS_multi(CorpNum, templateCode, snd, "", "",
-                                                altSendType, sndDT, KakaoMessages, UserID)
+                                                altSendType, sndDT, KakaoMessages, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -323,8 +338,13 @@ def sendFTS_one(request):
         # 광고여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendFTS(CorpNum, plusFriendID, snd, content, altContent, altSendType, sndDT,
-                                          receiver, receiverName, KakaoButtons, adsYN, UserID)
+                                          receiver, receiverName, KakaoButtons, adsYN, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -391,8 +411,13 @@ def sendFTS_same(request):
         # 광고여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendFTS_multi(CorpNum, plusFriendID, snd, content, altContent, altSendType,
-                                                sndDT, KakaoMessages, KakaoButtons, adsYN, UserID)
+                                                sndDT, KakaoMessages, KakaoButtons, adsYN, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -455,8 +480,13 @@ def sendFTS_multi(request):
         # 광고여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendFTS_multi(CorpNum, plusFriendID, snd, "", "", altSendType,
-                                                sndDT, KakaoMessages, KakaoButtons, adsYN, UserID)
+                                                sndDT, KakaoMessages, KakaoButtons, adsYN, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -527,9 +557,14 @@ def sendFMS_one(request):
         # 광고여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendFMS(CorpNum, plusFriendID, snd, content, altContent,
                                           altSendType, sndDT, filePath, imageURL, receiver, receiverName,
-                                          KakaoButtons, adsYN, UserID)
+                                          KakaoButtons, adsYN, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -603,9 +638,14 @@ def sendFMS_same(request):
         # 광고여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendFMS_multi(CorpNum, plusFriendID, snd, content, altContent,
                                                 altSendType, sndDT, filePath, imageURL, KakaoMessages,
-                                                KakaoButtons, adsYN, UserID)
+                                                KakaoButtons, adsYN, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -675,9 +715,14 @@ def sendFMS_multi(request):
         # 광고여부
         adsYN = False
 
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        requestNum = ""
+
         receiptNum = kakaoService.sendFMS_multi(CorpNum, plusFriendID, snd, "", "",
                                                 altSendType, sndDT, filePath, imageURL, KakaoMessages,
-                                                KakaoButtons, adsYN, UserID)
+                                                KakaoButtons, adsYN, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -703,6 +748,25 @@ def cancelReserve(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def cancelReserveRN(request):
+    """
+    전송요청번호(requestNum)를 할당한 알림톡/친구톡 예약전송건을 취소합니다.
+     - 예약취소는 예약전송시간 10분전까지만 가능합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 예약전송 요청시 할당한 전송요청번호
+        requestNum = "20180809151234"
+
+        result = kakaoService.cancelReserveRN(CorpNum, requestNum)
+
+        return render(request, 'result.html', {'result': result})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
 def getMessages(request):
     """
     알림톡/친구톡에 대한 전송결과를 확인합니다.
@@ -715,6 +779,24 @@ def getMessages(request):
         receiptNum = "018030511103200001"
 
         kakaoInfo = kakaoService.getMessages(CorpNum, receiptNum)
+
+        return render(request, 'Kakao/GetMessages.html', {'kakaoInfo': kakaoInfo})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def getMessagesRN(request):
+    """
+    전송요청번호(requestNum)를 할당한 알림톡/친구톡 전송내역 및 전송상태를 확인한다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 알림톡/친구톡 전송 요청시 반환받은 접수번호
+        requestNum = "20180809151234"
+
+        kakaoInfo = kakaoService.getMessagesRN(CorpNum, requestNum)
 
         return render(request, 'Kakao/GetMessages.html', {'kakaoInfo': kakaoInfo})
     except PopbillException as PE:
