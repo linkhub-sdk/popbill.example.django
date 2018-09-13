@@ -757,7 +757,7 @@ def cancelReserveRN(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 예약전송 요청시 할당한 전송요청번호
+        # 예약전송 요청시 할당한 전송요청번호(requestNum)
         requestNum = "20180809151234"
 
         result = kakaoService.cancelReserveRN(CorpNum, requestNum)
@@ -793,7 +793,7 @@ def getMessagesRN(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 알림톡/친구톡 전송 요청시 반환받은 접수번호
+        # 알림톡/친구톡 전송 요청시 할당한 전송요청번호(requestNum)
         requestNum = "20180809151234"
 
         kakaoInfo = kakaoService.getMessagesRN(CorpNum, requestNum)

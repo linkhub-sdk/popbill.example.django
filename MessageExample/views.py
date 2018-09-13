@@ -284,7 +284,7 @@ def sendMMS(request):
         # 예약전송시간, 형태 yyyyMMddHHmmss, 공백 처리시 즉시전송
         reserveDT = ""
 
-        # 전송할 파일경로
+        # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1500px 이하 권장)
         FilePath = './MessageExample/static/image/test.jpg'
 
         # 광고문자 전송여부
@@ -329,7 +329,7 @@ def sendMMS_multi(request):
         # 예약전송시간, 공백 처리시 즉시전송(작성형태 yyyyMMddHHmmss)
         reserveDT = ""
 
-        # 전송할 파일경로
+        # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1500px 이하 권장)
         filePath = './MessageExample/static/image/test.jpg'
 
         # 광고문자 전송여부
