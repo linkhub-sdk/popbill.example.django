@@ -17,11 +17,12 @@
                         <legend> 현금영수증 요약정보 [ {{ forloop.counter }} ]</legend>
                         <ul>
                             <li> ntsconfirmNum (국세청승인번호) : {{ cashbillInfo.ntsconfirmNum }}</li>
+                            <li> tradeDate (거래일자) : {{ cashbillInfo.tradeDate }}</li>
                             <li> tradeDT (거래일시) : {{ cashbillInfo.tradeDT }}</li>
                             <li> tradeUsage (거래유형) : {{ cashbillInfo.tradeUsage }}</li>
                             <li> tradeType (현금영수증 형태) : {{ cashbillInfo.tradeType }}</li>
                             <li> supplyCost (공급가액) : {{ cashbillInfo.supplyCost }}</li>
-                            <li> tax (세액) : {{ cashbillInfo.tax }}</li>
+                            <li> tax (부가세) : {{ cashbillInfo.tax }}</li>
                             <li> serviceFee (봉사료) : {{ cashbillInfo.serviceFee }}</li>
                             <li> totalAmount (거래금액) : {{ cashbillInfo.totalAmount }}</li>
                             <li> invoiceType (매입/매출) : {{ cashbillInfo.invoiceType }}</li>

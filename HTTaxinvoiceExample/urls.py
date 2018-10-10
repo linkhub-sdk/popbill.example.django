@@ -17,12 +17,17 @@ urlpatterns = [
     url(r'^Summary$', views.summary, name='Summary'),
     url(r'^GetTaxinvoice$', views.getTaxinvoice, name='GetTaxinvoice'),
     url(r'^GetXML$', views.getXML, name='GetXML'),
+    url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL$'),
 
     # 홈택스연동 인증 관리
     url(r'^GetCertificatePopUpURL', views.getCertificatePopUpURL, name='GetCertificatePopUpURL'),
     url(r'^GetCertificateExpireDate$', views.getCertificateExpireDate, name='GetCertificateExpireDate'),
+    url(r'^CheckCertValidation', views.checkCertValidation, name='CheckCertValidation'),
+    url(r'^RegistDeptUser', views.registDeptUser, name='RegistDeptUser'),
+    url(r'^CheckDeptUser', views.checkDeptUser, name='CheckDeptUser'),
+    url(r'^CheckLoginDeptUser', views.checkLoginDeptUser, name='CheckLoginDeptUser'),
+    url(r'^DeleteDeptUser', views.deleteDeptUser, name='DeleteDeptUser'),
 
-    # 포인트 관리 / 정액제 신청
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
     url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),

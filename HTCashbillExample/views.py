@@ -33,10 +33,10 @@ def requestJob(request):
         Type = "SELL"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20171201"
+        SDate = "20180101"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20170131"
+        EDate = "20181010"
 
         result = htCashbillService.requestJob(CorpNum, Type, SDate, EDate, UserID)
 
@@ -103,7 +103,7 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018020811000000002"
+        JobID = "018101017000000002"
 
         # 문서형태 배열, [N-일반 현금영수증 / C-취소 현금영수증]
         TradeType = ["N", "C"]
@@ -586,6 +586,87 @@ def updateContact(request):
         )
 
         response = htCashbillService.updateContact(CorpNum, updateInfo, UserID)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def checkCertValidation(request):
+    """
+    팝빌에 등록된 공인인증서의 홈택스 로그인을 테스트합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = htCashbillService.checkCertValidation(CorpNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def registDeptUser(request):
+    """
+    홈택스 현금영수증 부서사용자 계정을 등록합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 홈택스 부서사용자 계정아이디
+        DeptUserID = "deptuserid"
+
+        # 홈택스 부서사용자 계정비밀번호
+        DeptUserPWD = "deptuserpwd"
+
+        response = htCashbillService.registDeptUser(CorpNum, DeptUserID, DeptUserPWD)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def checkDeptUser(request):
+    """
+    팝빌에 등록된 현금영수증 부서사용자 아이디를 확인합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = htCashbillService.checkDeptUser(CorpNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def checkLoginDeptUser(request):
+    """
+    팝빌에 등록된 현금영수증 부서사용자 계정정보를 이용하여 홈택스 로그인을 테스트합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = htCashbillService.checkLoginDeptUser(CorpNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def deleteDeptUser(request):
+    """
+    팝빌에 등록된 현금영수증 부서사용자 계정정보를 삭제합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = htCashbillService.deleteDeptUser(CorpNum)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:

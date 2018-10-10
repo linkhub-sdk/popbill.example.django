@@ -664,3 +664,100 @@ def updateContact(request):
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def getPopUpURL(request):
+    """
+    홈택스 전자세금계산서 보기 팝업 URL을 반환 합니다.
+    - 보안정책에 의해 응답된 URL은 30초의 만료시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        url = htTaxinvoiceService.getPopUpURL(CorpNum)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def checkCertValidation(request):
+    """
+    팝빌에 등록된 공인인증서의 홈택스 로그인을 테스트합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = htTaxinvoiceService.checkCertValidation(CorpNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def registDeptUser(request):
+    """
+    홈택스 전자세금계산서 부서사용자 계정을 등록합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 홈택스 부서사용자 계정아이디
+        DeptUserID = "deptuserid"
+
+        # 홈택스 부서사용자 계정비밀번호
+        DeptUserPWD = "deptuserpwd"
+
+        response = htTaxinvoiceService.registDeptUser(CorpNum, DeptUserID, DeptUserPWD)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def checkDeptUser(request):
+    """
+    팝빌에 등록된 전자세금계산서 부서사용자 아이디를 확인합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = htTaxinvoiceService.checkDeptUser(CorpNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def checkLoginDeptUser(request):
+    """
+    팝빌에 등록된 전자세금계산서 부서사용자 계정정보를 이용하여 홈택스 로그인을 테스트합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = htTaxinvoiceService.checkLoginDeptUser(CorpNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def deleteDeptUser(request):
+    """
+    팝빌에 등록된 전자세금계산서 부서사용자 계정정보를 삭제합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = htTaxinvoiceService.deleteDeptUser(CorpNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
