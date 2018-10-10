@@ -60,9 +60,9 @@ def registIssue(request):
         cashbill = Cashbill(
 
             # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="20180118-001",
+            mgtKey="20181010-001",
 
-            # [필수] 현금영수증 형태, [승인거래 / 취소거래]
+            # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
 
             # [취소거래시 필수] 원본 현금영수증 국세청승인번호
@@ -74,7 +74,10 @@ def registIssue(request):
             # [필수] 과세형태, [과세 / 비과세]
             taxationType="과세",
 
-            # [필수] 거래유형, [소득공제용 /지출증빙용]
+            # [필수] 거래유형, [일반 / 도서공연 / 대중교통]
+            tradeOpt="일반",
+
+            # [필수] 거래구분, [소득공제용 /지출증빙용]
             tradeUsage="소득공제용",
 
             # [필수] 거래처 식별번호
@@ -110,19 +113,19 @@ def registIssue(request):
             # 발행자 연락처
             franchiseTEL="07012345678",
 
-            # 고객명
-            customerName="고객명",
+            # 주문자명
+            customerName="주문자명",
 
-            # 상품명
-            itemName="상품명",
+            # 주문상품명
+            itemName="주문상품명",
 
             # 주문번호
             orderNumber="주문번호",
 
-            # 고객 메일주소
+            # 이메일
             email="test@test.com",
 
-            # 고객 휴대폰번호
+            # 휴대폰
             hp="010111222",
 
             # 발행안내문자 전송여부
@@ -153,9 +156,9 @@ def register(request):
         cashbill = Cashbill(
 
             # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 공급자별 고유번호 생성
-            mgtKey="20180118-114",
+            mgtKey="20181010-002",
 
-            # [필수] 현금영수증 형태, [승인거래 / 취소거래]
+            # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
 
             # [취소거래시 필수] 원본 현금영수증 국세청승인번호
@@ -167,7 +170,10 @@ def register(request):
             # [필수] 과세형태, [과세 / 비과세]
             taxationType="과세",
 
-            # [필수] 거래유형, [소득공제용 /지출증빙용]
+            # [필수] 거래유형, [일반 / 도서공연 / 대중교통]
+            tradeOpt="일반",
+
+            # [필수] 거래구분, [소득공제용 /지출증빙용]
             tradeUsage="소득공제용",
 
             # [필수] 거래처 식별번호
@@ -179,43 +185,43 @@ def register(request):
             # [필수] 공급가액
             supplyCost="10000",
 
-            # 세액
+            # 부가세
             tax="1000",
 
             # 봉사료
             serviceFee="0",
 
-            # [필수] 거래금액, (공급가액+세액+봉사료)
+            # [필수] 거래금액, (공급가액+부가세+봉사료)
             totalAmount="11000",
 
-            # 발행자 사업자번호
+            # 가맹점 사업자번호
             franchiseCorpNum="1234567890",
 
-            # 발행자 상호
-            franchiseCorpName="발행자 상호",
+            # 가맹점 상호
+            franchiseCorpName="가맹점 상호",
 
-            # 발행자 대표자성명
+            # 가맹점 대표자성명
             franchiseCEOName="발행 대표자 성명",
 
-            # 발행자 주소
-            franchiseAddr="발행자 주소",
+            # 가맹점 주소
+            franchiseAddr="가맹점 주소",
 
-            # 발행자 연락처
+            # 가맹점 연락처
             franchiseTEL="07012345678",
 
-            # 고객명
-            customerName="고객명",
+            # 주문자명
+            customerName="주문자명",
 
-            # 상품명
-            itemName="상품명",
+            # 주문상품명
+            itemName="주문상품명",
 
             # 주문번호
             orderNumber="주문번호",
 
-            # 고객 메일주소
+            # 이메일
             email="test@test.com",
 
-            # 고객 휴대폰번호
+            # 휴대폰
             hp="010111222",
 
             # 발행안내문자 전송여부
@@ -249,7 +255,7 @@ def update(request):
             # [필수] 문서관리번호
             mgtKey=MgtKey,
 
-            # [필수] 현금영수증 형태, [승인거래 / 취소거래]
+            # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
 
             # [취소거래시 필수] 원본 현금영수증 국세청승인번호
@@ -261,7 +267,10 @@ def update(request):
             # [필수] 과세형태, [과세 / 비과세]
             taxationType="과세",
 
-            # [필수] 거래유형, [소득공제용 /지출증빙용]
+            # [필수] 거래유형, [일반 / 도서공연 / 대중교통]
+            tradeOpt="일반",
+
+            # [필수] 거래구분, [소득공제용 /지출증빙용]
             tradeUsage="소득공제용",
 
             # [필수] 거래처 식별번호
@@ -273,43 +282,43 @@ def update(request):
             # [필수] 공급가액
             supplyCost="20000",
 
-            # 세액
+            # 부가세
             tax="2000",
 
             # 봉사료
             serviceFee="0",
 
-            # [필수] 거래금액, (공급가액+세액+봉사료)
+            # [필수] 거래금액, (공급가액+부가세+봉사료)
             totalAmount="22000",
 
-            # 발행자 사업자번호
+            # 가맹점 사업자번호
             franchiseCorpNum="1234567890",
 
-            # 발행자 상호
-            franchiseCorpName="발행자 상호_수정",
+            # 가맹점 상호
+            franchiseCorpName="가맹점 상호_수정",
 
-            # 발행자 대표자성명
+            # 가맹점 대표자성명
             franchiseCEOName="발행 대표자 성명_수정",
 
-            # 발행자 주소
-            franchiseAddr="발행자 주소",
+            # 가맹점 주소
+            franchiseAddr="가맹점 주소",
 
-            # 발행자 연락처
+            # 가맹점 연락처
             franchiseTEL="07012345678",
 
-            # 고객명
-            customerName="고객명",
+            # 주문자명
+            customerName="주문자명",
 
-            # 상품명
-            itemName="상품명",
+            # 주문상품명
+            itemName="주문상품명",
 
             # 주문번호
             orderNumber="주문번호",
 
-            # 고객 메일주소
+            # 이메일
             email="test@test.com",
 
-            # 고객 휴대폰번호
+            # 휴대폰
             hp="010111222",
 
             # 발행안내문자 전송여부
@@ -469,13 +478,13 @@ def revokeRegistIssue_part(request):
         # [취소] 공급가액
         supplyCost = "10000"
 
-        # [취소] 세액
+        # [취소] 부가세
         tax = "1000"
 
         # [취소] 봉사료
         serviceFee = "0"
 
-        # [취소] 합계거래금액, (공급가액+세액+봉사료)
+        # [취소] 합계거래금액, (공급가액+부가세+봉사료)
         # 원본 현금영수증의 공급가액 이하만 가능
         totalAmount = "11000"
 
@@ -558,7 +567,7 @@ def revokeRegister_part(request):
         # [취소] 공급가액
         supplyCost = "4000"
 
-        # [취소] 세액
+        # [취소] 부가세
         tax = "400"
 
         # [취소] 봉사료
@@ -663,13 +672,13 @@ def search(request):
         # 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용 가능
         State = ["3**", "4**"]
 
-        # 현금영수증 형태, [N-일반 현금영수증 / C-취소 현금영수증]
+        # 문서형태, [N-일반 현금영수증 / C-취소 현금영수증]
         TradeType = ["N", "C"]
 
-        # 거래용도 배열, [P-소득공제용 / C-지출증빙용]
+        # 거래구분, [P-소득공제용 / C-지출증빙용]
         TradeUsage = ["P", "C"]
 
-        # 과세형태 배열, [T-과세 / N-비과세]
+        # 과세형태, [T-과세 / N-비과세]
         TaxationType = ["T", "N"]
 
         # 페이지 번호
@@ -684,8 +693,11 @@ def search(request):
         # 현금영수증 식별번호, 미기재시 전체조회
         QString = ""
 
+        # 거래유형 배열, [N-일반 / B-도서공연 / T-대중교통]
+        TradeOpt = ["N", "B", "T"]
+
         response = cashbillService.search(CorpNum, DType, SDate, EDate, State, TradeType,
-                                          TradeUsage, TaxationType, Page, PerPage, Order, UserID, QString)
+                                          TradeUsage, TaxationType, Page, PerPage, Order, UserID, QString, TradeOpt)
 
         return render(request, 'Cashbill/Search.html', {'response': response})
     except PopbillException as PE:
