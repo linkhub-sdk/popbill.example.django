@@ -1872,7 +1872,7 @@ def getCertificateExpireDate(request):
       재등록 하셔야 정상적으로 API를 이용하실 수 있습니다.
     """
     try:
-       # 팝빌회원 사업자번호
+        # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
         expiredate = taxinvoiceService.getCertificateExpireDate(CorpNum)
@@ -2261,6 +2261,21 @@ def updateContact(request):
         )
 
         response = taxinvoiceService.updateContact(CorpNum, updateInfo, UserID)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def checkCertValidation(request):
+    """
+    팝빌에 등록된 공인인증서의 유효성을 확인합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = taxinvoiceService.checkCertValidation(CorpNum)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:

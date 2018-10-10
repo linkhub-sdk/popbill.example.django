@@ -60,6 +60,7 @@ urlpatterns = [
     # 공인인증서 관리
     url(r'^GetPopbillURL_CERT$', views.getPopbillURL_CERT, name='GetPopbillURL_CERT'),
     url(r'^GetCertificateExpireDate$', views.getCertificateExpireDate, name='GetCertificateExpireDate'),
+    url(r'^CheckCertValidation', views.checkCertValidation, name='CheckCertValidation'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
