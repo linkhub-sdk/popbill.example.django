@@ -804,6 +804,10 @@ def getMessagesRN(request):
 
 
 def search(request):
+    """
+    검색조건을 사용하여 카카오톡 전송 내역을 조회합니다.
+     - 최대 검색기간 : 6개월 이내
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
