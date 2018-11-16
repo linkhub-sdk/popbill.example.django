@@ -16,7 +16,7 @@ def index(request):
     return render(request, 'Kakao/Index.html', {})
 
 
-def getURL_PLUSFRIEND(request):
+def getPlusFriendMgtURL(request):
     """
     플러스친구 계정관리 URL을 반환합니다.
      - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다"
@@ -28,10 +28,7 @@ def getURL_PLUSFRIEND(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # PLUSFRIEND(플러스친구계정관리), SENDER(발신번호관리), TEMPLATE(알림톡템플릿관리), BOX(카카오톡전송내역)
-        TOGO = "PLUSFRIEND"
-
-        url = kakaoService.getURL(CorpNum, UserID, TOGO)
+        url = kakaoService.getPlusFriendMgtURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -56,7 +53,7 @@ def listPlusFriendID(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getURL_SENDER(request):
+def getSenderNumberMgtURL(request):
     """
     발신번호 관리 URL을 반환합니다.
      - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
@@ -68,10 +65,7 @@ def getURL_SENDER(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # PLUSFRIEND(플러스친구계정관리), SENDER(발신번호관리), TEMPLATE(알림톡템플릿관리), BOX(카카오톡전송내역)
-        TOGO = "SENDER"
-
-        url = kakaoService.getURL(CorpNum, UserID, TOGO)
+        url = kakaoService.getSenderNumberMgtURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -93,7 +87,7 @@ def getSenderNumberList(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getURL_TEMPLATE(request):
+def getATSTemplateMgtURL(request):
     """
     알림톡 템플릿관리 URL을 반환합니다.
      - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
@@ -105,10 +99,7 @@ def getURL_TEMPLATE(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # PLUSFRIEND(플러스친구계정관리), SENDER(발신번호관리), TEMPLATE(알림톡템플릿관리), BOX(카카오톡전송내역)
-        TOGO = "TEMPLATE"
-
-        url = kakaoService.getURL(CorpNum, UserID, TOGO)
+        url = kakaoService.getATSTemplateMgtURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -850,11 +841,10 @@ def search(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getURL_BOX(request):
+def getSentListURL(request):
     """
     카카오톡전송내역 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
-
     """
     try:
         # 팝빌회원 사업자번호
@@ -863,10 +853,7 @@ def getURL_BOX(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # PLUSFRIEND(플러스친구계정관리), SENDER(발신번호관리), TEMPLATE(알림톡템플릿관리), BOX(카카오톡전송내역)
-        TOGO = "BOX"
-
-        url = kakaoService.getURL(CorpNum, UserID, TOGO)
+        url = kakaoService.getSentListURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -932,9 +919,9 @@ def getBalance(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopbillURL_CHRG(request):
+def getChargeURL(request):
     """
-    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    팝빌 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -944,10 +931,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
-        TOGO = "CHRG"
-
-        url = kakaoService.getPopbillURL(CorpNum, UserID, TOGO)
+        url = kakaoService.getChargeURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -1075,9 +1059,9 @@ def joinMember(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopbillURL_LOGIN(request):
+def getAccessURL(request):
     """
-    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    팝빌 로그인 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -1087,10 +1071,7 @@ def getPopbillURL_LOGIN(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
-        TOGO = "LOGIN"
-
-        url = kakaoService.getPopbillURL(CorpNum, UserID, TOGO)
+        url = kakaoService.getAccessURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:

@@ -50,7 +50,7 @@ how to test ?
 
 연동 API 목차
 ------------------------------
-* 전자세금계산서 API
+* 전자세금계산서 API 연동가이드 `<https://linkhub.tistory.com/146/>`_
 * 전자명세서 API
 * 현금영수증 API
 * 문자메시지 API
@@ -64,4 +64,5 @@ how to test ?
 -------------------------------
 `링크허브(Linkhub) <https://www.linkhub.co.kr/>`_,
 `팝빌(Popbill) <https://www.popbill.com/>`_,
+`팝빌 테스트배드(Test Popbill) <https://www.test.popbill.com/>`_,
 `Django SDK 적용방법 <http://blog.linkhub.co.kr/4311/>`_

@@ -16,9 +16,9 @@ def index(request):
     return render(request, 'Message/Index.html', {})
 
 
-def getURL_SENDER(request):
+def getSenderNumberMgtURL(request):
     """
-    문자메시지 전송내역 / 발신번호 관리 팝업 URL을 반환합니다.
+    발신번호 관리 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -28,10 +28,7 @@ def getURL_SENDER(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # BOX - 문자 전송내역 팝업, SENDER- 발신번호 관리 팝업
-        TOGO = "SENDER"
-
-        url = messageService.getURL(CorpNum, UserID, TOGO)
+        url = messageService.GetSenderNumberMgtURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -606,9 +603,9 @@ def search(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getURL_BOX(request):
+def getSentListURL(request):
     """
-    문자메시지 전송내역 / 발신번호 관리 팝업 URL을 반환합니다.
+    문자메시지 전송내역 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -618,10 +615,7 @@ def getURL_BOX(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # BOX - 문자 전송내역 팝업, SENDER- 발신번호 관리 팝업
-        TOGO = "BOX"
-
-        url = messageService.getURL(CorpNum, UserID, TOGO)
+        url = messageService.getSentListURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -646,9 +640,9 @@ def getAutoDenyList(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopbillURL_CHRG(request):
+def getChargeURL(request):
     """
-    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    팝빌 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -658,10 +652,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
-        TOGO = "CHRG"
-
-        url = messageService.getPopbillURL(CorpNum, UserID, TOGO)
+        url = messageService.getChargeURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -846,9 +837,9 @@ def joinMember(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopbillURL_LOGIN(request):
+def getAccessURL(request):
     """
-    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    팝빌 로그인 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -858,10 +849,7 @@ def getPopbillURL_LOGIN(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-포인트충전
-        TOGO = "LOGIN"
-
-        url = messageService.getPopbillURL(CorpNum, UserID, TOGO)
+        url = messageService.getAccessURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:

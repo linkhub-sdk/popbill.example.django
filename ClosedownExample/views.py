@@ -55,9 +55,9 @@ def checkCorpNums(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopbillURL_CHRG(request):
+def getChargeURL(request):
     """
-    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    팝빌 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -67,10 +67,7 @@ def getPopbillURL_CHRG(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
-        TOGO = "CHRG"
-
-        url = closedownService.getPopbillURL(CorpNum, UserID, TOGO)
+        url = closedownService.getChargeURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -414,9 +411,9 @@ def updateContact(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getPopbillURL_LOGIN(request):
+def getAccessURL(request):
     """
-    팝빌 관련 팝업 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    팝빌 로그인 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -426,10 +423,7 @@ def getPopbillURL_LOGIN(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # LOGIN-팝빌 로그인, CHRG-연동회원 포인트충전
-        TOGO = "LOGIN"
-
-        url = closedownService.getPopbillURL(CorpNum, UserID, TOGO)
+        url = closedownService.getAccessURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
