@@ -28,7 +28,7 @@ def getSenderNumberMgtURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        url = messageService.GetSenderNumberMgtURL(CorpNum, UserID)
+        url = messageService.getSenderNumberMgtURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
