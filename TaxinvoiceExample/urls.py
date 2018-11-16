@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^Accept$', views.accept, name='Accept'),
     url(r'^Deny$', views.deny, name='Deny'),
     url(r'^Delete$', views.delete, name='Delete'),
+    url(r'^RegistRequest$', views.registRequest, name='RegistRequest$'),
     url(r'^Request$', views.request, name='Request'),
     url(r'^CancelRequest$', views.cancelRequest, name='CancelRequest'),
     url(r'^Refuse$', views.refuse, name='Refuse'),
