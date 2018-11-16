@@ -8,15 +8,15 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 
     # 플러스친구 계정관리
-    url(r'^GetURL_PLUSFRIEND$', views.getURL_PLUSFRIEND, name='GetURL_plusfriend'),
+    url(r'^GetPlusFriendMgtURL', views.getPlusFriendMgtURL, name='GetPlusFriendMgtURL'),
     url(r'^ListPlusFriendID$', views.listPlusFriendID, name='ListPlusFriendID'),
 
     # 발신번호 관리
-    url(r'^GetURL_SENDER$', views.getURL_SENDER, name='GetURL_sender'),
+    url(r'^GetSenderNumberMgtURL', views.getSenderNumberMgtURL, name='GetSenderNumberMgtURL'),
     url(r'^GetSenderNumberList$', views.getSenderNumberList, name='GetSenderNumberLis'),
 
     # 알림톡 템플릿관리
-    url(r'^GetURL_TEMPLATE$', views.getURL_TEMPLATE, name='GetURL_template'),
+    url(r'^GetATSTemplateMgtURL', views.getATSTemplateMgtURL, name='GetATSTemplateMgtURL'),
     url(r'^ListATSTemplate$', views.listATStemplate, name='ListATStemplate'),
 
     # 카카오톡 전송
@@ -32,7 +32,7 @@ urlpatterns = [
 
     # 정보확인
     url(r'^Search$', views.search, name='Search'),
-    url(r'^GetURL_BOX$', views.getURL_BOX, name='GetURL_BOX'),
+    url(r'^GetSentListURL', views.getSentListURL, name='GetSentListURL'),
 
     # 접수번호 관련 기능 (요청번호 미할당)
     url(r'^GetMessages$', views.getMessages, name='GetMessages'),
@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
+    url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
 
@@ -54,7 +54,7 @@ urlpatterns = [
     url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),
     url(r'^CheckID$', views.checkID, name='CheckID'),
     url(r'^JoinMember$', views.joinMember, name='JoinMember'),
-    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='GetPopbillURL_LOGIN'),
+    url(r'^GetAccessURL', views.getAccessURL, name='GetAccessURL'),
     url(r'^RegistContact$', views.registContact, name='RegistContact'),
     url(r'^ListContact$', views.listContact, name='ListContact'),
     url(r'^UpdateCorpInfo$', views.updateCorpInfo, name='UpdateCorpInfo'),

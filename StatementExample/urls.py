@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
 
     # 부가 기능
-    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='GetPopbillURL_LOGIN'),
+    url(r'^GetAccessURL', views.getAccessURL, name='GetAccessURL'),
     url(r'^AttachFile$', views.attachFile, name='AttachFile'),
     url(r'^DeleteFile$', views.deleteFile, name='DeleteFile'),
     url(r'^GetFiles$', views.getFiles, name='GetFiles'),
@@ -47,7 +47,7 @@ urlpatterns = [
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^getPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
+    url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
@@ -63,8 +63,3 @@ urlpatterns = [
     url(r'^ListContact$', views.listContact, name='ListContact'),
     url(r'^UpdateContact$', views.updateContact, name='UpdateContact'),
 ]
-
-
-
-
-

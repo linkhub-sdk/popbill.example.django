@@ -42,8 +42,8 @@ urlpatterns = [
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
 
     # 부가 기능
-    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='GetPopbillURL_LOGIN'),
-    url(r'^GetPopbillURL_SEAL$', views.getPopbillURL_SEAL, name='GetPopbillURL_SEAL'),
+    url(r'^GetAccessURL', views.getAccessURL, name='GetAccessURL'),
+    url(r'^GetSealURL', views.getSealURL, name='GetSealURL'),
     url(r'^AttachFile$', views.attachFile, name='AttachFile'),
     url(r'^DeleteFile$', views.deleteFile, name='DeleteFile'),
     url(r'^GetFiles$', views.getFiles, name='GetFiles'),
@@ -58,13 +58,13 @@ urlpatterns = [
     url(r'^UpdateEmailConfig', views.updateEmailConfig, name='UpdateEmailConfig'),
 
     # 공인인증서 관리
-    url(r'^GetPopbillURL_CERT$', views.getPopbillURL_CERT, name='GetPopbillURL_CERT'),
+    url(r'^GetTaxCertURL', views.getTaxCertURL, name='GetTaxCertURL'),
     url(r'^GetCertificateExpireDate$', views.getCertificateExpireDate, name='GetCertificateExpireDate'),
     url(r'^CheckCertValidation', views.checkCertValidation, name='CheckCertValidation'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^getPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
+    url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
@@ -80,5 +80,3 @@ urlpatterns = [
     url(r'^ListContact$', views.listContact, name='ListContact'),
     url(r'^UpdateContact$', views.updateContact, name='UpdateContact'),
 ]
-
-

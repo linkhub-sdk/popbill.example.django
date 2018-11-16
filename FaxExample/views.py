@@ -495,6 +495,28 @@ def getSentListURL(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def getPreviewURL(request):
+    """
+    팩스 전송내역 목록 팝업 URL을 반환합니다.
+    - 보안정책으로 인해 반환된 URL은 30초의 유효시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팩스 접수번호
+        ReceiptNum = "018012215343900001"
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        url = faxService.getPreviewURL(CorpNum, ReceiptNum, UserID)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
 def getChargeURL(request):
     """
     팝빌 포인트 충전 URL을 반환합니다.

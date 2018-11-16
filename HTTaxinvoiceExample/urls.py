@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^DeleteDeptUser', views.deleteDeptUser, name='DeleteDeptUser'),
 
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^GetPopbillURL_CHRG$', views.getPopbillURL_CHRG, name='GetPopbillURL_CHRG'),
+    url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
@@ -40,11 +40,10 @@ urlpatterns = [
     url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),
     url(r'^CheckID$', views.checkID, name='CheckID'),
     url(r'^JoinMember$', views.joinMember, name='JoinMember'),
-    url(r'^GetPopbillURL_LOGIN$', views.getPopbillURL_LOGIN, name='GetPopbillURL_LOGIN'),
+    url(r'^GetAccessURL', views.getAccessURL, name='GetAccessURL'),
     url(r'^GetCorpInfo$', views.getCorpInfo, name='GetCorpInfo'),
     url(r'^UpdateCorpInfo$', views.updateCorpInfo, name='UpdateCorpInfo'),
     url(r'^RegistContact$', views.registContact, name='RegistContact'),
     url(r'^ListContact$', views.listContact, name='ListContact'),
     url(r'^UpdateContact$', views.updateContact, name='UpdateContact'),
 ]
-
