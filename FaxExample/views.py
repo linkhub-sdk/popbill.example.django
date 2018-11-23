@@ -519,7 +519,7 @@ def getPreviewURL(request):
 
 def getChargeURL(request):
     """
-    팝빌 포인트 충전 URL을 반환합니다.
+    팝빌 연동회원 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -710,7 +710,7 @@ def joinMember(request):
 
 def getAccessURL(request):
     """
-    팝빌 로그인 URL을 반환합니다.
+    팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:

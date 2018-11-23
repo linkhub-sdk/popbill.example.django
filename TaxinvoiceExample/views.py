@@ -1035,6 +1035,13 @@ def delete(request):
 
 
 def registRequest(request):
+    """
+     [공급받는자]가 공급자에게 1건의 역발행 세금계산서를 [즉시 요청]합니다.
+      - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서구성"을 참조하시기 바랍니다.
+      - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
+      - 역발행 즉시요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라
+        정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -1045,7 +1052,7 @@ def registRequest(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20181116
             writeDate="20181116",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
@@ -1070,7 +1077,7 @@ def registRequest(request):
             ######################################################################
 
             # [필수] 공급자 사업자번호 , '-' 없이 10자리 기재.
-            invoicerCorpNum=settings.testCorpNum,
+            invoicerCorpNum='8888888888',
 
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
@@ -1702,7 +1709,7 @@ def getMailURL(request):
 
 def getAccessURL(request):
     """
-    팝빌 로그인 URL을 반환합니다.
+    팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -2156,7 +2163,7 @@ def getBalance(request):
 
 def getChargeURL(request):
     """
-    팝빌 포인트 충전 URL을 반환합니다.
+    팝빌 연동회원 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
