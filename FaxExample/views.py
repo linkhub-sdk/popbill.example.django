@@ -51,7 +51,7 @@ def getSenderNumberList(request):
 
 def sendFAX(request):
     """
-    팩스를 전송합니다. (전송할 파일 개수는 최대 5개까지 가능)
+    팩스를 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
     """
     try:
         # 팝빌회원 사업자번호
