@@ -136,7 +136,7 @@ def sendATS_one(request):
         UserID = settings.testUserID
 
         # 알림톡 템플릿코드
-        # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetURL(TEMPLATE) API, 혹은 팝빌사이트에서 확인이 가능합니다.
+        # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetATSTemplateMgtURL API, 혹은 팝빌사이트에서 확인이 가능합니다.
         templateCode = "018080000079"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
@@ -185,7 +185,7 @@ def sendATS_same(request):
         UserID = settings.testUserID
 
         # 알림톡 템플릿 코드
-        # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetURL(TEMPLATE) API, 혹은 팝빌사이트에서 확인이 가능합니다.
+        # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetATSTemplateMgtURL API, 혹은 팝빌사이트에서 확인이 가능합니다.
         templateCode = "018080000079"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
