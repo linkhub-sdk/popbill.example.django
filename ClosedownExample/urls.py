@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
-    url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost$'),
+    url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
 
     # 회원정보

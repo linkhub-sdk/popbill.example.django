@@ -199,44 +199,44 @@ def joinMember(request):
         # 회원정보
         newMember = JoinForm(
 
-            # 회원아이디, 최대 20자
-            ID="testkorea",
+            # 아이디 (6자 이상 50자 미만)
+            ID="join_id_test",
 
-            # 비밀번호, 최대 20자
+            # 비밀번호 (6자 이상 20자 미만)
             PWD="this_is_password",
 
-            # 사업자번호
-            CorpNum="1234567890",
+            # 사업자번호 "-" 제외
+            CorpNum="0000000000",
 
-            # 상호
-            CorpName="테스트가입상호",
-
-            # 대표자성명
+            # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
 
-            # 주소
-            Addr="테스트 회사 주소",
+            # 상호 (최대 200자)
+            CorpName="테스트가입상호",
 
-            # 업태
+            # 주소 (최대 300자)
+            Addr="테스트회사주소",
+
+            # 업태 (최대 100자)
             BizType="테스트업태",
 
-            # 종목
+            # 종목 (최대 100자)
             BizClass="테스트업종",
 
-            # 담당자 성명
+            # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 연락처
-            ContactTEL="070-4304-2991",
+            # 담당자 이메일주소 (최대 100자)
+            ContactEmail="test@test.com",
 
-            # 담당자 휴대폰번호
-            ContactHP="010-2222-3333",
+            # 담당자 연락처 (최대 20자)
+            ContactTEL="070-111-222",
 
-            # 담당자 팩스번호
-            ContactFAX="070-4304-2991",
+            # 담당자 휴대폰번호 (최대 20자)
+            ContactHP="010-111-222",
 
-            # 담당자 메일주소
-            ContactEmail="test@test.com"
+            # 담당자 팩스번호 (최대 20자)
+            ContactFAX="070-111-222"
         )
 
         response = closedownService.joinMember(newMember)
@@ -281,19 +281,19 @@ def updateCorpInfo(request):
         # 회사정보
         corpInfo = CorpInfo(
 
-            # 대표자성명
-            ceoname="대표자성명",
+            # 대표자 성명 (최대 100자)
+            ceoname="대표자_성명",
 
-            # 상호
+            # 상호 (최대 200자)
             corpName="상호",
 
-            # 주소
+            # 주소 (최대 300자)
             addr="주소",
 
-            # 업태
+            # 업태 (최대 100자)
             bizType="업태",
 
-            # 종목
+            # 종목 (최대 100자)
             bizClass="종목"
         )
 
@@ -318,29 +318,32 @@ def registContact(request):
         # 담당자 정보
         newContact = ContactInfo(
 
-            # 아이디
-            id="testkorea_1117",
+            # 아이디 (6자 이상 50자 미만)
+            id="popbill_test_id",
 
-            # 비밀번호
-            pwd="this_is_password",
+            # 비밀번호 (6자 이상 20자 미만)
+            pwd="popbill_test_pwd",
 
-            # 담당자명
-            personName="정대리",
+            # 담당자명 (최대 100자)
+            personName="담당자명",
 
-            # 연락처
-            tel="010-4304-2991",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-222",
 
-            # 휴대폰번호
-            hp="010-4304-2991",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-222",
 
-            # 팩스번호
-            fax="070-4324-2991",
+            # 담당자 팩스번호 (최대 20자)
+            fax="070-111-222",
 
-            # 메일주소
-            email="dev@linkhub.co.kr",
+            # 담당자 이메일 (최대 100자)
+            email="test@test.com",
 
             # 회사조회 권한여부, True(회사조회) False(개인조회)
-            searchAllAllowYN=True
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = closedownService.registContact(CorpNum, newContact, UserID)
@@ -383,25 +386,28 @@ def updateContact(request):
         updateInfo = ContactInfo(
 
             # 담당자 아이디
-            id=UserID,
+            id="UserID",
 
-            # 담당자 성명
-            personName="담당자 성명",
+            # 담당자 성명 (최대 100자)
+            personName="담당자_성명",
 
-            # 연락처
-            tel="070-4304-2991",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-111",
 
-            # 휴대폰번호
-            hp="010-4324-4324",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-111",
 
-            # 팩스번호
+            # 담당자 팩스번호 (최대 20자)
             fax="070-111-222",
 
-            # 메일주소
-            email="dev@linkhub.co.kr",
+            # 담당자 메일주소 (최대 100자)
+            email="test@test.com",
 
-            # 회사조회 여부, True-회사조회, False-개인조회
-            searchAllAllowYN=True
+            # 회사조회 권한여부, True(회사조회) False(개인조회)
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = closedownService.updateContact(CorpNum, updateInfo, UserID)
