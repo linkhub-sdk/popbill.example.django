@@ -97,9 +97,8 @@ def sendSMS(request):
 
 def sendSMS_multi(request):
     """
-    [대량전송 / 부분전송] 단문SMS를 전송합니다.
-    - 대량전송/부분전송에 대한 설명은 "[문자 API 연동매뉴얼] > 3.2.1 SendSMS(단문전송)"을
-      참조하시기 바랍니다.
+    [대량전송] 단문SMS를 전송합니다.
+    - 단건/대량 전송에 대한 설명은 "[문자 API 연동매뉴얼] > 3.2.1 SendSMS(단문전송)"을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -196,9 +195,8 @@ def sendLMS(request):
 
 def sendLMS_multi(request):
     """
-    [대량전송 / 부분전송] 장문LMS을 전송합니다.
-    - 대량전송/부분전송에 대한 설명은 "[문자 API 연동매뉴얼] > 3.2.1 SendLMS(장문전송)"을
-      참조하시기 바랍니다.
+    [대량전송] 장문LMS을 전송합니다.
+    - 단건/대량 전송에 대한 설명은 "[문자 API 연동매뉴얼] > 3.2.2 SendLMS(장문전송)"을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -303,9 +301,9 @@ def sendMMS(request):
 
 def sendMMS_multi(request):
     """
-    [대량전송 / 부분전송] 포토MMS를 전송합니다.
-    - 대량전송/부분전송에 대한 설명은 "[문자 API 연동매뉴얼] > 3.2.3 SendMMS(포토)"을
-      참조하시기 바랍니다.
+    [대량전송] 포토MMS를 전송합니다.
+     - 메시지 내용이 2,000Byte 초과시 메시지 내용은 자동으로 제거됩니다.
+     - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1500px 이하 권장
     """
     try:
         # 팝빌회원 사업자번호
@@ -362,6 +360,7 @@ def sendMMS_multi(request):
 def sendXMS(request):
     """
     메시지 내용의 길이(90Byte)에 따라 SMS/LMS를 자동인식하여 전송합니다.
+    - 90byte 초과시 LMS(장문)으로 인식 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -410,8 +409,8 @@ def sendXMS(request):
 def sendXMS_multi(request):
     """
     [대량전송 / 부분전송] 메시지 내용의 길이(90Byte)에 따라 SMS/LMS를 자동인식하여 전송합니다
-    - 대량전송/부분전송에 대한 설명은 "[문자 API 연동매뉴얼] > 3.2.4 SendSMS(단문전송)"을
-      참조하시기 바랍니다.
+    - 단건/대량 전송에 대한 설명은 "[문자 API 연동매뉴얼] > 3.2.4 SendXMS(단문/장문 자동인식 전송)"을 참조하시기 바랍니다.
+    - 90byte 초과시 LMS(장문)으로 인식 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -464,7 +463,7 @@ def sendXMS_multi(request):
 
 def cancelReserve(request):
     """
-    예약문자전송을 취소합니다.
+    문자전송요청시 발급받은 접수번호(receiptNum)로 예약문자 전송을 취소합니다.
     - 예약취소는 예약전송시간 10분전까지만 가능합니다.
     """
     try:
@@ -502,7 +501,8 @@ def cancelReserveRN(request):
 
 def getMessages(request):
     """
-    문자전송요청에 대한 전송결과를 확인합니다.
+    문자전송요청시 발급받은 접수번호(receiptNum)로 전송상태를 확인합니다.
+    - 응답항목에 대한 자세한 사항은 "[문자 API 연동매뉴얼] >  3.3.1. GetMessages (전송내역 확인)을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -521,13 +521,14 @@ def getMessages(request):
 def getMessagesRN(request):
     """
     문자전송요청시 할당한 전송요청번호(requestNum)로 전송상태를 확인합니다
+    - 응답항목에 대한 자세한 사항은 "[문자 API 연동매뉴얼] > 3.3.2. GetMessagesRN (전송내역 확인 - 요청번호 할당)을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
         # 문자전송 요청 시 할당한 전송요청번호(requestNum)
-        requestNum = '20180910103454'
+        requestNum = '20190116-001'
 
         resultList = messageService.getMessagesRN(CorpNum, requestNum)
 
@@ -538,7 +539,7 @@ def getMessagesRN(request):
 
 def getStates(request):
     """
-    문자 전송내역 요약정보를 확인한다.
+    문자 전송내역 요약정보를 확인합니다. (최대 1000건)
     """
     try:
         # 팝빌회원 사업자번호
@@ -569,10 +570,10 @@ def search(request):
         UserID = settings.testUserID
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20171201"
+        SDate = "20190101"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20180131"
+        EDate = "20190116"
 
         # 전송상태 배열, 1-대기, 2-성공, 3-실패, 4-취소
         State = ['1', '2', '3', '4']
@@ -691,7 +692,7 @@ def getUnitCost(request):
         CorpNum = settings.testCorpNum
 
         # 문자전송유형, [SMS(단문) / LMS(장문) / MMS(포토)]
-        MsgType = "MMS"
+        MsgType = "SMS"
 
         result = messageService.getUnitCost(CorpNum, MsgType)
 
@@ -790,44 +791,44 @@ def joinMember(request):
         # 회원정보
         newMember = JoinForm(
 
-            # 회원아이디, 최대 20자
-            ID="testkorea",
+            # 아이디 (6자 이상 50자 미만)
+            ID="join_id_test",
 
-            # 비밀번호, 최대 20자
+            # 비밀번호 (6자 이상 20자 미만)
             PWD="this_is_password",
 
-            # 사업자번호
-            CorpNum="1234567890",
+            # 사업자번호 "-" 제외
+            CorpNum="0000000000",
 
-            # 상호
-            CorpName="테스트가입상호",
-
-            # 대표자성명
+            # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
 
-            # 주소
-            Addr="테스트 회사 주소",
+            # 상호 (최대 200자)
+            CorpName="테스트가입상호",
 
-            # 업태
+            # 주소 (최대 300자)
+            Addr="테스트회사주소",
+
+            # 업태 (최대 100자)
             BizType="테스트업태",
 
-            # 종목
+            # 종목 (최대 100자)
             BizClass="테스트업종",
 
-            # 담당자 성명
+            # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 연락처
-            ContactTEL="070-4304-2991",
+            # 담당자 이메일주소 (최대 100자)
+            ContactEmail="test@test.com",
 
-            # 담당자 휴대폰번호
-            ContactHP="010-2222-3333",
+            # 담당자 연락처 (최대 20자)
+            ContactTEL="070-111-222",
 
-            # 담당자 팩스번호
-            ContactFAX="070-4304-2991",
+            # 담당자 휴대폰번호 (최대 20자)
+            ContactHP="010-111-222",
 
-            # 담당자 메일주소
-            ContactEmail="test@test.com"
+            # 담당자 팩스번호 (최대 20자)
+            ContactFAX="070-111-222"
         )
 
         response = messageService.joinMember(newMember)
@@ -870,29 +871,32 @@ def registContact(request):
         # 담당자 정보
         newContact = ContactInfo(
 
-            # 아이디
-            id="testkorea_1117",
+            # 아이디 (6자 이상 50자 미만)
+            id="popbill_test_id",
 
-            # 비밀번호
-            pwd="this_is_password",
+            # 비밀번호 (6자 이상 20자 미만)
+            pwd="popbill_test_pwd",
 
-            # 담당자명
-            personName="정대리",
+            # 담당자명 (최대 100자)
+            personName="담당자명",
 
-            # 연락처
-            tel="010-4304-2991",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-222",
 
-            # 휴대폰번호
-            hp="010-4304-2991",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-222",
 
-            # 팩스번호
-            fax="070-4324-2991",
+            # 담당자 팩스번호 (최대 20자)
+            fax="070-111-222",
 
-            # 메일주소
-            email="dev@linkhub.co.kr",
+            # 담당자 이메일 (최대 100자)
+            email="test@test.com",
 
             # 회사조회 권한여부, True(회사조회) False(개인조회)
-            searchAllAllowYN=True
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = messageService.registContact(CorpNum, newContact, UserID)
@@ -934,19 +938,19 @@ def updateCorpInfo(request):
         # 회사정보
         corpInfo = CorpInfo(
 
-            # 대표자성명
-            ceoname="대표자성명",
+            # 대표자 성명 (최대 100자)
+            ceoname="대표자_성명",
 
-            # 상호
+            # 상호 (최대 200자)
             corpName="상호",
 
-            # 주소
+            # 주소 (최대 300자)
             addr="주소",
 
-            # 업태
+            # 업태 (최대 100자)
             bizType="업태",
 
-            # 종목
+            # 종목 (최대 100자)
             bizClass="종목"
         )
 
@@ -993,25 +997,28 @@ def updateContact(request):
         updateInfo = ContactInfo(
 
             # 담당자 아이디
-            id=UserID,
+            id="UserID",
 
-            # 담당자 성명
-            personName="담당자 성명",
+            # 담당자 성명 (최대 100자)
+            personName="담당자_성명",
 
-            # 연락처
-            tel="070-4304-2991",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-111",
 
-            # 휴대폰번호
-            hp="010-4324-4324",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-111",
 
-            # 팩스번호
+            # 담당자 팩스번호 (최대 20자)
             fax="070-111-222",
 
-            # 메일주소
-            email="dev@linkhub.co.kr",
+            # 담당자 메일주소 (최대 100자)
+            email="test@test.com",
 
-            # 회사조회 여부, True-회사조회, False-개인조회
-            searchAllAllowYN=True
+            # 회사조회 권한여부, True(회사조회) False(개인조회)
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = messageService.updateContact(CorpNum, updateInfo, UserID)
