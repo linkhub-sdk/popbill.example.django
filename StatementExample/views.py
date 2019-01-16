@@ -24,10 +24,10 @@ def checkMgtKeyInUse(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 공급자별 고유번호 생성
-        MgtKey = "20161121-01"
+        # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 발신자별 고유번호 생성
+        MgtKey = "20190116-001"
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         bIsInUse = statementService.checkMgtKeyInUse(CorpNum, ItemCode, MgtKey)
@@ -58,7 +58,7 @@ def registIssue(request):
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20180119",
+            writeDate="20190116",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -69,76 +69,76 @@ def registIssue(request):
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
 
-            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
 
-            # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 공급자별 고유번호 생성
-            mgtKey="20180119-111",
+            # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
+            mgtKey="20190116-001",
 
-            # [필수] 공급자 사업자번호, '-' 제외 10자리
+            # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
 
-            # 공급자 상호
-            senderCorpName="공급자 상호",
+            # 발신자 상호
+            senderCorpName="발신자 상호",
 
-            # 공급자 주소
-            senderAddr="공급자 주소",
+            # 발신자 주소
+            senderAddr="발신자 주소",
 
-            # 공급자 대표자 성명
-            senderCEOName="공급자 대표자 성명",
+            # 발신자 대표자 성명
+            senderCEOName="발신자 대표자 성명",
 
-            # 공급자 종사업장 식별번호, 필요시 4자리 숫자값 기재
+            # 발신자 종사업장 식별번호, 필요시 4자리 숫자값 기재
             senderTaxRegID="",
 
-            # 공급자 종목
+            # 발신자 종목
             senderBizClass="종목",
 
-            # 공급자 업태
+            # 발신자 업태
             senderBizType="업태",
 
-            # 공급자 담당자 성명
-            senderContactName="공급자 담당자명",
+            # 발신자 담당자 성명
+            senderContactName="발신자 담당자명",
 
-            # 공급자 메일주소
+            # 발신자 메일주소
             senderEmail="test@test.com",
 
-            # 공급자 연락처
+            # 발신자 연락처
             senderTEL="070-1234-1234",
 
-            # 공급자 휴대폰번호
+            # 발신자 휴대폰번호
             senderHP="010-000-222",
 
-            # [필수] 공급받는자 사업자번호, '-' 제외 10자리
+            # [필수] 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
 
-            # 공급받는자 상호
-            receiverCorpName="공급받는자 상호",
+            # 수신자 상호
+            receiverCorpName="수신자 상호",
 
-            # [필수] 공급받는자 대표자 성명
-            receiverCEOName="공급받는자 대표자 성명",
+            # [필수] 수신자 대표자 성명
+            receiverCEOName="수신자 대표자 성명",
 
-            # 공급받는자 주소
-            receiverAddr="공급받는자 주소",
+            # 수신자 주소
+            receiverAddr="수신자 주소",
 
-            # 공급받는자 종사업장식별번호, 필요시 4자리 숫자값 기재
+            # 수신자 종사업장식별번호, 필요시 4자리 숫자값 기재
             receiverTaxRegID="",
 
-            # 공급받는자 종목
-            receiverBizClass="공급받는자 종목",
+            # 수신자 종목
+            receiverBizClass="수신자 종목",
 
-            # 공급받는자 업태
-            receiverBizType="공급받는자 업태",
+            # 수신자 업태
+            receiverBizType="수신자 업태",
 
-            # 공급받는자 담당자 성명
-            receiverContactName="공급받는자 담당자명",
+            # 수신자 담당자 성명
+            receiverContactName="수신자 담당자명",
 
-            # 공급받는자  메일주소
+            # 수신자 메일주소
             receiverEmail="test@test.com",
 
-            # 공급받는자 연락처
+            # 수신자 연락처
             receiverTEL="070111222",
 
-            # 공급받는자 휴대폰번호
+            # 수신자 휴대폰번호
             receiverHP="010-111-222",
 
             # [필수] 공급가액 합계
@@ -169,7 +169,7 @@ def registIssue(request):
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20160119",  # 거래일자
+                    purchaseDT="20190116",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -179,7 +179,7 @@ def registIssue(request):
                 StatementDetail(
                     serialNum=2,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20160119",  # 거래일자
+                    purchaseDT="20190116",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -207,7 +207,7 @@ def registIssue(request):
 def register(request):
     """
     전자명세서 1건을 임시저장합니다.
-    - 임시저장 상태의 명세서는 발행(Issue API)을 호출해야 공급받는자에게 메일이 전송됩니다.
+    - 임시저장 상태의 명세서는 발행(Issue API)을 호출해야 수신자에게 메일이 전송됩니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -216,7 +216,7 @@ def register(request):
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20180119",
+            writeDate="20190116",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -227,76 +227,76 @@ def register(request):
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
 
-            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
 
-            # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 공급자별 고유번호 생성
-            mgtKey="20180119-100",
+            # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
+            mgtKey="20190116-002",
 
-            # [필수] 공급자 사업자번호, '-' 제외 10자리
+            # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
 
-            # 공급자 상호
-            senderCorpName="공급자 상호",
+            # 발신자 상호
+            senderCorpName="발신자 상호",
 
-            # 공급자 주소
-            senderAddr="공급자 주소",
+            # 발신자 주소
+            senderAddr="발신자 주소",
 
-            # 공급자 대표자 성명
-            senderCEOName="공급자 대표자 성명",
+            # 발신자 대표자 성명
+            senderCEOName="발신자 대표자 성명",
 
-            # 공급자 종사업장 식별번호, 필요시 4자리 숫자값 기재
+            # 발신자 종사업장 식별번호, 필요시 4자리 숫자값 기재
             senderTaxRegID="",
 
-            # 공급자 종목
+            # 발신자 종목
             senderBizClass="종목",
 
-            # 공급자 업태
+            # 발신자 업태
             senderBizType="업태",
 
-            # 공급자 담당자 성명
-            senderContactName="공급자 담당자명",
+            # 발신자 담당자 성명
+            senderContactName="발신자 담당자명",
 
-            # 공급자 메일주소
+            # 발신자 메일주소
             senderEmail="test@test.com",
 
-            # 공급자 연락처
+            # 발신자 연락처
             senderTEL="070-1234-1234",
 
-            # 공급자 휴대폰번호
+            # 발신자 휴대폰번호
             senderHP="010-000-222",
 
-            # [필수] 공급받는자 사업자번호, '-' 제외 10자리
+            # [필수] 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
 
-            # [필수] 공급받는자 상호
-            receiverCorpName="공급받는자 상호",
+            # [필수] 수신자 상호
+            receiverCorpName="수신자 상호",
 
-            # [필수] 공급받는자 대표자 성명
-            receiverCEOName="공급받는자 대표자 성명",
+            # [필수] 수신자 대표자 성명
+            receiverCEOName="수신자 대표자 성명",
 
-            # 공급받는자 주소
-            receiverAddr="공급받는자 주소",
+            # 수신자 주소
+            receiverAddr="수신자 주소",
 
-            # 공급받는자 종사업장식별번호, 필요시 4자리 숫자값 기재
+            # 수신자 종사업장식별번호, 필요시 4자리 숫자값 기재
             receiverTaxRegID="",
 
-            # 공급받는자 종목
-            receiverBizClass="공급받는자 종목",
+            # 수신자 종목
+            receiverBizClass="수신자 종목",
 
-            # 공급받는자 업태
-            receiverBizType="공급받는자 업태",
+            # 수신자 업태
+            receiverBizType="수신자 업태",
 
-            # 공급받는자 담당자 성명
-            receiverContactName="공급받는자 담당자명",
+            # 수신자 담당자 성명
+            receiverContactName="수신자 담당자명",
 
-            # 공급받는자  메일주소
+            # 수신자  메일주소
             receiverEmail="test@test.com",
 
-            # 공급받는자 연락처
+            # 수신자 연락처
             receiverTEL="070111222",
 
-            # 공급받는자 휴대폰번호
+            # 수신자 휴대폰번호
             receiverHP="010-111-222",
 
             # [필수] 공급가액 합계
@@ -327,7 +327,7 @@ def register(request):
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20160119",  # 거래일자
+                    purchaseDT="20190116",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -337,7 +337,7 @@ def register(request):
                 StatementDetail(
                     serialNum=2,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20160119",  # 거래일자
+                    purchaseDT="20190116",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -371,16 +371,16 @@ def update(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 수정할 전자명세서 문서관리번호
-        mgtKey = "20180119-100"
+        mgtKey = "20190116-002"
 
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20180119",
+            writeDate="20190116",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -391,76 +391,76 @@ def update(request):
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
 
-            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=ItemCode,
 
-            # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 공급자별 고유번호 생성
+            # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
             mgtKey=mgtKey,
 
-            # [필수] 공급자 사업자번호, '-' 제외 10자리
+            # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
 
-            # 공급자 상호
-            senderCorpName="공급자 상호_수",
+            # 발신자 상호
+            senderCorpName="발신자 상호_수정",
 
-            # 공급자 주소
-            senderAddr="공급자 주소",
+            # 발신자 주소
+            senderAddr="발신자 주소",
 
-            # 공급자 대표자 성명
-            senderCEOName="공급자 대표자 성명",
+            # 발신자 대표자 성명
+            senderCEOName="발신자 대표자 성명",
 
-            # 공급자 종사업장 식별번호, 필요시 4자리 숫자값 기재
+            # 발신자 종사업장 식별번호, 필요시 4자리 숫자값 기재
             senderTaxRegID="",
 
-            # 공급자 종목
+            # 발신자 종목
             senderBizClass="종목",
 
-            # 공급자 업태
+            # 발신자 업태
             senderBizType="업태",
 
-            # 공급자 담당자 성명
-            senderContactName="공급자 담당자명",
+            # 발신자 담당자 성명
+            senderContactName="발신자 담당자명",
 
-            # 공급자 메일주소
+            # 발신자 메일주소
             senderEmail="test@test.com",
 
-            # 공급자 연락처
+            # 발신자 연락처
             senderTEL="070-1234-1234",
 
-            # 공급자 휴대폰번호
+            # 발신자 휴대폰번호
             senderHP="010-000-222",
 
-            # [필수] 공급받는자 사업자번호, '-' 제외 10자리
+            # [필수] 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
 
-            # [필수] 공급받는자 상호
-            receiverCorpName="공급받는자 상호",
+            # [필수] 수신자 상호
+            receiverCorpName="수신자 상호",
 
-            # [필수] 공급받는자 대표자 성명
-            receiverCEOName="공급받는자 대표자 성명",
+            # [필수] 수신자 대표자 성명
+            receiverCEOName="수신자 대표자 성명",
 
-            # 공급받는자 주소
-            receiverAddr="공급받는자 주소",
+            # 수신자 주소
+            receiverAddr="수신자 주소",
 
-            # 공급받는자 종사업장식별번호, 필요시 4자리 숫자값 기재
+            # 수신자 종사업장식별번호, 필요시 4자리 숫자값 기재
             receiverTaxRegID="",
 
-            # 공급받는자 종목
-            receiverBizClass="공급받는자 종목",
+            # 수신자 종목
+            receiverBizClass="수신자 종목",
 
-            # 공급받는자 업태
-            receiverBizType="공급받는자 업태",
+            # 수신자 업태
+            receiverBizType="수신자 업태",
 
-            # 공급받는자 담당자 성명
-            receiverContactName="공급받는자 담당자명",
+            # 수신자 담당자 성명
+            receiverContactName="수신자 담당자명",
 
-            # 공급받는자 메일주소
+            # 수신자 메일주소
             receiverEmail="test@test.com",
 
-            # 공급받는자 연락처
+            # 수신자 연락처
             receiverTEL="070111222",
 
-            # 공급받는자 휴대폰번호
+            # 수신자 휴대폰번호
             receiverHP="010-111-222",
 
             # [필수] 공급가액 합계
@@ -491,7 +491,7 @@ def update(request):
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20160119",  # 거래일자
+                    purchaseDT="20190116",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -501,7 +501,7 @@ def update(request):
                 StatementDetail(
                     serialNum=2,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20160119",  # 거래일자
+                    purchaseDT="20190116",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -535,11 +535,11 @@ def issue(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
-        ItemCode = 124
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
+        ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20180119-100"
+        MgtKey = "20190116-002"
 
         response = statementService.issue(CorpNum, ItemCode, MgtKey)
 
@@ -556,11 +556,11 @@ def cancel(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 124
 
         # 전자명세서 문서관리번호
-        MgtKey = "20180119-100"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "발행취소 메모"
@@ -582,11 +582,11 @@ def delete(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 124
 
         # 전자명세서 문서관리번호
-        MgtKey = "20180119-100"
+        MgtKey = "20190116-002"
 
         response = statementService.delete(CorpNum, ItemCode, MgtKey)
 
@@ -605,11 +605,11 @@ def getInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20190116-001"
 
         statementInfo = statementService.getInfo(CorpNum, ItemCode, MgtKey)
 
@@ -628,14 +628,14 @@ def getInfos(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 문서관리번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20161121-01")
-        MgtKeyList.append("20161121-02")
-        MgtKeyList.append("20161121-03")
+        MgtKeyList.append("20190116-001")
+        MgtKeyList.append("20190116-002")
+        MgtKeyList.append("20190116-003")
 
         InfoList = statementService.getInfos(CorpNum, ItemCode, MgtKeyList)
 
@@ -654,11 +654,11 @@ def getDetailInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20190116-001"
 
         statement = statementService.getDetailInfo(CorpNum, ItemCode, MgtKey)
 
@@ -684,10 +684,10 @@ def search(request):
         DType = "W"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20171201"
+        SDate = "20190101"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20180125"
+        EDate = "20190116"
 
         # 명세서 상태코드, 2,3번째 자리에 와일드카드(*) 사용 가능
         State = ["2**", "3**"]
@@ -719,17 +719,17 @@ def getLogs(request):
     """
     전자명세서 상태 변경이력을 확인합니다.
     - 상태 변경이력 확인(GetLogs API) 응답항목에 대한 자세한 정보는 "[전자명세서 API 연동매뉴얼] >
-     3.3.4 GetLogs (상태 변경이력 확인)" 을 참조하시기 바랍니다.
+     3.2.5 GetLogs (상태 변경이력 확인)" 을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20190116-01"
 
         LogList = statementService.getLogs(CorpNum, ItemCode, MgtKey)
 
@@ -769,11 +769,11 @@ def getPopUpURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20190116-001"
 
         url = statementService.getPopUpURL(CorpNum, ItemCode, MgtKey)
 
@@ -791,11 +791,11 @@ def getPrintURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20161121-03"
+        MgtKey = "20190116-001"
 
         url = statementService.getPrintURL(CorpNum, ItemCode, MgtKey)
 
@@ -806,7 +806,7 @@ def getPrintURL(request):
 
 def getEPrintURL(request):
     """
-    전자명세서 인쇄(공급받는자) URL을 반환합니다.
+    전자명세서 인쇄(수신자) URL을 반환합니다.
     - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
     """
 
@@ -814,11 +814,11 @@ def getEPrintURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20190116-001"
 
         url = statementService.getEPrintURL(CorpNum, ItemCode, MgtKey)
 
@@ -836,14 +836,14 @@ def getMassPrintURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 인쇄할 문서관리번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20180103010")
-        MgtKeyList.append("20171228-013")
-        MgtKeyList.append("20171228-001")
+        MgtKeyList.append("20190116-001")
+        MgtKeyList.append("20190116-002")
+        MgtKeyList.append("20190116-003")
 
         url = statementService.getMassPrintURL(CorpNum, ItemCode, MgtKeyList)
 
@@ -854,18 +854,18 @@ def getMassPrintURL(request):
 
 def getMailURL(request):
     """
-    공급받는자 메일링크 URL을 반환합니다.
+    수신자 메일링크 URL을 반환합니다.
     - 메일링크 URL은 유효시간이 존재하지 않습니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20161123-01"
+        MgtKey = "20190116-001"
 
         url = statementService.getMailURL(CorpNum, ItemCode, MgtKey)
 
@@ -903,11 +903,11 @@ def attachFile(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "2018-01-16-888"
+        MgtKey = "20190116-002"
 
         # 파일경로
         FilePath = "./StatementExample/static/image/attachfile.png"
@@ -932,11 +932,11 @@ def deleteFile(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "2018-01-16-888"
+        MgtKey = "20190116-002"
 
         # 삭제할 FileID, 첨부파일목록(getFiles API) 응답 전문의 attachedFile 값
         FileID = "0DD20B73-5654-488E-A683-0ABED95C7D07.PBF"
@@ -960,11 +960,11 @@ def getFiles(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "2018-01-16-888"
+        MgtKey = "20190116-002"
 
         fileList = statementService.getFiles(CorpNum, ItemCode, MgtKey)
 
@@ -981,11 +981,11 @@ def sendEmail(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "2018-01-16-888"
+        MgtKey = "20190116-002"
 
         # 수신메일주소
         ReceiverMail = "test@test.com"
@@ -1004,17 +1004,17 @@ def sendSMS(request):
     """
     알림문자를 전송합니다. (단문/SMS- 한글 최대 45자)
     - 알림문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [전송내역] 탭에서 전송결과를 확인할 수 있습니다.
+    - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] >[전송내역] 탭에서 전송결과를 확인할 수 있습니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "2018-01-16-888"
+        MgtKey = "20190116-002"
 
         # 발신번호
         Sender = "07000001234"
@@ -1045,11 +1045,11 @@ def sendFAX(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20150326-01"
+        MgtKey = "20190116-002"
 
         # 발신번호
         Sender = "070222111"
@@ -1089,7 +1089,7 @@ def FAXSend(request):
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20180119",
+            writeDate="20190116",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -1100,76 +1100,76 @@ def FAXSend(request):
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
 
-            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
 
-            # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 공급자별 고유번호 생성
-            mgtKey="20180119-100",
+            # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
+            mgtKey="20190116-100",
 
-            # [필수] 공급자 사업자번호, '-' 제외 10자리
+            # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
 
-            # 공급자 상호
-            senderCorpName="공급자 상호",
+            # 발신자 상호
+            senderCorpName="발신자 상호",
 
-            # 공급자 주소
-            senderAddr="공급자 주소",
+            # 발신자 주소
+            senderAddr="발신자 주소",
 
-            # 공급자 대표자 성명
-            senderCEOName="공급자 대표자 성명",
+            # 발신자 대표자 성명
+            senderCEOName="발신자 대표자 성명",
 
-            # 공급자 종사업장 식별번호, 필요시 4자리 숫자값 기재
+            # 발신자 종사업장 식별번호, 필요시 4자리 숫자값 기재
             senderTaxRegID="",
 
-            # 공급자 종목
+            # 발신자 종목
             senderBizClass="종목",
 
-            # 공급자 업태
+            # 발신자 업태
             senderBizType="업태",
 
-            # 공급자 담당자 성명
-            senderContactName="공급자 담당자명",
+            # 발신자 담당자 성명
+            senderContactName="발신자 담당자명",
 
-            # 공급자 메일주소
+            # 발신자 메일주소
             senderEmail="test@test.com",
 
-            # 공급자 연락처
+            # 발신자 연락처
             senderTEL="070-1234-1234",
 
-            # 공급자 휴대폰번호
+            # 발신자 휴대폰번호
             senderHP="010-000-222",
 
-            # [필수] 공급받는자 사업자번호, '-' 제외 10자리
+            # [필수] 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
 
-            # 공급받는자 상호
-            receiverCorpName="공급받는자 상호",
+            # 수신자 상호
+            receiverCorpName="수신자 상호",
 
-            # [필수] 공급받는자 대표자 성명
-            receiverCEOName="공급받는자 대표자 성명",
+            # [필수] 수신자 대표자 성명
+            receiverCEOName="수신자 대표자 성명",
 
-            # 공급받는자 주소
-            receiverAddr="공급받는자 주소",
+            # 수신자 주소
+            receiverAddr="수신자 주소",
 
-            # 공급받는자 종사업장식별번호, 필요시 4자리 숫자값 기재
+            # 수신자 종사업장식별번호, 필요시 4자리 숫자값 기재
             receiverTaxRegID="",
 
-            # 공급받는자 종목
-            receiverBizClass="공급받는자 종목",
+            # 수신자 종목
+            receiverBizClass="수신자 종목",
 
-            # 공급받는자 업태
-            receiverBizType="공급받는자 업태",
+            # 수신자 업태
+            receiverBizType="수신자 업태",
 
-            # 공급받는자 담당자 성명
-            receiverContactName="공급받는자 담당자명",
+            # 수신자 담당자 성명
+            receiverContactName="수신자 담당자명",
 
-            # 공급받는자  메일주소
+            # 수신자  메일주소
             receiverEmail="test@test.com",
 
-            # 공급받는자 연락처
+            # 수신자 연락처
             receiverTEL="070111222",
 
-            # 공급받는자 휴대폰번호
+            # 수신자 휴대폰번호
             receiverHP="010-111-222",
 
             # [필수] 공급가액 합계
@@ -1200,7 +1200,7 @@ def FAXSend(request):
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20161120",  # 거래일자
+                    purchaseDT="20190116",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -1210,7 +1210,7 @@ def FAXSend(request):
                 StatementDetail(
                     serialNum=2,  # 일련번호, 1부터 순차기재
                     itemName="품목1",  # 품목
-                    purchaseDT="20161120",  # 거래일자
+                    purchaseDT="20190116",  # 거래일자
                     spec="BOX",  # 규격
                     unitCost="10000",  # 단가
                     qty=1,  # 수량
@@ -1250,13 +1250,13 @@ def attachStatement(request):
         ItemCode = "121"
 
         # 전자명세서 문서관리번호
-        MgtKey = "2018-01-16-888"
+        MgtKey = "20190116-001"
 
         # 첨부할 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         SubItemCode = "121"
 
         # 첨부할 전자명세서 문서관리번호
-        SubMgtKey = "20171122-03"
+        SubMgtKey = "20190115-001"
 
         response = statementService.attachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
 
@@ -1280,13 +1280,13 @@ def detachStatement(request):
         ItemCode = "121"
 
         # 전자명세서 문서관리번호
-        MgtKey = "2018-01-16-888"
+        MgtKey = "20190116-001"
 
         # 첨부할 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         SubItemCode = "121"
 
         # 첨부할 전자명세서 문서관리번호
-        SubMgtKey = "20171122-03"
+        SubMgtKey = "20190115-001"
 
         response = statementService.detachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
 
@@ -1317,11 +1317,11 @@ def updateEmailConfig(request):
     """
     전자명세서 관련 메일전송 항목에 대한 전송여부를 수정합니다.
     메일전송유형
-    SMT_ISSUE : 공급받는자에게 전자명세서가 발행 되었음을 알려주는 메일입니다.
-    SMT_ACCEPT : 공급자에게 전자명세서가 승인 되었음을 알려주는 메일입니다.
-    SMT_DENY : 공급자에게 전자명세서가 거부 되었음을 알려주는 메일입니다.
-    SMT_CANCEL : 공급받는자에게 전자명세서가 취소 되었음을 알려주는 메일입니다.
-    SMT_CANCEL_ISSUE : 공급받는자에게 전자명세서가 발행취소 되었음을 알려주는 메일입니다.
+    SMT_ISSUE : 수신자에게 전자명세서가 발행 되었음을 알려주는 메일입니다.
+    SMT_ACCEPT : 발신자에게 전자명세서가 승인 되었음을 알려주는 메일입니다.
+    SMT_DENY : 발신자에게 전자명세서가 거부 되었음을 알려주는 메일입니다.
+    SMT_CANCEL : 수신자에게 전자명세서가 취소 되었음을 알려주는 메일입니다.
+    SMT_CANCEL_ISSUE : 수신자에게 전자명세서가 발행취소 되었음을 알려주는 메일입니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1424,7 +1424,7 @@ def getUnitCost(request):
         CorpNum = settings.testCorpNum
 
         # 명세서 코드 [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
-        ItemCode = 123
+        ItemCode = 121
 
         result = statementService.getUnitCost(CorpNum, ItemCode)
 
@@ -1444,7 +1444,7 @@ def getChargeInfo(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서] [124-발주서], [125-입금표], [126-영수증]
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = "121"
 
         response = statementService.getChargeInfo(CorpNum, ItemCode, UserID)
@@ -1491,47 +1491,47 @@ def joinMember(request):
     팝빌 연동회원 가입을 요청합니다.
     """
     try:
-        # 회원정보
+        # 연동회원 가입정보
         newMember = JoinForm(
 
-            # 회원아이디, 최대 20자
-            ID="testkorea1123",
+            # 아이디 (6자 이상 50자 미만)
+            ID="join_id_test",
 
-            # 비밀번호, 최대 20자
-            PWD="testpasswodrd",
+            # 비밀번호 (6자 이상 20자 미만)
+            PWD="this_is_password",
 
-            # 사업자번호
-            CorpNum="0000000102",
+            # 사업자번호 "-" 제외
+            CorpNum="0000000000",
 
-            # 상호
-            CorpName="테스트가입상호",
-
-            # 대표자성명
+            # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
 
-            # 주소
-            Addr="테스트 회사 주소",
+            # 상호 (최대 200자)
+            CorpName="테스트가입상호",
 
-            # 업태
+            # 주소 (최대 300자)
+            Addr="테스트회사주소",
+
+            # 업태 (최대 100자)
             BizType="테스트업태",
 
-            # 종목
+            # 종목 (최대 100자)
             BizClass="테스트업종",
 
-            # 담당자 성명
+            # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 연락처
-            ContactTEL="070-1111-1234",
+            # 담당자 이메일주소 (최대 100자)
+            ContactEmail="test@test.com",
 
-            # 담당자 휴대폰번호
-            ContactHP="010-2222-3333",
+            # 담당자 연락처 (최대 20자)
+            ContactTEL="070-111-222",
 
-            # 담당자 팩스번호
-            ContactFAX="070-4304-2991",
+            # 담당자 휴대폰번호 (최대 20자)
+            ContactHP="010-111-222",
 
-            # 담당자 메일주소
-            ContactEmail="test@test.com"
+            # 담당자 팩스번호 (최대 20자)
+            ContactFAX="070-111-222"
         )
 
         response = statementService.joinMember(newMember)
@@ -1564,7 +1564,7 @@ def getCorpInfo(request):
 
 def updateCorpInfo(request):
     """
-    회사정보를 수정합니다.
+    연동회원사의 회사정보를 수정 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1576,20 +1576,20 @@ def updateCorpInfo(request):
         # 회사정보
         corpInfo = CorpInfo(
 
-            # 대표자성명
-            ceoname="대표자성명_수정",
+            # 대표자 성명 (최대 100자)
+            ceoname="대표자_성명",
 
-            # 상호
-            corpName="상호_수정",
+            # 상호 (최대 200자)
+            corpName="상호",
 
-            # 주소
-            addr="주소_수정",
+            # 주소 (최대 300자)
+            addr="주소",
 
-            # 업태
-            bizType="업태_수정",
+            # 업태 (최대 100자)
+            bizType="업태",
 
-            # 종목
-            bizClass="종목_수"
+            # 종목 (최대 100자)
+            bizClass="종목"
         )
 
         response = statementService.updateCorpInfo(CorpNum, corpInfo, UserID)
@@ -1613,29 +1613,33 @@ def registContact(request):
         # 담당자 정보
         newContact = ContactInfo(
 
-            # 아이디
-            id="testkorea_cash",
+            # 아이디 (6자 이상 50자 미만)
+            id="popbill_test_id",
 
-            # 비밀번호
-            pwd="thisispassword_cash",
+            # 비밀번호 (6자 이상 20자 미만)
+            pwd="popbill_test_pwd",
 
-            # 담당자명
-            personName="신규담당자",
+            # 담당자명 (최대 100자)
+            personName="담당자명",
 
-            # 연락처
-            tel="010-1234-1234",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-222",
 
-            # 휴대폰번호
-            hp="010-1234-1234",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-222",
 
-            # 팩스번호
-            fax="070-1234-1234",
+            # 담당자 팩스번호 (최대 20자)
+            fax="070-111-222",
 
-            # 메일주소
-            email="test@test.comr",
+            # 담당자 이메일 (최대 100자)
+            email="test@test.com",
 
             # 회사조회 권한여부, True(회사조회) False(개인조회)
-            searchAllAllowYN=True
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
+
         )
 
         response = statementService.registContact(CorpNum, newContact, UserID)
@@ -1675,25 +1679,28 @@ def updateContact(request):
         updateInfo = ContactInfo(
 
             # 담당자 아이디
-            id="testkorea_cash",
+            id="UserID",
 
-            # 담당자 성명
-            personName="담당자 성명_수정",
+            # 담당자 성명 (최대 100자)
+            personName="담당자_성명",
 
-            # 연락처
-            tel="010-1234-1234",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-111",
 
-            # 휴대폰번호
-            hp="010-8888-7777",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-111",
 
-            # 팩스번호
-            fax="070-1234-1234",
+            # 담당자 팩스번호 (최대 20자)
+            fax="070-111-222",
 
-            # 메일주소
+            # 담당자 메일주소 (최대 100자)
             email="test@test.com",
 
-            # 회사조회 여부, True-회사조회, False-개인조회
-            searchAllAllowYN=True
+            # 회사조회 권한여부, True(회사조회) False(개인조회)
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = statementService.updateContact(CorpNum, updateInfo, UserID)
