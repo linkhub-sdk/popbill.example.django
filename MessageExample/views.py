@@ -12,6 +12,11 @@ messageService = MessageService(settings.LinkID, settings.SecretKey)
 messageService.IsTest = settings.IsTest
 
 
+# 문자를 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
+# 1. 팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 메뉴에서 등록
+# 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+
+
 def index(request):
     return render(request, 'Message/Index.html', {})
 

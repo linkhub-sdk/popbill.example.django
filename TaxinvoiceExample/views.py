@@ -12,9 +12,9 @@ taxinvoiceService = TaxinvoiceService(settings.LinkID, settings.SecretKey)
 taxinvoiceService.IsTest = settings.IsTest
 
 
-# 전자세금계산서 발행을 위해 공인인증서를 등록합니다.
-# - 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리]
-# - 공인인증서 등록 팝업 URL (getTaxCertURL API)을 이용하여 등록
+# 전자세금계산서 발행을 위해 공인인증서를 등록합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
+# 1. 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리] 메뉴에서 등록
+# 2. 공인인증서 등록 팝업 URL (getTaxCertURL API)을 이용하여 등록
 
 def index(request):
     return render(request, 'Taxinvoice/Index.html', {})
