@@ -29,26 +29,22 @@ urlpatterns = [
     url(r'^SendFMS_one$', views.sendFMS_one, name='SendFMS_one'),
     url(r'^SendFMS_same$', views.sendFMS_same, name='SendFMS_same'),
     url(r'^SendFMS_multi$', views.sendFMS_multi, name='SendFMS_multi'),
+    url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
+    url(r'^CancelReserveRN$', views.cancelReserveRN, name='CancelReserveRN'),
 
     # 정보확인
+    url(r'^GetMessages$', views.getMessages, name='GetMessages'),
+    url(r'^GetMessagesRN$', views.getMessagesRN, name='GetMessagesRN'),
     url(r'^Search$', views.search, name='Search'),
     url(r'^GetSentListURL', views.getSentListURL, name='GetSentListURL'),
 
-    # 접수번호 관련 기능 (요청번호 미할당)
-    url(r'^GetMessages$', views.getMessages, name='GetMessages'),
-    url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
-
-    # 요청번호 할당 전송건 관련 기능
-    url(r'^GetMessagesRN$', views.getMessagesRN, name='GetMessagesRN'),
-    url(r'^CancelReserveRN$', views.cancelReserveRN, name='CancelReserveRN'),
-
     # 포인트 관리
-    url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
-    url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
     url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
+    url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
+    url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
 
     # 회원정보
     url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),
