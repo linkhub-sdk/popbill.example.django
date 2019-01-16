@@ -74,7 +74,7 @@ STATICFILES_DIRS = [
 ]
 
 """
- - Django SDK 연동환경 설정방법 안내 : http://blog.linkhub.co.kr/
+ - Django SDK 연동환경 설정방법 안내 : https://linkhub.tistory.com/146
  - 업데이트 일자 : 2019-01-16
  - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
  - 연동 기술지원 이메일 : code@linkhub.co.kr
