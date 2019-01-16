@@ -12,6 +12,10 @@ taxinvoiceService = TaxinvoiceService(settings.LinkID, settings.SecretKey)
 taxinvoiceService.IsTest = settings.IsTest
 
 
+# 전자세금계산서 발행을 위해 공인인증서를 등록합니다.
+# - 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리]
+# - 공인인증서 등록 팝업 URL (getTaxCertURL API)을 이용하여 등록
+
 def index(request):
     return render(request, 'Taxinvoice/Index.html', {})
 
@@ -29,7 +33,7 @@ def checkMgtKeyInUse(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "2018-02-06-1"
+        MgtKey = "20190116-001"
 
         keyInUse = taxinvoiceService.checkMgtKeyInUse(CorpNum, MgtKeyType, MgtKey)
 
@@ -54,7 +58,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "2018-02-07-1"
+        MgtKey = "20190116-001"
 
         # 지연발행 강제여부
         # 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
@@ -79,8 +83,8 @@ def registIssue(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
-            writeDate="20180207",
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
+            writeDate="20190116",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -261,7 +265,7 @@ def registIssue(request):
         taxinvoice.detailList = [
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20180116",  # 거래일자, yyyyMMdd
+                purchaseDT="20190116",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -272,7 +276,7 @@ def registIssue(request):
             ),
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20180116",  # 거래일자, yyyyMMdd
+                purchaseDT="20190116",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -314,10 +318,10 @@ def registIssue(request):
 def register(request):
     """
     1건의 세금계산서를 임시저장 합니다.
-    - 세금계산서 임시저장(Register API) 호출후에는 발행(Issue API)을 호출해야만 국세청으로 전송됩니다.
-    - 임시저장과 발행을 한번의 호출로 처리하는 즉시발행(RegistIssue API) 프로세스 연동을 권장합니다.
-    - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서
-      구성"을 참조하시기 바랍니다.
+     - 세금계산서 임시저장(Register API) 호출후에는 발행(Issue API)을 호출해야만 국세청으로 전송됩니다.
+     - 정발행시 임시저장(Register)과 발행(Issue)을 한번의 호출로 처리하는 즉시발행(RegistIssue API) 프로세스 연동을 권장합니다.
+     - 역발행시 임시저장(Register)과 역발행요청(Request)을 한번의 호출로 처리하는 즉시요청(RegistRequest API) 프로세스 연동을 권장합니다.
+     - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서구성"을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -325,7 +329,7 @@ def register(request):
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "2018-02-07-59"
+        MgtKey = "20190116-002"
 
         # 거래명세서 동시작성여부
         writeSpecification = False
@@ -336,8 +340,8 @@ def register(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
-            writeDate="20180206",
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
+            writeDate="20190116",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -518,7 +522,7 @@ def register(request):
         taxinvoice.detailList = [
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20180116",  # 거래일자, yyyyMMdd
+                purchaseDT="20190116",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -529,7 +533,7 @@ def register(request):
             ),
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20180116",  # 거래일자, yyyyMMdd
+                purchaseDT="20190116",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -581,7 +585,7 @@ def update(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-02-07-2"
+        MgtKey = "20190116-002"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -589,8 +593,8 @@ def update(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20180116
-            writeDate="20180210",
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
+            writeDate="20190116",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -769,7 +773,7 @@ def update(request):
         taxinvoice.detailList = [
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20180116",  # 거래일자, yyyyMMdd
+                purchaseDT="20190116",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -780,7 +784,7 @@ def update(request):
             ),
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20180116",  # 거래일자, yyyyMMdd
+                purchaseDT="20190116",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -820,13 +824,8 @@ def update(request):
 
 def issue(request):
     """
-    [임시저장] 또는 [발행대기] 상태의 세금계산서를 [발행] 처리합니다.
-    - 세금계산서를 발행하기 위해서는 먼저 공인인증서가 팝빌에 등록되어 있어야 합니다.
-    - 발행(Issue API)를 호출하는 시점에서 포인트가 차감됩니다.
-    - [발행완료] 세금계산서는 연동회원의 국세청 전송설정에 따라 익일/즉시전송 처리됩니다. 기본설정(익일전송)
-    - 국세청 전송설정은 "팝빌 로그인" > [전자세금계산서] > [환경설정] >
-      [전자세금계산서 관리] > [국세청 전송 및 지연발행 설정] 탭에서 확인할 수 있습니다.
-    - 국세청 전송정책에 대한 사항은 "[전자세금계산서 API 연동매뉴얼] > 1.3. 국세청 전송 정책" 을 참조하시기 바랍니다
+    [임시저장] 또는 [발행대기] 상태의 세금계산서를 [공급자]가 [발행]합니다.
+     - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서구성"을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -836,7 +835,7 @@ def issue(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-02-07-0509-2"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "발행 메모"
@@ -863,11 +862,10 @@ def issue(request):
 
 def cancelIssue(request):
     """
-    [발행완료] 상태의 세금계산서를 [발행취소] 처리합니다.
-    - [발행취소]는 국세청 전송전에만 가능합니다.
-    - 발행취소된 세금계산서는 국세청에 전송되지 않습니다.
-    - 발행취소 세금계산서에 기재된 '문서관리번호(mgtKey)'를 재사용 하기 위해서는 삭제(Delete API)를
-      호출하여 [삭제] 처리 하셔야 합니다.
+     [발행완료] 상태의 세금계산서를 [공급자]가 [발행취소]합니다.
+      - [발행취소]는 국세청 전송전에만 가능합니다.
+      - 발행취소된 세금계산서는 국세청에 전송되지 않습니다.
+      - 발행취소 세금계산서에 사용된 문서관리번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -877,7 +875,7 @@ def cancelIssue(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "201802061080"
+        MgtKey = "20190116-001"
 
         # 메모
         Memo = "발행취소 메모"
@@ -896,8 +894,7 @@ def send(request):
     """
     공급자가 [임시저장] 상태의 세금계산서를 [발행예정] 합니다.
     - 발행예정이란 공급자와 공급받는자 사이에 세금계산서 확인 후 발해하는 방법입니다.
-    - "[전자세금계산서 API 연동매뉴얼] > 1.2.1. 정발행 프로세스 흐름도 > 다. 임시저장 발행예정" 의
-      프로세스를 참조하시기 바랍니다.
+    - "[전자세금계산서 API 연동매뉴얼] > 1.2.1. 정발행 > 다. 임시저장 발행예정" 의 프로세스를 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -907,7 +904,7 @@ def send(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-005"
+        MgtKey = "20190116-001"
 
         # 메모
         Memo = "발행예정 메모"
@@ -938,7 +935,7 @@ def cancelSend(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-005"
+        MgtKey = "20190116-001"
 
         # 메모
         Memo = "발행예정 취소 메모"
@@ -955,17 +952,17 @@ def cancelSend(request):
 
 def accept(request):
     """
-    [발행예정] 세금계산서를 공급받는자가 [승인]처리 합니다.
+    [승인대기] 상태의 세금계산서를 [공급받는자]가 [승인]합니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "SELL"
+        MgtKeyType = "BUY"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-008"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "발행예정 승인 메모"
@@ -982,7 +979,7 @@ def accept(request):
 
 def deny(request):
     """
-    발행예정 세금계산서를 [거부]처리 합니다.
+    [승인대기] 상태의 세금계산서를 [공급받는자]가 [거부]합니다.
     - [거부]된 세금계산서를 삭제(Delete API)하면 등록된 '문서관리번호'를재사용할 수 있습니다.
     """
     try:
@@ -990,10 +987,10 @@ def deny(request):
         CorpNum = settings.testCorpNum
 
         # 관리번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "SELL"
+        MgtKeyType = "BUY"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-009"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "발행예정 거부 메모"
@@ -1022,7 +1019,7 @@ def delete(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180112001"
+        MgtKey = "20190116-002"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1052,8 +1049,8 @@ def registRequest(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20181116
-            writeDate="20181116",
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
+            writeDate="20190116",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -1134,7 +1131,7 @@ def registRequest(request):
 
             # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로
             # 사업자별로 중복되지 않도록 구성
-            invoiceeMgtKey="20181116-00A",
+            invoiceeMgtKey="20190116-100",
 
             # [필수] 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
@@ -1234,7 +1231,7 @@ def registRequest(request):
         taxinvoice.detailList = [
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20181116",  # 거래일자, yyyyMMdd
+                purchaseDT="20190116",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1245,7 +1242,7 @@ def registRequest(request):
             ),
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20181116",  # 거래일자, yyyyMMdd
+                purchaseDT="20190116",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1287,11 +1284,10 @@ def registRequest(request):
 
 def request(request):
     """
-    공급받는자가 공급자에게 1건의 역발행 세금계산서를 요청합니다.
-    - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
-    - 역발행 요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목 중
-      과금방향(ChargeDirection) 에 기재한 값에 따라 정과금(공급자과금) 또는 역과금(공급받는자과금)
-      처리됩니다.
+    [공급받는자]가 임시저장 상태의 역발행 세금계산서를 공급자에게 [발행요청] 합니다.
+     - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
+     - 역발행 요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라
+       정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1301,7 +1297,7 @@ def request(request):
         MgtKeyType = "BUY"
 
         # 문서관리번호
-        MgtKey = "2018-02-07-0509-5"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "역발행 요청 메모"
@@ -1318,9 +1314,8 @@ def request(request):
 
 def cancelRequest(request):
     """
-    역발행 세금계산서를 [취소] 처리합니다.
-    - [취소]한 세금계산서의 '문서관리번호(mgtKey)'를 재사용하기 위해서는 삭제 (Delete API)
-      를 호출해야 합니다.
+    [공급받는자]가 역)발행대기 상태의 세금계산서를 [취소]합니다.
+     - [취소]한 세금계산서의 문서관리번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1330,7 +1325,7 @@ def cancelRequest(request):
         MgtKeyType = "BUY"
 
         # 문서관리번호
-        MgtKey = "2018-02-07-0509-4"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "처리시 메모"
@@ -1347,9 +1342,8 @@ def cancelRequest(request):
 
 def refuse(request):
     """
-    공급받는자에게 요청받은 역발행 세금계산서를 [거부]처리 합니다.
-    - [거부]한 세금계산서의 '문서관리번호(mgtKey)'를 재사용하기 위해서는 삭제 (Delete API)
-      를 호출해야 합니다.
+    공급받는자에게 요청받은 역)발행대기 상태의 세금계산서를 [공급자]가 [거부]합니다.
+     - 세금계산서의 문서관리번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1359,7 +1353,7 @@ def refuse(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-02-07-0509-1"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "발행 메모"
@@ -1391,7 +1385,7 @@ def sendToNTS(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "201802061081"
+        MgtKey = "20190116-002"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1406,8 +1400,8 @@ def sendToNTS(request):
 def getInfo(request):
     """
     1건의 세금계산서 상태/요약 정보를 확인합니다.
-    - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서
-      구성"을 참조하시기 바랍니다.
+     - 세금계산서 상태정보(GetInfo API) 응답항목에 대한 자세한 정보는
+       "[전자세금계산서 API 연동매뉴얼] > 4.2. (세금)계산서 상태정보 구성" 을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1417,7 +1411,7 @@ def getInfo(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "BIC-67890-18010403_00000"
+        MgtKey = "20190116-002"
 
         taxinvoiceInfo = taxinvoiceService.getInfo(CorpNum, MgtKeyType, MgtKey)
 
@@ -1441,9 +1435,9 @@ def getInfos(request):
 
         # 문서관리번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("2018-01-16-001")
-        MgtKeyList.append("2018-01-16-008")
-        MgtKeyList.append("2018-01-16-009")
+        MgtKeyList.append("20190116-001")
+        MgtKeyList.append("20190116-002")
+        MgtKeyList.append("20190116-003")
 
         InfoList = taxinvoiceService.getInfos(CorpNum, MgtKeyType, MgtKeyList)
 
@@ -1466,7 +1460,7 @@ def getDetailInfo(request):
         MgtKeyType = "SELL"
 
         # 문서 관리번호
-        MgtKey = "2018-01-16-5555"
+        MgtKey = "20190116-001"
 
         taxinvoice = taxinvoiceService.getDetailInfo(CorpNum, MgtKeyType, MgtKey)
 
@@ -1495,10 +1489,10 @@ def search(request):
         DType = "W"
 
         # [필수] 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20171210"
+        SDate = "20190101"
 
         # [필수] 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20180116"
+        EDate = "20190116"
 
         # 세금계산서 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용가능
         State = ["3**", "6**"]
@@ -1563,7 +1557,7 @@ def getLogs(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-5555"
+        MgtKey = "20190116-001"
 
         LogList = taxinvoiceService.getLogs(CorpNum, MgtKeyType, MgtKey)
 
@@ -1607,7 +1601,7 @@ def getPopUpURL(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180115-00001"
+        MgtKey = "20190116-001"
 
         url = taxinvoiceService.getPopUpURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1629,7 +1623,7 @@ def getPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-5555"
+        MgtKey = "20190116-001"
 
         url = taxinvoiceService.getPrintURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1651,7 +1645,7 @@ def getEPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "2018-01-16-5555"
+        MgtKey = "20190116-001"
 
         url = taxinvoiceService.getEPrintURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1674,9 +1668,9 @@ def getMassPrintURL(request):
 
         # 인쇄할 문서관리번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20161117-01")
-        MgtKeyList.append("20161117-02")
-        MgtKeyList.append("20161117-03")
+        MgtKeyList.append("20190116-001")
+        MgtKeyList.append("20190116-002")
+        MgtKeyList.append("20190116-003")
 
         url = taxinvoiceService.getMassPrintURL(CorpNum, MgtKeyType, MgtKeyList)
 
@@ -1698,7 +1692,7 @@ def getMailURL(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180103006"
+        MgtKey = "20190116-001"
 
         url = taxinvoiceService.getMailURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1759,7 +1753,7 @@ def attachFile(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180115-00003"
+        MgtKey = "20190116-002"
 
         # 파일경로
         FilePath = "./TaxinvoiceExample/static/image/attachfile.png"
@@ -1788,7 +1782,7 @@ def deleteFile(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180115-00003"
+        MgtKey = "20190116-002"
 
         # 첨부파일 아이디, GetFiles API의 응답항목(AtachedFile) 확인.
         FileID = "8D13F961-CD77-4856-9501-1FB59CAFEE9E.PBF"
@@ -1817,7 +1811,7 @@ def getFiles(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180115-00003"
+        MgtKey = "20190116-002"
 
         fileList = taxinvoiceService.getFiles(CorpNum, MgtKeyType, MgtKey)
 
@@ -1838,7 +1832,7 @@ def sendEmail(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180104qwe"
+        MgtKey = "20190116-002"
 
         # 수신메일주소
         ReceiverMail = "test@test.com"
@@ -1857,7 +1851,7 @@ def sendSMS(request):
     """
     알림문자를 전송합니다. (단문/SMS- 한글 최대 45자)
     - 알림문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [전송내역] 탭에서 전송결과를 확인할 수 있습니다.
+    - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] > [전송내역] 탭에서 전송결과를 확인할 수 있습니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1867,7 +1861,7 @@ def sendSMS(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180104qwe"
+        MgtKey = "20190116-002"
 
         # 발신번호
         Sender = "070-4304-2991"
@@ -1903,7 +1897,7 @@ def sendFAX(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20180104qwe"
+        MgtKey = "20190116-002"
 
         # 발신번호
         Sender = "070-4304-2991"
@@ -1933,13 +1927,13 @@ def attachStatement(request):
         MgtKeyType = "SELL"
 
         # 세금계산서 문서관리번호
-        MgtKey = "20180115-00003"
+        MgtKey = "20190116-001"
 
-        # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
-        ItemCode = "126"
+        # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
+        ItemCode = "121"
 
         # 전자명세서 문서관리번호
-        StmtMgtKey = "2018-01-16-888"
+        StmtMgtKey = "20190115-001"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1964,13 +1958,13 @@ def detachStatement(request):
         MgtKeyType = "SELL"
 
         # 문서 관리번호
-        MgtKey = "20180115-00003"
+        MgtKey = "20190116-001"
 
-        # 전자명세서 종류코드, 121-거래명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
-        ItemCode = "126"
+        # 전자명세서 종류코드, 121-거래명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
+        ItemCode = "121"
 
         # 전자명세서 문서관리번호
-        StmtMgtKey = "2018-01-16-888"
+        StmtMgtKey = "20190115-001"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -2010,11 +2004,11 @@ def assignMgtKet(request):
         MgtKeyType = "SELL"
 
         # 세금계산서 아이템키, 문서 목록조회(Search) API의 반환항목중 ItemKey 참조
-        ItemKey = '018081611481500001'
+        ItemKey = '019011609280500001'
 
         # 할당할 문서관리번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
         # 사업자번호별 중복없는 고유번호 할당
-        MgtKey = "20180912-002"
+        MgtKey = "20190116-003"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -2108,6 +2102,25 @@ def updateEmailConfig(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
+def getTaxCertURL(request):
+    """
+    공인인증서 등록 URL을 반환합니다.
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        url = taxinvoiceService.getTaxCertURL(CorpNum, UserID)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
 def getCertificateExpireDate(request):
     """
     팝빌에 등록되어 있는 공인인증서의 만료일자를 확인합니다.
@@ -2125,21 +2138,17 @@ def getCertificateExpireDate(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def getTaxCertURL(request):
+def checkCertValidation(request):
     """
-    공인인증서 등록 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    팝빌에 등록된 공인인증서의 유효성을 확인합니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
+        response = taxinvoiceService.checkCertValidation(CorpNum)
 
-        url = taxinvoiceService.getTaxCertURL(CorpNum, UserID)
-
-        return render(request, 'url.html', {'url': url})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -2290,44 +2299,44 @@ def joinMember(request):
         # 연동회원 가입정보
         newMember = JoinForm(
 
-            # 회원아이디 (4자 이상 50자 미만)
+            # 아이디 (6자 이상 50자 미만)
             ID="join_id_test",
 
-            # 비밀번호, 최대 20자
+            # 비밀번호 (6자 이상 20자 미만)
             PWD="this_is_password",
 
-            # 사업자번호
+            # 사업자번호 "-" 제외
             CorpNum="0000000000",
 
-            # 상호
-            CorpName="테스트가입상호",
-
-            # 대표자성명
+            # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
 
-            # 주소
+            # 상호 (최대 200자)
+            CorpName="테스트가입상호",
+
+            # 주소 (최대 300자)
             Addr="테스트회사주소",
 
-            # 업태
+            # 업태 (최대 100자)
             BizType="테스트업태",
 
-            # 종목
+            # 종목 (최대 100자)
             BizClass="테스트업종",
 
-            # 담당자 성명
+            # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 연락처
+            # 담당자 이메일주소 (최대 100자)
+            ContactEmail="test@test.com",
+
+            # 담당자 연락처 (최대 20자)
             ContactTEL="070-111-222",
 
-            # 담당자 휴대폰번호
+            # 담당자 휴대폰번호 (최대 20자)
             ContactHP="010-111-222",
 
-            # 담당자 팩스번호
-            ContactFAX="070-111-222",
-
-            # 담당자 메일주소
-            ContactEmail="test@test.com"
+            # 담당자 팩스번호 (최대 20자)
+            ContactFAX="070-111-222"
         )
 
         response = taxinvoiceService.joinMember(newMember)
@@ -2372,19 +2381,19 @@ def updateCorpInfo(request):
         # 회사정보
         corpInfo = CorpInfo(
 
-            # 대표자성명
+            # 대표자 성명 (최대 100자)
             ceoname="대표자_성명",
 
-            # 상호
+            # 상호 (최대 200자)
             corpName="상호",
 
-            # 주소
+            # 주소 (최대 300자)
             addr="주소",
 
-            # 업태
+            # 업태 (최대 100자)
             bizType="업태",
 
-            # 종목
+            # 종목 (최대 100자)
             bizClass="종목"
         )
 
@@ -2409,29 +2418,33 @@ def registContact(request):
         # 담당자 정보
         newContact = ContactInfo(
 
-            # 아이디 (4자 이상 50자 미만)
+            # 아이디 (6자 이상 50자 미만)
             id="popbill_test_id",
 
-            # 비밀번호
+            # 비밀번호 (6자 이상 20자 미만)
             pwd="popbill_test_pwd",
 
-            # 담당자명
+            # 담당자명 (최대 100자)
             personName="담당자명",
 
-            # 연락처
+            # 담당자 연락처 (최대 20자)
             tel="010-111-222",
 
-            # 휴대폰번호
+            # 담당자 휴대폰번호 (최대 20자)
             hp="010-111-222",
 
-            # 팩스번호
+            # 담당자 팩스번호 (최대 20자)
             fax="070-111-222",
 
-            # 메일주소
+            # 담당자 이메일 (최대 100자)
             email="test@test.com",
 
             # 회사조회 권한여부, True(회사조회) False(개인조회)
-            searchAllAllowYN=True
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
+
         )
 
         response = taxinvoiceService.registContact(CorpNum, newContact, UserID)
@@ -2476,41 +2489,29 @@ def updateContact(request):
             # 담당자 아이디
             id="UserID",
 
-            # 담당자 성명
+            # 담당자 성명 (최대 100자)
             personName="담당자_성명",
 
-            # 연락처
+            # 담당자 연락처 (최대 20자)
             tel="010-111-111",
 
-            # 휴대폰번호
+            # 담당자 휴대폰번호 (최대 20자)
             hp="010-111-111",
 
-            # 팩스번호
+            # 담당자 팩스번호 (최대 20자)
             fax="070-111-222",
 
-            # 메일주소
+            # 담당자 메일주소 (최대 100자)
             email="test@test.com",
 
-            # 회사조회 여부, True-회사조회, False-개인조회
-            searchAllAllowYN=True
+            # 회사조회 권한여부, True(회사조회) False(개인조회)
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = taxinvoiceService.updateContact(CorpNum, updateInfo, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def checkCertValidation(request):
-    """
-    팝빌에 등록된 공인인증서의 유효성을 확인합니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        response = taxinvoiceService.checkCertValidation(CorpNum)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
