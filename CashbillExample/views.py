@@ -25,7 +25,7 @@ def checkMgtKeyInUse(request):
         CorpNum = settings.testCorpNum
 
         # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 공급자별 고유번호 생성
-        MgtKey = "20161122-01"
+        MgtKey = "20190116-001"
 
         bIsInUse = cashbillService.checkMgtKeyInUse(CorpNum, MgtKey)
         if bIsInUse:
@@ -44,7 +44,6 @@ def registIssue(request):
     - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
     - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을
       참조하시기 바랍니다.
-    - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
     """
     try:
         # 팝빌회원 사업자번호
@@ -60,7 +59,7 @@ def registIssue(request):
         cashbill = Cashbill(
 
             # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="20181010-001",
+            mgtKey="20190116-001",
 
             # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
@@ -99,7 +98,7 @@ def registIssue(request):
             totalAmount="11000",
 
             # 발행자 사업자번호
-            franchiseCorpNum="1234567890",
+            franchiseCorpNum=CorpNum,
 
             # 발행자 상호
             franchiseCorpName="발행자 상호",
@@ -144,9 +143,8 @@ def register(request):
     1건의 현금영수증을 임시저장 합니다.
     - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
     - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책"을
+    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을
       참조하시기 바랍니다.
-    - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
     """
     try:
         # 팝빌회원 사업자번호
@@ -156,7 +154,7 @@ def register(request):
         cashbill = Cashbill(
 
             # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 공급자별 고유번호 생성
-            mgtKey="20181010-002",
+            mgtKey="20190116-002",
 
             # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
@@ -195,7 +193,7 @@ def register(request):
             totalAmount="11000",
 
             # 가맹점 사업자번호
-            franchiseCorpNum="1234567890",
+            franchiseCorpNum=CorpNum,
 
             # 가맹점 상호
             franchiseCorpName="가맹점 상호",
@@ -240,14 +238,13 @@ def update(request):
     1건의 현금영수증을 수정합니다.
     - [임시저장] 상태의 현금영수증만 수정할 수 있습니다.
     - 국세청에 신고된 현금영수증은 수정할 수 없으며, 취소 현금영수증을 발행하여 취소처리 할 수 있습니다.
-    - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
         # [필수] 수정하고자하는 현금영수증 문서관리번호
-        MgtKey = '20180118-003'
+        MgtKey = '20190116-002'
 
         # 현금영수증 정보
         cashbill = Cashbill(
@@ -336,7 +333,7 @@ def issue(request):
     """
     1건의 임시저장 현금영수증을 발행처리합니다.
     - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책" 을
+    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책" 을
       참조하시기 바랍니다.
     """
     try:
@@ -344,7 +341,7 @@ def issue(request):
         CorpNum = settings.testCorpNum
 
         # 문서관리번호
-        MgtKey = "20180118-004"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "발행 메모"
@@ -368,7 +365,7 @@ def cancelIssue(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180118-004"
+        MgtKey = "20190116-002"
 
         # 메모
         Memo = "발행취소 메모"
@@ -392,7 +389,7 @@ def delete(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180118-004"
+        MgtKey = "20190116-002"
 
         response = cashbillService.delete(CorpNum, MgtKey)
 
@@ -417,13 +414,13 @@ def revokeRegistIssue(request):
         UserID = settings.testUserID
 
         # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20180305-101"
+        mgtKey = "20190116-101"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "527489269"
+        orgConfirmNum = "158814020"
 
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20180227"
+        orgTradeDate = "20190115"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -445,7 +442,6 @@ def revokeRegistIssue_part(request):
     - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
     - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책"을
       참조하시기 바랍니다.
-    - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
     """
     try:
         # 팝빌회원 사업자번호
@@ -455,13 +451,13 @@ def revokeRegistIssue_part(request):
         UserID = settings.testUserID
 
         # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20180118-019"
+        mgtKey = "20190116-102"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "315234938"
+        orgConfirmNum = "158814020"
 
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20180117"
+        orgTradeDate = "20190115"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -513,13 +509,13 @@ def revokeRegister(request):
         UserID = settings.testUserID
 
         # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 공급자별 고유번호 생성
-        mgtKey = "20180118-43A"
+        mgtKey = "20190116-103"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "315234938"
+        orgConfirmNum = "158814020"
 
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20180117"
+        orgTradeDate = "20190115"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -547,13 +543,13 @@ def revokeRegister_part(request):
         UserID = settings.testUserID
 
         # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20180118-1233"
+        mgtKey = "20190116-104"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "315234938"
+        orgConfirmNum = "158814020"
 
         # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20180117"
+        orgTradeDate = "20190115"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -595,7 +591,7 @@ def getInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180305-001"
+        MgtKey = "20190116-001"
 
         cashbillInfo = cashbillService.getInfo(CorpNum, MgtKey)
 
@@ -607,8 +603,7 @@ def getInfo(request):
 def getInfos(request):
     """
     다수건의 현금영수증 상태/요약 정보를 확인합니다. (최대 1000건)
-    - 응답항목에 대한 자세한 정보는 "[현금영수증 API 연동매뉴얼] > 4.2.
-      현금영수증 상태정보 구성"을 참조하시기 바랍니다.
+    - 응답항목에 대한 자세한 정보는 "[현금영수증 API 연동매뉴얼] > 4.2. 현금영수증 상태정보 구성"을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -616,9 +611,9 @@ def getInfos(request):
 
         # 현금영수증 문서관리번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20170718-04")
-        MgtKeyList.append("20161118-02")
-        MgtKeyList.append("20161118-03")
+        MgtKeyList.append("20190116-001")
+        MgtKeyList.append("20190116-002")
+        MgtKeyList.append("20190116-003")
 
         InfoList = cashbillService.getInfos(CorpNum, MgtKeyList)
 
@@ -638,7 +633,7 @@ def getDetailInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "NLJ80227-68106601"
+        MgtKey = "20190116-001"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
 
@@ -664,10 +659,10 @@ def search(request):
         DType = "R"
 
         # 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20171201"
+        SDate = "20190101"
 
         # 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20180131"
+        EDate = "20190116"
 
         # 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용 가능
         State = ["3**", "4**"]
@@ -710,7 +705,7 @@ def getLogs(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180104001"
+        MgtKey = "20190116-001"
 
         LogList = cashbillService.getLogs(CorpNum, MgtKey)
 
@@ -751,7 +746,7 @@ def getPopUpURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180104001"
+        MgtKey = "20190116-001"
 
         url = cashbillService.getPopUpURL(CorpNum, MgtKey)
 
@@ -770,7 +765,7 @@ def getPrintURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180104001"
+        MgtKey = "20190116-001"
 
         url = cashbillService.getPrintURL(CorpNum, MgtKey)
 
@@ -789,7 +784,7 @@ def getPrintURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20150326-01"
+        MgtKey = "20190116-001"
 
         url = cashbillService.getEPrintURL(CorpNum, MgtKey)
 
@@ -809,9 +804,9 @@ def getMassPrintURL(request):
 
         # 문서관리번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20180118-019")
-        MgtKeyList.append("20180118-005")
-        MgtKeyList.append("20180116-03")
+        MgtKeyList.append("20190116-001")
+        MgtKeyList.append("20190116-002")
+        MgtKeyList.append("20180116-003")
 
         url = cashbillService.getMassPrintURL(CorpNum, MgtKeyList)
 
@@ -830,7 +825,7 @@ def getMailURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180118-019"
+        MgtKey = "20190116-001"
 
         url = cashbillService.getMailURL(CorpNum, MgtKey)
 
@@ -867,7 +862,7 @@ def sendEmail(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180118-019"
+        MgtKey = "20190116-001"
 
         # 수신 메일주소
         Receiver = "test@test.com"
@@ -886,14 +881,14 @@ def sendSMS(request):
     """
     알림문자를 전송합니다. (단문/SMS- 한글 최대 45자)
     - 알림문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [전송내역] 탭에서 전송결과를 확인할 수 있습니다.
+    - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] > [전송내역] 탭에서 전송결과를 확인할 수 있습니다.
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180118-019"
+        MgtKey = "20190116-001"
 
         # 발신번호
         Sender = "07012345678"
@@ -925,7 +920,7 @@ def sendFAX(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서관리번호
-        MgtKey = "20180118-019"
+        MgtKey = "20190116-001"
 
         # 발신번호
         Sender = "07012345678"
@@ -1131,47 +1126,47 @@ def joinMember(request):
     아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
     """
     try:
-        # 회원정보
+        # 연동회원 가입정보
         newMember = JoinForm(
 
-            # 회원아이디, 최대 20자
-            ID="testkorea1123",
+            # 아이디 (6자 이상 50자 미만)
+            ID="join_id_test",
 
-            # 비밀번호, 최대 20자
-            PWD="testpasswodrd",
+            # 비밀번호 (6자 이상 20자 미만)
+            PWD="this_is_password",
 
-            # 사업자번호
-            CorpNum="0000000102",
+            # 사업자번호 "-" 제외
+            CorpNum="0000000000",
 
-            # 상호
-            CorpName="테스트가입상호",
-
-            # 대표자성명
+            # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
 
-            # 주소
-            Addr="테스트 회사 주소",
+            # 상호 (최대 200자)
+            CorpName="테스트가입상호",
 
-            # 업태
+            # 주소 (최대 300자)
+            Addr="테스트회사주소",
+
+            # 업태 (최대 100자)
             BizType="테스트업태",
 
-            # 종목
+            # 종목 (최대 100자)
             BizClass="테스트업종",
 
-            # 담당자 성명
+            # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 연락처
-            ContactTEL="070-1111-1234",
+            # 담당자 이메일주소 (최대 100자)
+            ContactEmail="test@test.com",
 
-            # 담당자 휴대폰번호
-            ContactHP="010-2222-3333",
+            # 담당자 연락처 (최대 20자)
+            ContactTEL="070-111-222",
 
-            # 담당자 팩스번호
-            ContactFAX="070-4304-2991",
+            # 담당자 휴대폰번호 (최대 20자)
+            ContactHP="010-111-222",
 
-            # 담당자 메일주소
-            ContactEmail="test@test.com"
+            # 담당자 팩스번호 (최대 20자)
+            ContactFAX="070-111-222"
         )
 
         response = cashbillService.joinMember(newMember)
@@ -1216,20 +1211,20 @@ def updateCorpInfo(request):
         # 회사정보
         corpInfo = CorpInfo(
 
-            # 대표자성명
-            ceoname="대표자성명_수정",
+            # 대표자 성명 (최대 100자)
+            ceoname="대표자_성명",
 
-            # 상호
-            corpName="상호_수정",
+            # 상호 (최대 200자)
+            corpName="상호",
 
-            # 주소
-            addr="주소_수정",
+            # 주소 (최대 300자)
+            addr="주소",
 
-            # 업태
-            bizType="업태_수정",
+            # 업태 (최대 100자)
+            bizType="업태",
 
-            # 종목
-            bizClass="종목_수정"
+            # 종목 (최대 100자)
+            bizClass="종목"
         )
 
         response = cashbillService.updateCorpInfo(CorpNum, corpInfo, UserID)
@@ -1253,29 +1248,33 @@ def registContact(request):
         # 담당자 정보
         newContact = ContactInfo(
 
-            # 아이디
-            id="testkorea_cash",
+            # 아이디 (6자 이상 50자 미만)
+            id="popbill_test_id",
 
-            # 비밀번호
-            pwd="thisispassword_cash",
+            # 비밀번호 (6자 이상 20자 미만)
+            pwd="popbill_test_pwd",
 
-            # 담당자명
-            personName="신규담당자",
+            # 담당자명 (최대 100자)
+            personName="담당자명",
 
-            # 연락처
-            tel="010-1234-1234",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-222",
 
-            # 휴대폰번호
-            hp="010-1234-1234",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-222",
 
-            # 팩스번호
-            fax="070-1234-1234",
+            # 담당자 팩스번호 (최대 20자)
+            fax="070-111-222",
 
-            # 메일주소
-            email="test@test.comr",
+            # 담당자 이메일 (최대 100자)
+            email="test@test.com",
 
             # 회사조회 권한여부, True(회사조회) False(개인조회)
-            searchAllAllowYN=True
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
+
         )
 
         response = cashbillService.registContact(CorpNum, newContact, UserID)
@@ -1315,25 +1314,28 @@ def updateContact(request):
         updateInfo = ContactInfo(
 
             # 담당자 아이디
-            id="testkorea_cash",
+            id="UserID",
 
-            # 담당자 성명
-            personName="담당자 성명_수정",
+            # 담당자 성명 (최대 100자)
+            personName="담당자_성명",
 
-            # 연락처
-            tel="010-1234-1234",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-111",
 
-            # 휴대폰번호
-            hp="010-8888-7777",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-111",
 
-            # 팩스번호
-            fax="070-1234-1234",
+            # 담당자 팩스번호 (최대 20자)
+            fax="070-111-222",
 
-            # 메일주소
+            # 담당자 메일주소 (최대 100자)
             email="test@test.com",
 
-            # 회사조회 여부, True-회사조회, False-개인조회
-            searchAllAllowYN=True
+            # 회사조회 권한여부, True(회사조회) False(개인조회)
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = cashbillService.updateContact(CorpNum, updateInfo, UserID)
