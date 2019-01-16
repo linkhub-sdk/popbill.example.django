@@ -557,7 +557,7 @@ def cancel(request):
         CorpNum = settings.testCorpNum
 
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
-        ItemCode = 124
+        ItemCode = 121
 
         # 전자명세서 문서관리번호
         MgtKey = "20190116-002"
@@ -583,7 +583,7 @@ def delete(request):
         CorpNum = settings.testCorpNum
 
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
-        ItemCode = 124
+        ItemCode = 121
 
         # 전자명세서 문서관리번호
         MgtKey = "20190116-002"
@@ -729,7 +729,7 @@ def getLogs(request):
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20190116-01"
+        MgtKey = "20190116-001"
 
         LogList = statementService.getLogs(CorpNum, ItemCode, MgtKey)
 

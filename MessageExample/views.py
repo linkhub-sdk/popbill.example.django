@@ -285,7 +285,7 @@ def sendMMS(request):
         reserveDT = ""
 
         # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1500px 이하 권장)
-        FilePath = './MessageExample/static/image/test.jpg'
+        FilePath = './MessageExample/static/image/mms.jpg'
 
         # 광고문자 전송여부
         adsYN = False
@@ -330,7 +330,7 @@ def sendMMS_multi(request):
         reserveDT = ""
 
         # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1500px 이하 권장)
-        filePath = './MessageExample/static/image/test.jpg'
+        filePath = './MessageExample/static/image/mms.jpg'
 
         # 광고문자 전송여부
         adsYN = False

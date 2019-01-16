@@ -244,7 +244,10 @@ def getPopUpURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        url = htTaxinvoiceService.getPopUpURL(CorpNum)
+        # 조회할 전자세금계산서 국세청 승인번호
+        NTSConfirmNum = "201812044100020300000c0a";
+
+        url = htTaxinvoiceService.getPopUpURL(CorpNum, NTSConfirmNum)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
