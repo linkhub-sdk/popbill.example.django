@@ -52,6 +52,7 @@ def getSenderNumberList(request):
 def sendFAX(request):
     """
     팩스를 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
+    - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
     """
     try:
         # 팝빌회원 사업자번호
@@ -99,9 +100,8 @@ def sendFAX(request):
 
 def sendFAX_multi(request):
     """
-    팩스를 동보전송 합니다.
-    - 동보전송은 한 송신측이 다른 수신단말기를 지정하여 같은 내용을 동시에
-      전송하는 것을 말합니다.
+    [대량전송] 팩스를 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
+    - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
     """
     try:
         # 팝빌회원 사업자번호
@@ -155,7 +155,6 @@ def resendFAX(request):
     팩스를 재전송합니다.
     - 접수일로부터 60일이 경과되지 않은 팩스전송건만 재전송할 수 있습니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
     """
     try:
         # 팝빌회원 사업자번호
@@ -164,8 +163,8 @@ def resendFAX(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 팩스 접수번호
-        ReceiptNum = "018012215343900001"
+        # 팩스전송 요청시 발급받은 접수번호
+        ReceiptNum = "018120517165400001"
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
         Sender = ""
@@ -204,7 +203,6 @@ def resendFAXRN(request):
     전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
     - 접수일로부터 60일이 경과된 경우 재전송할 수 없습니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
     """
     try:
         # 팝빌회원 사업자번호
@@ -214,7 +212,7 @@ def resendFAXRN(request):
         UserID = settings.testUserID
 
         # 원본 팩스 전송시 할당한 전송요청번호
-        OrgRequestNum = '20180912105825'
+        OrgRequestNum = '20190116-001'
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
         Sender = '07043042991'
@@ -253,7 +251,6 @@ def resendFAX_multi(request):
     팩스를 재전송합니다.
     - 접수일로부터 60일이 경과되지 않은 팩스전송건만 재전송할 수 있습니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
     """
     try:
         # 팝빌회원 사업자번호
@@ -262,7 +259,7 @@ def resendFAX_multi(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 팩스 접수번호
+        # 팩스전송 요청시 발급받은 접수번호
         ReceiptNum = "018012215401700001"
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
@@ -309,7 +306,6 @@ def resendFAXRN_multi(request):
     전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
     - 접수일로부터 60일이 경과된 경우 재전송할 수 없습니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
     """
     try:
         # 팝빌회원 사업자번호
@@ -319,7 +315,7 @@ def resendFAXRN_multi(request):
         UserID = settings.testUserID
 
         # 원본 팩스 전송시 할당한 전송요청번호
-        OrgRequestNum = '20180912105825'
+        OrgRequestNum = '20190116-001'
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
         Sender = '07043042991'
@@ -363,8 +359,8 @@ def resendFAXRN_multi(request):
 
 def cancelReserve(request):
     """
-    예약전송 팩스요청건을 취소합니다.
-    - 예약전송 취소는 예약전송시간 10분전까지 가능합니다.
+    팩스전송요청시 발급받은 접수번호(receiptNum)로 팩스 예약전송건을 취소합니다.
+    - 예약전송 취소는 예약전송시간 10분전까지 가능하며, 팩스변환 이후 가능합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -383,7 +379,7 @@ def cancelReserve(request):
 def cancelReserveRN(request):
     """
     팩스전송요청시 할당한 전송요청번호(requestNum)로 팩스 예약전송건을 취소합니다.
-    - 예약전송 취소는 예약전송시간 10분전까지 가능합니다.
+    - 예약전송 취소는 예약전송시간 10분전까지 가능하며, 팩스변환 이후 가능합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -401,8 +397,8 @@ def cancelReserveRN(request):
 
 def getFaxDetail(request):
     """
-    팩스 전송요청시 반환받은 접수번호(receiptNum)을 사용하여 팩스전송
-    결과를 확인합니다.
+    팩스전송요청시 발급받은 접수번호(receiptNum)로 전송결과를 확인합니다
+    - 응답항목에 대한 자세한 사항은 "[팩스 API 연동매뉴얼] >  3.3.1 GetFaxDetail (전송내역 및 전송상태 확인)을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -421,6 +417,7 @@ def getFaxDetail(request):
 def getFaxDetailRN(request):
     """
     팩스전송요청시 할당한 전송요청번호(requestNum)으로 전송결과를 확인합니다
+    - 응답항목에 대한 자세한 사항은 "[팩스 API 연동매뉴얼] >  3.3.2 GetFaxDetailRN (전송내역 및 전송상태 확인 - 요청번호 할당)을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -449,10 +446,10 @@ def search(request):
         UserID = settings.testUserID
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20171201"
+        SDate = "20190101"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20180131"
+        EDate = "20190116"
 
         # 팩스전송상태 배열, [1-대기 / 2-성공 / 3-실패 / 4-취소]
         State = ["1", "2", "3", "4"]
@@ -665,44 +662,44 @@ def joinMember(request):
         # 회원정보
         newMember = JoinForm(
 
-            # 회원아이디, 최대 20자
-            ID="testkorea",
+            # 아이디 (6자 이상 50자 미만)
+            ID="join_id_test",
 
-            # 비밀번호, 최대 20자
+            # 비밀번호 (6자 이상 20자 미만)
             PWD="this_is_password",
 
-            # 사업자번호
-            CorpNum="1234567890",
+            # 사업자번호 "-" 제외
+            CorpNum="0000000000",
 
-            # 상호
-            CorpName="테스트가입상호",
-
-            # 대표자성명
+            # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
 
-            # 주소
-            Addr="테스트 회사 주소",
+            # 상호 (최대 200자)
+            CorpName="테스트가입상호",
 
-            # 업태
+            # 주소 (최대 300자)
+            Addr="테스트회사주소",
+
+            # 업태 (최대 100자)
             BizType="테스트업태",
 
-            # 종목
+            # 종목 (최대 100자)
             BizClass="테스트업종",
 
-            # 담당자 성명
+            # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 연락처
-            ContactTEL="070-4304-2991",
+            # 담당자 이메일주소 (최대 100자)
+            ContactEmail="test@test.com",
 
-            # 담당자 휴대폰번호
-            ContactHP="010-2222-3333",
+            # 담당자 연락처 (최대 20자)
+            ContactTEL="070-111-222",
 
-            # 담당자 팩스번호
-            ContactFAX="070-4304-2991",
+            # 담당자 휴대폰번호 (최대 20자)
+            ContactHP="010-111-222",
 
-            # 담당자 메일주소
-            ContactEmail="test@test.com"
+            # 담당자 팩스번호 (최대 20자)
+            ContactFAX="070-111-222"
         )
 
         response = faxService.joinMember(newMember)
@@ -745,29 +742,32 @@ def registContact(request):
         # 담당자 정보
         newContact = ContactInfo(
 
-            # 아이디
-            id="testkorea_1117",
+            # 아이디 (6자 이상 50자 미만)
+            id="popbill_test_id",
 
-            # 비밀번호
-            pwd="this_is_password",
+            # 비밀번호 (6자 이상 20자 미만)
+            pwd="popbill_test_pwd",
 
-            # 담당자명
-            personName="정대리",
+            # 담당자명 (최대 100자)
+            personName="담당자명",
 
-            # 연락처
-            tel="010-4304-2991",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-222",
 
-            # 휴대폰번호
-            hp="010-4304-2991",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-222",
 
-            # 팩스번호
-            fax="070-4324-2991",
+            # 담당자 팩스번호 (최대 20자)
+            fax="070-111-222",
 
-            # 메일주소
-            email="dev@linkhub.co.kr",
+            # 담당자 이메일 (최대 100자)
+            email="test@test.com",
 
             # 회사조회 권한여부, True(회사조회) False(개인조회)
-            searchAllAllowYN=True
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = faxService.registContact(CorpNum, newContact, UserID)
@@ -809,19 +809,19 @@ def updateCorpInfo(request):
         # 회사정보
         corpInfo = CorpInfo(
 
-            # 대표자성명
-            ceoname="대표자성명",
+            # 대표자 성명 (최대 100자)
+            ceoname="대표자_성명",
 
-            # 상호
+            # 상호 (최대 200자)
             corpName="상호",
 
-            # 주소
+            # 주소 (최대 300자)
             addr="주소",
 
-            # 업태
+            # 업태 (최대 100자)
             bizType="업태",
 
-            # 종목
+            # 종목 (최대 100자)
             bizClass="종목"
         )
 
@@ -868,25 +868,28 @@ def updateContact(request):
         updateInfo = ContactInfo(
 
             # 담당자 아이디
-            id=UserID,
+            id="UserID",
 
-            # 담당자 성명
-            personName="담당자 성명",
+            # 담당자 성명 (최대 100자)
+            personName="담당자_성명",
 
-            # 연락처
-            tel="070-4304-2991",
+            # 담당자 연락처 (최대 20자)
+            tel="010-111-111",
 
-            # 휴대폰번호
-            hp="010-4324-4324",
+            # 담당자 휴대폰번호 (최대 20자)
+            hp="010-111-111",
 
-            # 팩스번호
+            # 담당자 팩스번호 (최대 20자)
             fax="070-111-222",
 
-            # 메일주소
-            email="dev@linkhub.co.kr",
+            # 담당자 메일주소 (최대 100자)
+            email="test@test.com",
 
-            # 회사조회 여부, True-회사조회, False-개인조회
-            searchAllAllowYN=True
+            # 회사조회 권한여부, True(회사조회) False(개인조회)
+            searchAllAllowYN=True,
+
+            # 관리자 권한여부, True(관리자), False(사용자)
+            mgrYN=True
         )
 
         response = faxService.updateContact(CorpNum, updateInfo, UserID)
