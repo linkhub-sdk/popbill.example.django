@@ -164,7 +164,7 @@ def registIssue(request):
             # 통장사본 이미지 첨부 여부
             bankBookYN=False,
 
-            # 상세항목(품목) 정보
+            # 상세항목(품목) 정보 (배열 길이 제한 없음)
             detailList=[
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
@@ -322,7 +322,7 @@ def register(request):
             # 통장사본 이미지 첨부 여부
             bankBookYN=False,
 
-            # 상세항목(품목) 정보
+            # 상세항목(품목) 정보 (배열 길이 제한 없음)
             detailList=[
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
@@ -486,7 +486,7 @@ def update(request):
             # 통장사본 이미지 첨부 여부
             bankBookYN=False,
 
-            # 상세항목(품목) 정보
+            # 상세항목(품목) 정보 (배열 길이 제한 없음)
             detailList=[
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
@@ -1195,7 +1195,7 @@ def FAXSend(request):
             # 통장사본 이미지 첨부 여부
             bankBookYN=False,
 
-            # 상세항목(품목) 정보
+            # 상세항목(품목) 정보 (배열 길이 제한 없음)
             detailList=[
                 StatementDetail(
                     serialNum=1,  # 일련번호, 1부터 순차기재
@@ -1282,10 +1282,10 @@ def detachStatement(request):
         # 전자명세서 문서관리번호
         MgtKey = "20190116-001"
 
-        # 첨부할 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
+        # 첨부해제할 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         SubItemCode = "121"
 
-        # 첨부할 전자명세서 문서관리번호
+        # 첨부해제할 전자명세서 문서관리번호
         SubMgtKey = "20190115-001"
 
         response = statementService.detachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
@@ -1554,10 +1554,7 @@ def getCorpInfo(request):
 
         response = statementService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'getCorpInfo.html',
-                      {'ceoname': response.ceoname, 'corpName': response.corpName,
-                       'addr': response.addr, 'bizType': response.bizType,
-                       'bizClass': response.bizClass})
+        return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

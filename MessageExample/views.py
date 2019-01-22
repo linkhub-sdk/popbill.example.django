@@ -133,7 +133,7 @@ def sendSMS_multi(request):
                     sndnm='발신자명',  # 발신자명
                     rcv='010111222',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
-                    msg='단문 문자 API TEST'  # 메시지 내용, msg값이 없는경우 동보전송 메시지로 전송됨
+                    msg='단문 문자 API TEST'  # 메시지 내용, msg값이 없는경우 동보전송 메시지로 전송됨, 90Byte 초과시 길이가 조정되 전송됨
                 )
             )
 
@@ -234,7 +234,7 @@ def sendLMS_multi(request):
                     sndnm='발신자명',  # 발신자명
                     rcv='010111222',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
-                    msg='장문 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨.
+                    msg='장문 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨. 2000Byte 초과시 길이가 조정되어 전송됨.
                     sjt='장문문자제목'  # 장문 메시지 제목
                 )
             )
@@ -344,7 +344,7 @@ def sendMMS_multi(request):
                     sndnm='발신자명',  # 발신자명
                     rcv='010111222',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
-                    msg='멀티 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨.
+                    msg='멀티 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨. 2000Byte 초과시 길이가 조정되어 전송됨.
                     sjt='멀티 문자제목'  # 장문 메시지 제목
                 )
             )
@@ -740,7 +740,7 @@ def getPartnerBalance(request):
 
 def getPartnerURL(request):
     """
-    파트너 포인트 충전 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    파트너 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -979,10 +979,7 @@ def getCorpInfo(request):
 
         response = messageService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'getCorpInfo.html',
-                      {'ceoname': response.ceoname, 'corpName': response.corpName,
-                       'addr': response.addr, 'bizType': response.bizType,
-                       'bizClass': response.bizClass})
+        return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

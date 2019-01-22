@@ -11,9 +11,9 @@ htCashbillService = HTCashbillService(settings.LinkID, settings.SecretKey)
 htCashbillService.IsTest = settings.IsTest
 
 
-# 홈택스 연동서비스를 이용하기 위해 인증 처리를 합니다. (인증방법은 사이트/API 두가지 방식이 있습니다.)
-# 1. 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴에서 홈택스 인증 처리를 합니다.
-# 2. 홈택스연동 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL을 이용하여 홈택스 인증 처리를 합니다.
+# 홈택스 연동서비스를 이용하기 위해 인증 처리를 합니다. (인증방법은 부서사용자 인증 / 공인인증서 인증 방식이 있습니다.)
+# - 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴에서 부서사용자 인증 혹은 공인인증서 인증을 합니다.
+# - 홈택스연동 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL에 접속 하여 부서사용자 인증 혹은 공인인증서 인증을 합니다.
 
 def index(request):
     return render(request, 'HTCashbill/Index.html', {})
@@ -330,7 +330,7 @@ def getPartnerBalance(request):
 
 def getPartnerURL(request):
     """
-    파트너 포인트 충전 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    파트너 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -623,10 +623,7 @@ def getCorpInfo(request):
 
         response = htCashbillService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'getCorpInfo.html',
-                      {'ceoname': response.ceoname, 'corpName': response.corpName,
-                       'addr': response.addr, 'bizType': response.bizType,
-                       'bizClass': response.bizClass})
+        return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

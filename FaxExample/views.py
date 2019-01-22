@@ -606,7 +606,7 @@ def getPartnerBalance(request):
 
 def getPartnerURL(request):
     """
-    파트너 포인트 충전 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    파트너 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -845,10 +845,7 @@ def getCorpInfo(request):
 
         response = faxService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'getCorpInfo.html',
-                      {'ceoname': response.ceoname, 'corpName': response.corpName,
-                       'addr': response.addr, 'bizType': response.bizType,
-                       'bizClass': response.bizClass})
+        return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

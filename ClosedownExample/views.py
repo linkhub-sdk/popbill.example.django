@@ -26,7 +26,7 @@ def checkCorpNum(request):
         CorpNum = settings.testCorpNum
 
         # 확인하고자 하는 사업자번호
-        corpNum = "6798700433"
+        corpNum = "1234567890"
 
         corpState = closedownService.checkCorpNum(CorpNum, corpNum)
 
@@ -45,7 +45,7 @@ def checkCorpNums(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 확인하고자 하는 사업자번호
+        # 확인하고자 하는 사업자번호 (최대 1000건)
         corpNumList = ["4108600477", "1234567890", "8888888888", "4352343543"]
 
         corpStateList = closedownService.checkCorpNums(CorpNum, corpNumList)
@@ -96,7 +96,7 @@ def getChargeInfo(request):
 
 def getUnitCost(request):
     """
-    휴폐업조회 전송단가를 확인합니다.
+    휴폐업조회 조회단가를 확인합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -143,7 +143,7 @@ def getPartnerBalance(request):
 
 def getPartnerURL(request):
     """
-    파트너 포인트 충전 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    파트너 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -259,13 +259,9 @@ def getCorpInfo(request):
 
         response = closedownService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'getCorpInfo.html',
-                      {'ceoname': response.ceoname, 'corpName': response.corpName,
-                       'addr': response.addr, 'bizType': response.bizType,
-                       'bizClass': response.bizClass})
+        return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def updateCorpInfo(request):
     """

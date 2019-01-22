@@ -203,7 +203,8 @@ def sendATS_multi(request):
         # 예약일시 (작성형식 : yyyyMMddHHmmss)
         sndDT = ""
 
-        KakaoMessages = []  # 1회 최대 전송 1,000건 전송 가능
+        # 수신정보 배열 (최대 1000개 가능)
+        KakaoMessages = []
         for x in range(0, 2):
             KakaoMessages.append(
                 KakaoReceiver(
@@ -258,7 +259,8 @@ def sendATS_same(request):
         # 예약일시 (작성형식 : yyyyMMddHHmmss)
         sndDT = ""
 
-        KakaoMessages = []  # 1회 최대 전송 1,000건 전송 가능
+        # 수신정보 배열 (최대 1000개 가능)
+        KakaoMessages = []
         for x in range(0, 10):
             KakaoMessages.append(
                 KakaoReceiver(
@@ -304,7 +306,7 @@ def sendFTS_one(request):
         # 대체문자 내용 (최대 2000byte)
         altContent = "대체문자 내용"
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
         # 예약일시 (작성형식 : yyyyMMddHHmmss)
@@ -318,7 +320,7 @@ def sendFTS_one(request):
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 1):
+        for x in range(0, 2):
             KakaoButtons.append(
                 KakaoButton(
                     n="팝빌 바로가기",  # 버튼명
@@ -369,26 +371,27 @@ def sendFTS_multi(request):
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
         snd = "07043042992"
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
         # 예약일시 (작성형식 : yyyyMMddHHmmss)
         sndDT = ""
 
-        KakaoMessages = []  # 1회 최대 전송 1,000건 전송 가능
+        # 수신정보 배열 (최대 1000개 가능)
+        KakaoMessages = []
         for x in range(0, 10):
             KakaoMessages.append(
                 KakaoReceiver(
-                    rcv="0101234567",
-                    rcvnm="김현진",
-                    msg="안녕하세요 " + str(x) + "님 링크허브입니다.",
-                    altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."
+                    rcv="0101234567",  # 수신번호
+                    rcvnm="김현진",  # 수신자 이름
+                    msg="안녕하세요 " + str(x) + "님 링크허브입니다.",  # 친구톡 내용 (최대 1000자)
+                    altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
                 )
             )
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 1):
+        for x in range(0, 5):
             KakaoButtons.append(
                 KakaoButton(
                     n="팝빌 바로가기",  # 버튼명
@@ -445,13 +448,14 @@ def sendFTS_same(request):
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "(친구톡 대체문자) 안녕하세요 팝빌 플친님 파이썬입니다."
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
         # 예약일시 (작성형식 : yyyyMMddHHmmss)
         sndDT = ""
 
-        KakaoMessages = []  # 1회 최대 전송 1,000건 전송 가능
+        # 수신정보 배열 (최대 1000개 가능)
+        KakaoMessages = []
         for x in range(0, 2):
             KakaoMessages.append(
                 KakaoReceiver(
@@ -462,7 +466,7 @@ def sendFTS_same(request):
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 1):
+        for x in range(0, 5):
             KakaoButtons.append(
                 KakaoButton(
                     n="팝빌 바로가기",  # 버튼명
@@ -520,14 +524,14 @@ def sendFMS_one(request):
         # 대체문자 내용 (최대 2000byte)
         altContent = "대체문자 내용"
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
         # 예약일시 (작성형식 : yyyyMMddHHmmss)
         sndDT = ""
 
         # 파일경로
-        # 이미지 전송 규격 (전송포맷-JPG,JPEG / 용량제한-최대 500Kbte / 이미지 가로&세로 비율 : 1.5 미만)
+        # 이미지 전송규격 (jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상)
         filePath = "./KakaoExample/static/image/test.jpg"
 
         # 이미지 링크 URL
@@ -594,20 +598,21 @@ def sendFMS_multi(request):
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
         snd = "07043042992"
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
         # 예약일시 (작성형식 : yyyyMMddHHmmss)
         sndDT = ""
 
         # 파일경로
-        # 이미지 전송 규격 (전송포맷-JPG,JPEG / 용량제한-최대 500Kbte / 이미지 가로&세로 비율 : 1.5 미만)
+        # 이미지 전송규격 (jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상)
         filePath = "./KakaoExample/static/image/test.jpg"
 
         # 이미지 링크 URL
         imageURL = "http://www.linkhub.co.kr"
 
-        KakaoMessages = []  # 1회 최대 전송 1,000건 전송 가능
+        # 수신정보 배열 (최대 1000개 가능)
+        KakaoMessages = []
         for x in range(0, 10):
             KakaoMessages.append(
                 KakaoReceiver(
@@ -679,20 +684,21 @@ def sendFMS_same(request):
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "(친구톡 대체문자) 안녕하세요 팝빌 플친님 파이썬입니다."
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
         # 예약일시 (작성형식 : yyyyMMddHHmmss)
         sndDT = ""
 
         # 파일경로
-        # 이미지 전송 규격 (전송포맷-JPG,JPEG / 용량제한-최대 500Kbte / 이미지 가로&세로 비율 : 1.5 미만)
+        # 이미지 전송규격 (jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상)
         filePath = "./KakaoExample/static/image/test.jpg"
 
         # 이미지 링크 URL
         imageURL = "http://www.linkhub.co.kr"
 
-        KakaoMessages = []  # 1회 최대 전송 1,000건 전송 가능
+        # 수신정보 배열 (최대 1000개 가능)
+        KakaoMessages = []
         for x in range(0, 10):
             KakaoMessages.append(
                 KakaoReceiver(
@@ -832,7 +838,7 @@ def search(request):
         # 전송상태 배열 [0-대기, 1-전송중, 2-성공, 3-대체 4-실패, 5-취소]
         State = ["1", "2", "3", "4", "5"]
 
-        # 전송유형 [ATS(알림톡) / ATS(친구톡 텍스트) / FMS(친구톡 이미지)]
+        # 검색대상 [ATS(알림톡) / ATS(친구톡 텍스트) / FMS(친구톡 이미지)]
         Item = ["ATS", "ATS", "FMS"]
 
         # 예약전송 검색여부, [공백-전체조회, 0-즉시전송조회, 1-예약전송조회]
@@ -879,7 +885,7 @@ def getSentListURL(request):
 
 def getUnitCost(request):
     """
-    알림톡/친구 전송단가를 확인합니다.
+    알림톡/친구톡 전송단가를 확인합니다.
     """
     try:
         # 팝빌회원 아이디
@@ -973,7 +979,7 @@ def getPartnerBalance(request):
 
 def getPartnerURL(request):
     """
-    파트너 포인트 충전 URL을 반환합니다. (팝빌 로그인, 포인트충전)
+    파트너 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
@@ -1212,10 +1218,7 @@ def getCorpInfo(request):
 
         response = kakaoService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'getCorpInfo.html',
-                      {'ceoname': response.ceoname, 'corpName': response.corpName,
-                       'addr': response.addr, 'bizType': response.bizType,
-                       'bizClass': response.bizClass})
+        return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

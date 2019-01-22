@@ -231,9 +231,11 @@ def registIssue(request):
             remark3="비고3",
 
             # 기재상 '권' 항목, 최대값 32767
+            # 미기재시 kwon=None,
             kwon=1,
 
             # 기재상 '호' 항목, 최대값 32767
+            # 미기재시 ho=None,
             ho=2,
 
             # 사업자등록증 이미지 첨부여부
@@ -488,9 +490,11 @@ def register(request):
             remark3="비고3",
 
             # 기재상 '권' 항목, 최대값 32767
+            # 미기재시 kwon=None,
             kwon=1,
 
             # 기재상 '호' 항목, 최대값 32767
+            # 미기재시 ho=None,
             ho=2,
 
             # 사업자등록증 이미지 첨부여부
@@ -739,9 +743,11 @@ def update(request):
             remark3='비고3',
 
             # 기재상 '권' 항목, 최대값 32767
+            # 미기재시 kwon=None,
             kwon=1,
 
             # 기재상 '호' 항목, 최대값 32767
+            # 미기재시 ho=None,
             ho=2,
 
             # 사업자등록증 이미지 첨부여부
@@ -924,7 +930,7 @@ def send(request):
 
 def cancelSend(request):
     """
-    [발행예정] 세금계산서를 [취소] 처리 합니다.
+    [승인대기] 상태의 세금계산서를 [공급자]가 [취소]합니다.
     - [취소]된 세금계산서를 삭제(Delete API)하면 등록된 '문서관리번호'를 재사용할 수 있습니다.
     """
     try:
@@ -1007,9 +1013,8 @@ def deny(request):
 
 def delete(request):
     """
-    1건의 전자세금계산서를 삭제합니다.
-    - 세금계산서를 삭제해야만 '문서관리번호(mgtKey)'를 재사용할 수 있습니다.
-    - 삭제가능한 문서 상태 : [임시저장], [발행취소], [발행예정 취소], [발행예정 거부]
+    삭제 가능한 상태의 세금계산서를 삭제 합니다.
+    - 삭제가능한 문서 상태 : 임시저장, [발행예정]거부/취소, 발행취소, 역)발행 거부/취소
     """
     try:
         # 팝빌회원 사업자번호
@@ -1197,10 +1202,12 @@ def registRequest(request):
             remark3="비고3",
 
             # 기재상 '권' 항목, 최대값 32767
-            kwon=10,
+            # 미기재시 kwon=None,
+            kwon=1,
 
             # 기재상 '호' 항목, 최대값 32767
-            ho=10,
+            # 미기재시 ho=None,
+            ho=2,
 
             # 사업자등록증 이미지 첨부여부
             businessLicenseYN=False,
@@ -1314,7 +1321,7 @@ def request(request):
 
 def cancelRequest(request):
     """
-    [공급받는자]가 역)발행대기 상태의 세금계산서를 [취소]합니다.
+    [공급받는자]가 역)발행대기 상태의 세금계산서의 발행요청을 [취소]합니다.
      - [취소]한 세금계산서의 문서관리번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
     """
     try:
@@ -2359,10 +2366,7 @@ def getCorpInfo(request):
 
         response = taxinvoiceService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'getCorpInfo.html',
-                      {'ceoname': response.ceoname, 'corpName': response.corpName,
-                       'addr': response.addr, 'bizType': response.bizType,
-                       'bizClass': response.bizClass})
+        return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

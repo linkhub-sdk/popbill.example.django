@@ -700,6 +700,11 @@ def search(request):
 
 
 def getLogs(request):
+    """
+    현금영수증 상태 변경이력을 확인합니다.
+    - 상태 변경이력 확인(GetLogs API) 응답항목에 대한 자세한 정보는
+    "[현금영수증 API 연동매뉴얼] > 3.3.5. 상태 변경이력 확인" 을 참조하시기 바랍니다.
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -1189,10 +1194,7 @@ def getCorpInfo(request):
 
         response = cashbillService.getCorpInfo(CorpNum, UserID)
 
-        return render(request, 'getCorpInfo.html',
-                      {'ceoname': response.ceoname, 'corpName': response.corpName,
-                       'addr': response.addr, 'bizType': response.bizType,
-                       'bizClass': response.bizClass})
+        return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1285,6 +1287,9 @@ def registContact(request):
 
 
 def listContact(request):
+    """
+    연동회원의 담당자 목록을 확인합니다.
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
