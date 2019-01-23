@@ -36,7 +36,7 @@ def getSenderNumberMgtURL(request):
 
 def getSenderNumberList(request):
     """
-    등록된 팩스 발신번호 목록을 확인합니다.
+    팝빌에 등록된 팩스 발신번호 목록을 확인합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -248,7 +248,7 @@ def resendFAXRN(request):
 
 def resendFAX_multi(request):
     """
-    팩스를 재전송합니다.
+    [대량전송] 팩스를 재전송합니다.
     - 접수일로부터 60일이 경과되지 않은 팩스전송건만 재전송할 수 있습니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
     """
@@ -303,7 +303,7 @@ def resendFAX_multi(request):
 
 def resendFAXRN_multi(request):
     """
-    전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
+    [대량전] 전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
     - 접수일로부터 60일이 경과된 경우 재전송할 수 없습니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
     """
@@ -398,7 +398,7 @@ def cancelReserveRN(request):
 def getFaxDetail(request):
     """
     팩스전송요청시 발급받은 접수번호(receiptNum)로 전송결과를 확인합니다
-    - 응답항목에 대한 자세한 사항은 "[팩스 API 연동매뉴얼] >  3.3.1 GetFaxDetail (전송내역 및 전송상태 확인)을 참조하시기 바랍니다.
+    - 응답항목에 대한 자세한 사항은 "[팩스 API 연동매뉴얼] > 3.3.1 GetFaxDetail (전송내역 및 전송상태 확인)을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -417,7 +417,7 @@ def getFaxDetail(request):
 def getFaxDetailRN(request):
     """
     팩스전송요청시 할당한 전송요청번호(requestNum)으로 전송결과를 확인합니다
-    - 응답항목에 대한 자세한 사항은 "[팩스 API 연동매뉴얼] >  3.3.2 GetFaxDetailRN (전송내역 및 전송상태 확인 - 요청번호 할당)을 참조하시기 바랍니다.
+    - 응답항목에 대한 자세한 사항은 "[팩스 API 연동매뉴얼] > 3.3.2 GetFaxDetailRN (전송내역 및 전송상태 확인 - 요청번호 할당)을 참조하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -463,14 +463,17 @@ def search(request):
         # 페이지 번호
         Page = 1
 
-        # 페이지당 목록갯수, 기본값 500
+        # 페이지당 검색개수, 기본값 500, 최대값 1000
         PerPage = 10
 
         # 정렬방향, [D-내림차순 / A-오름차순]
         Order = "D"
 
+        # 조회 검색어, 발신자명 또는 수신자명 기재
+        QString = ""
+
         response = faxService.search(CorpNum, SDate, EDate, State, ReserveYN, SenderOnly,
-                                     Page, PerPage, Order, UserID)
+                                     Page, PerPage, Order, UserID, QString)
 
         return render(request, 'Fax/Search.html', {'response': response})
     except PopbillException as PE:

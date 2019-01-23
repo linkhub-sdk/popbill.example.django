@@ -65,7 +65,7 @@ def getJobState(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
-        jobID = "018020811000000002"
+        jobID = "019012312000000001"
 
         response = htCashbillService.getJobState(CorpNum, jobID, UserID)
 
@@ -109,7 +109,7 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018101017000000002"
+        JobID = "019012312000000001"
 
         # 문서형태 배열, [N-일반 현금영수증 / C-취소 현금영수증]
         TradeType = ["N", "C"]
@@ -148,7 +148,7 @@ def summary(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018020811000000002"
+        JobID = "019012312000000001"
 
         # 문서형태 배열, [N-일반 현금영수증 / C-취소 현금영수증]
         TradeType = ["N", "C"]

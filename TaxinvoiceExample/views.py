@@ -1166,7 +1166,7 @@ def registRequest(request):
 
             # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로
             # 사업자별로 중복되지 않도록 구성
-            invoiceeMgtKey="20190116-100",
+            invoiceeMgtKey="20190116-200",
 
             # [필수] 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
@@ -1458,7 +1458,7 @@ def getInfo(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20190116-002"
+        MgtKey = "20190116-200"
 
         taxinvoiceInfo = taxinvoiceService.getInfo(CorpNum, MgtKeyType, MgtKey)
 

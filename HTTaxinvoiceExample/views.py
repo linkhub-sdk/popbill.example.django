@@ -247,7 +247,7 @@ def getPopUpURL(request):
         CorpNum = settings.testCorpNum
 
         # 조회할 전자세금계산서 국세청 승인번호
-        NTSConfirmNum = "20190116410002030000103d";
+        NTSConfirmNum = "20190116410002030000103d"
 
         url = htTaxinvoiceService.getPopUpURL(CorpNum, NTSConfirmNum)
 

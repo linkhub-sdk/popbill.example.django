@@ -26,9 +26,9 @@ def checkCorpNum(request):
         CorpNum = settings.testCorpNum
 
         # 확인하고자 하는 사업자번호
-        corpNum = "1234567890"
+        checkCorpNum = "1234567890"
 
-        corpState = closedownService.checkCorpNum(CorpNum, corpNum)
+        corpState = closedownService.checkCorpNum(CorpNum, checkCorpNum)
 
         return render(request, 'Closedown/CheckCorpNum.html', {'corpState': corpState})
     except PopbillException as PE:
@@ -46,9 +46,9 @@ def checkCorpNums(request):
         CorpNum = settings.testCorpNum
 
         # 확인하고자 하는 사업자번호 (최대 1000건)
-        corpNumList = ["4108600477", "1234567890", "8888888888", "4352343543"]
+        checkCorpNums = ["4108600477", "1234567890", "8888888888", "4352343543"]
 
-        corpStateList = closedownService.checkCorpNums(CorpNum, corpNumList)
+        corpStateList = closedownService.checkCorpNums(CorpNum, checkCorpNums)
 
         return render(request, 'Closedown/CheckCorpNums.html', {'corpStateList': corpStateList})
     except PopbillException as PE:

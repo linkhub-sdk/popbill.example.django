@@ -10,8 +10,8 @@
                 <li> message (요청에 대한 응답 메시지) : {{ response.message }}</li>
                 <li> total (총 검색결과 건수) : {{ response.total }}</li>
                 <li> perPage (페이지당 검색개수) : {{ response.perPage }}</li>
-                <li> pageNum (페이지 번호) {{ response.pageNum }}</li>
-                <li> pageCount (페이지 개수) {{ response.pageCount }}</li>
+                <li> pageNum (페이지 번호) : {{ response.pageNum }}</li>
+                <li> pageCount (페이지 개수) : {{ response.pageCount }}</li>
                 {% for messageInfo in  response.list %}
                     <fieldset class="fieldset2">
                         <legend>문자전송 정보 [{{ forloop.counter }}]</legend>

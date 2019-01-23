@@ -628,7 +628,7 @@ def getInfo(request):
 
         return render(request, 'Statement/GetInfo.html', {'statementInfo': statementInfo})
     except PopbillException as PE:
-        return render(request, 'Statement/GetInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getInfos(request):
@@ -654,7 +654,7 @@ def getInfos(request):
 
         return render(request, 'Statement/GetInfos.html', {'InfoList': InfoList})
     except PopbillException as PE:
-        return render(request, 'Statement/GetInfos.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getDetailInfo(request):
@@ -677,7 +677,7 @@ def getDetailInfo(request):
 
         return render(request, 'Statement/GetDetailInfo.html', {'statement': statement})
     except PopbillException as PE:
-        return render(request, 'Statement/GetDetailInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def search(request):
@@ -725,7 +725,7 @@ def search(request):
 
         return render(request, 'Statement/Search.html', {'response': response})
     except PopbillException as PE:
-        return render(request, 'Statement/Search.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getLogs(request):
@@ -748,7 +748,7 @@ def getLogs(request):
 
         return render(request, 'Statement/GetLogs.html', {'LogList': LogList})
     except PopbillException as PE:
-        return render(request, 'Statement/GetLogs.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getURL(request):
@@ -983,7 +983,7 @@ def getFiles(request):
 
         return render(request, 'Statement/GetFiles.html', {'fileList': fileList})
     except PopbillException as PE:
-        return render(request, 'Statement/GetFiles.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def sendEmail(request):

@@ -359,7 +359,6 @@ def cancelIssue(request):
     - 발행취소는 국세청 전송전에만 가능합니다.
     - 발행취소된 형금영수증은 국세청에 전송되지 않습니다.
     """
-
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -383,7 +382,6 @@ def delete(request):
     - 현금영수증을 삭제하면 사용된 문서관리번호(mgtKey)를 재사용할 수 있습니다.
     - 삭제가능한 문서 상태 : [임시저장], [발행취소]
     """
-
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -597,7 +595,7 @@ def getInfo(request):
 
         return render(request, 'Cashbill/GetInfo.html', {'cashbillInfo': cashbillInfo})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getInfos(request):
@@ -619,7 +617,7 @@ def getInfos(request):
 
         return render(request, 'Cashbill/GetInfos.html', {'InfoList': InfoList})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetInfos.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getDetailInfo(request):
@@ -639,7 +637,7 @@ def getDetailInfo(request):
 
         return render(request, 'Cashbill/GetDetailInfo.html', {'cashbill': cashbill})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetDetailInfo.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def search(request):
@@ -716,7 +714,7 @@ def getLogs(request):
 
         return render(request, 'Cashbill/GetLogs.html', {'LogList': LogList})
     except PopbillException as PE:
-        return render(request, 'Cashbill/GetLogs.html', {'code': PE.code, 'message': PE.message})
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
 def getURL(request):
