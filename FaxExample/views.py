@@ -77,7 +77,7 @@ def sendFAX(request):
         FilePath = ["./FaxExample/static/file/faxfile.jpg", "./FaxExample/static/file/test.pdf"]
 
         # 예약전송일시, None처리시 즉시전송, 작성형태 'yyyyMMddHHmmss'
-        ReserveDT = None
+        ReserveDT = ''
 
         # 광고팩스 전송여부
         AdsYN = False
@@ -405,7 +405,7 @@ def getFaxDetail(request):
         CorpNum = settings.testCorpNum
 
         # 팩스전송 요청시 반환받은 접수번호 (receiptNum)
-        receiptNum = "018012914050700001"
+        receiptNum = "019012311143200001"
 
         resultList = faxService.getFaxResult(CorpNum, receiptNum)
 
@@ -424,7 +424,7 @@ def getFaxDetailRN(request):
         CorpNum = settings.testCorpNum
 
         # 팩스전송요청시 할당한 전송요청번호 (requestNum)
-        requestNum = "20180809162125"
+        requestNum = "20190123-001"
 
         resultList = faxService.getFaxResultRN(CorpNum, requestNum)
 
@@ -550,9 +550,7 @@ def getChargeInfo(request):
 
         response = faxService.getChargeInfo(CorpNum, UserID)
 
-        return render(request, 'getChargeInfo.html',
-                      {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
-                       'rateSystem': response.rateSystem})
+        return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

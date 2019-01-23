@@ -495,7 +495,7 @@ def cancelReserveRN(request):
         CorpNum = settings.testCorpNum
 
         # 예약문자전송 요청시 할당한 전송요청번호
-        requestNum = "20180912104018"
+        requestNum = "20190116-001"
 
         response = messageService.cancelReserveRN(CorpNum, requestNum)
 
@@ -681,9 +681,7 @@ def getChargeInfo(request):
 
         response = messageService.getChargeInfo(CorpNum, MsgType, UserID)
 
-        return render(request, 'getChargeInfo.html',
-                      {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
-                       'rateSystem': response.rateSystem})
+        return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

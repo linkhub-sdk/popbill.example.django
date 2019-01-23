@@ -320,15 +320,15 @@ def sendFTS_one(request):
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 2):
-            KakaoButtons.append(
-                KakaoButton(
-                    n="팝빌 바로가기",  # 버튼명
-                    t="WL",  # 버튼유형 [WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
-                    u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
-                    u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
-                )
+
+        KakaoButtons.append(
+            KakaoButton(
+                n="팝빌 바로가기",  # 버튼명
+                t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+                u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
+                u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
             )
+        )
 
         KakaoButtons.append(
             KakaoButton(
@@ -391,20 +391,20 @@ def sendFTS_multi(request):
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 5):
-            KakaoButtons.append(
-                KakaoButton(
-                    n="팝빌 바로가기",  # 버튼명
-                    t="WL",  # [버튼유형 WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
-                    u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
-                    u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
-                )
-            )
 
         KakaoButtons.append(
             KakaoButton(
-                n="봇키워드",
-                t="BK",
+                n="팝빌 바로가기",  # 버튼명
+                t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+                u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
+                u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
+            )
+        )
+
+        KakaoButtons.append(
+            KakaoButton(
+                n="메시지전달",
+                t="MD",
             )
         )
 
@@ -466,20 +466,20 @@ def sendFTS_same(request):
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 5):
-            KakaoButtons.append(
-                KakaoButton(
-                    n="팝빌 바로가기",  # 버튼명
-                    t="WL",  # [버튼유형 WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
-                    u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
-                    u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
-                )
-            )
 
         KakaoButtons.append(
             KakaoButton(
-                n="봇키워드",
-                t="BK",
+                n="팝빌 바로가기",  # 버튼명
+                t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+                u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
+                u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
+            )
+        )
+
+        KakaoButtons.append(
+            KakaoButton(
+                n="메시지전달",
+                t="MD",
             )
         )
 
@@ -545,15 +545,15 @@ def sendFMS_one(request):
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 2):
-            KakaoButtons.append(
-                KakaoButton(
-                    n="팝빌 바로가기",  # 버튼명
-                    t="WL",  # 버튼유형 [WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
-                    u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
-                    u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
-                )
+
+        KakaoButtons.append(
+            KakaoButton(
+                n="팝빌 바로가기",  # 버튼명
+                t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+                u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
+                u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
             )
+        )
 
         KakaoButtons.append(
             KakaoButton(
@@ -625,20 +625,20 @@ def sendFMS_multi(request):
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 2):
-            KakaoButtons.append(
-                KakaoButton(
-                    n="팝빌 바로가기",  # 버튼명
-                    t="WL",  # 버튼유형 [WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
-                    u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
-                    u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
-                )
-            )
 
         KakaoButtons.append(
             KakaoButton(
-                n="봇키워드",
-                t="BK",
+                n="팝빌 바로가기",  # 버튼명
+                t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+                u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
+                u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
+            )
+        )
+
+        KakaoButtons.append(
+            KakaoButton(
+                n="메시지전달",
+                t="MD",
             )
         )
 
@@ -709,20 +709,20 @@ def sendFMS_same(request):
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
-        for x in range(0, 2):
-            KakaoButtons.append(
-                KakaoButton(
-                    n="팝빌 바로가기",  # 버튼명
-                    t="WL",  # 버튼유형 [WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
-                    u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
-                    u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
-                )
-            )
 
         KakaoButtons.append(
             KakaoButton(
-                n="봇키워드",
-                t="BK",
+                n="팝빌 바로가기",  # 버튼명
+                t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+                u1="http://www.popbill.com",  # [앱링크-Android, 웹링크-Mobile]
+                u2="http://www.popbill.com"  # [앱링크-IOS, 웹링크-PC URL]
+            )
+        )
+
+        KakaoButtons.append(
+            KakaoButton(
+                n="메시지전달",
+                t="MD",
             )
         )
 
@@ -917,9 +917,7 @@ def getChargeInfo(request):
 
         response = kakaoService.getChargeInfo(CorpNum, MsgType, UserID)
 
-        return render(request, 'getChargeInfo.html',
-                      {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
-                       'rateSystem': response.rateSystem})
+        return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

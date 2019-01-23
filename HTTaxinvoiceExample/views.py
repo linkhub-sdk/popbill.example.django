@@ -68,7 +68,7 @@ def getJobState(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
-        jobID = "018020810000000001"
+        jobID = "019012311000000001"
 
         response = htTaxinvoiceService.getJobState(CorpNum, jobID, UserID)
 
@@ -112,7 +112,7 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "018020810000000001"
+        JobID = "019012311000000001"
 
         # 문서형태 배열, [N-일반전자세금계산서 / M-수정전자세금계산서]
         Type = ["N", "M"]
@@ -163,7 +163,7 @@ def summary(request):
         UserID = settings.testUserID
 
         # 수집 요청(requestJob)시 발급받은 작업아이디
-        JobID = "018020811000000001"
+        JobID = "019012311000000001"
 
         # 문서형태 배열, [N-일반전자세금계산서 / M-수정전자세금계산서]
         Type = ["N", "M"]
@@ -205,7 +205,7 @@ def getTaxinvoice(request):
         UserID = settings.testUserID
 
         # 전자세금계산서 국세청승인번호
-        NTSConfirmNum = "20161121410002030000079e"
+        NTSConfirmNum = "20190116410002030000103d"
 
         taxinvoice = htTaxinvoiceService.getTaxinvoice(CorpNum, NTSConfirmNum, UserID)
 
@@ -228,7 +228,7 @@ def getXML(request):
         UserID = settings.testUserID
 
         # 전자세금계산서 국세청승인번호
-        NTSConfirmNum = "20161121410002030000079e"
+        NTSConfirmNum = "20190116410002030000103d"
 
         response = htTaxinvoiceService.getXML(CorpNum, NTSConfirmNum, UserID)
 
@@ -247,7 +247,7 @@ def getPopUpURL(request):
         CorpNum = settings.testCorpNum
 
         # 조회할 전자세금계산서 국세청 승인번호
-        NTSConfirmNum = "201812044100020300000c0a";
+        NTSConfirmNum = "20190116410002030000103d";
 
         url = htTaxinvoiceService.getPopUpURL(CorpNum, NTSConfirmNum)
 
@@ -277,7 +277,6 @@ def getCertificateExpireDate(request):
     """
     팝빌에 등록되어 있는 홈택스 공인인증서의 만료일시를 확인합니다.
     """
-
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -456,9 +455,7 @@ def getChargeInfo(request):
 
         response = htTaxinvoiceService.getChargeInfo(CorpNum, UserID)
 
-        return render(request, 'getChargeInfo.html',
-                      {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
-                       'rateSystem': response.rateSystem})
+        return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

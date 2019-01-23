@@ -58,7 +58,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "20190116-001"
+        MgtKey = "20190116-03"
 
         # 지연발행 강제여부
         # 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
@@ -264,7 +264,9 @@ def registIssue(request):
 
         # 상세항목 0~99개 까지 작성가능.
         # 일련번호 (serialNum) 는 1부터 99까지 순차기재.
-        taxinvoice.detailList = [
+        taxinvoice.detailList = []
+
+        taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 purchaseDT="20190116",  # 거래일자, yyyyMMdd
@@ -275,7 +277,10 @@ def registIssue(request):
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
-            ),
+            )
+        )
+
+        taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 purchaseDT="20190116",  # 거래일자, yyyyMMdd
@@ -287,7 +292,7 @@ def registIssue(request):
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
             )
-        ]
+        )
 
         ######################################################################
         #                           추가담당자 정보
@@ -296,18 +301,23 @@ def registIssue(request):
         ######################################################################
 
         # 최대 5개까지 기재 가능
-        taxinvoice.addContactList = [
+        taxinvoice.addContactList = []
+
+        taxinvoice.addContactList.append(
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
                 email="test1@test.com"  # 메일주소
-            ),
+            )
+        )
+
+        taxinvoice.addContactList.append(
             Contact(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
                 email="test1@test.com"  # 메일주소
             )
-        ]
+        )
 
         response = taxinvoiceService.registIssue(CorpNum, taxinvoice, writeSpecification,
                                                  forceIssue, dealInvoiceMgtKey, memo, emailSubject, UserID)
@@ -331,7 +341,7 @@ def register(request):
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "20190116-002"
+        MgtKey = "20190116-301"
 
         # 거래명세서 동시작성여부
         writeSpecification = False
@@ -523,7 +533,9 @@ def register(request):
 
         # 상세항목 0~99개 까지 작성가능.
         # 일련번호 (serialNum) 는 1부터 99까지 순차기재.
-        taxinvoice.detailList = [
+        taxinvoice.detailList = []
+
+        taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 purchaseDT="20190116",  # 거래일자, yyyyMMdd
@@ -534,7 +546,10 @@ def register(request):
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
-            ),
+            )
+        )
+
+        taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 purchaseDT="20190116",  # 거래일자, yyyyMMdd
@@ -546,7 +561,7 @@ def register(request):
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
             )
-        ]
+        )
 
         ######################################################################
         #                           추가담당자 정보
@@ -555,18 +570,23 @@ def register(request):
         ######################################################################
 
         # 최대 5개까지 기재 가능
-        taxinvoice.addContactList = [
+        taxinvoice.addContactList = []
+
+        taxinvoice.addContactList.append(
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
                 email="test1@test.com"  # 메일주소
-            ),
+            )
+        )
+
+        taxinvoice.addContactList.append(
             Contact(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
                 email="test1@test.com"  # 메일주소
             )
-        ]
+        )
 
         response = taxinvoiceService.register(CorpNum, taxinvoice, writeSpecification, UserID)
 
@@ -776,7 +796,9 @@ def update(request):
 
         # 상세항목 0~99개 까지 작성가능.
         # 일련번호 (serialNum) 는 1부터 99까지 순차기재.
-        taxinvoice.detailList = [
+        taxinvoice.detailList = []
+
+        taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 purchaseDT="20190116",  # 거래일자, yyyyMMdd
@@ -787,7 +809,10 @@ def update(request):
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
-            ),
+            )
+        )
+
+        taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 purchaseDT="20190116",  # 거래일자, yyyyMMdd
@@ -799,7 +824,7 @@ def update(request):
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
             )
-        ]
+        )
 
         ######################################################################
         #                           추가담당자 정보
@@ -808,18 +833,23 @@ def update(request):
         ######################################################################
 
         # 최대 5개까지 기재 가능
-        taxinvoice.addContactList = [
+        taxinvoice.addContactList = []
+
+        taxinvoice.addContactList.append(
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
                 email="test1@test.com"  # 메일주소
-            ),
+            )
+        )
+
+        taxinvoice.addContactList.append(
             Contact(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
                 email="test1@test.com"  # 메일주소
             )
-        ]
+        )
 
         response = taxinvoiceService.update(CorpNum, MgtKeyType, MgtKey, taxinvoice, UserID)
 
@@ -841,7 +871,7 @@ def issue(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20190116-002"
+        MgtKey = "20190116-301"
 
         # 메모
         Memo = "발행 메모"
@@ -858,10 +888,10 @@ def issue(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        result = taxinvoiceService.issue(CorpNum, MgtKeyType, MgtKey, Memo,
-                                         EmailSubject, ForceIssue, UserID)
+        response = taxinvoiceService.issue(CorpNum, MgtKeyType, MgtKey, Memo,
+                                           EmailSubject, ForceIssue, UserID)
 
-        return render(request, 'result.html', {'code': result.code})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -1235,7 +1265,9 @@ def registRequest(request):
 
         # 상세항목 0~99개 까지 작성가능.
         # 일련번호 (serialNum) 는 1부터 99까지 순차기재.
-        taxinvoice.detailList = [
+        taxinvoice.detailList = []
+
+        taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 purchaseDT="20190116",  # 거래일자, yyyyMMdd
@@ -1246,7 +1278,10 @@ def registRequest(request):
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
-            ),
+            )
+        )
+
+        taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 purchaseDT="20190116",  # 거래일자, yyyyMMdd
@@ -1258,7 +1293,7 @@ def registRequest(request):
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
             )
-        ]
+        )
 
         ######################################################################
         #                           추가담당자 정보
@@ -1267,18 +1302,23 @@ def registRequest(request):
         ######################################################################
 
         # 최대 5개까지 기재 가능
-        taxinvoice.addContactList = [
+        taxinvoice.addContactList = []
+
+        taxinvoice.addContactList.append(
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
                 email="test1@test.com"  # 메일주소
-            ),
+            )
+        )
+
+        taxinvoice.addContactList.append(
             Contact(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
                 email="test1@test.com"  # 메일주소
             )
-        ]
+        )
 
         memo = "즉시발행 메모"
 
@@ -2260,9 +2300,7 @@ def getChargeInfo(request):
 
         response = taxinvoiceService.getChargeInfo(CorpNum, UserID)
 
-        return render(request, 'getChargeInfo.html',
-                      {'unitCost': response.unitCost, 'chargeMethod': response.chargeMethod,
-                       'rateSystem': response.rateSystem})
+        return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
