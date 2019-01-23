@@ -25,7 +25,7 @@
 
                 {% for btns in kakaoInfo.btns %}
                     <fieldset class="fieldset2">
-                        <legend> 버튼 [{{ forloop.counter }}]</legend>
+                        <legend> btns ([배열] 버튼 목록) [{{ forloop.counter }}]</legend>
                         <ul>
                             <li> n (버튼명) : {{ btns.n }}</li>
                             <li> t (버튼유형) : {{ btns.t }}</li>
@@ -37,7 +37,7 @@
 
                 {% for msgs in kakaoInfo.msgs %}
                     <fieldset class="fieldset2">
-                        <legend> 개별 전송내역 [{{ forloop.counter }}]</legend>
+                        <legend> 전송결과 정보 배열 [{{ forloop.counter }}]</legend>
                         <ul>
                             <li> state (전송상태 코드) : {{ msgs.state }}</li>
                             <li> sendDT (전송일시) : {{ msgs.sendDT }}</li>

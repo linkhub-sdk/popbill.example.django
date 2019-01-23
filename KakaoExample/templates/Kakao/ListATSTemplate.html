@@ -15,7 +15,7 @@
                         <li> plusFriendID (플러스친구 아이디) : {{ template.plusFriendID }}</li>
                         {% for btns in template.btns %}
                             <fieldset class="fieldset2">
-                                <legend> 버튼 [{{ forloop.counter }}]</legend>
+                                <legend> btns ([배열] 버튼 목록) [{{ forloop.counter }}]</legend>
                                 <ul>
                                     <li> n (버튼명) : {{ btns.n }}</li>
                                     <li> t (버튼유형) : {{ btns.t }}</li>

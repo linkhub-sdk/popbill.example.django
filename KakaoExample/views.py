@@ -790,7 +790,7 @@ def getMessages(request):
         CorpNum = settings.testCorpNum
 
         # 알림톡/친구톡 요청시 반환받은 접수번호
-        receiptNum = "018030511103200001"
+        receiptNum = "019012313433000001"
 
         kakaoInfo = kakaoService.getMessages(CorpNum, receiptNum)
 
@@ -808,7 +808,7 @@ def getMessagesRN(request):
         CorpNum = settings.testCorpNum
 
         # 알림톡/친구톡 전송 요청시 할당한 전송요청번호(requestNum)
-        requestNum = "20190116-001"
+        requestNum = "20190123-123"
 
         kakaoInfo = kakaoService.getMessagesRN(CorpNum, requestNum)
 
@@ -847,17 +847,20 @@ def search(request):
         # 개인조회여부 [0-전체조회, 1-개인조회]
         SenderYN = "0"
 
-        # 페이지 번호
+        # 페이지 번호, 기본값 ‘1’
         Page = 1
 
-        # 페이지당 목록개수
+        # 페이지당 검색개수, 기본값 500, 최대값 1000
         PerPage = 10
 
         # 정렬방향 [D-내림차순, A-오름차순]
         Order = "D"
 
+        # 조회 검색어, 수신자명 기재
+        QString = ""
+
         response = kakaoService.search(CorpNum, SDate, EDate, State, Item, ReserveYN, SenderYN, Page, PerPage, Order,
-                                       UserID)
+                                       UserID, QString)
 
         return render(request, 'Kakao/Search.html', {'response': response})
     except PopbillException as PE:
