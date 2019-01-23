@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block contents %}
-<div id="content">
-    <p class="heading1">팝빌 세금계산서 Django Example.</p>
-    <br/>
-    <fieldset class="fieldset1">
-        <legend>유통사업자 메일 목록 확인</legend>
-        <ul>
-            {% for asp in aspList %}
-            <fieldset class="fieldset2">
-                <ul>
-                    <li> confirmNum (유통사업자 승인번호) : {{ asp.confirmNum }}</li>
-                    <li> email (유통사업자 이매일) : {{ asp.email }}</li>
-                </ul>
-            </fieldset>
-            {% endfor %}
-        </ul>
-    </fieldset>
-</div>
+    <div id="content">
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>유통사업자 메일 목록 확인</legend>
+            <ul>
+                {% for asp in aspList %}
+                <fieldset class="fieldset2">
+                    <ul>
+                        <li> confirmNum (유통사업자 승인번호) : {{ asp.confirmNum }}</li>
+                        <li> email (유통사업자 이매일) : {{ asp.email }}</li>
+                    </ul>
+                </fieldset>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
 {% endblock contents %}

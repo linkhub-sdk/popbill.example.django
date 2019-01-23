@@ -463,7 +463,7 @@ def revokeRegistIssue_part(request):
         # 즉시발행 메모
         memo = "현금영수증 즉시발행 메모"
 
-        # 부분취소여부, [true-부분취소 / false-전체취소]
+        # 부분취소여부, [True-부분취소 / False-전체취소]
         isPartCancel = True
 
         # 취소사유, [1-거래취소 /  2-오류발급취소 / 3-기타]
@@ -541,18 +541,18 @@ def revokeRegister_part(request):
         UserID = settings.testUserID
 
         # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20190116-104"
+        mgtKey = "20190123-123"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "158814020"
+        orgConfirmNum = "760661092"
 
         # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20190115"
+        orgTradeDate = "20190122"
 
         # 발행안내문자 전송여부
         smssendYN = False
 
-        # 부분취소여부, [true-부분취소 / false-전체취소]
+        # 부분취소여부, [True-부분취소 / False-전체취소]
         isPartCancel = True
 
         # 취소사유, [1-거래취소 / 2-오류발급취소 / 3-기타]
@@ -809,7 +809,7 @@ def getMassPrintURL(request):
         MgtKeyList = []
         MgtKeyList.append("20190116-001")
         MgtKeyList.append("20190116-002")
-        MgtKeyList.append("20180116-003")
+        MgtKeyList.append("20190116-003")
 
         url = cashbillService.getMassPrintURL(CorpNum, MgtKeyList)
 

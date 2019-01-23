@@ -386,7 +386,7 @@ def cancelReserveRN(request):
         CorpNum = settings.testCorpNum
 
         # 예약팩스전송 요청시 할당한 전송요청번호
-        requestNum = "20180912-004"
+        requestNum = "20190123-004"
 
         response = faxService.cancelReserveRN(CorpNum, requestNum)
 
