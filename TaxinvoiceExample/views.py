@@ -89,14 +89,13 @@ def registIssue(request):
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
 
-            # [필수] 발행영태, [정발행, 역발행, 위수탁] 중 기재
+            # [필수] 발행형태, [정발행, 역발행, 위수탁] 중 기재
             issueType="정발행",
 
             # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
 
-            # [필수] 발행시점, [직접발행, 승인시자동발행] '중 기재
-            # 발행예정(Send API) 프로세스를 구현하지 않는경우 "직접발행' 기재
+            # [필수] 발행시점
             issueTiming="직접발행",
 
             # [필수] 과세형태, [과세, 영세, 면세] 중 기재
@@ -162,8 +161,7 @@ def registIssue(request):
             # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
-            # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로
-            # 사업자별로 중복되지 않도록 구성
+            # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoiceeMgtKey=None,
 
             # [필수] 공급받는자 대표자 성명
@@ -358,14 +356,13 @@ def register(request):
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
 
-            # [필수] 발행영태, [정발행, 역발행, 위수탁] 중 기재
+            # [필수] 발행형태, [정발행, 역발행, 위수탁] 중 기재
             issueType="정발행",
 
             # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
 
-            # [필수] 발행시점, [직접발행, 승인시자동발행] '중 기재
-            # 발행예정(Send API) 프로세스를 구현하지 않는경우 '직접발행' 기재
+            # [필수] 발행시점
             issueTiming="직접발행",
 
             # [필수] 과세형태, [과세, 영세, 면세] 중 기재
@@ -384,8 +381,7 @@ def register(request):
             # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # [필수] 공급자 문서관리번호, 1~24자리, (영문, 숫자, '-', '_')조합으로
-            # 사업자별로 중복되지 않도록 구성
+            # [필수] 공급자 문서관리번호, 1~24자리, (영문, 숫자, '-', '_')조합으로 사업자별로 중복되지 않도록 구성
             invoicerMgtKey=MgtKey,
 
             # 공급자 대표자 성명
@@ -431,8 +427,7 @@ def register(request):
             # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
-            # [역발행시 필수] 공급받는자 문서관리번호, , 1~24자리, (영문, 숫자, '-', '_') 조합으로
-            # 사업자별로 중복되지 않도록 구성
+            # [역발행시 필수] 공급받는자 문서관리번호, , 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoiceeMgtKey=None,
 
             # [필수] 공급받는자 대표자 성명
@@ -622,14 +617,13 @@ def update(request):
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
 
-            # [필수] 발행영태, [정발행, 역발행, 위수탁] 중 기재
+            # [필수] 발행형태, [정발행, 역발행, 위수탁] 중 기재
             issueType="정발행",
 
             # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
 
-            # [필수] 발행시점, [직접발행, 승인시자동발행] '중 기재
-            # 발행예정(Send API) 프로세스를 구현하지 않는경우 '직접발행' 기재
+            # [필수] 발행시점
             issueTiming="직접발행",
 
             # [필수] 과세형태, [과세, 영세, 면세] 중 기재
@@ -923,125 +917,10 @@ def cancelIssue(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def send(request):
-    """
-    공급자가 [임시저장] 상태의 세금계산서를 [발행예정] 합니다.
-    - 발행예정이란 공급자와 공급받는자 사이에 세금계산서 확인 후 발행하는 방법입니다.
-    - "[전자세금계산서 API 연동매뉴얼] > 1.2.1. 정발행 > 다. 임시저장 발행예정" 의 프로세스를 참조하시기 바랍니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "SELL"
-
-        # 문서관리번호
-        MgtKey = "20190116-001"
-
-        # 메모
-        Memo = "발행예정 메모"
-
-        # 안내메일 제목, 미기재시 기본양식으로 전송
-        EmailSubject = ""
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = taxinvoiceService.send(CorpNum, MgtKeyType, MgtKey, Memo, EmailSubject, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def cancelSend(request):
-    """
-    [승인대기] 상태의 세금계산서를 [공급자]가 [취소]합니다.
-    - 취소된 세금계산서에 사용된 문서관리번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "SELL"
-
-        # 문서관리번호
-        MgtKey = "20190116-001"
-
-        # 메모
-        Memo = "발행예정 취소 메모"
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = taxinvoiceService.cancelSend(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def accept(request):
-    """
-    [승인대기] 상태의 세금계산서를 [공급받는자]가 [승인]합니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "BUY"
-
-        # 문서관리번호
-        MgtKey = "20190116-002"
-
-        # 메모
-        Memo = "발행예정 승인 메모"
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = taxinvoiceService.accept(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def deny(request):
-    """
-    [승인대기] 상태의 세금계산서를 [공급받는자]가 [거부]합니다.
-    - 거부된 세금계산서에 사용된 문서관리번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 관리번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "BUY"
-
-        # 문서관리번호
-        MgtKey = "20190116-002"
-
-        # 메모
-        Memo = "발행예정 거부 메모"
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = taxinvoiceService.deny(CorpNum, MgtKeyType, MgtKey, Memo, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
 def delete(request):
     """
     삭제 가능한 상태의 세금계산서를 삭제 합니다.
-    - 삭제가능한 문서 상태 : 임시저장, [발행예정]거부/취소, 발행취소, 역)발행 거부/취소
+    - 삭제가능한 문서 상태 : 임시저장, 발행취소, 역)발행 거부/취소
     """
     try:
         # 팝빌회원 사업자번호
@@ -1088,14 +967,13 @@ def registRequest(request):
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
 
-            # [필수] 발행영태, [정발행, 역발행, 위수탁] 중 기재
+            # [필수] 발행형태, [정발행, 역발행, 위수탁] 중 기재
             issueType="역발행",
 
             # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
 
-            # [필수] 발행시점, [직접발행, 승인시자동발행] '중 기재
-            # 발행예정(Send API) 프로세스를 구현하지 않는경우 "직접발행' 기재
+            # [필수] 발행시점
             issueTiming="직접발행",
 
             # [필수] 과세형태, [과세, 영세, 면세] 중 기재
@@ -2234,8 +2112,7 @@ def getChargeURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를
-      이용하시기 바랍니다.
+    - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -2333,7 +2210,7 @@ def checkID(request):
 def joinMember(request):
     """
     파트너의 연동회원으로 회원가입을 요청합니다.
-    아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+    - 아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
     """
     try:
         # 연동회원 가입정보
