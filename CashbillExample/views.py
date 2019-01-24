@@ -779,8 +779,27 @@ def getPrintURL(request):
 
 def getPrintURL(request):
     """
-    현금영수증 인쇄(공급받는자) URL을 반환합니다.
+    현금영수증 인쇄(공급자) URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 현금영수증 문서관리번호
+        MgtKey = "20190116-001"
+
+        url = cashbillService.getEPrintURL(CorpNum, MgtKey)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+
+def getEPrintURL(request):
+    """
+    현금영수증 인쇄(공급받는자) URL을 반환합니다.
+    - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
     """
     try:
         # 팝빌회원 사업자번호
