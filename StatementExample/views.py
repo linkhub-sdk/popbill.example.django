@@ -73,7 +73,7 @@ def registIssue(request):
             itemCode=121,
 
             # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20190116-300",
+            mgtKey="20190124-900",
 
             # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
@@ -177,7 +177,13 @@ def registIssue(request):
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
                 supplyCost="10000",  # 공급가액
-                tax="1000"  # 세액
+                tax="1000",  # 세액
+                remark="비고",  # 비고
+                spare1="여분1",  # 여분1
+                spare2="여분2",  # 여분2
+                spare3="여분3",  # 여분3
+                spare4="여분4",  # 여분4
+                spare5="여분5",  # 여분5
             )
         )
         statement.detailList.append(
@@ -189,7 +195,13 @@ def registIssue(request):
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
                 supplyCost="10000",  # 공급가액
-                tax="1000"  # 세액
+                tax="1000",  # 세액
+                remark="비고",  # 비고
+                spare1="여분1",  # 여분1
+                spare2="여분2",  # 여분2
+                spare3="여분3",  # 여분3
+                spare4="여분4",  # 여분4
+                spare5="여분5",  # 여분5
             )
         )
 
@@ -220,7 +232,7 @@ def register(request):
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20190116",
+            writeDate="20190124",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -235,7 +247,7 @@ def register(request):
             itemCode=121,
 
             # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20190116-002",
+            mgtKey="20190124-901",
 
             # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
@@ -335,24 +347,37 @@ def register(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190116",  # 거래일자
+                purchaseDT="20190124",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
                 supplyCost="10000",  # 공급가액
-                tax="1000"  # 세액
+                tax="1000",  # 세액
+                remark="비고",  # 비고
+                spare1="여분1",  # 여분1
+                spare2="여분2",  # 여분2
+                spare3="여분3",  # 여분3
+                spare4="여분4",  # 여분4
+                spare5="여분5",  # 여분5
+
             )
         )
         statement.detailList.append(
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190116",  # 거래일자
+                purchaseDT="20190124",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
                 supplyCost="10000",  # 공급가액
-                tax="1000"  # 세액
+                tax="1000",  # 세액
+                remark="비고",  # 비고
+                spare1="여분1",  # 여분1
+                spare2="여분2",  # 여분2
+                spare3="여분3",  # 여분3
+                spare4="여분4",  # 여분4
+                spare5="여분5",  # 여분5
             )
         )
 
@@ -384,12 +409,12 @@ def update(request):
         ItemCode = 121
 
         # 수정할 전자명세서 문서관리번호
-        mgtKey = "20190116-002"
+        mgtKey = "20190124-901"
 
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20190116",
+            writeDate="20190124",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -503,24 +528,36 @@ def update(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190116",  # 거래일자
+                purchaseDT="20190124",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
                 supplyCost="10000",  # 공급가액
-                tax="1000"  # 세액
+                tax="1000",  # 세액
+                remark="비고",  # 비고
+                spare1="여분1",  # 여분1
+                spare2="여분2",  # 여분2
+                spare3="여분3",  # 여분3
+                spare4="여분4",  # 여분4
+                spare5="여분5",  # 여분5
             )
         )
         statement.detailList.append(
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190116",  # 거래일자
+                purchaseDT="20190124",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
                 supplyCost="10000",  # 공급가액
-                tax="1000"  # 세액
+                tax="1000",  # 세액
+                remark="비고",  # 비고
+                spare1="여분1",  # 여분1
+                spare2="여분2",  # 여분2
+                spare3="여분3",  # 여분3
+                spare4="여분4",  # 여분4
+                spare5="여분5",  # 여분5
             )
         )
 
@@ -622,7 +659,7 @@ def getInfo(request):
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20190116-001"
+        MgtKey = "20190124-900"
 
         statementInfo = statementService.getInfo(CorpNum, ItemCode, MgtKey)
 
@@ -647,8 +684,8 @@ def getInfos(request):
         # 문서관리번호 배열, 최대 1000건
         MgtKeyList = []
         MgtKeyList.append("20190116-001")
-        MgtKeyList.append("20190116-002")
-        MgtKeyList.append("20190116-003")
+        MgtKeyList.append("20190124-900")
+        MgtKeyList.append("20190124-901")
 
         InfoList = statementService.getInfos(CorpNum, ItemCode, MgtKeyList)
 
@@ -671,7 +708,7 @@ def getDetailInfo(request):
         ItemCode = 121
 
         # 전자명세서 문서관리번호
-        MgtKey = "20190116-001"
+        MgtKey = "20190124-900"
 
         statement = statementService.getDetailInfo(CorpNum, ItemCode, MgtKey)
 
@@ -753,7 +790,7 @@ def getLogs(request):
 
 def getURL(request):
     """
-    전자명세서 문서함 관련 URL을 반홚합니다.
+    전자명세서 문서함 관련 URL을 반환합니다.
     - 보안정책으로 인해 반한된 URL의 유효시간은 30초입니다.
     """
     try:
