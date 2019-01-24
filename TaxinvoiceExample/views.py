@@ -957,6 +957,10 @@ def registRequest(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
+        # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
+        # 사업자별로 중복되지 않도록 구성
+        MgtKey = "20190116-555"
+
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
@@ -992,8 +996,7 @@ def registRequest(request):
             # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # 공급자 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
-            # 사업자별로 중복되지 않도록 구성
+            # 공급자 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoicerMgtKey="",
 
             # [필수] 공급자 대표자 성명
@@ -1039,9 +1042,8 @@ def registRequest(request):
             # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
-            # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로
-            # 사업자별로 중복되지 않도록 구성
-            invoiceeMgtKey="20190116-200",
+            # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            invoiceeMgtKey=MgtKey,
 
             # [필수] 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
@@ -1164,38 +1166,13 @@ def registRequest(request):
                 spec="규격",  # 규격
                 qty=1,  # 수량
                 unitCost="50000",  # 단가
-                supplyCost="50000",  # 공급가액
+                supplyCost="50000",  # 공가액
                 tax="5000",  # 세액
                 remark="품목비고"  # 비고
             )
         )
 
-        ######################################################################
-        #                           추가담당자 정보
-        # - 세금계산서 발행안내 메일을 수신받을 공급받는자 담당자가 다수인 경우
-        #   담당자 정보를 추가하여 발행안내메일을 다수에게 전송할 수 있습니다.
-        ######################################################################
-
-        # 최대 5개까지 기재 가능
-        taxinvoice.addContactList = []
-
-        taxinvoice.addContactList.append(
-            Contact(
-                serialNum=1,  # 일련번호, 1부터 순차기재
-                contactName="추가담당자 성명",  # 담당자명
-                email="test1@test.com"  # 메일주소
-            )
-        )
-
-        taxinvoice.addContactList.append(
-            Contact(
-                serialNum=2,  # 일련번호, 1부터 순차기재
-                contactName="추가담당자 성명",  # 담당자명
-                email="test1@test.com"  # 메일주소
-            )
-        )
-
-        memo = "즉시발행 메모"
+        memo = "역발행 즉시요청 메모"
 
         response = taxinvoiceService.registRequest(CorpNum, taxinvoice, memo, UserID)
 
