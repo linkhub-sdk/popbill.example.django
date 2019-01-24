@@ -1814,7 +1814,7 @@ def deleteFile(request):
     """
     세금계산서에 첨부된 파일을 삭제합니다.
     - 첨부파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목
-      중 파일아이디(atachedFile) 통해 확인할 수 있습니다.
+      중 파일아이디(attachedFile) 통해 확인할 수 있습니다.
     """
     try:
         # 팝빌회원 아이디
@@ -1826,7 +1826,7 @@ def deleteFile(request):
         # 문서관리번호
         MgtKey = "20190116-002"
 
-        # 첨부파일 아이디, GetFiles API의 응답항목(atachedFile) 확인.
+        # 첨부파일 아이디, GetFiles API의 응답항목(attachedFile) 확인.
         FileID = "8D13F961-CD77-4856-9501-1FB59CAFEE9E.PBF"
 
         # 팝빌회원 아이디
