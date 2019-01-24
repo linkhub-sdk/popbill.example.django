@@ -770,7 +770,7 @@ def getPrintURL(request):
         # 현금영수증 문서관리번호
         MgtKey = "20190116-001"
 
-        url = cashbillService.getEPrintURL(CorpNum, MgtKey)
+        url = cashbillService.getPrintURL(CorpNum, MgtKey)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
