@@ -81,7 +81,7 @@ def sendSMS(request):
         # 단문메시지 내용, 90Byte 초과시 길이가 조정되 전송됨
         Contents = "문자 API 단건전송 테스트"
 
-        # 예약전송시간, 형태 yyyyMMddHHmmss 공백 기재시 즉시전송
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
         # 광고문자 전송여부
@@ -118,7 +118,7 @@ def sendSMS_multi(request):
         # 단문메시지 내용(동보전송용)
         Contents = "동보전송용 메시지 내용"
 
-        # 예약전송시간, 형태 yyyyMMddHHmmss 공백 기재시 즉시전송
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
         # 광고문자 전송여부
@@ -179,7 +179,7 @@ def sendLMS(request):
         # 장문 메시지 내용, 길이가 2000Byte 초과시 길이가 조정되어 전송됨.
         Contents = "장문메시지 단건전송 테스트"
 
-        # 예약전송시간, 형태 yyyyMMddHHmmss, 공백 처리시 즉시전송
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
         # 광고문자 전송여부
@@ -219,7 +219,7 @@ def sendLMS_multi(request):
         # 장문 메시지 내용, 2000Byte 초과시 길이가 조정되어 전송됨.
         Contents = "동보전송용 메시지 내용"
 
-        # 예약전송시간, 공백 처리시 즉시전송(작성형태 yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
         # 광고문자 전송여부
@@ -281,7 +281,7 @@ def sendMMS(request):
         # 장문 메시지 내용, 길이가 2000Byte 초과시 길이가 조정되어 전송됨.
         Contents = "멀티메시지 단건전송 테스트"
 
-        # 예약전송시간, 형태 yyyyMMddHHmmss, 공백 처리시 즉시전송
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
         # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1500px 이하 권장)
@@ -326,7 +326,7 @@ def sendMMS_multi(request):
         # 장문 메시지 내용, 2000Byte 초과시 길이가 조정되어 전송됨.
         Contents = "동보전송용 메시지 내용"
 
-        # 예약전송시간, 공백 처리시 즉시전송(작성형태 yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
         # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1500px 이하 권장)
@@ -392,7 +392,7 @@ def sendXMS(request):
         # 메시지 제목
         Subject = "장문 문자 제목"
 
-        # 예약전송시간, 형태 yyyyMMddHHmmss 공백 처리시 즉시전송
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
         # 광고문자 전송여부
@@ -433,7 +433,7 @@ def sendXMS_multi(request):
         # 메시지 내용(동보전송용)
         Contents = "동보전송용 메시지 내용"
 
-        # 예약전송시간, 공백 처리시 즉시전송(작성형태 yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
         # 광고문자 전송여부

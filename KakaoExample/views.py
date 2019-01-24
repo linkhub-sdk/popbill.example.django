@@ -149,6 +149,7 @@ def sendATS_one(request):
         snd = "07043042992"
 
         # 알림톡 내용 (최대 1000자)
+        # 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
         content = "테스트 템플릿 입니다."
 
         # 대체문자 내용 (최대 2000byte)
@@ -157,7 +158,7 @@ def sendATS_one(request):
         # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 수신번호
@@ -200,7 +201,7 @@ def sendATS_multi(request):
         # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 수신정보 배열 (최대 1000개 가능)
@@ -248,6 +249,7 @@ def sendATS_same(request):
         snd = "07043042992"
 
         # [동보] 알림톡 내용 (최대 1000자)
+        # 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
         content = "[테스트] 테스트 템플릿입니다."
 
         # [동보] 대체문자 내용 (최대 2000byte)
@@ -256,7 +258,7 @@ def sendATS_same(request):
         # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 수신정보 배열 (최대 1000개 가능)
@@ -309,7 +311,7 @@ def sendFTS_one(request):
         # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 수신번호
@@ -374,7 +376,7 @@ def sendFTS_multi(request):
         # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 수신정보 배열 (최대 1000개 가능)
@@ -451,7 +453,7 @@ def sendFTS_same(request):
         # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 수신정보 배열 (최대 1000개 가능)
@@ -527,7 +529,7 @@ def sendFMS_one(request):
         # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 파일경로
@@ -601,7 +603,7 @@ def sendFMS_multi(request):
         # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 파일경로
@@ -687,7 +689,7 @@ def sendFMS_same(request):
         # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
 
-        # 예약일시 (작성형식 : yyyyMMddHHmmss)
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 파일경로
@@ -838,8 +840,8 @@ def search(request):
         # 전송상태 배열 [0-대기, 1-전송중, 2-성공, 3-대체 4-실패, 5-취소]
         State = ["1", "2", "3", "4", "5"]
 
-        # 검색대상 [ATS(알림톡) / ATS(친구톡 텍스트) / FMS(친구톡 이미지)]
-        Item = ["ATS", "ATS", "FMS"]
+        # 검색대상 [ATS(알림톡) / FTS(친구톡 텍스트) / FMS(친구톡 이미지)]
+        Item = ["ATS", "FTS", "FMS"]
 
         # 예약전송 검색여부, [공백-전체조회, 0-즉시전송조회, 1-예약전송조회]
         ReserveYN = ""

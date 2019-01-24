@@ -76,8 +76,8 @@ def sendFAX(request):
         # 파일경로 (해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개)
         FilePath = ["./FaxExample/static/file/faxfile.jpg", "./FaxExample/static/file/test.pdf"]
 
-        # 예약전송일시, None처리시 즉시전송, 작성형태 'yyyyMMddHHmmss'
-        ReserveDT = ''
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
+        ReserveDT = ""
 
         # 광고팩스 전송여부
         AdsYN = False
@@ -122,8 +122,8 @@ def sendFAX_multi(request):
         # 광고팩스 전송여부
         AdsYN = False
 
-        # 예약전송시간, None처리시 즉시전송, 작성형태 'yyyyMMddHHmmss'
-        ReserveDT = None
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
+        ReserveDT = ""
 
         # 팩스제목
         Title = "Python 팩스동보전송 제목"
@@ -177,10 +177,10 @@ def resendFAX(request):
         Receiver = ""
 
         # 수신자명
-        ReceiverName = ''
+        ReceiverName = ""
 
-        # 예약전송시간, 공백시 즉시전송, 작성형태 yyyyMMddHHmmss
-        ReserveDT = ''
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
+        ReserveDT = ""
 
         # 팩스제목
         Title = "팩스 재전송 제목"
@@ -222,13 +222,13 @@ def resendFAXRN(request):
 
         # 수신번호/수신자명 모두 공백처리시 기존전송정보로 재전송
         # 수신번호
-        Receiver = ''
+        Receiver = ""
 
         # 수신자명
-        ReceiverName = ''
+        ReceiverName = ""
 
-        # 예약전송시간, 공백시 즉시전송, 작성형태 yyyyMMddHHmmss
-        ReserveDT = ''
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
+        ReserveDT = ""
 
         # 팩스제목
         Title = '팩스 재전송 제목'
@@ -268,10 +268,10 @@ def resendFAX_multi(request):
         # 발신자명, 공백처리시 기존전송정보로 재전송
         SenderName = "발신자명"
 
-        # 예약전송시간, 공백시 즉시전송, 작성형태 yyyyMMddHHmmss
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         ReserveDT = ""
 
-        # 수신정보 배열 None 처리시 기존전송정보로 전송
+        # 수신정보 배열, None처리시 기존전송정보로 전송
         Receivers = None
 
         # 팩스제목
@@ -323,10 +323,10 @@ def resendFAXRN_multi(request):
         # 발신자명, 공백처리시 기존전송정보로 재전송
         SenderName = '발신자명'
 
-        # 예약전송시간, 공백시 즉시전송, 작성형태 yyyyMMddHHmmss
-        ReserveDT = ''
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
+        ReserveDT = ""
 
-        # 수신정보 배열 None 처리시 기존전송정보로 전송
+        # 수신정보 배열, None처리시 기존전송정보로 전송
         Receivers = None
 
         # 팩스제목
