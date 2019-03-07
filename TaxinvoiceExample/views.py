@@ -57,7 +57,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "20190116-03"
+        MgtKey = "20190307-10"
 
         # 지연발행 강제여부
         # 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
@@ -83,7 +83,7 @@ def registIssue(request):
         taxinvoice = Taxinvoice(
 
             # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
-            writeDate="20190116",
+            writeDate="20190307",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -318,7 +318,7 @@ def registIssue(request):
         response = taxinvoiceService.registIssue(CorpNum, taxinvoice, writeSpecification,
                                                  forceIssue, dealInvoiceMgtKey, memo, emailSubject, UserID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'ntsConfirmNum': response.ntsConfirmNum})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -337,7 +337,7 @@ def register(request):
 
         # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "20190116-301"
+        MgtKey = "20190307-12"
 
         # 거래명세서 동시작성여부
         writeSpecification = False
@@ -349,7 +349,7 @@ def register(request):
         taxinvoice = Taxinvoice(
 
             # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
-            writeDate="20190116",
+            writeDate="20190307",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -869,7 +869,7 @@ def issue(request):
         MgtKeyType = "SELL"
 
         # 문서관리번호
-        MgtKey = "20190116-301"
+        MgtKey = "20190307-12"
 
         # 메모
         Memo = "발행 메모"
@@ -889,7 +889,7 @@ def issue(request):
         response = taxinvoiceService.issue(CorpNum, MgtKeyType, MgtKey, Memo,
                                            EmailSubject, ForceIssue, UserID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'ntsConfirmNum': response.ntsConfirmNum})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

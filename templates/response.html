@@ -6,8 +6,11 @@
         <fieldset class="fieldset1">
             <legend>{{ request.path }}</legend>
             <ul>
-                <li>Response.code : {{ code }}</li>
-                <li>Response.message : {{ message }}</li>
+                <li>응답코드 (Response.code) : {{ code }}</li>
+                <li>응답메시지 (Response.message) : {{ message }}</li>
+                {% if ntsConfirmNum != None %}
+                  <li>국세청 승인번호 (Response.ntsConfirmNum) : {{ ntsConfirmNum }}</li>
+                {% endif %}
             </ul>
         </fieldset>
     </div>
