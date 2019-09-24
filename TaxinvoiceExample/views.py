@@ -11,6 +11,8 @@ taxinvoiceService = TaxinvoiceService(settings.LinkID, settings.SecretKey)
 # 연동환경 설정값, 개발용(True), 상업용(False)
 taxinvoiceService.IsTest = settings.IsTest
 
+# 인증토큰 IP제한기능 사용여부, 권장(True)
+taxinvoiceService.IPRestrictOnOff = settings.IPRestrictOnOff
 
 # 전자세금계산서 발행을 위해 공인인증서를 등록합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
 # 1. 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리] 메뉴에서 등록

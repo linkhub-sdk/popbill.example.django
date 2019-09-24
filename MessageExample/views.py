@@ -11,6 +11,9 @@ messageService = MessageService(settings.LinkID, settings.SecretKey)
 # 연동환경 설정값, 개발용(True), 상업용(False)
 messageService.IsTest = settings.IsTest
 
+# 인증토큰 IP제한기능 사용여부, 권장(True)
+messageService.IPRestrictOnOff = settings.IPRestrictOnOff
+
 
 # 문자를 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
 # 1. 팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 메뉴에서 등록

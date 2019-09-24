@@ -10,6 +10,8 @@ closedownService = ClosedownService(settings.LinkID, settings.SecretKey)
 # 연동환경 설정값, 개발용(True), 상업용(False)
 closedownService.IsTest = settings.IsTest
 
+# 인증토큰 IP제한기능 사용여부, 권장(True)
+closedownService.IPRestrictOnOff = settings.IPRestrictOnOff
 
 def index(request):
     return render(request, 'Closedown/Index.html', {})
@@ -46,7 +48,7 @@ def checkCorpNums(request):
         CorpNum = settings.testCorpNum
 
         # 확인하고자 하는 사업자번호 (최대 1000건)
-        targetCorpNumList = ["4108600477", "1234567890", "8888888888", "4352343543"]
+        targetCorpNumList = ["1231212312", "1234567890", "6798700433"]
 
         corpStateList = closedownService.checkCorpNums(CorpNum, targetCorpNumList)
 

@@ -11,6 +11,8 @@ kakaoService = KakaoService(settings.LinkID, settings.SecretKey)
 # 연동환경 설정값, 개발용(True), 상업용(False)
 kakaoService.IsTest = settings.IsTest
 
+# 인증토큰 IP제한기능 사용여부, 권장(True)
+kakaoService.IPRestrictOnOff = settings.IPRestrictOnOff
 
 # 친구톡/알림톡 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
 # 1. 팝빌 사이트 로그인 > [문자/팩스] > [카카오톡] > [발신번호 사전등록] 메뉴에서 등록

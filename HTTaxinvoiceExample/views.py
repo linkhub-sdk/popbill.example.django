@@ -10,6 +10,9 @@ htTaxinvoiceService = HTTaxinvoiceService(settings.LinkID, settings.SecretKey)
 # 연동환경 설정값, 개발용(True), 상업용(False)
 htTaxinvoiceService.IsTest = settings.IsTest
 
+# 인증토큰 IP제한기능 사용여부, 권장(True)
+htTaxinvoiceService.IPRestrictOnOff = settings.IPRestrictOnOff
+
 
 # 홈택스 연동서비스를 이용하기 위해 팝빌에 인증정보를 등록 합니다. (인증방법은 부서사용자 인증 / 공인인증서 인증 방식이 있습니다.)
 # - 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴에서 [홈택스 부서사용자 등록] 혹은
@@ -39,7 +42,7 @@ def requestJob(request):
         Type = "SELL"
 
         # 일자유형, [W-작성일자 / I-발행일자 / S-전송일자]
-        DType = "W"
+        DType = "S"
 
         # 시작일자, 날짜형식(yyyyMMdd)
         SDate = "20190101"

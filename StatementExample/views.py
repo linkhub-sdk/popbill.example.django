@@ -10,6 +10,8 @@ statementService = StatementService(settings.LinkID, settings.SecretKey)
 # 연동환경 설정, 개발용(True), 상업용(False)
 statementService.IsTest = settings.IsTest
 
+# 인증토큰 IP제한기능 사용여부, 권장(True)
+statementService.IPRestrictOnOff = settings.IPRestrictOnOff
 
 def index(request):
     return render(request, 'Statement/Index.html', {})

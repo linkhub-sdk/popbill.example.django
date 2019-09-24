@@ -10,6 +10,8 @@ cashbillService = CashbillService(settings.LinkID, settings.SecretKey)
 # 연동환경 설정값, 개발용(True), 상업용(False)
 cashbillService.IsTest = settings.IsTest
 
+# 인증토큰 IP제한기능 사용여부, 권장(True)
+cashbillService.IPRestrictOnOff = settings.IPRestrictOnOff
 
 def index(request):
     return render(request, 'Cashbill/Index.html', {})
