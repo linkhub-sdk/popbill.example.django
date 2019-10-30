@@ -33,6 +33,7 @@ urlpatterns = [
 
     # 세금계산서 보기인쇄
     url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL'),
+    url(r'^GetViewURL$', views.getViewURL, name='GetViewURL'),
     url(r'^GetPrintURL$', views.getPrintURL, name='GetPrintURL'),
     url(r'^GetEPrintURL$', views.getEPrintURL, name='GetEPrintURL'),
     url(r'^GetMassPrintURL$', views.getMassPrintURL, name='GetMassPrintURL'),
