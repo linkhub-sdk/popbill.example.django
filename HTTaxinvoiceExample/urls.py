@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^GetTaxinvoice$', views.getTaxinvoice, name='GetTaxinvoice'),
     url(r'^GetXML$', views.getXML, name='GetXML'),
     url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL$'),
+    url(r'^GetPrintURL$', views.getPrintURL, name='GetPrintURL$'),
 
     # 홈택스연동 인증 관리
     url(r'^GetCertificatePopUpURL', views.getCertificatePopUpURL, name='GetCertificatePopUpURL'),

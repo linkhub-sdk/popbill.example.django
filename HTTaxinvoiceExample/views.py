@@ -258,6 +258,24 @@ def getPopUpURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getPrintURL(request):
+    """
+    홈택스 전자세금계산서 인쇄 팝업 URL을 반환 합니다.
+    - 보안정책에 의해 응답된 URL은 30초의 만료시간을 갖습니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 전자세금계산서 국세청 승인번호
+        NTSConfirmNum = "20190116410002030000103d"
+
+        url = htTaxinvoiceService.getPrintURL(CorpNum, NTSConfirmNum)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
 
 def getCertificatePopUpURL(request):
     """
