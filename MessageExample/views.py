@@ -287,7 +287,7 @@ def sendMMS(request):
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
-        # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1500px 이하 권장)
+        # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1000px 이하 권장)
         FilePath = './MessageExample/static/image/mms.jpg'
 
         # 광고문자 전송여부
@@ -311,7 +311,7 @@ def sendMMS_multi(request):
     """
     [대량전송] 포토MMS를 전송합니다.
      - 메시지 내용이 2,000Byte 초과시 메시지 내용은 자동으로 제거됩니다.
-     - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1500px 이하 권장
+     - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1000px 이하 권장
     """
     try:
         # 팝빌회원 사업자번호
@@ -332,7 +332,7 @@ def sendMMS_multi(request):
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         reserveDT = ""
 
-        # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1500px 이하 권장)
+        # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1000px 이하 권장)
         filePath = './MessageExample/static/image/mms.jpg'
 
         # 광고문자 전송여부
