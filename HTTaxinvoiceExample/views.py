@@ -27,9 +27,6 @@ def index(request):
 def requestJob(request):
     """
     전자(세금)계산서 매출/매입 내역 수집을 요청합니다
-    - 홈택스연동 프로세스는 "[홈택스연동(전자세금계산서) API 연동매뉴얼] >
-      1.1. 홈택스연동(전자세금계산서) API 구성" 을 참고하시기 바랍니다.
-    - 수집 요청후 반환받은 작업아이디(JobID)의 유효시간은 1시간 입니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -45,10 +42,10 @@ def requestJob(request):
         DType = "S"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20190101"
+        SDate = "20190901"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20190116"
+        EDate = "20191231"
 
         result = htTaxinvoiceService.requestJob(CorpNum, Type, DType, SDate, EDate, UserID)
 
@@ -60,8 +57,6 @@ def requestJob(request):
 def getJobState(request):
     """
     수집 요청 상태를 확인합니다.
-    - 응답항목 관한 정보는 "[홈택스연동 (전자세금계산서) API 연동매뉴얼] >
-      3.1.2. GetJobState(수집 상태 확인)" 을 참고하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -84,8 +79,6 @@ def listActiveJob(request):
     """
     수집 요청건들에 대한 상태 목록을 확인합니다.
     - 수집 요청 작업아이디(JobID)의 유효시간은 1시간 입니다.
-    - 응답항목에 관한 정보는 "[홈택스연동 (전자세금계산서) API 연동매뉴얼] >
-      3.1.3. ListActiveJob(수집 상태 목록 확인)" 을 참고하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -104,8 +97,6 @@ def listActiveJob(request):
 def search(request):
     """
     전자세금계산서 매입/매출 내역의 수집 결과를 조회합니다.
-    - 응답항목에 관한 정보는 "[홈택스연동 (전자세금계산서) API 연동매뉴얼] >
-      3.2.1. Search(수집 결과 조회)" 을 참고하시기 바랍니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -115,7 +106,7 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "019012311000000001"
+        JobID = "019103015000000002"
 
         # 문서형태 배열, [N-일반전자세금계산서 / M-수정전자세금계산서]
         Type = ["N", "M"]
@@ -144,8 +135,11 @@ def search(request):
         # 정렬방향 [D-내림차순 / A-오름차순]
         Order = "D"
 
-        response = htTaxinvoiceService.search(CorpNum, JobID, Type, TaxType, PurposeType,
-                                              TaxRegIDType, TaxRegIDYN, TaxRegID, Page, PerPage, Order, UserID)
+        # 조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+        SearchString = ""
+
+        response = htTaxinvoiceService.search(CorpNum, JobID, Type, TaxType, PurposeType, TaxRegIDType,
+            TaxRegIDYN, TaxRegID, Page, PerPage, Order, UserID, SearchString)
 
         return render(request, 'HTTaxinvoice/Search.html', {'response': response})
     except PopbillException as PE:
@@ -166,7 +160,7 @@ def summary(request):
         UserID = settings.testUserID
 
         # 수집 요청(requestJob)시 발급받은 작업아이디
-        JobID = "019012311000000001"
+        JobID = "019103015000000002"
 
         # 문서형태 배열, [N-일반전자세금계산서 / M-수정전자세금계산서]
         Type = ["N", "M"]
@@ -186,8 +180,11 @@ def summary(request):
         # 종사업장번호, 콤마(",")로 구분하여 구성 Ex) "0001,0007"
         TaxRegID = ""
 
+        # 조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+        SearchString = ""
+
         response = htTaxinvoiceService.summary(CorpNum, JobID, Type, TaxType, PurposeType,
-                                               TaxRegIDType, TaxRegIDYN, TaxRegID, UserID)
+                                               TaxRegIDType, TaxRegIDYN, TaxRegID, UserID, SearchString)
 
         return render(request, 'HTTaxinvoice/Summary.html', {'response': response})
     except PopbillException as PE:
