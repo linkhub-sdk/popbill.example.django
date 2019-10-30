@@ -24,8 +24,8 @@ def index(request):
 
 def checkMgtKeyInUse(request):
     """
-    세금계산서 관리번호 중복여부를 확인합니다.
-    - 관리번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 구성할 수 있습니다.
+    세금계산서 문서번호 중복여부를 확인합니다.
+    - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 구성할 수 있습니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -34,7 +34,7 @@ def checkMgtKeyInUse(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별로 중복되지 않도록 구성
+        # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별로 중복되지 않도록 구성
         MgtKey = "20190116-001"
 
         keyInUse = taxinvoiceService.checkMgtKeyInUse(CorpNum, MgtKeyType, MgtKey)
@@ -58,7 +58,7 @@ def registIssue(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+        # [필수] 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
         MgtKey = "20191030-21"
 
         # 지연발행 강제여부
@@ -69,7 +69,7 @@ def registIssue(request):
         # 거래명세서 동시작성여부
         writeSpecification = False
 
-        # 거래명세서 동시작성시, 명세서 관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+        # 거래명세서 동시작성시, 명세서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
         dealInvoiceMgtKey = ""
 
         # 메모
@@ -116,7 +116,7 @@ def registIssue(request):
             # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # [필수] 공급자 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
+            # [필수] 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
             # 사업자별로 중복되지 않도록 구성
             invoicerMgtKey=MgtKey,
 
@@ -165,7 +165,7 @@ def registIssue(request):
             # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
-            # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoiceeMgtKey=None,
 
             # [필수] 공급받는자 대표자 성명
@@ -184,6 +184,8 @@ def registIssue(request):
             invoiceeContactName1="공급받는자 담당자",
 
             # 공급받는자 담당자 메일주소
+            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 실제 거래처의 메일주소가 기재되지 않도록 주의
             invoiceeEmail1="test@test.com",
 
             # 공급받는자 연락처
@@ -337,7 +339,7 @@ def register(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
+        # [필수] 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
         MgtKey = "20190307-12"
 
@@ -382,7 +384,7 @@ def register(request):
             # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # [필수] 공급자 문서관리번호, 1~24자리, (영문, 숫자, '-', '_')조합으로 사업자별로 중복되지 않도록 구성
+            # [필수] 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_')조합으로 사업자별로 중복되지 않도록 구성
             invoicerMgtKey=MgtKey,
 
             # 공급자 대표자 성명
@@ -430,7 +432,7 @@ def register(request):
             # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
-            # [역발행시 필수] 공급받는자 문서관리번호, , 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            # [역발행시 필수] 공급받는자 문서번호, , 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoiceeMgtKey=None,
 
             # [필수] 공급받는자 대표자 성명
@@ -449,6 +451,8 @@ def register(request):
             invoiceeContactName1="공급받는자 담당자",
 
             # 공급받는자 담당자 메일주소
+            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 실제 거래처의 메일주소가 기재되지 않도록 주의
             invoiceeEmail1="test@test.com",
 
             # 공급받는자 연락처
@@ -606,7 +610,7 @@ def update(request):
         # [필수] 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 팝빌회원 아이디
@@ -647,7 +651,7 @@ def update(request):
             # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # [필수] 공급자 문서관리번호
+            # [필수] 공급자 문서번호
             invoicerMgtKey=MgtKey,
 
             # [필수] 공급자 대표자 성명
@@ -695,7 +699,7 @@ def update(request):
             # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
-            # [역발행시 필수] 공급받는자 문서관리번호
+            # [역발행시 필수] 공급받는자 문서번호
             invoiceeMgtKey=None,
 
             # [필수] 공급받는자 대표자 성명
@@ -714,6 +718,8 @@ def update(request):
             invoiceeContactName1="공급받는자 담당자",
 
             # 공급받는자 담당자 메일주소
+            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 실제 거래처의 메일주소가 기재되지 않도록 주의
             invoiceeEmail1="test@test.com",
 
             # 공급받는자 연락처
@@ -870,7 +876,7 @@ def issue(request):
         # [필수] 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190307-12"
 
         # 메모
@@ -901,7 +907,7 @@ def cancelIssue(request):
      [발행완료] 상태의 세금계산서를 [공급자]가 [발행취소]합니다.
       - [발행취소]는 국세청 전송전에만 가능합니다.
       - 발행취소된 세금계산서는 국세청에 전송되지 않습니다.
-      - 발행취소 세금계산서에 사용된 문서관리번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
+      - 발행취소 세금계산서에 사용된 문서번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -910,7 +916,7 @@ def cancelIssue(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-001"
 
         # 메모
@@ -938,7 +944,7 @@ def delete(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 팝빌회원 아이디
@@ -966,7 +972,7 @@ def registRequest(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # [필수] 세금계산서 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
+        # [필수] 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
         MgtKey = "20190116-555"
 
@@ -1005,7 +1011,7 @@ def registRequest(request):
             # [필수] 공급자 상호
             invoicerCorpName="공급자 상호",
 
-            # 공급자 문서관리번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoicerMgtKey="",
 
             # [필수] 공급자 대표자 성명
@@ -1051,7 +1057,7 @@ def registRequest(request):
             # [필수] 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
 
-            # [역발행시 필수] 공급받는자 문서관리번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoiceeMgtKey=MgtKey,
 
             # [필수] 공급받는자 대표자 성명
@@ -1070,6 +1076,8 @@ def registRequest(request):
             invoiceeContactName1="공급받는자 담당자",
 
             # 공급받는자 담당자 메일주소
+            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 실제 거래처의 메일주소가 기재되지 않도록 주의
             invoiceeEmail1="test@test.com",
 
             # 공급받는자 연락처
@@ -1204,7 +1212,7 @@ def request(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "BUY"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 메모
@@ -1223,7 +1231,7 @@ def request(request):
 def cancelRequest(request):
     """
     [공급받는자]가 역)발행대기 상태의 세금계산서의 발행요청을 [취소]합니다.
-     - [취소]한 세금계산서의 문서관리번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
+     - [취소]한 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1232,7 +1240,7 @@ def cancelRequest(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "BUY"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 메모
@@ -1251,7 +1259,7 @@ def cancelRequest(request):
 def refuse(request):
     """
     공급받는자에게 요청받은 역)발행대기 상태의 세금계산서를 [공급자]가 [거부]합니다.
-     - 세금계산서의 문서관리번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
+     - 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1260,7 +1268,7 @@ def refuse(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 메모
@@ -1292,7 +1300,7 @@ def sendToNTS(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 팝빌회원 아이디
@@ -1318,7 +1326,7 @@ def getInfo(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-200"
 
         taxinvoiceInfo = taxinvoiceService.getInfo(CorpNum, MgtKeyType, MgtKey)
@@ -1341,7 +1349,7 @@ def getInfos(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호 배열, 최대 1000건
+        # 문서번호 배열, 최대 1000건
         MgtKeyList = []
         MgtKeyList.append("20190116-001")
         MgtKeyList.append("20190116-002")
@@ -1367,7 +1375,7 @@ def getDetailInfo(request):
         # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서 관리번호
+        # 문서 문서번호
         MgtKey = "20190116-001"
 
         taxinvoice = taxinvoiceService.getDetailInfo(CorpNum, MgtKeyType, MgtKey)
@@ -1463,7 +1471,7 @@ def getLogs(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-001"
 
         LogList = taxinvoiceService.getLogs(CorpNum, MgtKeyType, MgtKey)
@@ -1507,7 +1515,7 @@ def getPopUpURL(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-001"
 
         url = taxinvoiceService.getPopUpURL(CorpNum, MgtKeyType, MgtKey)
@@ -1528,7 +1536,7 @@ def getViewURL(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20191030-011"
 
         url = taxinvoiceService.getViewURL(CorpNum, MgtKeyType, MgtKey)
@@ -1549,7 +1557,7 @@ def getPrintURL(request):
         # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-001"
 
         url = taxinvoiceService.getPrintURL(CorpNum, MgtKeyType, MgtKey)
@@ -1571,7 +1579,7 @@ def getEPrintURL(request):
         # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-001"
 
         url = taxinvoiceService.getEPrintURL(CorpNum, MgtKeyType, MgtKey)
@@ -1593,7 +1601,7 @@ def getMassPrintURL(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 인쇄할 문서관리번호 배열, 최대 100건
+        # 인쇄할 문서번호 배열, 최대 100건
         MgtKeyList = []
         MgtKeyList.append("20190116-001")
         MgtKeyList.append("20190116-002")
@@ -1618,7 +1626,7 @@ def getMailURL(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-001"
 
         url = taxinvoiceService.getMailURL(CorpNum, MgtKeyType, MgtKey)
@@ -1679,7 +1687,7 @@ def attachFile(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 파일경로
@@ -1708,7 +1716,7 @@ def deleteFile(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 첨부파일 아이디, GetFiles API의 응답항목(attachedFile) 확인.
@@ -1737,7 +1745,7 @@ def getFiles(request):
         # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         fileList = taxinvoiceService.getFiles(CorpNum, MgtKeyType, MgtKey)
@@ -1758,7 +1766,7 @@ def sendEmail(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 수신메일주소
@@ -1787,7 +1795,7 @@ def sendSMS(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 발신번호
@@ -1823,7 +1831,7 @@ def sendFAX(request):
         # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 발신번호
@@ -1853,13 +1861,13 @@ def attachStatement(request):
         # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 세금계산서 문서관리번호
+        # 세금계산서 문서번호
         MgtKey = "20190116-001"
 
         # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
         ItemCode = "121"
 
-        # 전자명세서 문서관리번호
+        # 전자명세서 문서번호
         StmtMgtKey = "20190115-001"
 
         # 팝빌회원 아이디
@@ -1884,13 +1892,13 @@ def detachStatement(request):
         # 세금계산서 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서 관리번호
+        # 문서 문서번호
         MgtKey = "20190116-001"
 
         # 전자명세서 종류코드, 121-거래명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
         ItemCode = "121"
 
-        # 전자명세서 문서관리번호
+        # 전자명세서 문서번호
         StmtMgtKey = "20190115-001"
 
         # 팝빌회원 아이디
@@ -1921,7 +1929,7 @@ def getEmailPublicKeys(request):
 
 def assignMgtKet(request):
     """
-    팝빌사이트에서 작성된 세금계산서에 파트너 문서관리번호를 할당합니다.
+    팝빌사이트에서 작성된 세금계산서에 파트너 문서번호를 할당합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -1933,7 +1941,7 @@ def assignMgtKet(request):
         # 세금계산서 아이템키, 문서 목록조회(Search) API의 반환항목중 ItemKey 참조
         ItemKey = '019011609280500001'
 
-        # 할당할 문서관리번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
+        # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
         # 사업자번호별 중복없는 고유번호 할당
         MgtKey = "20190116-003"
 
