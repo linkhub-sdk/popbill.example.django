@@ -57,11 +57,14 @@ def registIssue(request):
         # 즉시발행 메모
         Memo = "현금영수증 즉시발행 메모"
 
+        # 안내메일 제목, 미기재시 기본양식으로 전송
+        EmailSubject = ""
+
         # 현금영수증 정보
         cashbill = Cashbill(
 
             # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="20190116-001",
+            mgtKey="20191030-001",
 
             # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
@@ -133,7 +136,7 @@ def registIssue(request):
             smssendYN=False
         )
 
-        response = cashbillService.registIssue(CorpNum, cashbill, Memo, UserID)
+        response = cashbillService.registIssue(CorpNum, cashbill, Memo, UserID, EmailSubject)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:

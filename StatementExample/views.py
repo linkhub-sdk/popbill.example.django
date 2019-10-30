@@ -57,10 +57,14 @@ def registIssue(request):
         # 메모
         Memo = "즉시발행 메모"
 
+        # 안내메일 제목, 미기재시 기본양식으로 전송
+        EmailSubject = ""
+
         # 전자명세서 정보
         statement = Statement(
+
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20190116",
+            writeDate="20191030",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -75,7 +79,7 @@ def registIssue(request):
             itemCode=121,
 
             # [필수] 전자명세서 관리번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20190124-900",
+            mgtKey="20191030-001",
 
             # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
@@ -135,7 +139,7 @@ def registIssue(request):
             receiverContactName="수신자 담당자명",
 
             # 수신자 메일주소
-            receiverEmail="test@test.com",
+            receiverEmail="code@linkhub.co.kr",
 
             # 수신자 연락처
             receiverTEL="070111222",
@@ -215,7 +219,7 @@ def registIssue(request):
             'CBalance': "25000"  # 현잔액
         }
 
-        response = statementService.registIssue(CorpNum, statement, Memo, UserID)
+        response = statementService.registIssue(CorpNum, statement, Memo, UserID, EmailSubject)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
