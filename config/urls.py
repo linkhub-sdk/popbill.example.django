@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^HTCashbillExample/', include('HTCashbillExample.urls'), name='HTCashbillExample'),
     url(r'^ClosedownExample/', include('ClosedownExample.urls'), name='ClosedownExample'),
     url(r'^KakaoExample/', include('KakaoExample.urls'), name='KakaoExample'),
+    url(r'^EasyFinBankExample/', include('EasyFinBankExample.urls'), name='EasyFinBankExample'),
 ]

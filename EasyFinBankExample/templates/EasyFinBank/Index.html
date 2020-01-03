@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 계좌조회 API Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>계좌 관리</legend>
+            <ul>
+                <li><a href="getBankAccountMgtURL">GetBankAccountMgtURL</a> (계좌 관리 팝업 URL)</li>
+                <li><a href="listBankAccount">ListBankAccount</a> (계좌 목록 확인)</li>
+            </ul>
+        </fieldset>
+        <fieldset class="fieldset1">
+            <legend>계좌 거래내역 수집</legend>
+            <ul>
+                <li><a href="requestJob">requestJob</a> (수집 요청)</li>
+                <li><a href="getJobState">getJobState</a> (수집 상태 확인)</li>
+                <li><a href="listActiveJob">listActiveJob</a> (수집 상태 목록 확인)</li>
+            </ul>
+        </fieldset>
+        <fieldset class="fieldset1">
+            <legend>계좌 거래내역 관리</legend>
+            <ul>
+                <li><a href="search">search</a> (수집 결과 조회)</li>
+                <li><a href="summary">summary</a> (수집 결과 요약정보 조회)</li>
+                <li><a href="saveMemo">saveMemo</a> (거래내역 메모 저장)</li>
+            </ul>
+        </fieldset>
+
+        <fieldset class="fieldset1">
+            <legend>포인트 관리 / 정액제 신청</legend>
+            <ul>
+                <li><a href="getFlatRatePopUpURL">getFlatRatePopUpURL</a> (정액제 서비스 신청 URL)</li>
+                <li><a href="getFlatRateState">getFlatRateState</a> (정액제 서비스 상태 확인)</li>
+                <li><a href="getBalance">getBalance</a> (연동회원 잔여포인트 확인)</li>
+                <li><a href="getChargeURL">getChargeURL</a> (연동회원 포인트충전 URL)</li>
+                <li><a href="getPartnerBalance">getPartnerBalance</a> (파트너 잔여포인트 확인)</li>
+                <li><a href="getPartnerURL">getPartnerURL</a> (파트너 포인트충전 URL)</li>
+                <li><a href="getChargeInfo">getChargeInfo</a> (과금정보 확인)</li>
+            </ul>
+        </fieldset>
+        <fieldset class="fieldset1">
+            <legend>회원정보</legend>
+            <ul>
+                <li><a href="getAccessURL">getAccessURL</a> (팝빌 로그인 URL)</li>
+                <li><a href="checkIsMember">checkIsMember</a> (연동회원 가입여부 확인)</li>
+                <li><a href="checkID">checkID</a> (아이디 중복 확인)</li>
+                <li><a href="joinMember">joinMember</a> (연동회원 신규가입)</li>
+                <li><a href="getCorpInfo">getCorpInfo</a> (회사정보 확인)</li>
+                <li><a href="updateCorpInfo">updateCorpInfo</a> (회사정보 수정)</li>
+                <li><a href="registContact">registContact</a> (담당자 등록)</li>
+                <li><a href="listContact">listContact</a> (담당자 목록 확인)</li>
+                <li><a href="updateContact">updateContact</a> (담당자 정보 수정)</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

@@ -11,19 +11,6 @@ popbill.sdk.example.django
   * Django 1.11+
   * popbill [ https://github.com/linkhub-sdk/popbill.py ]
 
-
-* Python versions available in Django
-
-+------------------+---------------------+
-|  Django version  |   Python versions   |
-+==================+=====================+
-| 1.11             | 2.7, 3.4, 3.5, 3.6  |
-+------------------+---------------------+
-| 2.0              | 3.4, 3.5, 3.6       |
-+------------------+---------------------+
-| 2.1              | 3.5, 3.6, 3.7       |
-+------------------+---------------------+
-
 * install pip by
 
 ::
@@ -59,10 +46,10 @@ how to test ?
 * 홈택스 현금영수증 연계 API
 * 휴폐업조회 API
 * 카카오톡 API
+* 계좌조회 API
 
 사이트
 -------------------------------
 `링크허브(Linkhub) <https://www.linkhub.co.kr/>`_,
 `팝빌(Popbill) <https://www.popbill.com/>`_,
 `팝빌 테스트배드(Test Popbill) <https://www.test.popbill.com/>`_,
-`Django SDK 적용방법 <http://blog.linkhub.co.kr/4311/>`_

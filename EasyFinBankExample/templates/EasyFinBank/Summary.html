@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 계좌조회 API Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>수집 결과 요약정보 조회</legend>
+            <ul>
+                <li> count (수집 결과 건수) :  {{ response.count }}</li>
+                <li> cntAccIn (입금거래 건수) : {{ response.cntAccIn }}</li>
+                <li> cntAccOut (출금거래 건수) : {{ response.cntAccOut }}</li>
+                <li> totalAccIn (입금액 합계) : {{ response.totalAccIn }}</li>
+                <li> totalAccOut (출금액 합계) : {{ response.totalAccOut }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 계좌조회 API Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>{{ request.path }}</legend>
+
+            {% for response in list %}
+                <fieldset class="fieldset2">
+                  <legend>은행 계좌 정보</legend>
+                    <ul>
+                        <li> bankCode (은행코드) : {{ response.bankCode }}</li>
+                        <li> accountNumber (계좌번호) : {{ response.accountNumber }}</li>
+                        <li> accountName (계좌별칭) : {{ response.accountName }}</li>
+                        <li> accountType (계좌유형) : {{ response.accountType }}</li>
+                        <li> state (계좌 정액제 상태) : {{ response.state }}</li>
+                        <li> regDT (등록일시) : {{ response.regDT }}</li>
+                        <li> memo (메모) : {{ response.memo }}</li>
+                    </ul>
+                </fieldset>
+            {% endfor %}
+        </fieldset>
+    </div>
+{% endblock contents %}

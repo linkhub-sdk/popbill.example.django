@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'HTTaxinvoiceExample',  # 홈택스 전자(세금)계산서 연동
     'HTCashbillExample',  # 홈택스 현금영수증 연동
     'ClosedownExample',  # 휴폐업조회
-    'KakaoExample'  # 카카오톡(알림톡/친구톡)
+    'KakaoExample',  # 카카오톡(알림톡/친구톡)
+    'EasyFinBankExample'  # 계좌조회
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -74,7 +75,7 @@ STATICFILES_DIRS = [
 ]
 
 """
- - 업데이트 일자 : 2019-10-25
+ - 업데이트 일자 : 2020-01-03
  - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
  - 연동 기술지원 이메일 : code@linkhub.co.kr
 
