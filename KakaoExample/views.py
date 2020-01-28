@@ -24,7 +24,7 @@ def index(request):
 
 def getPlusFriendMgtURL(request):
     """
-    플러스친구 계정관리 URL을 반환합니다.
+    카카오톡 채널 계정관리 URL을 반환합니다.
      - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다
     """
     try:
@@ -43,7 +43,7 @@ def getPlusFriendMgtURL(request):
 
 def listPlusFriendID(request):
     """
-    팝빌에 등록된 플러스친구 목록을 반환 합니다.
+    팝빌에 등록된 카카오톡 채널 목록을 반환 합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -355,7 +355,7 @@ def sendFTS_one(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 팝빌에 등록된 플러스 친구 아아디
+        # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
@@ -426,7 +426,7 @@ def sendFTS_multi(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 팝빌에 등록된 플러스 친구 아아디
+        # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
@@ -497,7 +497,7 @@ def sendFTS_same(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 팝빌에 등록된 플러스 친구 아아디
+        # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
@@ -573,7 +573,7 @@ def sendFMS_one(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 팝빌에 등록된 플러스 친구 아아디
+        # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
@@ -653,7 +653,7 @@ def sendFMS_multi(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 팝빌에 등록된 플러스 친구 아아디
+        # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
@@ -733,7 +733,7 @@ def sendFMS_same(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 팝빌에 등록된 플러스 친구 아아디
+        # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
