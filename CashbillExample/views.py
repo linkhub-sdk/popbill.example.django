@@ -19,14 +19,15 @@ def index(request):
 
 def checkMgtKeyInUse(request):
     """
-    현금영수증 관리번호 중복여부를 확인합니다.
-    - 관리번호는 1~24자리로 (숫자, 영문 '-', '_') 조합으로 구성할 수 있습니다.
+    현금영수증 문서번호 중복여부를 확인합니다.
+    - 문서번호는 1~24자리로 (숫자, 영문 '-', '_') 조합으로 구성할 수 있습니다.
+    - https://docs.popbill.com/cashbill/python/api#CheckMgtKeyInUse
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+        # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
         MgtKey = "20190116-001"
 
         bIsInUse = cashbillService.checkMgtKeyInUse(CorpNum, MgtKey)
@@ -44,8 +45,7 @@ def registIssue(request):
     """
     1건의 현금영수증을 즉시발행합니다.
     - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#RegistIssue
     """
     try:
         # 팝빌회원 사업자번호
@@ -63,7 +63,7 @@ def registIssue(request):
         # 현금영수증 정보
         cashbill = Cashbill(
 
-            # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+            # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
             mgtKey="20191030-001",
 
             # [필수] 문서형태, [승인거래 / 취소거래]
@@ -149,9 +149,7 @@ def register(request):
     """
     1건의 현금영수증을 임시저장 합니다.
     - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
-    - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#Register
     """
     try:
         # 팝빌회원 사업자번호
@@ -160,7 +158,7 @@ def register(request):
         # 현금영수증 정보
         cashbill = Cashbill(
 
-            # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+            # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
             mgtKey="20190116-002",
 
             # [필수] 문서형태, [승인거래 / 취소거래]
@@ -246,19 +244,19 @@ def update(request):
     """
     1건의 현금영수증을 수정합니다.
     - [임시저장] 상태의 현금영수증만 수정할 수 있습니다.
-    - 국세청에 신고된 현금영수증은 수정할 수 없으며, 취소 현금영수증을 발행하여 취소처리 할 수 있습니다.
+    - https://docs.popbill.com/cashbill/python/api#Update
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # [필수] 수정하고자하는 현금영수증 문서관리번호
+        # [필수] 수정하고자하는 현금영수증 문서번호
         MgtKey = '20190116-002'
 
         # 현금영수증 정보
         cashbill = Cashbill(
 
-            # [필수] 문서관리번호
+            # [필수] 문서번호
             mgtKey=MgtKey,
 
             # [필수] 문서형태, [승인거래 / 취소거래]
@@ -344,14 +342,13 @@ def issue(request):
     """
     1건의 임시저장 현금영수증을 발행처리합니다.
     - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책" 을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#CBIssue
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 문서관리번호
+        # 문서번호
         MgtKey = "20190116-002"
 
         # 메모
@@ -368,14 +365,13 @@ def cancelIssue(request):
     """
     [발행완료] 상태의 현금영수증을 [발행취소] 합니다.
     - 발행취소는 국세청 전송전에만 가능합니다.
-    - 발행취소된 형금영수증은 국세청에 전송되지 않습니다.
-    - 발행취소된 현금영수증에 사용된 문서관리번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당 현금영수증을 삭제해야 합니다.
+    - https://docs.popbill.com/cashbill/python/api#CancelIssue
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-002"
 
         # 메모
@@ -391,14 +387,14 @@ def cancelIssue(request):
 def delete(request):
     """
     1건의 현금영수증을 삭제합니다.
-    - 현금영수증을 삭제하면 사용된 문서관리번호(mgtKey)를 재사용할 수 있습니다.
-    - 삭제가능한 문서 상태 : [임시저장], [발행취소]
+    - 현금영수증을 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
+    - https://docs.popbill.com/cashbill/python/api#Delete
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-002"
 
         response = cashbillService.delete(CorpNum, MgtKey)
@@ -412,8 +408,7 @@ def revokeRegistIssue(request):
     """
     1건의 취소현금영수증을 즉시발행합니다.
     - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책"을 참조하시기 바랍니다.
-    - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
+    - https://docs.popbill.com/cashbill/python/api#RevokeRegistIssue
     """
     try:
         # 팝빌회원 사업자번호
@@ -422,7 +417,7 @@ def revokeRegistIssue(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+        # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
         mgtKey = "20190116-101"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
@@ -449,8 +444,7 @@ def revokeRegistIssue_part(request):
     """
     1건의 (부분) 취소현금영수증을 즉시발행합니다.
     - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책"을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#RevokeRegistIssue
     """
     try:
         # 팝빌회원 사업자번호
@@ -459,7 +453,7 @@ def revokeRegistIssue_part(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+        # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
         mgtKey = "20190116-102"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
@@ -506,9 +500,7 @@ def revokeRegister(request):
     """
     1건의 취소현금영수증을 임시저장 합니다.
     - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
-    - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책"을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#RevokeRegister
     """
     try:
         # 팝빌회원 사업자번호
@@ -517,7 +509,7 @@ def revokeRegister(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+        # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
         mgtKey = "20190116-103"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
@@ -540,9 +532,7 @@ def revokeRegister_part(request):
     """
     1건의 (부분) 취소현금영수증을 임시저장 합니다.
     - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
-    - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-    - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.4. 국세청 전송정책"을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#RevokeRegister
     """
     try:
         # 팝빌회원 사업자번호
@@ -551,7 +541,7 @@ def revokeRegister_part(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # [필수] 문서관리번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
+        # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
         mgtKey = "20190123-123"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
@@ -592,14 +582,13 @@ def revokeRegister_part(request):
 def getInfo(request):
     """
     1건의 현금영수증 상태/요약 정보를 확인합니다.
-    - 응답항목에 대한 자세한 정보는 "[현금영수증 API 연동매뉴얼] > 4.2. 현금영수증 상태정보 구성"을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#GetInfo
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         cashbillInfo = cashbillService.getInfo(CorpNum, MgtKey)
@@ -612,13 +601,13 @@ def getInfo(request):
 def getInfos(request):
     """
     다수건의 현금영수증 상태/요약 정보를 확인합니다. (최대 1000건)
-    - 응답항목에 대한 자세한 정보는 "[현금영수증 API 연동매뉴얼] > 4.2. 현금영수증 상태정보 구성"을 참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#GetInfos
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호 배열, 최대 1000건
+        # 현금영수증 문서번호 배열, 최대 1000건
         MgtKeyList = []
         MgtKeyList.append("20190116-001")
         MgtKeyList.append("20190116-002")
@@ -634,14 +623,13 @@ def getInfos(request):
 def getDetailInfo(request):
     """
     현금영수증 1건의 상세정보를 조회합니다.
-    - 응답항목에 대한 자세한 사항은 "[현금영수증 API 연동매뉴얼] > 4.1. 현금영수증 구성" 을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#GetDetailInfo
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
@@ -654,8 +642,7 @@ def getDetailInfo(request):
 def search(request):
     """
     검색조건을 사용하여 현금영수증 목록을 조회합니다.
-    - 응답항목에 대한 자세한 사항은 "[현금영수증 API 연동매뉴얼] > 4.2. 현금영수증 상태정보 구성" 을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#Search
     """
     try:
         # 팝빌회원 사업자번호
@@ -711,14 +698,13 @@ def search(request):
 def getLogs(request):
     """
     현금영수증 상태 변경이력을 확인합니다.
-    - 상태 변경이력 확인(GetLogs API) 응답항목에 대한 자세한 정보는
-    "[현금영수증 API 연동매뉴얼] > 3.3.5. 상태 변경이력 확인" 을 참조하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#GetLogs
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         LogList = cashbillService.getLogs(CorpNum, MgtKey)
@@ -732,6 +718,7 @@ def getURL(request):
     """
     팝빌 현금영수증 관련 문서함 팝업 URL을 반환합니다.
     - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/cashbill/python/api#GetURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -754,12 +741,13 @@ def getPopUpURL(request):
     """
     1건의 현금영수증 보기 팝업 URL을 반환합니다.
     - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/cashbill/python/api#GetPopUpURL
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         url = cashbillService.getPopUpURL(CorpNum, MgtKey)
@@ -773,12 +761,13 @@ def getPrintURL(request):
     """
     1건의 현금영수증 인쇄(공급자) URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/cashbill/python/api#GetPrintURL
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         url = cashbillService.getPrintURL(CorpNum, MgtKey)
@@ -792,12 +781,13 @@ def getEPrintURL(request):
     """
     1건의 현금영수증 인쇄(공급받는자) URL을 반환합니다.
     - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/cashbill/python/api#GetPrintURL
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         url = cashbillService.getEPrintURL(CorpNum, MgtKey)
@@ -811,12 +801,13 @@ def getMassPrintURL(request):
     """
     다수건의 현금영수증 인쇄팝업 URL을 반환합니다.
     - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/cashbill/python/api#GetMassPrintURL
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 문서관리번호 배열, 최대 100건
+        # 문서번호 배열, 최대 100건
         MgtKeyList = []
         MgtKeyList.append("20190116-001")
         MgtKeyList.append("20190116-002")
@@ -833,12 +824,13 @@ def getMailURL(request):
     """
     공급받는자 메일링크 URL을 반환합니다.
     - 메일링크 URL은 유효시간이 존재하지 않습니다.
+    - https://docs.popbill.com/cashbill/python/api#GetMailURL
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         url = cashbillService.getMailURL(CorpNum, MgtKey)
@@ -852,6 +844,7 @@ def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/cashbill/python/api#GetAccessURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -869,13 +862,14 @@ def getAccessURL(request):
 
 def sendEmail(request):
     """
-    발행 안내메일을 재전송합니다.
+    안내 메일을 재전송합니다.
+    - https://docs.popbill.com/cashbill/python/api#SendEmail
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         # 수신 메일주소
@@ -896,12 +890,13 @@ def sendSMS(request):
     알림문자를 전송합니다. (단문/SMS- 한글 최대 45자)
     - 알림문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
     - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] > [전송내역] 탭에서 전송결과를 확인할 수 있습니다.
+    - https://docs.popbill.com/cashbill/python/api#SendSMS
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         # 발신번호
@@ -928,12 +923,13 @@ def sendFAX(request):
     현금영수증을 팩스전송합니다.
     - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
     - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+    - https://docs.popbill.com/cashbill/python/api#SendFAX
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 현금영수증 문서관리번호
+        # 현금영수증 문서번호
         MgtKey = "20190116-001"
 
         # 발신번호
@@ -955,6 +951,7 @@ def sendFAX(request):
 def listEmailConfig(request):
     """
     현금영수증 관련 메일전송 항목에 대한 전송여부를 목록으로 반환합니다
+    - https://docs.popbill.com/cashbill/python/api#ListEmailConfig
     """
     try:
         # 팝빌회원 사업자번호
@@ -973,6 +970,8 @@ def listEmailConfig(request):
 def updateEmailConfig(request):
     """
     현금영수증 관련 메일전송 항목에 대한 전송여부를 수정합니다.
+    - https://docs.popbill.com/cashbill/python/api#UpdateEmailConfig
+
     메일전송유형
     CSH_ISSUE : 고객에게 현금영수증이 발행 되었음을 알려주는 메일 입니다.
     CSH_CANCEL : 고객에게 현금영수증이 발행취소 되었음을 알려주는 메일 입니다.
@@ -1002,6 +1001,7 @@ def getBalance(request):
     연동회원의 잔여포인트를 확인합니다.
     - 과금방식이 연동과금이 아닌 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를
       통해 확인하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -1018,6 +1018,7 @@ def getChargeURL(request):
     """
     팝빌 연동회원 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/cashbill/python/api#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1038,6 +1039,7 @@ def getPartnerBalance(request):
     파트너의 잔여포인트를 확인합니다.
     - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를
       이용하시기 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#GetPartnerBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -1054,6 +1056,7 @@ def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/cashbill/python/api#GetPartnerURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1072,6 +1075,7 @@ def getPartnerURL(request):
 def getUnitCost(request):
     """
     현금영수증 발행단가를 확인합니다.
+    - https://docs.popbill.com/cashbill/python/api#GetUnitCost
     """
     try:
         # 팝빌회원 사업자번호
@@ -1087,6 +1091,7 @@ def getUnitCost(request):
 def getChargeInfo(request):
     """
     연동회원의 현금영수증 API 서비스 과금정보를 확인합니다.
+    - https://docs.popbill.com/cashbill/python/api#GetChargeInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1105,6 +1110,7 @@ def getChargeInfo(request):
 def checkIsMember(request):
     """
     해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+    - https://docs.popbill.com/cashbill/python/api#CheckIsMember
     """
     try:
         # 조회할 사업자등록번호, '-' 제외 10자리
@@ -1120,6 +1126,7 @@ def checkIsMember(request):
 def checkID(request):
     """
     팝빌 회원아이디 중복여부를 확인합니다.
+    - https://docs.popbill.com/cashbill/python/api#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -1135,7 +1142,8 @@ def checkID(request):
 def joinMember(request):
     """
     파트너의 연동회원으로 회원가입을 요청합니다.
-    아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+    - 아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+    - https://docs.popbill.com/cashbill/python/api#JoinMember
     """
     try:
         # 연동회원 가입정보
@@ -1191,6 +1199,7 @@ def joinMember(request):
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
+    - https://docs.popbill.com/cashbill/python/api#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1209,6 +1218,7 @@ def getCorpInfo(request):
 def updateCorpInfo(request):
     """
     회사정보를 수정합니다.
+    - https://docs.popbill.com/cashbill/python/api#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1246,6 +1256,7 @@ def updateCorpInfo(request):
 def registContact(request):
     """
     연동회원의 담당자를 신규로 등록합니다.
+    - https://docs.popbill.com/cashbill/python/api#RegistContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -1296,6 +1307,7 @@ def registContact(request):
 def listContact(request):
     """
     연동회원의 담당자 목록을 확인합니다.
+    - https://docs.popbill.com/cashbill/python/api#ListContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -1314,6 +1326,7 @@ def listContact(request):
 def updateContact(request):
     """
     연동회원의 담당자 정보를 수정합니다.
+    - https://docs.popbill.com/cashbill/python/api#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호

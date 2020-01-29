@@ -26,6 +26,7 @@ def checkMgtKeyInUse(request):
     """
     세금계산서 문서번호 중복여부를 확인합니다.
     - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 구성할 수 있습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#CheckMgtKeyInUse
     """
     try:
         # 팝빌회원 사업자번호
@@ -52,7 +53,7 @@ def checkMgtKeyInUse(request):
 def registIssue(request):
     """
     1건의 세금계산서를 즉시발행 처리합니다. (권장)
-    - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. 세금계산서 구성"을 참조하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#RegistIssue
     """
     try:
         # 팝빌회원 사업자번호
@@ -331,9 +332,7 @@ def register(request):
     """
     1건의 세금계산서를 임시저장 합니다.
      - 세금계산서 임시저장(Register API) 호출후에는 발행(Issue API)을 호출해야만 국세청으로 전송됩니다.
-     - 정발행시 임시저장(Register)과 발행(Issue)을 한번의 호출로 처리하는 즉시발행(RegistIssue API) 프로세스 연동을 권장합니다.
-     - 역발행시 임시저장(Register)과 역발행요청(Request)을 한번의 호출로 처리하는 즉시요청(RegistRequest API) 프로세스 연동을 권장합니다.
-     - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. 세금계산서 구성"을 참조하시기 바랍니다.
+     - https://docs.popbill.com/taxinvoice/python/api#Register
     """
     try:
         # 팝빌회원 사업자번호
@@ -601,7 +600,7 @@ def register(request):
 def update(request):
     """
     [임시저장] 상태의 세금계산서의 항목을 수정합니다.
-    - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. 세금계산서 구성"을 참조하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#Update
     """
     try:
         # 팝빌회원 사업자번호
@@ -868,6 +867,7 @@ def update(request):
 def issue(request):
     """
     [임시저장] 또는 [발행대기] 상태의 세금계산서를 [공급자]가 [발행]합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#TIIssue
     """
     try:
         # 팝빌회원 사업자번호
@@ -905,9 +905,9 @@ def issue(request):
 def cancelIssue(request):
     """
      [발행완료] 상태의 세금계산서를 [공급자]가 [발행취소]합니다.
-      - [발행취소]는 국세청 전송전에만 가능합니다.
-      - 발행취소된 세금계산서는 국세청에 전송되지 않습니다.
-      - 발행취소 세금계산서에 사용된 문서번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
+     - [발행취소]는 국세청 전송전에만 가능합니다.
+     - 발행취소된 세금계산서는 국세청에 전송되지 않습니다.
+     - https://docs.popbill.com/taxinvoice/python/api#CancelIssue
     """
     try:
         # 팝빌회원 사업자번호
@@ -935,7 +935,7 @@ def cancelIssue(request):
 def delete(request):
     """
     삭제 가능한 상태의 세금계산서를 삭제 합니다.
-    - 삭제가능한 문서 상태 : 임시저장, 발행취소, 역)발행 거부/취소
+    - https://docs.popbill.com/taxinvoice/python/api#Delete
     """
     try:
         # 팝빌회원 사업자번호
@@ -959,11 +959,11 @@ def delete(request):
 
 def registRequest(request):
     """
-     [공급받는자]가 공급자에게 1건의 역발행 세금계산서를 [즉시 요청]합니다.
-      - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. 세금계산서 구성"을 참조하시기 바랍니다.
-      - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
-      - 역발행 즉시요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라
+    [공급받는자]가 공급자에게 1건의 역발행 세금계산서를 [즉시 요청]합니다.
+    - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
+    - 역발행 즉시요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라
         정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+    - https://docs.popbill.com/taxinvoice/python/api#RegistRequest
     """
     try:
         # 팝빌회원 사업자번호
@@ -1201,9 +1201,10 @@ def registRequest(request):
 def request(request):
     """
     [공급받는자]가 임시저장 상태의 역발행 세금계산서를 공급자에게 [발행요청] 합니다.
-     - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
-     - 역발행 요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라
+    - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
+    - 역발행 요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라
        정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+    - https://docs.popbill.com/taxinvoice/python/api#Request
     """
     try:
         # 팝빌회원 사업자번호
@@ -1231,7 +1232,8 @@ def request(request):
 def cancelRequest(request):
     """
     [공급받는자]가 역)발행대기 상태의 세금계산서의 발행요청을 [취소]합니다.
-     - [취소]한 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
+    - [취소]한 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#CancelRequest
     """
     try:
         # 팝빌회원 사업자번호
@@ -1259,7 +1261,8 @@ def cancelRequest(request):
 def refuse(request):
     """
     공급받는자에게 요청받은 역)발행대기 상태의 세금계산서를 [공급자]가 [거부]합니다.
-     - 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
+    - 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#Refuse
     """
     try:
         # 팝빌회원 사업자번호
@@ -1287,11 +1290,7 @@ def refuse(request):
 def sendToNTS(request):
     """
     [발행완료] 상태의 세금계산서를 국세청으로 즉시전송합니다.
-    - 국세청 즉시전송을 호출하지 않은 경우 [발행완료] 상태의 세금계산서는 발행일 기준
-      익일 오후 3시에 팝빌 시스템에서 일괄적으로 국세청으로 전송합니다.
-    - 익일전송시 전송일이 법정공휴일인 경우 다음 영업일에 전송됩니다.
-    - 국세청 전송에 관한 사항은 "[전자세금계산서 API 연동매뉴얼] > 1.3 국세청 전송 정책" 을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#SendToNTS
     """
     try:
         # 팝빌회원 사업자번호
@@ -1316,8 +1315,7 @@ def sendToNTS(request):
 def getInfo(request):
     """
     1건의 세금계산서 상태/요약 정보를 확인합니다.
-    - 세금계산서 상태정보(GetInfo API) 응답항목에 대한 자세한 정보는
-    "[전자세금계산서 API 연동매뉴얼] > 4.2. 세금계산서 상태정보 구성" 을 참조하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1339,8 +1337,7 @@ def getInfo(request):
 def getInfos(request):
     """
     다량의 세금계산서 상태/요약 정보를 확인합니다. (최대 1000건)
-     - 세금계산서 상태정보(GetInfo API) 응답항목에 대한 자세한 정보는
-     "[전자세금계산서 API 연동매뉴얼] > 4.2. 세금계산서 상태정보 구성" 을 참조하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetInfos
     """
     try:
         # 팝빌회원 사업자번호
@@ -1365,8 +1362,7 @@ def getInfos(request):
 def getDetailInfo(request):
     """
     1건의 세금계산서 상세항목을 확인합니다.
-    - 응답항목에 대한 자세한 사항은 "[전자세금계산서 API 연동매뉴얼]  > 4.1 세금계산서 구성" 을
-      참조하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetDetailInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1388,7 +1384,7 @@ def getDetailInfo(request):
 def search(request):
     """
     검색조건을 사용하여 세금계산서 목록을 조회합니다.
-    - 응답항목에 대한 자세한 사항은 "[전자세금계산서 API 연동매뉴얼] > 3.5.4 Search (목록 조회)" 를 참조하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#Search
     """
     try:
         # 팝빌회원 사업자번호
@@ -1461,8 +1457,7 @@ def search(request):
 def getLogs(request):
     """
     세금계산서 상태 변경이력을 확인합니다.
-    - 상태 변경이력 확인(GetLogs API) 응답항목에 대한 자세한 정보는 "[전자세금계산서 API 연동매뉴얼]
-      > 3.5.5 상태 변경이력 확인" 을 참조하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetLogs
     """
     try:
         # 팝빌회원 사업자번호
@@ -1485,6 +1480,7 @@ def getURL(request):
     """
     팝빌 전자세금계산서 관련 문서함 팝업 URL을 반환합니다.
     - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1507,6 +1503,7 @@ def getPopUpURL(request):
     """
     1건의 전자세금계산서 보기 팝업 URL을 반환합니다.
     - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetPopUpURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1528,6 +1525,7 @@ def getViewURL(request):
     """
     1건의 전자세금계산서 보기 팝업 URL을 반환합니다. (메뉴/버튼 제외)
     - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetViewURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1549,6 +1547,7 @@ def getPrintURL(request):
     """
     1건의 전자세금계산서 인쇄팝업 URL을 반환합니다.
     - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetPrintURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1571,6 +1570,7 @@ def getEPrintURL(request):
     """
     세금계산서 인쇄(공급받는자) URL을 반환합니다.
     - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetEPrintURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1593,6 +1593,7 @@ def getMassPrintURL(request):
     """
     다수건의 전자세금계산서 인쇄팝업 URL을 반환합니다. (최대 100건)
     - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetMassPrintURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1618,6 +1619,7 @@ def getMailURL(request):
     """
     공급받는자 메일링크 URL을 반환합니다.
     - 메일링크 URL은 유효시간이 존재하지 않습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetMailURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1640,6 +1642,7 @@ def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetAccessURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1659,6 +1662,7 @@ def getSealURL(request):
     """
     인감 및 첨부문서 등록 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetSealURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1679,6 +1683,7 @@ def attachFile(request):
     세금계산서에 첨부파일을 등록합니다.
     - [임시저장] 상태의 세금계산서만 파일을 첨부할수 있습니다.
     - 첨부파일은 최대 5개까지 등록할 수 있습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#AttachFile
     """
     try:
         # 팝빌회원 아이디
@@ -1708,6 +1713,7 @@ def deleteFile(request):
     세금계산서에 첨부된 파일을 삭제합니다.
     - 첨부파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목
       중 파일아이디(attachedFile) 통해 확인할 수 있습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#DeleteFile
     """
     try:
         # 팝빌회원 아이디
@@ -1737,6 +1743,7 @@ def getFiles(request):
     세금계산서에 첨부된 파일의 목록을 확인합니다.
     - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API)
       호출시 이용할 수 있습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetFiles
     """
     try:
         # 팝빌회원 사업자번호
@@ -1758,6 +1765,7 @@ def getFiles(request):
 def sendEmail(request):
     """
     세금계산서 발행 안내메일을 재전송합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#SendEmail
     """
     try:
         # 팝빌회원 사업자번호
@@ -1787,6 +1795,7 @@ def sendSMS(request):
     알림문자를 전송합니다. (단문/SMS- 한글 최대 45자)
     - 알림문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
     - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] > [전송내역] 탭에서 전송결과를 확인할 수 있습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#SendSMS
     """
     try:
         # 팝빌회원 사업자번호
@@ -1823,6 +1832,7 @@ def sendFAX(request):
     전자세금계산서를 팩스전송합니다.
     - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
     - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#SendFAX
     """
     try:
         # 팝빌회원 사업자번호
@@ -1853,6 +1863,7 @@ def sendFAX(request):
 def attachStatement(request):
     """
     1건의 전자명세서를 세금계산서에 첨부합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#AttachStatement
     """
     try:
         # 팝빌회원 사업자번호
@@ -1884,6 +1895,7 @@ def attachStatement(request):
 def detachStatement(request):
     """
     세금계산서에 첨부된 전자명세서 1건을 첨부해제합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#DetachStatement
     """
     try:
         # 팝빌회원 사업자번호
@@ -1915,6 +1927,7 @@ def detachStatement(request):
 def getEmailPublicKeys(request):
     """
     대용량 연계사업자 메일주소 목록을 반환합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetEmailPublicKeys
     """
     try:
         # 팝빌회원 사업자번호
@@ -1930,6 +1943,7 @@ def getEmailPublicKeys(request):
 def assignMgtKet(request):
     """
     팝빌사이트에서 작성된 세금계산서에 파트너 문서번호를 할당합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#AssignMgtKey
     """
     try:
         # 팝빌회원 사업자번호
@@ -1957,7 +1971,8 @@ def assignMgtKet(request):
 
 def listEmailConfig(request):
     """
-    전자세금계산서 관련 메일전송 항목에 대한 전송여부를 목록으로 반환합니다
+    전자세금계산서 관련 메일전송 항목에 대한 전송여부를 목록으로 반환합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#ListEmailConfig
     """
     try:
         # 팝빌회원 사업자번호
@@ -1976,6 +1991,8 @@ def listEmailConfig(request):
 def updateEmailConfig(request):
     """
     전자세금계산서 관련 메일전송 항목에 대한 전송여부를 수정합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#UpdateEmailConfig
+
     메일전송유형
     [정발행]
     TAX_ISSUE : 공급받는자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
@@ -2041,6 +2058,7 @@ def getTaxCertURL(request):
     """
     공인인증서 등록 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetTaxCertURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -2061,6 +2079,7 @@ def getCertificateExpireDate(request):
     팝빌에 등록되어 있는 공인인증서의 만료일자를 확인합니다.
     - 공인인증서가 갱신/재발급/비밀번호 변경이 되는 경우 해당 인증서를
       재등록 하셔야 정상적으로 API를 이용하실 수 있습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetCertificateExpireDate
     """
     try:
         # 팝빌회원 사업자번호
@@ -2076,6 +2095,7 @@ def getCertificateExpireDate(request):
 def checkCertValidation(request):
     """
     팝빌에 등록된 공인인증서의 유효성을 확인합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#CheckCertValidation
     """
     try:
         # 팝빌회원 사업자번호
@@ -2093,6 +2113,7 @@ def getBalance(request):
     연동회원의 잔여포인트를 확인합니다.
     - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)
       를 통해 확인하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -2109,6 +2130,7 @@ def getChargeURL(request):
     """
     팝빌 연동회원 포인트 충전 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -2128,6 +2150,7 @@ def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
     - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetPartnerBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -2144,6 +2167,7 @@ def getPartnerURL(request):
     """
     파트너 포인트 충전 팝업 URL을 반환합니다.
     - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetPartnerURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -2162,6 +2186,7 @@ def getPartnerURL(request):
 def getUnitCost(request):
     """
     전자세금계산서 발행시 차감되는 포인트 단가를 반환합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetUnitCost
     """
     try:
         # 팝빌회원 사업자번호
@@ -2177,6 +2202,7 @@ def getUnitCost(request):
 def getChargeInfo(request):
     """
     연동회원의 전자세금계산서 API 서비스 과금정보를 확인합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetChargeInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -2195,6 +2221,7 @@ def getChargeInfo(request):
 def checkIsMember(request):
     """
     해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#CheckIsMember
     """
     try:
         # 가입여부 확인할 사업자 번호
@@ -2210,6 +2237,7 @@ def checkIsMember(request):
 def checkID(request):
     """
     회원가입(JoinMember API)을 호출하기전 팝빌 회원아이디 중복여부를 확인합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -2226,6 +2254,7 @@ def joinMember(request):
     """
     파트너의 연동회원으로 회원가입을 요청합니다.
     - 아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+    - https://docs.popbill.com/taxinvoice/python/api#JoinMember
     """
     try:
         # 연동회원 가입정보
@@ -2281,6 +2310,7 @@ def joinMember(request):
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -2299,6 +2329,7 @@ def getCorpInfo(request):
 def updateCorpInfo(request):
     """
     연동회원사의 회사정보를 수정 합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -2336,6 +2367,7 @@ def updateCorpInfo(request):
 def registContact(request):
     """
     연동회원의 담당자를 신규로 등록합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#RegistContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -2386,6 +2418,7 @@ def registContact(request):
 def listContact(request):
     """
     연동회원의 담당자 목록을 확인합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#ListContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -2404,6 +2437,7 @@ def listContact(request):
 def updateContact(request):
     """
     연동회원의 담당자 정보를 수정합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호
