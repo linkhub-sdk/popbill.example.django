@@ -843,6 +843,27 @@ def getPopUpURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getViewURL(request):
+    """
+    1건의 전자명세서 보기 팝업 URL을 반환합니다. (팝빌 메뉴 제외)
+    - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
+        ItemCode = 121
+
+        # 전자명세서 문서번호
+        MgtKey = "20190116-001"
+
+        url = statementService.getViewURL(CorpNum, ItemCode, MgtKey)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
 
 def getPrintURL(request):
     """

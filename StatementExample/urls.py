@@ -26,6 +26,7 @@ urlpatterns = [
 
     # 명세서 보기인쇄
     url(r'^GetPopUpURL$', views.getPopUpURL, name='getPopUpURL'),
+    url(r'^GetViewURL$', views.getViewURL, name='getViewURL'),
     url(r'^GetPrintURL$', views.getPrintURL, name='GetPrintURL'),
     url(r'^GetEPrintURL$', views.getEPrintURL, name='GetEPrintURL'),
     url(r'^GetMassPrintURL$', views.getMassPrintURL, name='GetMassPrintURL'),
