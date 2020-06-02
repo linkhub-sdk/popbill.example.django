@@ -7,6 +7,14 @@ urlpatterns = [
     # Index Page
     url(r'^$', views.index, name='index'),
 
+    url(r'^registBankAccount$', views.registBankAccount, name='RegistBankAccount'),
+    url(r'^updateBankAccount$', views.updateBankAccount, name='UpdateBankAccount'),
+    url(r'^closeBankAccount$', views.closeBankAccount, name='CloseBankAccount'),
+    url(r'^revokeCloseBankAccount$', views.revokeCloseBankAccount, name='RevokeCloseBankAccount'),
+    url(r'^getBankAccountInfo$', views.getBankAccountInfo, name='GetBankAccountInfo'),
+
+
+
     url(r'^getBankAccountMgtURL$', views.getBankAccountMgtURL, name='GetBankAccountMgtURL'),
     url(r'^listBankAccount$', views.listBankAccount, name='ListBankAccount'),
 
