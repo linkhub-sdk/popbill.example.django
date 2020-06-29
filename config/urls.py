@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^ClosedownExample/', include('ClosedownExample.urls'), name='ClosedownExample'),
     url(r'^KakaoExample/', include('KakaoExample.urls'), name='KakaoExample'),
     url(r'^EasyFinBankExample/', include('EasyFinBankExample.urls'), name='EasyFinBankExample'),
+    url(r'^AccountCheckExample/', include('AccountCheckExample.urls'), name='AccountCheckExample'),
 ]

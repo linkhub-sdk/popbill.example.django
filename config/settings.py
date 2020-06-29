@@ -10,7 +10,7 @@ except Exception as E:
     pass
 
 """
- - 업데이트 일자 : 2020-06-02
+ - 업데이트 일자 : 2020-06-29
  - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
  - 연동 기술지원 이메일 : code@linkhub.co.kr
 
@@ -64,7 +64,8 @@ INSTALLED_APPS = [
     'HTCashbillExample',  # 홈택스 현금영수증 연동
     'ClosedownExample',  # 휴폐업조회
     'KakaoExample',  # 카카오톡(알림톡/친구톡)
-    'EasyFinBankExample'  # 계좌조회
+    'EasyFinBankExample',  # 계좌조회
+    'AccountCheckExample'  # 예금주조회
 ]
 
 ROOT_URLCONF = 'config.urls'
