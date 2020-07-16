@@ -16,6 +16,9 @@ easyFinBankService.IsTest = settings.IsTest
 # 인증토큰 IP제한기능 사용여부, 권장(True)
 easyFinBankService.IPRestrictOnOff = settings.IPRestrictOnOff
 
+# 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
+easyFinBankService.UseStaticIP = settings.UseStaticIP
+
 def index(request):
     return render(request, 'EasyFinBank/Index.html', {})
 

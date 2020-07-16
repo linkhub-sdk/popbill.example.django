@@ -14,6 +14,9 @@ kakaoService.IsTest = settings.IsTest
 # 인증토큰 IP제한기능 사용여부, 권장(True)
 kakaoService.IPRestrictOnOff = settings.IPRestrictOnOff
 
+# 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
+kakaoService.UseStaticIP = settings.UseStaticIP
+
 # 알림톡/친구톡 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
 # 1. 팝빌 사이트 로그인 > [문자/팩스] > [카카오톡] > [발신번호 사전등록] 메뉴에서 등록
 # 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
