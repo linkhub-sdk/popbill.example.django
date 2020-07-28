@@ -101,9 +101,6 @@ def registIssue(request):
             # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
 
-            # [필수] 발행시점
-            issueTiming="직접발행",
-
             # [필수] 과세형태, [과세, 영세, 면세] 중 기재
             taxType="과세",
 
@@ -366,9 +363,6 @@ def register(request):
 
             # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
-
-            # [필수] 발행시점
-            issueTiming="직접발행",
 
             # [필수] 과세형태, [과세, 영세, 면세] 중 기재
             taxType="과세",
@@ -633,9 +627,6 @@ def update(request):
 
             # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
-
-            # [필수] 발행시점
-            issueTiming="직접발행",
 
             # [필수] 과세형태, [과세, 영세, 면세] 중 기재
             taxType="과세",
@@ -994,9 +985,6 @@ def registRequest(request):
 
             # [필수] 영수/청구, [영수, 청구] 중 기재
             purposeType="영수",
-
-            # [필수] 발행시점
-            issueTiming="직접발행",
 
             # [필수] 과세형태, [과세, 영세, 면세] 중 기재
             taxType="과세",
