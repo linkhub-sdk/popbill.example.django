@@ -14,7 +14,6 @@ taxinvoiceService.IsTest = settings.IsTest
 # 인증토큰 IP제한기능 사용여부, 권장(True)
 taxinvoiceService.IPRestrictOnOff = settings.IPRestrictOnOff
 
-
 # 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
 taxinvoiceService.UseStaticIP = settings.UseStaticIP
 
@@ -1404,10 +1403,10 @@ def search(request):
         DType = "W"
 
         # [필수] 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20190101"
+        SDate = "20200701"
 
         # [필수] 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20190116"
+        EDate = "20200731"
 
         # 세금계산서 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용가능
         State = ["3**", "6**"]
@@ -1420,6 +1419,12 @@ def search(request):
 
         # 발행형태 배열, N-정발행, R-역발행, T-위수탁
         IssueType = ["N", "R", "T"]
+
+        # 등록유형 배열, P-팝빌, H-홈택스, 외부ASP
+        RegType = ["P", "H"]
+
+        # 공급받는자 휴폐업상태 배열, N-미확인, 0-미등록, 1-사업중, 2-폐업, 3-휴업
+        CloseDownState = ["N", "0", "1", "2", "3"]
 
         # 지연발행 여부, 0-정상발행, 1-지연발행
         LateOnly = ""
@@ -1448,10 +1453,13 @@ def search(request):
         # 연동문서 조회여부, 공백-전체조회, 0-일반문서 조회, 1-연동문서조회
         InterOPYN = ""
 
-        response = taxinvoiceService.search(CorpNum, MgtKeyType, DType,
-                                            SDate, EDate, State, Type, TaxType, LateOnly, TaxRegIDYN,
-                                            TaxRegIDType, TaxRegID, Page, PerPage, Order, UserID,
-                                            QString, InterOPYN, IssueType)
+        # 문서번호 또는 국세청승인번호 조회 검색어
+        MgtKey = ""
+
+        response = taxinvoiceService.search(CorpNum, MgtKeyType, DType, SDate, EDate, State,
+                                        Type, TaxType, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID,
+                                        Page, PerPage, Order, UserID, QString, InterOPYN, IssueType,
+                                        RegType, CloseDownState, MgtKey)
 
         return render(request, 'Taxinvoice/Search.html', {'response': response})
     except PopbillException as PE:
