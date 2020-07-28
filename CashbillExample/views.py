@@ -879,6 +879,28 @@ def getAccessURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def assignMgtKey(request):
+    """
+    팝빌사이트에서 작성된 현금영수증에 파트너 문서번호를 할당합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 현금영수증 아이템키, 문서 목록조회(Search) API의 반환항목중 ItemKey 참조
+        ItemKey = '020072815420200001'
+
+        # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 최대 24자리, 사업자번호별 중복없는 고유번호 할당
+        MgtKey = "20200728-03"
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        response = cashbillService.assignMgtKey(CorpNum, ItemKey, MgtKey, UserID)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def sendEmail(request):
     """

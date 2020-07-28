@@ -52,7 +52,7 @@ urlpatterns = [
     url(r'^AttachStatement$', views.attachStatement, name='AttachStatement'),
     url(r'^DetachStatement$', views.detachStatement, name='DetachStatement'),
     url(r'^GetEmailPublicKeys$', views.getEmailPublicKeys, name='GetEmailPublicKeys'),
-    url(r'^AssignMgtKet', views.assignMgtKet, name='AssignMgtKet'),
+    url(r'^AssignMgtKey', views.assignMgtKey, name='AssignMgtKey'),
     url(r'^ListEmailConfig', views.listEmailConfig, name='ListEmailConfig'),
     url(r'^UpdateEmailConfig', views.updateEmailConfig, name='UpdateEmailConfig'),
 

@@ -1961,7 +1961,7 @@ def getEmailPublicKeys(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 
-def assignMgtKet(request):
+def assignMgtKey(request):
     """
     팝빌사이트에서 작성된 세금계산서에 파트너 문서번호를 할당합니다.
     - https://docs.popbill.com/taxinvoice/python/api#AssignMgtKey
