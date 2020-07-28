@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^GetEPrintURL$', views.getEPrintURL, name='GetEPrintURL'),
     url(r'^GetMassPrintURL$', views.getMassPrintURL, name='GetMassPrintURL'),
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
+    url(r'^GetPDFURL$', views.getPDFURL, name='GetPDFURL'),
 
     # 부가 기능
     url(r'^GetAccessURL', views.getAccessURL, name='GetAccessURL'),
