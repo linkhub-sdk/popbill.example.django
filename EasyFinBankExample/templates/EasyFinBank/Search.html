@@ -12,6 +12,7 @@
                 <li> perPage (페이지당 검색개수) : {{ response.perPage }}</li>
                 <li> pageNum (페이지 번호) : {{ response.pageNum }}</li>
                 <li> pageCount (페이지 개수) : {{ response.pageCount }}</li>
+                <li> lastScrapDT (최종 조회일시) : {{ response.lastScrapDT }}</li>
 
                 {% for tradeInfo in response.list %}
                     <fieldset class="fieldset2">

@@ -258,16 +258,16 @@ def requestJob(request):
         UserID = settings.testUserID
 
         # 은행코드
-        BankCode = "0048"
+        BankCode = "0039"
 
         # 계좌번호
-        AccountNumber = "131020538645"
+        AccountNumber = "2070064402404"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20191005"
+        SDate = "20200601"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20200103"
+        EDate = "20200728"
 
         result = easyFinBankService.requestJob(CorpNum, BankCode, AccountNumber,SDate, EDate, UserID)
 
@@ -330,7 +330,7 @@ def search(request):
         UserID = settings.testUserID
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "020010314000000035"
+        JobID = "020072814000000001"
 
         # 거래유형 배열, [I-입금 / O-출금]
         TradeType = ["I", "O"]
