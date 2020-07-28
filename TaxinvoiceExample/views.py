@@ -63,7 +63,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # [필수] 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "20191030-32"
+        MgtKey = "20200728-03"
 
         # 지연발행 강제여부
         # 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
@@ -89,7 +89,7 @@ def registIssue(request):
         taxinvoice = Taxinvoice(
 
             # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
-            writeDate="20191030",
+            writeDate="20200728",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능

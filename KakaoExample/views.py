@@ -227,7 +227,7 @@ def sendATS_multi(request):
         templateCode = "019020000163"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        snd = "01043245117"
 
         # 알림톡 내용 (최대 1000자)
         # 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
@@ -252,7 +252,8 @@ def sendATS_multi(request):
                     rcv="010456456",  # 수신번호
                     rcvnm="linkhub",  # 수신자 이름
                     msg=content,  # 알림톡 내용 (최대 1000자)
-                    altmsg="수신번호 010-456-456 알림톡 대체문자"  # 대체문자 내용 (최대 2000byte)
+                    altmsg="수신번호 010-456-456 알림톡 대체문자",  # 대체문자 내용 (최대 2000byte)
+                    interOPRefKey ="202007-"+str(x) # 파트너 지정키, 수신자 구분용 메모
                 )
             )
 
@@ -872,7 +873,7 @@ def getMessages(request):
         CorpNum = settings.testCorpNum
 
         # 알림톡/친구톡 요청시 반환받은 접수번호
-        receiptNum = "019012313433000001"
+        receiptNum = "020072814430000001"
 
         kakaoInfo = kakaoService.getMessages(CorpNum, receiptNum)
 
