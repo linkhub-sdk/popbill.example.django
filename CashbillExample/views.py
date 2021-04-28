@@ -762,6 +762,25 @@ def getPopUpURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getViewURL(request):
+    """
+    1건의 현금영수증 보기 팝업 URL을 반환합니다. (메뉴/버튼 제외)
+    - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/cashbill/python/api#GetViewURL
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 현금영수증 문서번호
+        MgtKey = "20190116-001"
+
+        url = cashbillService.getViewURL(CorpNum, MgtKey)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
 def getPDFURL(request):
     """
     1건의 현금영수증 PDF 다운로드 URL을 반환합니다.
