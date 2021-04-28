@@ -275,25 +275,53 @@ def sendATS_multi(request):
                     rcvnm="linkhub",  # 수신자 이름
                     msg=content,  # 알림톡 내용 (최대 1000자)
                     altmsg="수신번호 010-456-456 알림톡 대체문자",  # 대체문자 내용 (최대 2000byte)
-                    interOPRefKey ="202007-"+str(x) # 파트너 지정키, 수신자 구분용 메모
+                    interOPRefKey ="202007-"+str(x), # 파트너 지정키, 수신자 구분용 메모
                 )
             )
+
+            # 수신자별 개별 버튼내용 전송하는 경우
+            # 개별 버튼의 개수는 템플릿 신청 시 승인받은 버튼의 개수와 동일하게 생성, 다를 경우 전송실패 처리
+            # 버튼링크URL에 #{템플릿변수}를 기재하여 승인받은 경우 URL 수정가능.
+            # 버튼명 , 버튼 유형 수정 불가능.
+
+            # #개별 버튼정보 리스트 생성
+            # btns = []
+            # # # 수신자별 개별 전송할 버튼 정보
+            # btns.append(
+            #     KakaoButton(
+            #         n="템플릿 안내",  # 버튼명
+            #         t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+            #         u1="https://www.popbill.com",  # [앱링크-iOS, 웹링크-Mobile]
+            #         u2="http://www.popbill.com"  # [앱링크-Android, 웹링크-PC URL]
+            #     )
+            # )
+            # btns.append(
+            #     KakaoButton(
+            #         n="버튼명",  # 버튼명
+            #         t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+            #         u1="https://www.popbill" + str(x) + ".com",  # [앱링크-iOS, 웹링크-Mobile]
+            #         u2="https://www.popbill" + str(x) + ".com"  # [앱링크-Android, 웹링크-PC URL]
+            #     )
+            # )
+            # # 개별 버튼정보 리스트 수신정보에 추가
+            # KakaoMessages[x].btns = btns
 
         # 전송요청번호
         # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
-        # 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는 경우 btns를 빈 배열로 처리.
+        # 동일 버튼정보 리스트, 수신자별 동일 버튼내용 전송하는경우
+        # 버튼링크URL에 #{템플릿변수}를 기재하여 승인받은 경우 URL 수정가능.
+        # 버튼의 개수는 템플릿 신청 시 승인받은 버튼의 개수와 동일하게 생성, 다를 경우 전송실패 처리
+        # 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는 경우 btns를 빈 리스트 처리.
         btns = []
-
-        # 알림톡 버튼 URL에 #{템플릿변수}를 기재한경우 템플릿변수 값을 변경하여 버튼정보 구성
         # btns.append(
         #     KakaoButton(
-        #         n="템플릿 안내",  # 버튼명
-        #         t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
-        #         u1="https://www.popbill.com",  # [앱링크-iOS, 웹링크-Mobile]
-        #         u2="http://www.popbill.com"  # [앱링크-Android, 웹링크-PC URL]
+                # n="템플릿 안내",  # 버튼명
+                # t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+                # u1="https://www.popbill.com",  # [앱링크-iOS, 웹링크-Mobile]
+                # u2="http://www.popbill.com"  # [앱링크-Android, 웹링크-PC URL]
         #     )
         # )
         receiptNum = kakaoService.sendATS_multi(CorpNum, templateCode, snd, "", "",
@@ -467,7 +495,7 @@ def sendFTS_multi(request):
         plusFriendID = "@팝빌"
 
         # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        snd = "01043245117"
 
         # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
         altSendType = "A"
@@ -481,12 +509,38 @@ def sendFTS_multi(request):
             KakaoMessages.append(
                 KakaoReceiver(
                     rcv="0101234567",  # 수신번호
-                    rcvnm="김현진",  # 수신자 이름
+                    rcvnm="TESTER",  # 수신자 이름
                     msg="안녕하세요 " + str(x) + "님 링크허브입니다.",  # 친구톡 내용 (최대 1000자)
                     altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
                 )
             )
+            # 수신자별 개별 버튼내용 전송하는 경우
+            # 버튼 목록 (최대 5개)
 
+            # #개별 버튼정보 리스트 생성
+            # btns = []
+            # # 수신자별 개별 전송할 버튼 정보
+            # btns.append(
+            #     KakaoButton(
+            #         n="템플릿 안내",  # 버튼명
+            #         t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+            #         u1="https://www.popbill.com",  # [앱링크-iOS, 웹링크-Mobile]
+            #         u2="http://www.popbill.com"  # [앱링크-Android, 웹링크-PC URL]
+            #     )
+            # )
+            # btns.append(
+            #     KakaoButton(
+            #         n="버튼명",  # 버튼명
+            #         t="WL",  # 버튼유형 [DS-배송조회, WL-웹링크, AL-앱링크, MD-메시지전달, BK-봇키워드]
+            #         u1="https://www.popbill" + str(x) + ".com",  # [앱링크-iOS, 웹링크-Mobile]
+            #         u2="https://www.popbill" + str(x) + ".com"  # [앱링크-Android, 웹링크-PC URL]
+            #     )
+            # )
+            # # 개별 버튼정보 리스트 수신정보에 추가
+            # KakaoMessages[x].btns = btns
+
+        # 동일 버튼정보 리스트
+        # 버튼내용을 전송하지 않는 경우 빈 리스트 처리
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
 
