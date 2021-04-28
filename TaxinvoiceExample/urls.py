@@ -10,6 +10,8 @@ urlpatterns = [
     # 정발행/역발행/위수탁발행
     url(r'^CheckMgtKeyInUse$', views.checkMgtKeyInUse, name='CheckMgtKeyInUse'),
     url(r'^RegistIssue$', views.registIssue, name='RegistIssue'),
+    url(r'^BulkSubmit$', views.bulkSubmit, name='BulkSubmit'),
+    url(r'^GetBulkResult$', views.getBulkResult, name='GetBulkResult'),
     url(r'^Register$', views.register, name='Register'),
     url(r'^Update$', views.update, name='Update'),
     url(r'^Issue$', views.issue, name='Issue'),

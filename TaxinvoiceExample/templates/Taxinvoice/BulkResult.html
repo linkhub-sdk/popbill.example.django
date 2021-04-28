@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>초대량 접수결과 확인</legend>
+            <ul>
+                <li> code (요청에 대한 응답 상태코드) : {{ bulkTaxinvoiceResult.code }}</li>
+                <li> message (요청에 대한 응답 메시지) : {{ bulkTaxinvoiceResult.message }}</li>
+                <li> submitID (제출아이디) : {{ bulkTaxinvoiceResult.submitID }}</li>
+                <li> submitCount (세금계산서 접수 건수) : {{ bulkTaxinvoiceResult.submitCount }}</li>
+                <li> successCount (세금계산서 발행 성공 건수) : {{ bulkTaxinvoiceResult.successCount }}</li>
+                <li> failCount (세금계산서 발행 실패 건수) : {{ bulkTaxinvoiceResult.failCount }}</li>
+                <li> txState (접수상태코드) : {{ bulkTaxinvoiceResult.txState }}</li>
+                <li> txResultCode (접수 결과코드) : {{ bulkTaxinvoiceResult.txResultCode }}</li>
+                <li> txStartDT (발행처리 시작일시) : {{ bulkTaxinvoiceResult.txStartDT }}</li>
+                <li> txEndDT (발행처리 완료일시) : {{ bulkTaxinvoiceResult.txEndDT }}</li>
+                <li> receiptDT (접수일시) : {{ bulkTaxinvoiceResult.receiptDT }}</li>
+                <li> receiptID (접수아이디) : {{ bulkTaxinvoiceResult.receiptID }}</li>
+
+                {% for bulkTaxinvoiceIssueResult in bulkTaxinvoiceResult.issueResult %}
+                    <fieldset class="fieldset2">
+                        <legend>bulkTaxinvoiceIssueResult (발행결과) [ {{ forloop.counter }} ]</legend>
+                        <ul>
+                            <li> invoicerMgtKey (공급자 문서번호) : {{ bulkTaxinvoiceIssueResult.invoicerMgtKey }}</li>
+                            <li> invoicerMgtKey (수탁자 문서번호) : {{ bulkTaxinvoiceIssueResult.invoicerMgtKey }}</li>
+                            <li> code (응답코드) : {{ bulkTaxinvoiceIssueResult.code }}</li>
+                            <li> ntsconfirmNum (국세청승인번호) : {{ bulkTaxinvoiceIssueResult.ntsconfirmNum }}</li>
+                            <li> issueDT (발행일시) : {{ bulkTaxinvoiceIssueResult.issueDT }}</li>
+                        </ul>
+                    </fieldset>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
