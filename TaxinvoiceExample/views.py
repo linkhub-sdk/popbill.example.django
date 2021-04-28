@@ -1586,6 +1586,27 @@ def getPrintURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getOldPrintURL(request):
+    """
+    1건의 전자세금계산서 구버전 양식 인쇄팝업 URL을 반환합니다.
+    - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetOldPrintURL
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        MgtKeyType = "SELL"
+
+        # 문서번호
+        MgtKey = "20190116-001"
+
+        url = taxinvoiceService.getOldPrintURL(CorpNum, MgtKeyType, MgtKey)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def getEPrintURL(request):
     """

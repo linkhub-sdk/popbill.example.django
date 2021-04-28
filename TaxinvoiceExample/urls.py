@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL'),
     url(r'^GetViewURL$', views.getViewURL, name='GetViewURL'),
     url(r'^GetPrintURL$', views.getPrintURL, name='GetPrintURL'),
+    url(r'^GetOldPrintURL$', views.getOldPrintURL, name='GetOldPrintURL'),
     url(r'^GetEPrintURL$', views.getEPrintURL, name='GetEPrintURL'),
     url(r'^GetMassPrintURL$', views.getMassPrintURL, name='GetMassPrintURL'),
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
