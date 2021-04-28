@@ -158,7 +158,7 @@ def getBankAccountInfo(request):
 
 def closeBankAccount(request):
     """
-    팝빌에 등록된 은행계좌의 정액제 해지를 요청한다.
+    팝빌에 등록된 은행계좌의 정액제 해지를 요청합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -189,7 +189,7 @@ def closeBankAccount(request):
 
 def revokeCloseBankAccount(request):
     """
-    정액제 해지신청을 취소한다.
+    정액제 해지신청을 취소합니다.
     """
     try:
         # 팝빌회원 사업자번호
@@ -212,6 +212,36 @@ def revokeCloseBankAccount(request):
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def deleteBankAccount(request):
+    """
+    종량제 이용시 등록된 계좌를 삭제합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#DeleteBankAccount
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        infoObj = BankAccountInfo(
+            # [필수] 은행코드
+            # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+            # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+            # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+            BankCode="",
+
+            # [필수] 삭제할 계좌번호 하이픈('-') 제외
+            AccountNumber=""
+        )
+
+        response = easyFinBankService.deleteBankAccount(CorpNum, infoObj, UserID)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
 
 def getBankAccountMgtURL(request):
     """

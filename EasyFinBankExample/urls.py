@@ -11,10 +11,8 @@ urlpatterns = [
     url(r'^updateBankAccount$', views.updateBankAccount, name='UpdateBankAccount'),
     url(r'^closeBankAccount$', views.closeBankAccount, name='CloseBankAccount'),
     url(r'^revokeCloseBankAccount$', views.revokeCloseBankAccount, name='RevokeCloseBankAccount'),
+    url(r'^deleteBankAccount$', views.deleteBankAccount, name='DeleteBankAccount'),
     url(r'^getBankAccountInfo$', views.getBankAccountInfo, name='GetBankAccountInfo'),
-
-
-
     url(r'^getBankAccountMgtURL$', views.getBankAccountMgtURL, name='GetBankAccountMgtURL'),
     url(r'^listBankAccount$', views.listBankAccount, name='ListBankAccount'),
 
