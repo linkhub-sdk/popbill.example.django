@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 카카오톡 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>알림톡 템플릿 정보 확인</legend>
+            <ul>
+                <li> templateCode (템플릿 코드) : {{ templateInfo.templateCode }}</li>
+                <li> templateName (템플릿 제목) : {{ templateInfo.templateName }}</li>
+                <li> template (템플릿 내용) : {{ templateInfo.template }}</li>
+                <li> plusFriendID (카카오톡 채널 검색용 아이디) : {{ templateInfo.plusFriendID }}</li>
+
+                {% for btns in templateInfo.btns %}
+                    <fieldset class="fieldset2">
+                        <legend>btns  [ {{ forloop.counter }} ]</legend>
+                        <ul>
+                            <li> n (버튼명) : {{ btns.n }}</li>
+                            <li> t (버튼유형) : {{ btns.t }}</li>
+                            <li> u1 (버튼링크1) : {{ btns.u1 }}</li>
+                            <li> u2 (버튼링크2) : {{ btns.u2 }}</li>
+                        </ul>
+                    </fieldset>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

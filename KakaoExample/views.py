@@ -47,7 +47,6 @@ def getPlusFriendMgtURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def listPlusFriendID(request):
     """
     팝빌에 등록된 카카오톡 채널 목록을 반환 합니다.
@@ -122,6 +121,26 @@ def getATSTemplateMgtURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getATSTemplate(request):
+    """
+    등록된 알림톡 템플릿의 정보를 확인합니다.
+    - https://docs.popbill.com/kakao/python/api#GetATSTemplate
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        #템플릿 코드
+        templateCode = "021010000076"
+
+        templateInfo = kakaoService.getATSTemplate(CorpNum, templateCode, UserID)
+
+        return render(request, 'Kakao/GetATSTemplateS.html', {'templateInfo' : templateInfo })
+    except PopbillException as PE :
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def listATStemplate(request):
     """

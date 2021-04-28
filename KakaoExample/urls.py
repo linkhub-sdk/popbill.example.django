@@ -17,6 +17,7 @@ urlpatterns = [
 
     # 알림톡 템플릿관리
     url(r'^GetATSTemplateMgtURL', views.getATSTemplateMgtURL, name='GetATSTemplateMgtURL'),
+    url(r'^GetATSTemplate', views.getATSTemplate, name='GetATSTemplate'),
     url(r'^ListATSTemplate$', views.listATStemplate, name='ListATStemplate'),
 
     # 카카오톡 전송
