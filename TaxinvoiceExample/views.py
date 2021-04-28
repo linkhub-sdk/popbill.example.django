@@ -2098,6 +2098,20 @@ def updateEmailConfig(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getSendToNTSConfig(request):
+    """
+    국세청 전송 설정 확인
+    - https://docs.popbill.com/taxinvoice/python/api#GetSendToNTSConfig
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        sendToNTSConfig = taxinvoiceService.getSendToNTSConfig(CorpNum)
+
+        return render(request, 'Taxinvoice/SendToNTSConfig.html', {'sendToNTS' : sendToNTSConfig.sendToNTS})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def getTaxCertURL(request):
     """

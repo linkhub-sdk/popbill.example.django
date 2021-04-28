@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>국세청 전송 설정 확인</legend>
+            <ul>
+                <li> sendToNTS (True : 발행 즉시 전송 / False : 익일 자동 전송) : {{ sendToNTS }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

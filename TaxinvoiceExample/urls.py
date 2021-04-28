@@ -56,6 +56,7 @@ urlpatterns = [
     url(r'^AssignMgtKey', views.assignMgtKey, name='AssignMgtKey'),
     url(r'^ListEmailConfig', views.listEmailConfig, name='ListEmailConfig'),
     url(r'^UpdateEmailConfig', views.updateEmailConfig, name='UpdateEmailConfig'),
+    url(r'^GetSendToNTSConfig', views.getSendToNTSConfig, name='GetSendToNTSConfig'),
 
     # 공인인증서 관리
     url(r'^GetTaxCertURL', views.getTaxCertURL, name='GetTaxCertURL'),
