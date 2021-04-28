@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import FaxService, PopbillException, ContactInfo, JoinForm, FaxReceiver, CorpInfo
+from popbill import FaxService, PopbillException, ContactInfo, JoinForm, FaxReceiver, FileData, CorpInfo
 
 from config import settings
 
@@ -108,7 +108,7 @@ def sendFAX(request):
 def sendFAX_multi(request):
     """
     [대량전송] 팩스를 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
-    - https://docs.popbill.com/fax/python/api#SendFAX_Multi
+    - https://docs.popbill.com/fax/python/api#SendFAX_multi
     """
     try:
         # 팝빌회원 사업자번호
@@ -135,7 +135,7 @@ def sendFAX_multi(request):
         # 팩스제목
         Title = "Python 팩스동보전송 제목"
 
-        Receivers = []  # 수신정보 배열, 최대 1000개
+        Receivers = []  # 수신정보 리스트, 최대 1000개
         for x in range(0, 5):
             Receivers.append(
                 FaxReceiver(
@@ -156,6 +156,118 @@ def sendFAX_multi(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def sendFAXBinary(request):
+    """
+    전송할 파일의 바이너리 데이터로 팩스를 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
+    - https://docs.popbill.com/fax/python/api#SendFAXBinary
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 발신번호
+        Sender = "070111222"
+
+        # 발신자명
+        SenderName = "발신자명"
+
+        # 수신번호
+        Receiver = "070222111"
+
+        # 수신자명
+        ReceiverName = "수신자명"
+
+        #전송 파일 객체정보 리스트, 최대 20개
+        FileDatas = []
+        with open("./test.pdf", "rb") as f:
+            FileDatas.append(
+                FileData(
+                    fileName='test.pdf', #전송 파일명
+                    fileData=f.read()    #전송 파일 바이너리 데이터
+                )
+            )
+
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
+        ReserveDT = "20210428140000"
+
+        # 광고팩스 전송여부
+        AdsYN = True
+
+        # 팩스제목
+        Title = "Python 팩스단건 제목"
+
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
+        receiptNum = faxService.sendFaxBinary(CorpNum, Sender, Receiver, ReceiverName,
+                                        FileDatas, ReserveDT, UserID, SenderName, AdsYN, Title, RequestNum)
+
+        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def sendFAXBinary_multi(request):
+    """
+    [대량전송] 전송할 파일의 바이너리 데이터로 팩스를 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
+    - https://docs.popbill.com/fax/python/api#SendFAXBinary_multi
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 발신번호
+        Sender = "07043042991"
+
+        # 발신자명
+        SenderName = "발신자명"
+
+        # 광고팩스 전송여부
+        AdsYN = False
+
+        # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
+        ReserveDT = ""
+
+        # 팩스제목
+        Title = "Python 팩스동보전송 제목"
+
+        Receivers = []  # 수신정보 리스트, 최대 1000개
+        for x in range(0, 5):
+            Receivers.append(
+                FaxReceiver(
+                    receiveNum="070111222",  # 수신번호
+                    receiveName="수신자명" + str(x),  # 수신자명
+                )
+            )
+
+        #전송 파일 객체정보 리스트, 최대 20개
+        FileDatas = []
+        with open("./test.pdf", "rb") as f:
+            FileDatas.append(
+                FileData(
+                    fileName='test.pdf', #전송 파일명
+                    fileData=f.read()    #전송 파일 바이너리 데이터
+                )
+            )
+
+        # 전송요청번호
+        # 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        RequestNum = ""
+
+        receiptNum = faxService.sendFaxBinary_multi(CorpNum, Sender, Receivers,
+                                              FileDatas, ReserveDT, UserID, SenderName, AdsYN, Title, RequestNum)
+
+        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def resendFAX(request):
     """
@@ -260,7 +372,7 @@ def resendFAX_multi(request):
     [대량전송] 팩스를 재전송합니다.
     - 접수일로부터 60일이 경과되지 않은 팩스전송건만 재전송할 수 있습니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - https://docs.popbill.com/fax/python/api#ResendFAX_Multi
+    - https://docs.popbill.com/fax/python/api#ResendFAX_multi
     """
     try:
         # 팝빌회원 사업자번호
@@ -316,7 +428,7 @@ def resendFAXRN_multi(request):
     [대량전] 전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
     - 접수일로부터 60일이 경과된 경우 재전송할 수 없습니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-    - https://docs.popbill.com/fax/python/api#ResendFAXRN_Multi
+    - https://docs.popbill.com/fax/python/api#ResendFAXRN_multi
     """
     try:
         # 팝빌회원 사업자번호

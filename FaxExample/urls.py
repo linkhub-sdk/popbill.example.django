@@ -14,6 +14,8 @@ urlpatterns = [
     # 팩스 전송
     url(r'^SendFAX$', views.sendFAX, name='SendFAX'),
     url(r'^SendFAX_multi$', views.sendFAX_multi, name='SendSMS_multi'),
+    url(r'^SendFAXBinary$', views.sendFAXBinary, name='SendFAXBinary'),
+    url(r'^SendFAXBinary_multi$', views.sendFAXBinary_multi, name='SendFAXBinary_multi'),
     url(r'^ResendFAX$', views.resendFAX, name='ResendFAX'),
     url(r'^ResendFAXRN$', views.resendFAXRN, name='ResendFAXRN'),
     url(r'^ResendFAX_multi$', views.resendFAX_multi, name='resendFAX_multi'),
