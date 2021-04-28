@@ -70,7 +70,7 @@ def registIssue(request):
         statement = Statement(
 
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20191030",
+            writeDate="20210428",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -85,7 +85,7 @@ def registIssue(request):
             itemCode=121,
 
             # [필수] 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20191030-001",
+            mgtKey="20210428-002",
 
             # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
@@ -186,7 +186,7 @@ def registIssue(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190116",  # 거래일자
+                purchaseDT="20210422",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -204,7 +204,7 @@ def registIssue(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190116",  # 거래일자
+                purchaseDT="20210422",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -229,7 +229,7 @@ def registIssue(request):
 
         response = statementService.registIssue(CorpNum, statement, Memo, UserID, EmailSubject)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'invoiceNum' : response.invoiceNum})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -246,7 +246,7 @@ def register(request):
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20190124",
+            writeDate="20210428",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -261,7 +261,7 @@ def register(request):
             itemCode=121,
 
             # [필수] 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20190124-901",
+            mgtKey="20210428-100",
 
             # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
@@ -363,7 +363,7 @@ def register(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190124",  # 거래일자
+                purchaseDT="20210422",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -382,7 +382,7 @@ def register(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190124",  # 거래일자
+                purchaseDT="20210422",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -425,12 +425,12 @@ def update(request):
         ItemCode = 121
 
         # 수정할 전자명세서 문서번호
-        mgtKey = "20190124-901"
+        mgtKey = "20210428-1001"
 
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20190124",
+            writeDate="20210428",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -546,7 +546,7 @@ def update(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190124",  # 거래일자
+                purchaseDT="20210428",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -564,7 +564,7 @@ def update(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190124",  # 거래일자
+                purchaseDT="20210428",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -607,7 +607,7 @@ def issue(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20210428-100"
 
         response = statementService.issue(CorpNum, ItemCode, MgtKey)
 
@@ -1178,7 +1178,7 @@ def FAXSend(request):
         # 전자명세서 정보
         statement = Statement(
             # [필수] 작성일자 yyyyMMdd
-            writeDate="20190116",
+            writeDate="20210422",
 
             # [필수] [영수 / 청구] 중 기재
             purposeType="영수",
@@ -1294,7 +1294,7 @@ def FAXSend(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190116",  # 거래일자
+                purchaseDT="20210422",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -1306,7 +1306,7 @@ def FAXSend(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20190116",  # 거래일자
+                purchaseDT="20210422",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량

@@ -11,6 +11,9 @@
                 {% if ntsConfirmNum != None %}
                   <li>국세청 승인번호 (Response.ntsConfirmNum) : {{ ntsConfirmNum }}</li>
                 {% endif %}
+                {% if invoiceNum != None %}
+                    <li>팝빌 승인번호 (Response.invoiceNum) : {{ invoiceNum }}</li>
+                {% endif %}
             </ul>
         </fieldset>
     </div>
