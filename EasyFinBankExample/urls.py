@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^getFlatRateState$', views.getFlatRateState, name='GetFlatRateState'),
     url(r'^getBalance$', views.getBalance, name='GetBalance'),
     url(r'^getChargeURL$', views.getChargeURL, name='GetChargeURL'),
+    url(r'^GetPaymentURL', views.getPaymentURL, name='GetPaymentURL'),
+    url(r'^GetUseHistoryURL', views.getUseHistoryURL, name='GetUseHistoryURL'),
     url(r'^getPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^getPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^getChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
@@ -39,6 +41,7 @@ urlpatterns = [
     url(r'^getCorpInfo$', views.getCorpInfo, name='GetCorpInfo'),
     url(r'^updateCorpInfo$', views.updateCorpInfo, name='UpdateCorpInfo'),
     url(r'^registContact$', views.registContact, name='RegistContact'),
+    url(r'^GetContactInfo$', views.getContactInfo, name='GetContactInfo'),
     url(r'^listContact$', views.listContact, name='ListContact'),
     url(r'^updateContact$', views.updateContact, name='UpdateContact'),
 

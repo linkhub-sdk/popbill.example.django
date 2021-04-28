@@ -1454,7 +1454,6 @@ def getBalance(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getChargeURL(request):
     """
     팝빌 연동회원 포인트 충전 URL을 반환합니다.
@@ -1473,6 +1472,43 @@ def getChargeURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getPaymentURL(request):
+    """
+    팝빌 연동회원 포인트 결재내역 URL을 반환합니다.
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/statement/python/api#GetPaymentURL
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        url = statementService.getPaymentURL(CorpNum, UserID)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def getUseHistoryURL(request):
+    """
+    팝빌 연동회원 포인트 사용내역 URL을 반환합니다.
+    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - https://docs.popbill.com/statement/python/api#GetUseHistoryURL
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        url = statementService.getUseHistoryURL(CorpNum, UserID)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def getPartnerBalance(request):
     """
@@ -1738,6 +1774,26 @@ def registContact(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getContactInfo(request):
+    """
+    연동회원의 담당자 정보를 확인합니다.
+    - https://docs.popbill.com/statement/python/api#GetContactInfo
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 담당자 아이디
+        contactID = 'testkorea'
+
+        contactInfo = statementService.getContactInfo(CorpNum, contactID, UserID)
+
+        return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def listContact(request):
     try:

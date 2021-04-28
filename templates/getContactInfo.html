@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">과금정보 확인</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>{{ request.path }}</legend>
+            <ul>
+                <li>id (아이디) : {{ contactInfo.id }}</li>
+                <li>personName (담당자 성명) : {{ contactInfo.personName }}</li>
+                <li>tel (담당자 연락처(전화번호)) : {{ contactInfo.tel }}</li>
+                <li>hp (담당자 휴대폰번호) : {{ contactInfo.hp }}</li>
+                <li>fax	 (담당자 팩스번호) : {{ contactInfo.fax }}</li>
+                <li>email (담당자 이메일) : {{ contactInfo.email }}</li>
+                <li>regDT (등록일시) : {{ contactInfo.regDT }}</li>
+                <li>searchRole (담당자 조회권한) : {{ contactInfo.searchRole }}</li>
+                <li>mgrYN (관리자 여부) : {{ contactInfo.mgrYN }}</li>
+                <li>state (계정상태) : {{ contactInfo.state }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
