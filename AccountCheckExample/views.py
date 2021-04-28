@@ -16,6 +16,9 @@ accountCheckService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
 accountCheckService.UseStaticIP = settings.UseStaticIP
 
+#로컬서버 시간 사용여부, 권장(True)
+accountCheckService.UseLocalTimeYN = settings.UseLocalTimeYN
+
 def index(request):
     return render(request, 'AccountCheck/Index.html', {})
 

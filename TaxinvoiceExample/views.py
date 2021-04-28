@@ -17,6 +17,9 @@ taxinvoiceService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
 taxinvoiceService.UseStaticIP = settings.UseStaticIP
 
+#로컬서버 시간 사용여부, 권장(True)
+taxinvoiceService.UseLocalTimeYN = settings.UseLocalTimeYN
+
 # 전자세금계산서 발행을 위해 공인인증서를 등록합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
 # 1. 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리] 메뉴에서 등록
 # 2. 공인인증서 등록 팝업 URL (getTaxCertURL API)을 이용하여 등록
