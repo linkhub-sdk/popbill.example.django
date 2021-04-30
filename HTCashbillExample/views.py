@@ -16,7 +16,7 @@ htCashbillService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
 htCashbillService.UseStaticIP = settings.UseStaticIP
 
-#로컬서버 시간 사용여부, 권장(True)
+#로컬시스템 시간 사용여부, 권장(True)
 htCashbillService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 # 홈택스 연동서비스를 이용하기 위해 팝빌에 인증정보를 등록 합니다. (인증방법은 부서사용자 인증 / 공인인증서 인증 방식이 있습니다.)

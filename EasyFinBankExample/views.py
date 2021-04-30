@@ -19,7 +19,7 @@ easyFinBankService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
 easyFinBankService.UseStaticIP = settings.UseStaticIP
 
-#로컬서버 시간 사용여부, 권장(True)
+#로컬시스템 시간 사용여부, 권장(True)
 easyFinBankService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 def index(request):
@@ -902,7 +902,7 @@ def updateContact(request):
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
-            
+
             # 관리자 권한여부, True(관리자), False(사용자)
             mgrYN=True
         )

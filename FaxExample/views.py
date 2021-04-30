@@ -16,7 +16,7 @@ faxService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
 faxService.UseStaticIP = settings.UseStaticIP
 
-#로컬서버 시간 사용여부, 권장(True)
+#로컬시스템 시간 사용여부, 권장(True)
 faxService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 def index(request):
