@@ -2708,11 +2708,11 @@ def registContact(request):
         newContact = ContactInfo(
 
             # 아이디 (6자 이상 50자 미만)
-            id="registContact_test",
+            id="mgrYN_test2",
 
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
-            Password="password123!@#",
+            Password="qwe123!@#",
 
             # 담당자명 (최대 100자)
             personName="담당자명",
@@ -2730,11 +2730,7 @@ def registContact(request):
             email="test@test.com",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1,
-
-            # 관리자 권한여부, True(관리자), False(사용자)
-            mgrYN=True
-
+            searchRole=1
         )
 
         response = taxinvoiceService.registContact(CorpNum, newContact, UserID)
