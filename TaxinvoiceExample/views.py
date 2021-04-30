@@ -542,6 +542,10 @@ def bulkSubmit(request):
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def getBulkResult(request):
+    """
+    초대량 발행 접수결과를 확인합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetBulkResult
+    """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
