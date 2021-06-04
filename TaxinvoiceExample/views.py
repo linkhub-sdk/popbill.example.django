@@ -2341,7 +2341,7 @@ def getSendToNTSConfig(request):
 
         sendToNTSConfig = taxinvoiceService.getSendToNTSConfig(CorpNum)
 
-        return render(request, 'Taxinvoice/SendToNTSConfig.html', {'sendToNTS' : sendToNTSConfig.sendToNTS})
+        return render(request, 'Taxinvoice/SendToNTSConfig.html', {'sendToNTS' : sendToNTSConfig})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
