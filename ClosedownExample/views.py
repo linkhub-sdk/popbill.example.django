@@ -33,7 +33,7 @@ def checkCorpNum(request):
         CorpNum = settings.testCorpNum
 
         # 확인하고자 하는 사업자번호
-        targetCorpNum = "1234567890"
+        targetCorpNum = "6798700433"
 
         corpState = closedownService.checkCorpNum(CorpNum, targetCorpNum)
 
