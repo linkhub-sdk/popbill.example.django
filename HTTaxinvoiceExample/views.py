@@ -31,7 +31,7 @@ def index(request):
 
 def requestJob(request):
     """
-    전자(세금)계산서 매출/매입 내역 수집을 요청합니다
+    전자(세금)계산서 매출/매입 내역 수집을 요청합니다. (조회기간 단위 : 최대 3개월)
     - https://docs.popbill.com/httaxinvoice/python/api#RequestJob
     """
     try:

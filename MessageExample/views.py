@@ -582,8 +582,8 @@ def getStates(request):
 
 def search(request):
     """
-    검색조건을 사용하여 문자전송 내역을 조회합니다.
-    - 최대 검색기간 : 6개월 이내
+    검색조건을 사용하여 문자전송 내역을 조회합니다. (조회기간 단위 : 최대 2개월)
+    - 문자 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
     - https://docs.popbill.com/message/python/api#Search
     """
     try:

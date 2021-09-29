@@ -31,7 +31,7 @@ def index(request):
 
 def requestJob(request):
     """
-    현금영수증 매출/매입 내역 수집을 요청합니다
+    현금영수증 매출/매입 내역 수집을 요청합니다. (조회기간 단위 : 최대 3개월)
     - https://docs.popbill.com/htcashbill/python/api#RequestJob
     """
     try:
