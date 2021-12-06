@@ -24,7 +24,8 @@ def index(request):
 
 def checkAccountInfo(request):
     """
-    1건 계좌의 예금주성명을 조회합니다.
+    1건의 예금주성명을 조회합니다.
+    - https://docs.popbill.com/accountcheck/python/api#CheckAccountInfo
     """
     try:
         # 팝빌회원 사업자번호 ('-' 제외 10자리)
@@ -49,7 +50,8 @@ def checkAccountInfo(request):
 
 def checkDepositorInfo(request):
     """
-    1건 계좌의 예금주실명을 조회합니다.
+    1건의 예금주실명을 조회합니다.
+    - https://docs.popbill.com/accountcheck/python/api#CheckDepositorInfo
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -102,7 +104,7 @@ def getChargeURL(request):
 
 def getChargeInfo(request):
     """
-    연동회원의 에금주조회 API 서비스 과금정보를 확인합니다.
+    연동회원의 예금주조회 API 서비스 과금정보를 확인합니다.
     - https://docs.popbill.com/closedown/python/api#GetChargeInfo
     """
     try:
