@@ -9,6 +9,7 @@ urlpatterns = [
 
     # 예금주조회
     url(r'^CheckAccountInfo$', views.checkAccountInfo, name='CheckAccountInfo'),
+    url(r'^CheckDepositorInfo$', views.checkDepositorInfo, name='CheckDepositorInfo'),
 
 
     # 포인트 관리 / 정액제 신청

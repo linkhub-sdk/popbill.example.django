@@ -24,21 +24,58 @@ def index(request):
 
 def checkAccountInfo(request):
     """
-    1건 계좌의 예금주 성명을 조회합니다.
+    1건 계좌의 예금주성명을 조회합니다.
     """
     try:
-        # 팝빌회원 사업자번호
+        # 팝빌회원 사업자번호 ('-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        # 기관코드
+        # 조회할 계좌 기관코드
+        # - https://docs.popbill.com/accountcheck/?lang=python#BankCodeList
         bankCode = "0004"
 
-        # 은행 계좌번호
+        # 조회할 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
         accountNumber = "123412345123"
 
-        accountInfo = accountCheckService.checkAccountInfo(CorpNum, bankCode, accountNumber)
+        # 팝빌 회원 아이디
+        userId = settings.testUserID
+
+        accountInfo = accountCheckService.checkAccountInfo(CorpNum, bankCode, accountNumber, userId)
 
         return render(request, 'AccountCheck/CheckAccountInfo.html', {'accountInfo': accountInfo})
+
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def checkDepositorInfo(request):
+    """
+    1건 계좌의 예금주실명을 조회합니다.
+    """
+    try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
+        CorpNum = settings.testCorpNum
+
+        # 조회할 계좌 기관코드
+        # - https://docs.popbill.com/accountcheck/?lang=python#BankCodeList
+        bankCode = "0004"
+
+        # 조회할 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
+        accountNumber = "123412345123"
+
+        # 등록번호 유형 ( P / B 중 택 1 ,  P = 개인, B = 사업자)
+        identityNumType = "P"
+
+        # 등록번호
+        # - IdentityNumType 값이 "B" 인 경우 (하이픈 '-' 제외  사업자번호(10)자리 입력 )
+        # - IdentityNumType 값이 "P" 인 경우 (생년월일(6)자리 입력 (형식 : YYMMDD))
+        identityNum ="900101"
+
+        # 팝빌 회원 아이디
+        userId = settings.testUserID
+
+        depositorInfo = accountCheckService.checkDepositorInfo(CorpNum, bankCode, accountNumber, identityNumType, identityNum, userId)
+
+        return render(request, 'AccountCheck/CheckDepositorInfo.html', {'depositorInfo': depositorInfo})
 
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
@@ -69,13 +106,16 @@ def getChargeInfo(request):
     - https://docs.popbill.com/closedown/python/api#GetChargeInfo
     """
     try:
-        # 팝빌회원 사업자번호
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
+        
+        # 서비스 유형, 계좌성명조회 - 성명 , 계좌실명조회 - 실명 	
+        serviceType = "성명"
 
-        response = accountCheckService.getChargeInfo(CorpNum, UserID)
+        response = accountCheckService.getChargeInfo(CorpNum, UserID, serviceType)
 
         return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
@@ -88,10 +128,16 @@ def getUnitCost(request):
     - https://docs.popbill.com/closedown/python/api#GetUnitCost
     """
     try:
-        # 팝빌회원 사업자번호
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        result = accountCheckService.getUnitCost(CorpNum)
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        # 서비스 유형, 계좌성명조회 - 성명 , 계좌실명조회 - 실명 	
+        serviceType = "성명"
+
+        result = accountCheckService.getUnitCost(CorpNum, UserID, serviceType)
 
         return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
