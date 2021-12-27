@@ -34,6 +34,7 @@ urlpatterns = [
 
     # 부가 기능
     url(r'^GetAccessURL', views.getAccessURL, name='GetAccessURL'),
+    url(r'^GetSealURL', views.getSealURL, name='GetSealURL'),
     url(r'^AttachFile$', views.attachFile, name='AttachFile'),
     url(r'^DeleteFile$', views.deleteFile, name='DeleteFile'),
     url(r'^GetFiles$', views.getFiles, name='GetFiles'),
