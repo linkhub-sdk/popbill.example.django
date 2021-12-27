@@ -13,6 +13,8 @@
                         <li> templateName (템플릿 제목) : {{ template.templateName }}</li>
                         <li> template (템플릿 내용) : {{ template.template }}</li>
                         <li> plusFriendID (카카오톡 채널 아이디) : {{ template.plusFriendID }}</li>
+                        <li> ads (광고 메시지) : {{ template.ads }}</li>
+                        <li> appendix (부가 메시지) : {{ template.appendix }}</li>
                         {% for btns in template.btns %}
                             <fieldset class="fieldset2">
                                 <legend> btns ([배열] 버튼 목록) [{{ forloop.counter }}]</legend>
