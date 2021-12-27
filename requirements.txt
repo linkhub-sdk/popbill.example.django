@@ -1,2 +1,2 @@
-popbill==1.51.1
+popbill==1.52.0
 django==1.11.29
