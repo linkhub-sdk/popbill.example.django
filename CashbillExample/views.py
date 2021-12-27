@@ -70,7 +70,7 @@ def registIssue(request):
         cashbill = Cashbill(
 
             # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="20211227-DJango003",
+            mgtKey="20211227-DJango004",
 
             # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
@@ -108,19 +108,22 @@ def registIssue(request):
             # [필수] 거래금액, 공급가액+세액+봉사료
             totalAmount="11000",
 
-            # 발행자 사업자번호
+            # 가맹점 사업자번호
             franchiseCorpNum=CorpNum,
 
-            # 발행자 상호
-            franchiseCorpName="발행자 상호",
+            # 가맹점 종사업장 식별번호
+            franchiseTaxRegID="",
 
-            # 발행자 대표자성명
+            # 가맹점 상호
+            franchiseCorpName="가맹점 상호",
+
+            # 가맹점 대표자성명
             franchiseCEOName="발행 대표자 성명",
 
-            # 발행자 주소
-            franchiseAddr="발행자 주소",
+            # 가맹점 주소
+            franchiseAddr="가맹점 주소",
 
-            # 발행자 연락처
+            # 가맹점 연락처
             franchiseTEL="07012345678",
 
             # 주문자명
@@ -205,6 +208,9 @@ def register(request):
 
             # 가맹점 사업자번호
             franchiseCorpNum=CorpNum,
+
+            # 가맹점 종사업장 식별번호
+            franchiseTaxRegID="",
 
             # 가맹점 상호
             franchiseCorpName="가맹점 상호",
@@ -303,6 +309,9 @@ def update(request):
 
             # 가맹점 사업자번호
             franchiseCorpNum="1234567890",
+
+            # 가맹점 종사업장 식별번호
+            franchiseTaxRegID="",
 
             # 가맹점 상호
             franchiseCorpName="가맹점 상호_수정",
@@ -636,7 +645,7 @@ def getDetailInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20211227-001"
+        MgtKey = "20211227-DJango004"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
 
@@ -693,8 +702,12 @@ def search(request):
         # 거래유형 배열, [N-일반 / B-도서공연 / T-대중교통]
         TradeOpt = ["N", "B", "T"]
 
+        # 가맹점 종사업장 번호
+        # └ 다수건 검색시 콤마(",")로 구분. 예) 1234,1000
+        FranchiseTaxRegID = ""
+
         response = cashbillService.search(CorpNum, DType, SDate, EDate, State, TradeType,
-                                          TradeUsage, TaxationType, Page, PerPage, Order, UserID, QString, TradeOpt)
+                                          TradeUsage, TaxationType, Page, PerPage, Order, UserID, QString, TradeOpt, FranchiseTaxRegID)
 
         return render(request, 'Cashbill/Search.html', {'response': response})
     except PopbillException as PE:
