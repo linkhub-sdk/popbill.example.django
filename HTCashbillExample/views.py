@@ -45,10 +45,10 @@ def requestJob(request):
         Type = "SELL"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20190101"
+        SDate = "20211201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20190116"
+        EDate = "20211230"
 
         result = htCashbillService.requestJob(CorpNum, Type, SDate, EDate, UserID)
 

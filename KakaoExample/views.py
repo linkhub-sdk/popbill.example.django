@@ -275,7 +275,7 @@ def sendATS_multi(request):
                     rcvnm="linkhub",  # 수신자 이름
                     msg=content,  # 알림톡 내용 (최대 1000자)
                     altmsg="수신번호 010-456-456 알림톡 대체문자",  # 대체문자 내용 (최대 2000byte)
-                    interOPRefKey ="202007-"+str(x), # 파트너 지정키, 수신자 구분용 메모
+                    interOPRefKey ="2021-"+str(x), # 파트너 지정키, 수신자 구분용 메모
                 )
             )
 
@@ -930,7 +930,7 @@ def cancelReserveRN(request):
         CorpNum = settings.testCorpNum
 
         # 예약전송 요청시 할당한 전송요청번호(requestNum)
-        requestNum = "20190116-001"
+        requestNum = "20211227-001"
 
         result = kakaoService.cancelReserveRN(CorpNum, requestNum)
 
@@ -968,7 +968,7 @@ def getMessagesRN(request):
         CorpNum = settings.testCorpNum
 
         # 알림톡/친구톡 전송 요청시 할당한 전송요청번호(requestNum)
-        requestNum = "20190123-123"
+        requestNum = "20211201-123"
 
         kakaoInfo = kakaoService.getMessagesRN(CorpNum, requestNum)
 
@@ -991,10 +991,10 @@ def search(request):
         UserID = settings.testUserID
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20190101"
+        SDate = "20211201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20190116"
+        EDate = "20211227"
 
         # 전송상태 배열 [0-대기, 1-전송중, 2-성공, 3-대체 4-실패, 5-취소]
         State = ["1", "2", "3", "4", "5"]

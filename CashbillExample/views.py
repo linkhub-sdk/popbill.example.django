@@ -34,7 +34,7 @@ def checkMgtKeyInUse(request):
         CorpNum = settings.testCorpNum
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         bIsInUse = cashbillService.checkMgtKeyInUse(CorpNum, MgtKey)
         if bIsInUse:
@@ -257,7 +257,7 @@ def update(request):
         CorpNum = settings.testCorpNum
 
         # [필수] 수정하고자하는 현금영수증 문서번호
-        MgtKey = '20190116-002'
+        MgtKey = '20211227-002'
 
         # 현금영수증 정보
         cashbill = Cashbill(
@@ -378,7 +378,7 @@ def cancelIssue(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         # 메모
         Memo = "발행취소 메모"
@@ -401,7 +401,7 @@ def delete(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         response = cashbillService.delete(CorpNum, MgtKey)
 
@@ -516,13 +516,13 @@ def revokeRegister(request):
         UserID = settings.testUserID
 
         # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20190116-103"
+        mgtKey = "20211227-103"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
         orgConfirmNum = "158814020"
 
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20190115"
+        orgTradeDate = "20210115"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -548,13 +548,13 @@ def revokeRegister_part(request):
         UserID = settings.testUserID
 
         # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20190123-123"
+        mgtKey = "20211201-123"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
         orgConfirmNum = "760661092"
 
         # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20190122"
+        orgTradeDate = "20210122"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -595,7 +595,7 @@ def getInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         cashbillInfo = cashbillService.getInfo(CorpNum, MgtKey)
 
@@ -615,9 +615,9 @@ def getInfos(request):
 
         # 현금영수증 문서번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20190116-001")
-        MgtKeyList.append("20190116-002")
-        MgtKeyList.append("20190116-003")
+        MgtKeyList.append("20211227-001")
+        MgtKeyList.append("20211227-002")
+        MgtKeyList.append("20211227-003")
 
         InfoList = cashbillService.getInfos(CorpNum, MgtKeyList)
 
@@ -636,7 +636,7 @@ def getDetailInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
 
@@ -661,10 +661,10 @@ def search(request):
         DType = "R"
 
         # 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20190101"
+        SDate = "20211201"
 
         # 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20190116"
+        EDate = "20211230"
 
         # 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용 가능
         State = ["3**", "4**"]
@@ -711,7 +711,7 @@ def getLogs(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         LogList = cashbillService.getLogs(CorpNum, MgtKey)
 
@@ -754,7 +754,7 @@ def getPopUpURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = cashbillService.getPopUpURL(CorpNum, MgtKey)
 
@@ -773,7 +773,7 @@ def getViewURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = cashbillService.getViewURL(CorpNum, MgtKey)
 
@@ -791,7 +791,7 @@ def getPDFURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20200728-02"
+        MgtKey = "20211201-02"
 
         url = cashbillService.getPDFURL(CorpNum, MgtKey)
 
@@ -810,7 +810,7 @@ def getPrintURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = cashbillService.getPrintURL(CorpNum, MgtKey)
 
@@ -830,7 +830,7 @@ def getEPrintURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = cashbillService.getEPrintURL(CorpNum, MgtKey)
 
@@ -851,9 +851,9 @@ def getMassPrintURL(request):
 
         # 문서번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20190116-001")
-        MgtKeyList.append("20190116-002")
-        MgtKeyList.append("20190116-003")
+        MgtKeyList.append("20211227-001")
+        MgtKeyList.append("20211227-002")
+        MgtKeyList.append("20211227-003")
 
         url = cashbillService.getMassPrintURL(CorpNum, MgtKeyList)
 
@@ -873,7 +873,7 @@ def getMailURL(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = cashbillService.getMailURL(CorpNum, MgtKey)
 
@@ -913,7 +913,7 @@ def assignMgtKey(request):
         ItemKey = '020072815420200001'
 
         # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 최대 24자리, 사업자번호별 중복없는 고유번호 할당
-        MgtKey = "20200728-03"
+        MgtKey = "20211230-03"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -934,7 +934,7 @@ def sendEmail(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         # 수신 메일주소
         Receiver = "test@test.com"
@@ -961,7 +961,7 @@ def sendSMS(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         # 발신번호
         Sender = "07012345678"
@@ -994,7 +994,7 @@ def sendFAX(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         # 발신번호
         Sender = "07012345678"

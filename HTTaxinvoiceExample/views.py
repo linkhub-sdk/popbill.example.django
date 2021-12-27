@@ -48,10 +48,10 @@ def requestJob(request):
         DType = "S"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20190901"
+        SDate = "20211201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20191231"
+        EDate = "20211230"
 
         result = htTaxinvoiceService.requestJob(CorpNum, Type, DType, SDate, EDate, UserID)
 
@@ -212,7 +212,7 @@ def getTaxinvoice(request):
         UserID = settings.testUserID
 
         # 전자세금계산서 국세청승인번호
-        NTSConfirmNum = "20190116410002030000103d"
+        NTSConfirmNum = "20211227410002030000103d"
 
         taxinvoice = htTaxinvoiceService.getTaxinvoice(CorpNum, NTSConfirmNum, UserID)
 
@@ -234,7 +234,7 @@ def getXML(request):
         UserID = settings.testUserID
 
         # 전자세금계산서 국세청승인번호
-        NTSConfirmNum = "20190116410002030000103d"
+        NTSConfirmNum = "20211227410002030000103d"
 
         response = htTaxinvoiceService.getXML(CorpNum, NTSConfirmNum, UserID)
 
@@ -254,7 +254,7 @@ def getPopUpURL(request):
         CorpNum = settings.testCorpNum
 
         # 조회할 전자세금계산서 국세청 승인번호
-        NTSConfirmNum = "20190116410002030000103d"
+        NTSConfirmNum = "20211227410002030000103d"
 
         url = htTaxinvoiceService.getPopUpURL(CorpNum, NTSConfirmNum)
 
@@ -273,7 +273,7 @@ def getPrintURL(request):
         CorpNum = settings.testCorpNum
 
         # 전자세금계산서 국세청 승인번호
-        NTSConfirmNum = "20190116410002030000103d"
+        NTSConfirmNum = "20211227410002030000103d"
 
         url = htTaxinvoiceService.getPrintURL(CorpNum, NTSConfirmNum)
 

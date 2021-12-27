@@ -42,7 +42,7 @@ def checkMgtKeyInUse(request):
         MgtKeyType = "SELL"
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         keyInUse = taxinvoiceService.checkMgtKeyInUse(CorpNum, MgtKeyType, MgtKey)
 
@@ -67,7 +67,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # [필수] 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "20200728-03"
+        MgtKey = "20211201-03"
 
         # 지연발행 강제여부
         # 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
@@ -92,8 +92,8 @@ def registIssue(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
-            writeDate="20210428",
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20211201
+            writeDate="20211201",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -357,8 +357,8 @@ def bulkSubmit(request):
         for i in range(0,20):
             taxinvoicelist.append(
                 Taxinvoice(
-                    # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
-                    writeDate="20210428",
+                    # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20211201
+                    writeDate="20211201",
 
                     # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
                     # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -578,7 +578,7 @@ def register(request):
 
         # [필수] 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "20190307-12"
+        MgtKey = "20211201-12"
 
         # 거래명세서 동시작성여부
         writeSpecification = False
@@ -589,8 +589,8 @@ def register(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
-            writeDate="20210428",
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20211201
+            writeDate="20211201",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -845,7 +845,7 @@ def update(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -853,8 +853,8 @@ def update(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
-            writeDate="20210428",
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20211201
+            writeDate="20211201",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -1110,7 +1110,7 @@ def issue(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190307-12"
+        MgtKey = "20211201-12"
 
         # 메모
         Memo = "발행 메모"
@@ -1149,7 +1149,7 @@ def cancelIssue(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         # 메모
         Memo = "발행취소 메모"
@@ -1179,7 +1179,7 @@ def delete(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1207,13 +1207,13 @@ def registRequest(request):
 
         # [필수] 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "20190116-555"
+        MgtKey = "20211201-555"
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20190116
-            writeDate="20210428",
+            # [필수] 작성일자, 날짜형식(yyyyMMdd) ex)20211201
+            writeDate="20211201",
 
             # [필수] 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -1443,7 +1443,7 @@ def request(request):
         MgtKeyType = "BUY"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 메모
         Memo = "역발행 요청 메모"
@@ -1472,7 +1472,7 @@ def cancelRequest(request):
         MgtKeyType = "BUY"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 메모
         Memo = "처리시 메모"
@@ -1501,7 +1501,7 @@ def refuse(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 메모
         Memo = "발행 메모"
@@ -1531,7 +1531,7 @@ def sendToNTS(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1556,7 +1556,7 @@ def getInfo(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-200"
+        MgtKey = "20211201-200"
 
         taxinvoiceInfo = taxinvoiceService.getInfo(CorpNum, MgtKeyType, MgtKey)
 
@@ -1579,9 +1579,9 @@ def getInfos(request):
 
         # 문서번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20190116-001")
-        MgtKeyList.append("20190116-002")
-        MgtKeyList.append("20190116-003")
+        MgtKeyList.append("20211201-001")
+        MgtKeyList.append("20211201-002")
+        MgtKeyList.append("20211201-003")
 
         InfoList = taxinvoiceService.getInfos(CorpNum, MgtKeyType, MgtKeyList)
 
@@ -1603,7 +1603,7 @@ def getDetailInfo(request):
         MgtKeyType = "SELL"
 
         # 문서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         taxinvoice = taxinvoiceService.getDetailInfo(CorpNum, MgtKeyType, MgtKey)
 
@@ -1631,10 +1631,10 @@ def search(request):
         DType = "W"
 
         # [필수] 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20200701"
+        SDate = "20211201"
 
         # [필수] 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20200731"
+        EDate = "20211230"
 
         # 세금계산서 상태코드 배열, 2,3번째 자리에 와일드카드(*) 사용가능
         State = ["3**", "6**"]
@@ -1707,7 +1707,7 @@ def getLogs(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         LogList = taxinvoiceService.getLogs(CorpNum, MgtKeyType, MgtKey)
 
@@ -1753,7 +1753,7 @@ def getPopUpURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         url = taxinvoiceService.getPopUpURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1775,7 +1775,7 @@ def getViewURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20191030-011"
+        MgtKey = "20211201-011"
 
         url = taxinvoiceService.getViewURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1796,7 +1796,7 @@ def getPDFURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         url = taxinvoiceService.getPDFURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1818,7 +1818,7 @@ def getPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         url = taxinvoiceService.getPrintURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1840,7 +1840,7 @@ def getOldPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         url = taxinvoiceService.getOldPrintURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1862,7 +1862,7 @@ def getEPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         url = taxinvoiceService.getEPrintURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1886,9 +1886,9 @@ def getMassPrintURL(request):
 
         # 인쇄할 문서번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20190116-001")
-        MgtKeyList.append("20190116-002")
-        MgtKeyList.append("20190116-003")
+        MgtKeyList.append("20211201-001")
+        MgtKeyList.append("20211201-002")
+        MgtKeyList.append("20211201-003")
 
         url = taxinvoiceService.getMassPrintURL(CorpNum, MgtKeyType, MgtKeyList)
 
@@ -1911,7 +1911,7 @@ def getMailURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         url = taxinvoiceService.getMailURL(CorpNum, MgtKeyType, MgtKey)
 
@@ -1973,7 +1973,7 @@ def attachFile(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 파일경로
         FilePath = "./TaxinvoiceExample/static/image/attachfile.png"
@@ -2002,7 +2002,7 @@ def deleteFile(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 첨부파일 아이디, GetFiles API의 응답항목(attachedFile) 확인.
         FileID = "8D13F961-CD77-4856-9501-1FB59CAFEE9E.PBF"
@@ -2031,7 +2031,7 @@ def getFiles(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         fileList = taxinvoiceService.getFiles(CorpNum, MgtKeyType, MgtKey)
 
@@ -2053,7 +2053,7 @@ def sendEmail(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 수신메일주소
         ReceiverMail = "test@test.com"
@@ -2083,7 +2083,7 @@ def sendSMS(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 발신번호
         Sender = "070-4304-2991"
@@ -2119,7 +2119,7 @@ def sendFAX(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211201-002"
 
         # 발신번호
         Sender = "070-4304-2991"
@@ -2150,13 +2150,13 @@ def attachStatement(request):
         MgtKeyType = "SELL"
 
         # 세금계산서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
         ItemCode = "121"
 
         # 전자명세서 문서번호
-        StmtMgtKey = "20190115-001"
+        StmtMgtKey = "20211201-001"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -2182,13 +2182,13 @@ def detachStatement(request):
         MgtKeyType = "SELL"
 
         # 문서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         # 전자명세서 종류코드, 121-거래명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
         ItemCode = "121"
 
         # 전자명세서 문서번호
-        StmtMgtKey = "20190115-001"
+        StmtMgtKey = "20211201-001"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -2234,7 +2234,7 @@ def assignMgtKey(request):
 
         # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
         # 사업자번호별 중복없는 고유번호 할당
-        MgtKey = "20190116-003"
+        MgtKey = "20211201-003"
 
         # 팝빌회원 아이디
         UserID = settings.testUserID

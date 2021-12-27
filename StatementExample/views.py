@@ -34,7 +34,7 @@ def checkMgtKeyInUse(request):
         CorpNum = settings.testCorpNum
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 발신자별 고유번호 생성
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
@@ -634,7 +634,7 @@ def cancel(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         # 메모
         Memo = "발행취소 메모"
@@ -661,7 +661,7 @@ def delete(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         response = statementService.delete(CorpNum, ItemCode, MgtKey)
 
@@ -683,7 +683,7 @@ def getInfo(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190124-900"
+        MgtKey = "20211201-900"
 
         statementInfo = statementService.getInfo(CorpNum, ItemCode, MgtKey)
 
@@ -706,9 +706,9 @@ def getInfos(request):
 
         # 문서번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20190116-001")
-        MgtKeyList.append("20190124-900")
-        MgtKeyList.append("20190124-901")
+        MgtKeyList.append("20211201-001")
+        MgtKeyList.append("20211201-900")
+        MgtKeyList.append("20211201-901")
 
         InfoList = statementService.getInfos(CorpNum, ItemCode, MgtKeyList)
 
@@ -730,7 +730,7 @@ def getDetailInfo(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190124-900"
+        MgtKey = "20211201-900"
 
         statement = statementService.getDetailInfo(CorpNum, ItemCode, MgtKey)
 
@@ -755,10 +755,10 @@ def search(request):
         DType = "W"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20190101"
+        SDate = "20211201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20190116"
+        EDate = "20211227"
 
         # 명세서 상태코드, 2,3번째 자리에 와일드카드(*) 사용 가능
         State = ["2**", "3**"]
@@ -799,7 +799,7 @@ def getLogs(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         LogList = statementService.getLogs(CorpNum, ItemCode, MgtKey)
 
@@ -845,7 +845,7 @@ def getPopUpURL(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = statementService.getPopUpURL(CorpNum, ItemCode, MgtKey)
 
@@ -867,7 +867,7 @@ def getViewURL(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = statementService.getViewURL(CorpNum, ItemCode, MgtKey)
 
@@ -890,7 +890,7 @@ def getPrintURL(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = statementService.getPrintURL(CorpNum, ItemCode, MgtKey)
 
@@ -914,7 +914,7 @@ def getEPrintURL(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = statementService.getEPrintURL(CorpNum, ItemCode, MgtKey)
 
@@ -938,9 +938,9 @@ def getMassPrintURL(request):
 
         # 인쇄할 문서번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20190116-001")
-        MgtKeyList.append("20190116-002")
-        MgtKeyList.append("20190116-003")
+        MgtKeyList.append("20211227-001")
+        MgtKeyList.append("20211227-002")
+        MgtKeyList.append("20211227-003")
 
         url = statementService.getMassPrintURL(CorpNum, ItemCode, MgtKeyList)
 
@@ -963,7 +963,7 @@ def getMailURL(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         url = statementService.getMailURL(CorpNum, ItemCode, MgtKey)
 
@@ -1005,7 +1005,7 @@ def attachFile(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         # 파일경로
         FilePath = "./StatementExample/static/image/attachfile.png"
@@ -1034,7 +1034,7 @@ def deleteFile(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         # 삭제할 FileID, 첨부파일목록(getFiles API) 응답 전문의 attachedFile 값
         FileID = "0DD20B73-5654-488E-A683-0ABED95C7D07.PBF"
@@ -1063,7 +1063,7 @@ def getFiles(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         fileList = statementService.getFiles(CorpNum, ItemCode, MgtKey)
 
@@ -1085,7 +1085,7 @@ def sendEmail(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         # 수신메일주소
         ReceiverMail = "test@test.com"
@@ -1115,7 +1115,7 @@ def sendSMS(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         # 발신번호
         Sender = "07000001234"
@@ -1150,7 +1150,7 @@ def sendFAX(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227-002"
 
         # 발신번호
         Sender = "070222111"
@@ -1208,7 +1208,7 @@ def FAXSend(request):
             itemCode=121,
 
             # [필수] 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20190116-100",
+            mgtKey="20211227-100",
 
             # [필수] 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
@@ -1361,13 +1361,13 @@ def attachStatement(request):
         ItemCode = "121"
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211227-001"
 
         # 첨부할 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         SubItemCode = "121"
 
         # 첨부할 전자명세서 문서번호
-        SubMgtKey = "20190115-001"
+        SubMgtKey = "20211201-001"
 
         response = statementService.attachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
 
@@ -1392,13 +1392,13 @@ def detachStatement(request):
         ItemCode = "121"
 
         # 전자명세서 문서번호
-        MgtKey = "20190116-001"
+        MgtKey = "20211201-001"
 
         # 첨부해제할 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         SubItemCode = "121"
 
         # 첨부해제할 전자명세서 문서번호
-        SubMgtKey = "20190115-001"
+        SubMgtKey = "20211201-001"
 
         response = statementService.detachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
 

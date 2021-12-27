@@ -512,7 +512,7 @@ def cancelReserveRN(request):
         CorpNum = settings.testCorpNum
 
         # 예약문자전송 요청시 할당한 전송요청번호
-        requestNum = "20190116-001"
+        requestNum = "20211227-001"
 
         response = messageService.cancelReserveRN(CorpNum, requestNum)
 
@@ -550,7 +550,7 @@ def getMessagesRN(request):
         CorpNum = settings.testCorpNum
 
         # 문자전송 요청 시 할당한 전송요청번호(requestNum)
-        requestNum = '20190116-001'
+        requestNum = '20211227-001'
 
         resultList = messageService.getMessagesRN(CorpNum, requestNum)
 
@@ -594,10 +594,10 @@ def search(request):
         UserID = settings.testUserID
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20190101"
+        SDate = "20211201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20190116"
+        EDate = "20211227"
 
         # 전송상태 배열, 1-대기, 2-성공, 3-실패, 4-취소
         State = ['1', '2', '3', '4']
