@@ -70,7 +70,7 @@ def registIssue(request):
         cashbill = Cashbill(
 
             # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="20191030-001",
+            mgtKey="20211227-DJango003",
 
             # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
@@ -146,7 +146,7 @@ def registIssue(request):
 
         response = cashbillService.registIssue(CorpNum, cashbill, Memo, UserID, EmailSubject)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -165,7 +165,7 @@ def register(request):
         cashbill = Cashbill(
 
             # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="20190116-002",
+            mgtKey="20211227_DPY002",
 
             # [필수] 문서형태, [승인거래 / 취소거래]
             tradeType="승인거래",
@@ -355,14 +355,14 @@ def issue(request):
         CorpNum = settings.testCorpNum
 
         # 문서번호
-        MgtKey = "20190116-002"
+        MgtKey = "20211227_DPY001"
 
         # 메모
         Memo = "발행 메모"
 
         response = cashbillService.issue(CorpNum, MgtKey, Memo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -424,13 +424,13 @@ def revokeRegistIssue(request):
         UserID = settings.testUserID
 
         # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20190116-101"
+        mgtKey = "20211224_RevokePY001"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "158814020"
+        orgConfirmNum = "TB0000014"
 
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20190115"
+        orgTradeDate = "20211224"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -441,7 +441,7 @@ def revokeRegistIssue(request):
         response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
                                                      UserID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -460,13 +460,13 @@ def revokeRegistIssue_part(request):
         UserID = settings.testUserID
 
         # [필수] 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20190116-102"
+        mgtKey = "20211224_RevokePY002"
 
         # [필수] 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "158814020"
+        orgConfirmNum = "TB0000014"
 
         # [필수] 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20190115"
+        orgTradeDate = "20211224"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -497,7 +497,7 @@ def revokeRegistIssue_part(request):
                                                      UserID,
                                                      isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

@@ -14,6 +14,12 @@
                 {% if invoiceNum != None %}
                     <li>팝빌 승인번호 (Response.invoiceNum) : {{ invoiceNum }}</li>
                 {% endif %}
+                {% if confirmNum != None %}
+                    <li>국세청 승인번호 (Response.confirmNum) : {{ confirmNum }}</li>
+                {% endif %}
+                {% if tradeDate != None %}
+                    <li>거래일자 (Response.tradeDate) : {{ tradeDate }}</li>
+                {% endif %}
             </ul>
         </fieldset>
     </div>
