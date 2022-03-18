@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 현금영수증 SDK Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>초대량 발행 접수</legend>
+            <ul>
+                <li>응답코드 (BulkResponse.code) : {{ code }}</li>
+                <li>응답메시지 (BulkResponse.message) : {{ message }}</li>
+                <li>접수아이디 (BulkResponse.receiptID) : {{ receiptID }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
