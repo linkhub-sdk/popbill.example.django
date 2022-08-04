@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>상세정보 확인 (XML)</legend>
+            <ul>
+                <li> code (응답코드) : {{ taxinvoiceXML.code }}</li>
+                <li> message (응답메시지) : {{ taxinvoiceXML.message }}</li>
+                <li> retObject (전자세금계산서 XML문서) : {{ taxinvoiceXML.retObject }}</li>
+        </fieldset>
+    </div>
+{% endblock contents %}

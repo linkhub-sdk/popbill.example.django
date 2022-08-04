@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^GetInfo$', views.getInfo, name='GetInfo'),
     url(r'^GetInfos$', views.getInfos, name='GetInfos'),
     url(r'^GetDetailInfo$', views.getDetailInfo, name='GetDetailInfo'),
+    url(r'^GetXML$', views.getXML, name='GetXML'),
     url(r'^Search$', views.search, name='Search'),
     url(r'^GetLogs$', views.getLogs, name='GetLogs'),
     url(r'^GetURL$', views.getURL, name='GetURL'),

@@ -1667,6 +1667,27 @@ def getDetailInfo(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getXML(request):
+    """
+    세금계산서 1건의 상세정보를 XML로 반환합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetXML
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        MgtKeyType = "SELL"
+
+        # 문서 문서번호
+        MgtKey = "20220803-002"
+
+        taxinvoiceXML = taxinvoiceService.getXML(CorpNum, MgtKeyType, MgtKey)
+
+        return render(request, 'Taxinvoice/GetXML.html', {'taxinvoiceXML': taxinvoiceXML})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
 def search(request):
     """
     검색조건에 해당하는 세금계산서를 조회합니다. (조회기간 단위 : 최대 6개월)
