@@ -31,10 +31,11 @@ def checkAccountInfo(request):
         # 팝빌회원 사업자번호 ('-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        # 기관코드
+        # 조회할 기관코드
+        # 조회 가능한 금융기관 : [https://docs.popbill.com/accountcheck/?lang=python#BankCodeList]
         bankCode = ""
 
-        # 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
+        # 조회할 기관의 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
         accountNumber = ""
 
         accountInfo = accountCheckService.checkAccountInfo(CorpNum, bankCode, accountNumber)
@@ -53,10 +54,11 @@ def checkDepositorInfo(request):
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        # 기관코드
+        # 조회할 기관코드
+        # 조회 가능한 금융기관 : [https://docs.popbill.com/accountcheck/?lang=python#BankCodeList]
         bankCode = ""
 
-        # 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
+        # 조회할 기관의 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
         accountNumber = ""
 
         # 등록번호 유형 ( P / B 중 택 1 ,  P = 개인, B = 사업자)

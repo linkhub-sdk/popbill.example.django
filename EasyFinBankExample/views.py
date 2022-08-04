@@ -454,7 +454,7 @@ def getFlatRatePopUpURL(request):
 
 def getFlatRateState(request):
     """
-    정액제 서비스 이용상태를 확인합니다.
+    계좌조회 정액제 서비스 상태를 확인합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetFlatRateState
     """
     try:

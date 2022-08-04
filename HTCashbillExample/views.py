@@ -182,7 +182,7 @@ def getCertificatePopUpURL(request):
 
 def getCertificateExpireDate(request):
     """
-    팝빌에 등록되어 있는 홈택스 인증서의 만료일시를 확인합니다.
+    팝빌에 등록된 인증서 만료일자를 확인합니다.
     - https://docs.popbill.com/htcashbill/python/api#GetCertificateExpireDate
     """
     try:

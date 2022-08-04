@@ -99,6 +99,7 @@ def getATSTemplateMgtURL(request):
     """
     알림톡 템플릿을 신청하고 승인심사 결과를 확인하며 등록 내역을 확인하는 알림톡 템플릿 관리 페이지 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+    - 승인된 알림톡 템플릿은 수정이 불가하고, 변경이 필요한 경우 새롭게 템플릿 신청을 해야합니다.
     - https://docs.popbill.com/kakao/python/api#GetATSTemplateMgtURL
     """
     try:
@@ -222,7 +223,6 @@ def sendATS_one(request):
 def sendATS_multi(request):
     """
     승인된 템플릿의 내용을 작성하여 다수건의 알림톡 전송을 팝빌에 접수하며, 수신자 별로 개별 내용을 전송합니다. (최대 1,000건)
-    - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendATS_multi
     """
@@ -325,7 +325,6 @@ def sendATS_multi(request):
 def sendATS_same(request):
     """
     승인된 템플릿 내용을 작성하여 다수건의 알림톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
-    - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendATS_same
     """
@@ -457,7 +456,9 @@ def sendFTS_one(request):
             )
         )
 
-        # 광고여부
+        # 광고성 메시지 여부 ( true , false 중 택 1)
+        # └ true = 광고 , false = 일반
+        # - 미입력 시 기본값 false 처리
         adsYN = False
 
         # 전송요청번호
@@ -556,7 +557,9 @@ def sendFTS_multi(request):
             )
         )
 
-        # 광고여부
+        # 광고성 메시지 여부 ( true , false 중 택 1)
+        # └ true = 광고 , false = 일반
+        # - 미입력 시 기본값 false 처리
         adsYN = False
 
         # 전송요청번호
@@ -633,7 +636,9 @@ def sendFTS_same(request):
             )
         )
 
-        # 광고여부
+        # 광고성 메시지 여부 ( true , false 중 택 1)
+        # └ true = 광고 , false = 일반
+        # - 미입력 시 기본값 false 처리
         adsYN = False
 
         # 전송요청번호
@@ -717,7 +722,9 @@ def sendFMS_one(request):
             )
         )
 
-        # 광고여부
+        # 광고성 메시지 여부 ( true , false 중 택 1)
+        # └ true = 광고 , false = 일반
+        # - 미입력 시 기본값 false 처리
         adsYN = False
 
         # 전송요청번호
@@ -801,7 +808,9 @@ def sendFMS_multi(request):
             )
         )
 
-        # 광고여부
+        # 광고성 메시지 여부 ( true , false 중 택 1)
+        # └ true = 광고 , false = 일반
+        # - 미입력 시 기본값 false 처리
         adsYN = False
 
         # 전송요청번호
@@ -822,6 +831,7 @@ def sendFMS_same(request):
     이미지가 첨부된 다수건의 친구톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
     - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
+    - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
     - https://docs.popbill.com/kakao/python/api#SendFMS_same
     """
     try:
@@ -888,7 +898,9 @@ def sendFMS_same(request):
             )
         )
 
-        # 광고여부
+        # 광고성 메시지 여부 ( true , false 중 택 1)
+        # └ true = 광고 , false = 일반
+        # - 미입력 시 기본값 false 처리
         adsYN = False
 
         # 전송요청번호

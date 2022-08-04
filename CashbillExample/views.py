@@ -160,7 +160,7 @@ def bulkSubmit(request):
 
         #제출아이디
         #최대 36자리 영문, 숫자, '-' 조합으로 구성
-        submitID = 'DJANGO-BULK'
+        submitID = 'PYTHON-DJANGO-BULK'
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -268,7 +268,7 @@ def getBulkResult(request):
 
         #제출아이디
         #최대 36자리 영문, 숫자, '-' 조합으로 구성
-        submitID = 'Django001'
+        submitID = 'PYTHON-DJANGO-BULK'
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -350,10 +350,10 @@ def revokeRegistIssue(request):
         smssendYN = False
 
         # 즉시발행 메모
-        memo = "현금영수증 즉시발행 메모"
+        memo = "취소현금영수증 즉시발행 메모"
 
         response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
-                                                     UserID)
+                                                        UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
     except PopbillException as PE:
@@ -390,7 +390,7 @@ def revokeRegistIssue_part(request):
         smssendYN = False
 
         # 현금영수증 상태 이력을 관리하기 위한 메모
-        memo = "현금영수증 즉시발행 메모"
+        memo = "부분취소 현금영수증 즉시발행 메모"
 
         # 현금영수증 취소유형 : true / false 중 택 1
         # └ true = 부분 취소, false = 전체 취소
@@ -423,8 +423,7 @@ def revokeRegistIssue_part(request):
         totalAmount = "11000"
 
         response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
-                                                     UserID,
-                                                     isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
+                                                    UserID, isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
     except PopbillException as PE:
@@ -483,7 +482,7 @@ def getDetailInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-DJango004"
+        MgtKey = "20220803-001"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
 
@@ -554,7 +553,7 @@ def search(request):
         FranchiseTaxRegID = ""
 
         response = cashbillService.search(CorpNum, DType, SDate, EDate, State, TradeType,
-                                          TradeUsage, TaxationType, Page, PerPage, Order, UserID, QString, TradeOpt, FranchiseTaxRegID)
+                                            TradeUsage, TaxationType, Page, PerPage, Order, UserID, QString, TradeOpt, FranchiseTaxRegID)
 
         return render(request, 'Cashbill/Search.html', {'response': response})
     except PopbillException as PE:
