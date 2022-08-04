@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^ListPlusFriendID$', views.listPlusFriendID, name='ListPlusFriendID'),
 
     # 발신번호 관리
+    url(r'^CheckSenderNumber', views.checkSenderNumber, name='CheckSenderNumber'),
     url(r'^GetSenderNumberMgtURL', views.getSenderNumberMgtURL, name='GetSenderNumberMgtURL'),
     url(r'^GetSenderNumberList$', views.getSenderNumberList, name='GetSenderNumberLis'),
 

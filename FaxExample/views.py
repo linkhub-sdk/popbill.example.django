@@ -22,6 +22,25 @@ faxService.UseLocalTimeYN = settings.UseLocalTimeYN
 def index(request):
     return render(request, 'Fax/Index.html', {})
 
+def checkSenderNumber(request):
+    '''
+    팩스 발신번호 등록여부를 확인합니다.
+    - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
+    - https://docs.popbill.com/fax/python/api#CheckSenderNumber
+    '''
+
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 확인할 발신번호
+        senderNumber = ""
+
+        result = faxService.checkSenderNumber(CorpNum, senderNumber)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def getSenderNumberMgtURL(request):
     """
@@ -528,7 +547,7 @@ def cancelReserveRN(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-def GetFaxResult(request):
+def getFaxResult(request):
     """
     팝빌에서 반환 받은 접수번호를 통해 팩스 전송상태 및 결과를 확인합니다.
     - https://docs.popbill.com/fax/python/api#GetFaxResult
@@ -546,7 +565,7 @@ def GetFaxResult(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-def GetFaxResultRN(request):
+def getFaxResultRN(request):
     """
     파트너가 할당한 전송요청 번호를 통해 팩스 전송상태 및 결과를 확인합니다.
     - https://docs.popbill.com/fax/python/api#GetFaxResultRN

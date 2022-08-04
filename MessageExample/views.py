@@ -28,6 +28,26 @@ messageService.UseLocalTimeYN = settings.UseLocalTimeYN
 def index(request):
     return render(request, 'Message/Index.html', {})
 
+def checkSenderNumber(request):
+    '''
+    문자 발신번호 등록여부를 확인합니다.
+    - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
+    - https://docs.popbill.com/message/python/api#CheckSenderNumber
+    '''
+
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 확인할 발신번호
+        senderNumber = ""
+
+        result = messageService.checkSenderNumber(CorpNum, senderNumber)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
 def getSenderNumberMgtURL(request):
     """
     발신번호를 등록하고 내역을 확인하는 문자 발신번호 관리 페이지 팝업 URL을 반환합니다.
@@ -784,7 +804,7 @@ def getChargeInfo(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        
+
         # 문자전송 유형 : SMS / LMS / MMS 중 택 1
         # └ SMS = 단문, LMS = 장문, MMS = 포토문자
         MsgType = "SMS"

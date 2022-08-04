@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 
     # 발신번호 사전등록
+    url(r'^CheckSenderNumber', views.checkSenderNumber, name='CheckSenderNumber'),
     url(r'^GetSenderNumberMgtURL', views.getSenderNumberMgtURL, name='GetSenderNumberMgtURL'),
     url(r'^GetSenderNumberList$', views.getSenderNumberList, name='GetSenderNumberList'),
 
