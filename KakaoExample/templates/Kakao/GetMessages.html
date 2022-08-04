@@ -9,7 +9,7 @@
                 <ul>
                     <li> contentType (카카오톡 유형) : {{ kakaoInfo.contentType }}</li>
                     <li> templateCode (템플릿 코드) : {{ kakaoInfo.templateCode }}</li>
-                    <li> plusFriendID (카카오톡 채널 아이디) : {{ kakaoInfo.plusFriendID }}</li>
+                    <li> plusFriendID (카카오톡 채널 검색용 아이디) : {{ kakaoInfo.plusFriendID }}</li>
                     <li> sendNum (발신번호) : {{ kakaoInfo.sendNum }}</li>
                     <li> altContent ([동보]대체문자 내용) : {{ kakaoInfo.altContent }}</li>
                     <li> altSendType (대체문자 유형) : {{ kakaoInfo.altSendType }}</li>
@@ -41,11 +41,12 @@
                         <ul>
                             <li> state (전송상태 코드) : {{ msgs.state }}</li>
                             <li> sendDT (전송일시) : {{ msgs.sendDT }}</li>
+                            <li> result (알림톡/친구톡 전송결과 코드) : {{ msgs.result }}</li>
+                            <li> resultDT (알림톡/친구톡 전송결과 수신일시) : {{ msgs.resultDT }}</li>
+                            <li> contentType (카카오톡 전송유형) : {{ msgs.contentType }}</li>
                             <li> receiveNum (수신번호) : {{ msgs.receiveNum }}</li>
                             <li> receiveName (수신자명) : {{ msgs.receiveName }}</li>
                             <li> content (알림톡/친구톡 내용) : {{ msgs.content }}</li>
-                            <li> result (알림톡/친구톡 전송결과 코드) : {{ msgs.result }}</li>
-                            <li> resultDT (알림톡/친구톡 전송결과 수신일시) : {{ msgs.resultDT }}</li>
                             <li> altContent (대체문자 내용) : {{ msgs.altContent }}</li>
                             <li> altContentType (대체문자 전송유형) : {{ msgs.altContentType }}</li>
                             <li> altSendDT (대체문자 전송일시) : {{ msgs.altSendDT }}</li>

@@ -25,14 +25,14 @@ def index(request):
 
 def checkCorpNum(request):
     """
-    1건의 휴폐업 정보를 조회합니다.
+    사업자번호 1건에 대한 휴폐업정보를 확인합니다.
     - https://docs.popbill.com/closedown/python/api#CheckCorpNum
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 확인하고자 하는 사업자번호
+        # 조회 사업자번호
         targetCorpNum = "6798700433"
 
         corpState = closedownService.checkCorpNum(CorpNum, targetCorpNum)
@@ -41,10 +41,9 @@ def checkCorpNum(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def checkCorpNums(request):
     """
-    다수의 휴폐업 정보를 조회합니다. (최대 1000건)
+    다수건의 사업자번호에 대한 휴폐업정보를 확인합니다. (최대 1,000건)
     - https://docs.popbill.com/closedown/python/api#CheckCorpNums
     """
     try:
@@ -60,11 +59,25 @@ def checkCorpNums(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getBalance(request):
+    """
+    연동회원의 잔여포인트를 확인합니다.
+    - https://docs.popbill.com/closedown/python/api#GetBalance
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        result = closedownService.getBalance(CorpNum)
+
+        return render(request, 'result.html', {'result': result})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def getChargeURL(request):
     """
-    팝빌 연동회원 포인트 충전 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/closedown/python/api#GetChargeURL
     """
     try:
@@ -80,63 +93,11 @@ def getChargeURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
-def getChargeInfo(request):
-    """
-    연동회원의 휴폐업조회 API 서비스 과금정보를 확인합니다.
-    - https://docs.popbill.com/closedown/python/api#GetChargeInfo
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = closedownService.getChargeInfo(CorpNum, UserID)
-
-        return render(request, 'getChargeInfo.html', {'response': response})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getUnitCost(request):
-    """
-    휴폐업조회 조회단가를 확인합니다.
-    - https://docs.popbill.com/closedown/python/api#GetUnitCost
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        result = closedownService.getUnitCost(CorpNum)
-
-        return render(request, 'result.html', {'result': result})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getBalance(request):
-    """
-    연동회원의 잔여포인트를 확인합니다.
-    - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
-    - https://docs.popbill.com/closedown/python/api#GetBalance
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        result = closedownService.getBalance(CorpNum)
-
-        return render(request, 'result.html', {'result': result})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 def getPaymentURL(request):
     """
-    팝빌 연동회원 포인트 결재내역 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
-    - https://docs.popbill.com/taxinvoice/python/api#GetPaymentURL
+    연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+    - https://docs.popbill.com/closedown/python/api#GetPaymentURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -153,9 +114,9 @@ def getPaymentURL(request):
 
 def getUseHistoryURL(request):
     """
-    팝빌 연동회원 포인트 사용내역 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
-    - https://docs.popbill.com/taxinvoice/python/api#GetUseHistoryURL
+    연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+    - https://docs.popbill.com/closedown/python/api#GetUseHistoryURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -173,7 +134,6 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
     - https://docs.popbill.com/closedown/python/api#GetPartnerBalance
     """
     try:
@@ -186,11 +146,10 @@ def getPartnerBalance(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/closedown/python/api#GetPartnerURL
     """
     try:
@@ -206,10 +165,39 @@ def getPartnerURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getUnitCost(request):
+    """
+    휴폐업 조회시 과금되는 포인트 단가를 확인합니다.
+    - https://docs.popbill.com/closedown/python/api#GetUnitCost
+    """
+    try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
+        CorpNum = settings.testCorpNum
+
+        result = closedownService.getUnitCost(CorpNum)
+
+        return render(request, 'result.html', {'result': result})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def getChargeInfo(request):
+    """
+    팝빌 휴폐업조회 API 서비스 과금정보를 확인합니다.
+    - https://docs.popbill.com/closedown/python/api#GetChargeInfo
+    """
+    try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
+        CorpNum = settings.testCorpNum
+
+        response = closedownService.getChargeInfo(CorpNum)
+
+        return render(request, 'getChargeInfo.html', {'response': response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def checkIsMember(request):
     """
-    해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+    사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
     - https://docs.popbill.com/closedown/python/api#CheckIsMember
     """
     try:
@@ -222,10 +210,9 @@ def checkIsMember(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def checkID(request):
     """
-    팝빌 회원아이디 중복여부를 확인합니다.
+    사용하고자 하는 아이디의 중복여부를 확인합니다.
     - https://docs.popbill.com/closedown/python/api#CheckID
     """
     try:
@@ -238,11 +225,9 @@ def checkID(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def joinMember(request):
     """
-    파트너의 연동회원으로 회원가입을 요청합니다.
-    - 아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+    사용자를 연동회원으로 가입처리합니다.
     - https://docs.popbill.com/closedown/python/api#JoinMember
     """
     try:
@@ -278,16 +263,10 @@ def joinMember(request):
             ContactName="담당자성명",
 
             # 담당자 이메일주소 (최대 100자)
-            ContactEmail="test@test.com",
+            ContactEmail="",
 
             # 담당자 연락처 (최대 20자)
-            ContactTEL="070-111-222",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            ContactHP="010-111-222",
-
-            # 담당자 팩스번호 (최대 20자)
-            ContactFAX="070-111-222"
+            ContactTEL=""
         )
 
         response = closedownService.joinMember(newMember)
@@ -296,6 +275,24 @@ def joinMember(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getAccessURL(request):
+    """
+    팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+    - https://docs.popbill.com/closedown/python/api#GetAccessURL
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        url = closedownService.getAccessURL(CorpNum, UserID)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def getCorpInfo(request):
     """
@@ -306,15 +303,11 @@ def getCorpInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         response = closedownService.getCorpInfo(CorpNum, UserID)
 
         return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def updateCorpInfo(request):
     """
@@ -324,9 +317,6 @@ def updateCorpInfo(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
 
         # 회사정보
         corpInfo = CorpInfo(
@@ -347,16 +337,15 @@ def updateCorpInfo(request):
             bizClass="종목"
         )
 
-        response = closedownService.updateCorpInfo(CorpNum, corpInfo, UserID)
+        response = closedownService.updateCorpInfo(CorpNum, corpInfo)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def registContact(request):
     """
-    연동회원의 담당자를 신규로 등록합니다.
+    연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
     - https://docs.popbill.com/closedown/python/api#RegistContact
     """
     try:
@@ -380,16 +369,10 @@ def registContact(request):
             personName="담당자명",
 
             # 담당자 연락처 (최대 20자)
-            tel="010-111-222",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            hp="010-111-222",
-
-            # 담당자 팩스번호 (최대 20자)
-            fax="070-111-222",
+            tel="",
 
             # 담당자 이메일 (최대 100자)
-            email="test@test.com",
+            email="",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1
@@ -403,20 +386,17 @@ def registContact(request):
 
 def getContactInfo(request):
     """
-    연동회원의 담당자 정보를 확인합니다.
+    연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
     - https://docs.popbill.com/closedown/python/api#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 담당자 아이디
         contactID = 'testkorea'
 
-        contactInfo = closedownService.getContactInfo(CorpNum, contactID, UserID)
+        contactInfo = closedownService.getContactInfo(CorpNum, contactID)
 
         return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
     except PopbillException as PE:
@@ -424,22 +404,18 @@ def getContactInfo(request):
 
 def listContact(request):
     """
-    연동회원의 담당자 목록을 확인합니다.
+    연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
     - https://docs.popbill.com/closedown/python/api#ListContact
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        listContact = closedownService.listContact(CorpNum, UserID)
+        listContact = closedownService.listContact(CorpNum)
 
         return render(request, 'listContact.html', {'listContact': listContact})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def updateContact(request):
     """
@@ -449,9 +425,6 @@ def updateContact(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
 
         # 담당자 정보
         updateInfo = ContactInfo(
@@ -463,43 +436,17 @@ def updateContact(request):
             personName="담당자_성명",
 
             # 담당자 연락처 (최대 20자)
-            tel="010-111-111",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            hp="010-111-111",
-
-            # 담당자 팩스번호 (최대 20자)
-            fax="070-111-222",
+            tel="",
 
             # 담당자 메일주소 (최대 100자)
-            email="test@test.com",
+            email="",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1
         )
 
-        response = closedownService.updateContact(CorpNum, updateInfo, UserID)
+        response = closedownService.updateContact(CorpNum, updateInfo)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getAccessURL(request):
-    """
-    팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
-    - https://docs.popbill.com/closedown/python/api#GetAccessURL
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        url = closedownService.getAccessURL(CorpNum, UserID)
-
-        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})

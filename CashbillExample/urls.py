@@ -12,17 +12,17 @@ urlpatterns = [
     url(r'^RegistIssue$', views.registIssue, name='RegistIssue'),
     url(r'^BulkSubmit$', views.bulkSubmit, name='BulkSubmit'),
     url(r'^GetBulkResult$', views.getBulkResult, name='GetBulkResult'),
-    url(r'^Register$', views.register, name='Register'),
-    url(r'^Update$', views.update, name='Update'),
-    url(r'^Issue$', views.issue, name='Issue'),
+    # url(r'^Register$', views.register, name='Register'),
+    # url(r'^Update$', views.update, name='Update'),
+    # url(r'^Issue$', views.issue, name='Issue'),
     url(r'^CancelIssue$', views.cancelIssue, name='CancelIssue'),
     url(r'^Delete$', views.delete, name='Delete'),
 
     # 취소현금영수증 발행
     url(r'^RevokeRegistIssue$', views.revokeRegistIssue, name='RevokeRegistIssue'),
     url(r'^RevokeRegistIssue_part$', views.revokeRegistIssue_part, name='RevokeRegistIssue_part'),
-    url(r'^RevokeRegister$', views.revokeRegister, name='RevokeRegister'),
-    url(r'^RevokeRegister_part$', views.revokeRegister_part, name='RevokeRegister_part'),
+    # url(r'^RevokeRegister$', views.revokeRegister, name='RevokeRegister'),
+    # url(r'^RevokeRegister_part$', views.revokeRegister_part, name='RevokeRegister_part'),
 
     # 현금영수증 정보확인
     url(r'^GetInfo$', views.getInfo, name='GetInfo'),
@@ -36,7 +36,7 @@ urlpatterns = [
     url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL'),
     url(r'^GetViewURL$', views.getViewURL, name='GetViewURL'),
     url(r'^GetPrintURL$', views.getPrintURL, name='GetPrintURL'),
-    url(r'^GetEPrintURL$', views.getEPrintURL, name='GetEPrintURL'),
+    # url(r'^GetEPrintURL$', views.getEPrintURL, name='GetEPrintURL'),
     url(r'^GetMassPrintURL$', views.getMassPrintURL, name='GetMassPrintURL'),
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
     url(r'^GetPDFURL$', views.getPDFURL, name='GetPDFURL'),
@@ -46,9 +46,9 @@ urlpatterns = [
     url(r'^SendEmail$', views.sendEmail, name='SendEmail'),
     url(r'^SendSMS$', views.sendSMS, name='SendSMS'),
     url(r'^SendFAX$', views.sendFAX, name='SendFAX'),
+    url(r'^AssignMgtKey', views.assignMgtKey, name='AssignMgtKey'),
     url(r'^ListEmailConfig', views.listEmailConfig, name='ListEmailConfig'),
     url(r'^UpdateEmailConfig', views.updateEmailConfig, name='UpdateEmailConfig'),
-    url(r'^AssignMgtKey', views.assignMgtKey, name='AssignMgtKey'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),

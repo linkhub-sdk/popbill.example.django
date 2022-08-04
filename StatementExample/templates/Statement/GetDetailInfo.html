@@ -29,6 +29,7 @@
                 <li> senderBizType (발신자 업태) : {{ statement.senderBizType }}</li>
                 <li> senderBizClass (발신자 종목) : {{ statement.senderBizClass }}</li>
                 <li> senderContactName (발신자 성명) : {{ statement.senderContactName }}</li>
+                <li> senderDeptName (발신자 부서명) : {{ statement.senderDeptName }}</li>
                 <li> senderTEL (발신자 연락처) : {{ statement.senderTEL }}</li>
                 <li> senderHP (발신자 휴대전화) : {{ statement.senderHP }}</li>
                 <li> senderEmail (발신자 이메일주소) : {{ statement.senderEmail }}</li>
@@ -39,14 +40,30 @@
                 <li> receiverCorpName (수신자 상호) : {{ statement.receiverCorpName }}</li>
                 <li> receiverCEOName (수신자 대표자 성명) : {{ statement.receiverCEOName }}</li>
                 <li> receiverAddr (수신자 주소) : {{ statement.receiverAddr }}</li>
-                <li> receiverBizClass (수신자 업태) : {{ statement.receiverBizClass }}</li>
                 <li> receiverBizType (수신자 종목) : {{ statement.receiverBizType }}</li>
+                <li> receiverBizClass (수신자 업태) : {{ statement.receiverBizClass }}</li>
                 <li> receiverContactName (수신자 성명) : {{ statement.receiverContactName }}</li>
                 <li> receiverTEL (수신자 연락처) : {{ statement.receiverTEL }}</li>
                 <li> receiverHP (수신자 휴대전화) : {{ statement.receiverHP }}</li>
                 <li> receiverEmail (수신자 이메일주소) : {{ statement.receiverEmail }}</li>
                 <li> receiverFAX (수신자 팩스주소) : {{ statement.receiverFAX }}</li>
+                
+                {% if statement.propertyBag %}
+                    <fieldset class="fieldset2">
+                        <legend>기본양식 추가속성</legend>
+                        <ul>
+                            <li> Balance (전잔액) : {{ statement.propertyBag.Balance }}</li>
+                            <li> Deposit (입금액) : {{ statement.propertyBag.Deposit }}</li>
+                            <li> CBalance (현잔액) : {{ statement.propertyBag.CBalance }}</li>
+                        </ul>
+                    </fieldset>
+                {% endif %}
 
+                <li> businessLicenseYN (사업자등록증 첨부 여부) : {{ statement.businessLicenseYN }}</li>
+                <li> bankBookYN (통장사본 첨부 여부) : {{ statement.bankBookYN }}</li>
+                <li> smssendYN (문자 자동승인 여부) : {{ statement.smssendYN }}</li>
+                <!-- <li> autoAcceptYN (발행시 자동승인 여부) : {{ statement.autoAcceptYN }}</li> -->
+                
                 {% for detailList in statement.detailList %}
                     <fieldset class="fieldset2">
                         <legend> 전자명세서 상세항목 [{{ forloop.counter }}]</legend>
@@ -69,21 +86,7 @@
                     </fieldset>
                 {% endfor %}
 
-                {% if statement.propertyBag %}
-                    <fieldset class="fieldset2">
-                        <legend>기본양식 추가속성</legend>
-                        <ul>
-                            <li> Balance (전잔액) : {{ statement.propertyBag.Balance }}</li>
-                            <li> Deposit (입금액) : {{ statement.propertyBag.Deposit }}</li>
-                            <li> CBalance (현잔액) : {{ statement.propertyBag.CBalance }}</li>
-                        </ul>
-                    </fieldset>
-                {% endif %}
 
-                <li> businessLicenseYN (사업자등록증 첨부 여부) : {{ statement.businessLicenseYN }}</li>
-                <li> bankBookYN (통장사본 첨부 여부) : {{ statement.bankBookYN }}</li>
-                <li> smssendYN (문자 자동승인 여부) : {{ statement.smssendYN }}</li>
-                <li> autoAcceptYN (발행시 자동승인 여부) : {{ statement.autoAcceptYN }}</li>
             </ul>
         </fieldset>
     </div>

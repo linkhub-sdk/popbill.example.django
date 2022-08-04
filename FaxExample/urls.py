@@ -24,8 +24,8 @@ urlpatterns = [
     url(r'^CancelReserveRN$', views.cancelReserveRN, name='CancelReserveRN'),
 
     # 팩스전송 목록조회
-    url(r'^GetFaxDetail$', views.getFaxDetail, name='GetFaxDetail'),
-    url(r'^GetFaxDetailRN$', views.getFaxDetailRN, name='GetFaxDetailRN'),
+    url(r'^GetFaxResult$', views.getFaxResult, name='GetFaxResult'),
+    url(r'^GetFaxResultRN$', views.getFaxResultRN, name='GetFaxResultRN'),
     url(r'^Search$', views.search, name='Search'),
     url(r'^GetSentListURL', views.getSentListURL, name='GetSentListURL'),
     url(r'^GetPreviewURL', views.getPreviewURL, name='GetPreviewURL'),

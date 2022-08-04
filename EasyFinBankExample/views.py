@@ -29,34 +29,32 @@ def index(request):
 def registBankAccount(request):
     """
     팝빌에 계좌정보를 등록합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#RegistBankAccount
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         infoObj = BankAccountInfo(
 
-            # [필수] 기관코드
+            # 기관코드
             # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
             # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
             # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
             BankCode="",
 
-            # [필수] 계좌번호 하이픈('-') 제외
+            # 계좌번호 하이픈('-') 제외
             AccountNumber="",
 
-            # [필수] 계좌비밀번호
+            # 계좌비밀번호
             AccountPWD="",
 
-            # [필수] 계좌유형, "법인" 또는 "개인" 입력
+            # 계좌유형, "법인" 또는 "개인" 입력
             AccountType="",
 
-            # [필수] 예금주 식별정보 (‘-‘ 제외)
-            # 계좌유형이 “법인”인 경우 : 사업자번호(10자리)
-            # 계좌유형이 “개인”인 경우 : 예금주 생년월일 (6자리-YYMMDD)
+            # 예금주 식별정보 ('-' 제외)
+            # 계좌유형이 "법인"인 경우 : 사업자번호(10자리)
+            # 계좌유형이 "개인"인 경우 : 예금주 생년월일 (6자리-YYMMDD)
             IdentityNumber="",
 
             # 계좌 별칭
@@ -76,10 +74,10 @@ def registBankAccount(request):
             UsePeriod="1",
 
             # 메모
-            Memo="",
+            Memo=""
         )
 
-        response = easyFinBankService.registBankAccount(CorpNum, infoObj, UserID)
+        response = easyFinBankService.registBankAccount(CorpNum, infoObj)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -88,25 +86,23 @@ def registBankAccount(request):
 def updateBankAccount(request):
     """
     팝빌에 등록된 계좌정보를 수정합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#UpdateBankAccount
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         infoObj = BankAccountInfo(
-            # [필수] 기관코드
+            # 기관코드
             # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
             # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
             # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
             BankCode="",
 
-            # [필수] 계좌번호 하이픈('-') 제외
+            # 계좌번호 하이픈('-') 제외
             AccountNumber="",
 
-            # [필수] 계좌비밀번호
+            # 계좌비밀번호
             AccountPWD="",
 
             # 계좌 별칭
@@ -122,10 +118,10 @@ def updateBankAccount(request):
             FastPWD="",
 
             # 메모
-            Memo="",
+            Memo=""
         )
 
-        response = easyFinBankService.updateBankAccount(CorpNum, infoObj, UserID)
+        response = easyFinBankService.updateBankAccount(CorpNum, infoObj)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -133,7 +129,8 @@ def updateBankAccount(request):
 
 def getBankAccountInfo(request):
     """
-    계좌 상세정보를 확인합니다.
+    팝빌에 등록된 계좌정보를 확인합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#GetBankAccountInfo
     """
     try:
 
@@ -149,114 +146,9 @@ def getBankAccountInfo(request):
         # 계좌번호
         AccountNumber = "";
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = easyFinBankService.getBankAccountInfo(CorpNum, BankCode, AccountNumber, UserID)
+        response = easyFinBankService.getBankAccountInfo(CorpNum, BankCode, AccountNumber)
 
         return render(request, 'EasyFinBank/getBankAccountInfo.html', {'response': response})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def closeBankAccount(request):
-    """
-    팝빌에 등록된 은행계좌의 정액제 해지를 요청합니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # [필수] 기관코드
-        # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
-        # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
-        # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
-        BankCode = ""
-
-        # [필수] 계좌번호 하이픈('-') 제외
-        AccountNumber = ""
-
-        # 해지유형, "일반", "중도" 중 선택기재
-        # 일반해지 - 이용중인 정액제 사용기간까지 이용후 정지
-        # 중도해지 - 요청일 기준으로 정지, 정액제 잔여기간은 일할로 계산되어 포인트 환불
-        CloseType = "중도"
-
-        response = easyFinBankService.closeBankAccount(CorpNum, BankCode, AccountNumber, CloseType, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-def revokeCloseBankAccount(request):
-    """
-    정액제 해지신청을 취소합니다.
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # [필수] 기관코드
-        # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
-        # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
-        # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
-        BankCode = ""
-
-        # [필수] 계좌번호 하이픈('-') 제외
-        AccountNumber = ""
-
-        response = easyFinBankService.revokeCloseBankAccount(CorpNum, BankCode, AccountNumber, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-def deleteBankAccount(request):
-    """
-    종량제 이용시 등록된 계좌를 삭제합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#DeleteBankAccount
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # [필수] 기관코드
-        # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
-        # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
-        # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
-        BankCode = ""
-
-        # [필수] 계좌번호 하이픈('-') 제외
-        AccountNumber = ""
-
-        response = easyFinBankService.deleteBankAccount(CorpNum, BankCode, AccountNumber, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getBankAccountMgtURL(request):
-    """
-    계좌 관리 팝업 URL을 반환 합니다.
-    - 보안정책에 의해 응답된 URL은 30초의 만료시간을 갖습니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetBankAccountMgtURL
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        url = easyFinBankService.getBankAccountMgtURL(CorpNum)
-
-        return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -276,11 +168,29 @@ def listBankAccount(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-def requestJob(request):
+def getBankAccountMgtURL(request):
     """
-    계좌 거래내역 수집을 요청합니다. (조회기간 단위 : 최대 1개월)
-    - 조회일로부터 최대 3개월 이전 내역까지 조회할 수 있습니다.
-    - https://docs.popbill.com/easyfinbank/python/api#RequestJob
+    계좌 관리 팝업 URL을 반환 합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#GetBankAccountMgtURL
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        url = easyFinBankService.getBankAccountMgtURL(CorpNum, UserID)
+
+        return render(request, 'url.html', {'url': url})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def closeBankAccount(request):
+    """
+    계좌의 정액제 해지를 요청합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#CloseBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -290,84 +200,164 @@ def requestJob(request):
         UserID = settings.testUserID
 
         # 기관코드
-        BankCode = "0039"
+        # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+        # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+        # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+        BankCode = ""
+
+        # 계좌번호 하이픈('-') 제외
+        AccountNumber = ""
+
+        # 해지유형, "일반", "중도" 중 택 1
+        # - 일반(일반해지) - 해지 요청일이 포함된 정액제 이용기간 만료 후 해지
+        # - 중도(중도해지) - 해지 요청시 즉시 정지되고 팝빌 담당자가 승인시 해지
+        # └ 중도일 경우, 정액제 잔여기간은 일할로 계산되어 포인트 환불(무료 이용기간에 해지하면 전액 환불)
+        CloseType = "중도"
+
+        response = easyFinBankService.closeBankAccount(CorpNum, BankCode, AccountNumber, CloseType, UserID)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def revokeCloseBankAccount(request):
+    """
+    신청한 정액제 해지요청을 취소합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#RevokeCloseBankAccount
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 기관코드
+        # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+        # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+        # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+        BankCode = ""
+
+        # 계좌번호 하이픈('-') 제외
+        AccountNumber = ""
+
+        response = easyFinBankService.revokeCloseBankAccount(CorpNum, BankCode, AccountNumber)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def deleteBankAccount(request):
+    """
+    종량제 이용시 등록된 계좌를 삭제합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#DeleteBankAccount
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 기관코드
+        # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+        # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+        # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+        BankCode = ""
+
+        # 계좌번호 하이픈('-') 제외
+        AccountNumber = ""
+
+        response = easyFinBankService.deleteBankAccount(CorpNum, BankCode, AccountNumber)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def requestJob(request):
+    """
+    계좌 거래내역을 확인하기 위해 팝빌에 수집요청을 합니다. (조회기간 단위 : 최대 1개월)
+    - 조회일로부터 최대 3개월 이전 내역까지 조회할 수 있습니다.
+    - 반환 받은 작업아이디는 함수 호출 시점부터 1시간 동안 유효합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#RequestJob
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 기관코드
+        BankCode = ""
 
         # 계좌번호
-        AccountNumber = "2070064402404"
+        AccountNumber = ""
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20211201"
+        SDate = "20220701"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20211230"
+        EDate = "20220731"
 
-        result = easyFinBankService.requestJob(CorpNum, BankCode, AccountNumber,SDate, EDate, UserID)
+        result = easyFinBankService.requestJob(CorpNum, BankCode, AccountNumber,SDate, EDate)
 
         return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getJobState(request):
     """
-    수집 요청 상태를 확인합니다.
+    수집 요청(RequestJob API) 함수를 통해 반환 받은 작업 아이디의 상태를 확인합니다.
+    - 거래 내역 조회(Search API) 함수 또는 거래 요약 정보 조회(Summary API) 함수를 사용하기 전에
+    수집 작업의 진행 상태, 수집 작업의 성공 여부를 확인해야 합니다.
+    - 작업 상태(jobState) = 3(완료)이고 수집 결과 코드(errorCode) = 1(수집성공)이면
+    거래 내역 조회(Search) 또는 거래 요약 정보 조회(Summary) 를 해야합니다.
+    - 작업 상태(jobState)가 3(완료)이지만 수집 결과 코드(errorCode)가 1(수집성공)이 아닌 경우에는
+    오류메시지(errorReason)로 수집 실패에 대한 원인을 파악할 수 있습니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetJobState
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
         jobID = "020010314000000028"
 
-        response = easyFinBankService.getJobState(CorpNum, jobID, UserID)
+        response = easyFinBankService.getJobState(CorpNum, jobID)
 
         return render(request, 'EasyFinBank/GetJobState.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def listActiveJob(request):
     """
-    수집 요청 목록을 확인합니다.
+    수집 요청(RequestJob API) 함수를 통해 반환 받은 작업아이디의 목록을 확인합니다.
+    - 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
     - https://docs.popbill.com/easyfinbank/python/api#ListActiveJob
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = easyFinBankService.listActiveJob(CorpNum, UserID)
+        response = easyFinBankService.listActiveJob(CorpNum)
 
         return render(request, 'EasyFinBank/ListActiveJob.html', {'list': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def search(request):
     """
-    거래내역의 수집 결과를 조회합니다.
+    수집 상태 확인(getJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 계좌 거래 내역을 조회합니다.
     - https://docs.popbill.com/easyfinbank/python/api#Search
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 수집요청(requestJob)시 발급받은 작업아이디
         JobID = "020072814000000001"
 
-        # 거래유형 배열, [I-입금 / O-출금]
+        # 거래유형 배열 ("I" 와 "O" 중 선택, 다중 선택 가능)
+        # └ I = 입금 , O = 출금
+        # - 미입력 시 전체조회
         TradeType = ["I", "O"]
 
-        # 조회 검색어, 입금/출금액, 메모, 적요 like 검색
+        # "입·출금액" / "메모" / "비고" 중 검색하고자 하는 값 입력
+        # - 메모 = 거래내역 메모저장(SaveMemo)을 사용하여 저장한 값
+        # - 비고 = EasyFinBankSearchDetail의 remark1, remark2, remark3 값
+        # - 미입력시 전체조회
         SearchString = ""
 
         # 페이지번호
@@ -388,7 +378,8 @@ def search(request):
 
 def summary(request):
     """
-    검색조건을 사용하여 수집 결과 요약정보를 조회합니다.
+    수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 계좌 거래내역의 요약 정보를 조회합니다.
+    - 요약 정보 : 입·출 금액 합계, 입·출 거래 건수
     - https://docs.popbill.com/easyfinbank/python/api#Summary
     """
     try:
@@ -401,10 +392,15 @@ def summary(request):
         # 수집요청(requestJob)시 발급받은 작업아이디
         JobID = "020010314000000035"
 
-        # 거래유형 배열, [I-입금 / O-출금]
+        # 거래유형 배열 ("I" 와 "O" 중 선택, 다중 선택 가능)
+        # └ I = 입금 , O = 출금
+        # - 미입력 시 전체조회
         TradeType = ["I", "O"]
 
-        # 조회 검색어, 입금/출금액, 메모, 적요 like 검색
+        # "입·출금액" / "메모" / "비고" 중 검색하고자 하는 값 입력
+        # - 메모 = 거래내역 메모저장(SaveMemo)을 사용하여 저장한 값
+        # - 비고 = EasyFinBankSearchDetail의 remark1, remark2, remark3 값
+        # - 미입력시 전체조회
         SearchString = ""
 
         response = easyFinBankService.summary(CorpNum, JobID, TradeType, SearchString, UserID)
@@ -413,10 +409,9 @@ def summary(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def saveMemo(request):
     """
-    연동회원사의 회사정보를 수정 합니다.
+    한 건의 거래 내역에 메모를 저장합니다.
     - https://docs.popbill.com/easyfinbank/python/api#SaveMemo
     """
     try:
@@ -441,14 +436,17 @@ def saveMemo(request):
 def getFlatRatePopUpURL(request):
     """
     정액제 서비스 신청 팝업 URL을 반환 합니다.
-    - 보안정책에 의해 응답된 URL은 30초의 만료시간을 갖습니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetFlatRatePopUpURL
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        url = easyFinBankService.getFlatRatePopUpURL(CorpNum)
+        # 팝빌회원 아이디
+        UserID = testValue.testUserID
+
+        url = easyFinBankService.getFlatRatePopUpURL(CorpNum, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -456,7 +454,7 @@ def getFlatRatePopUpURL(request):
 
 def getFlatRateState(request):
     """
-    연동회원의 정액제 서비스 이용상태를 확인합니다.
+    정액제 서비스 이용상태를 확인합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetFlatRateState
     """
     try:
@@ -464,25 +462,20 @@ def getFlatRateState(request):
         CorpNum = settings.testCorpNum
 
         # 기관코드
-        BankCode = "0048"
+        BankCode = ""
 
         # 계좌번호
-        AccountNumber = "131020538645"
+        AccountNumber = ""
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        flatRateState = easyFinBankService.getFlatRateState(CorpNum, BankCode, AccountNumber, UserID)
+        flatRateState = easyFinBankService.getFlatRateState(CorpNum, BankCode, AccountNumber)
 
         return render(request, 'EasyFinBank/GetFlatRateState.html', {'flatRateState': flatRateState})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetBalance
     """
     try:
@@ -495,11 +488,10 @@ def getBalance(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getChargeURL(request):
     """
-    팝빌 연동회원 포인트 충전 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetChargeURL
     """
     try:
@@ -517,8 +509,8 @@ def getChargeURL(request):
 
 def getPaymentURL(request):
     """
-    팝빌 연동회원 포인트 결재내역 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetPaymentURL
     """
     try:
@@ -536,8 +528,8 @@ def getPaymentURL(request):
 
 def getUseHistoryURL(request):
     """
-    팝빌 연동회원 포인트 사용내역 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetUseHistoryURL
     """
     try:
@@ -556,7 +548,6 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetPartnerBalance
     """
     try:
@@ -569,11 +560,10 @@ def getPartnerBalance(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetPartnerURL
     """
     try:
@@ -589,29 +579,24 @@ def getPartnerURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getChargeInfo(request):
     """
-    연동회원의 홈택스연동 API 서비스 과금정보를 확인합니다.
+    팝빌 계좌조회 API 서비스 과금정보를 확인합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetChargeInfo
     """
     try:
-        # 팝빌회원 사업자번호
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = easyFinBankService.getChargeInfo(CorpNum, UserID)
+        response = easyFinBankService.getChargeInfo(CorpNum)
 
         return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def checkIsMember(request):
     """
-    해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+    사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
     - https://docs.popbill.com/easyfinbank/python/api#CheckIsMember
     """
     try:
@@ -624,10 +609,9 @@ def checkIsMember(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def checkID(request):
     """
-    팝빌 회원아이디 중복여부를 확인합니다.
+    사용하고자 하는 아이디의 중복여부를 확인합니다.
     - https://docs.popbill.com/easyfinbank/python/api#CheckID
     """
     try:
@@ -640,11 +624,9 @@ def checkID(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def joinMember(request):
     """
-    파트너의 연동회원으로 회원가입을 요청합니다.
-    - 아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+    사용자를 연동회원으로 가입처리합니다.
     - https://docs.popbill.com/easyfinbank/python/api#JoinMember
     """
     try:
@@ -680,16 +662,10 @@ def joinMember(request):
             ContactName="담당자성명",
 
             # 담당자 이메일주소 (최대 100자)
-            ContactEmail="test@test.com",
+            ContactEmail="",
 
             # 담당자 연락처 (최대 20자)
-            ContactTEL="070-111-222",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            ContactHP="010-111-222",
-
-            # 담당자 팩스번호 (최대 20자)
-            ContactFAX="070-111-222"
+            ContactTEL=""
         )
 
         response = easyFinBankService.joinMember(newMember)
@@ -698,11 +674,10 @@ def joinMember(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetAccessURL
     """
     try:
@@ -718,10 +693,58 @@ def getAccessURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getCorpInfo(request):
+    """
+    연동회원의 회사정보를 확인합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#GetCorpInfo
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = easyFinBankService.getCorpInfo(CorpNum, UserID)
+
+        return render(request, 'getCorpInfo.html', {'response': response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def updateCorpInfo(request):
+    """
+    연동회원사의 회사정보를 수정 합니다.
+    - https://docs.popbill.com/easyfinbank/python/api#UpdateCorpInfo
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 회사정보
+        corpInfo = CorpInfo(
+
+            # 대표자 성명 (최대 100자)
+            ceoname="대표자_성명",
+
+            # 상호 (최대 200자)
+            corpName="상호",
+
+            # 주소 (최대 300자)
+            addr="주소",
+
+            # 업태 (최대 100자)
+            bizType="업태",
+
+            # 종목 (최대 100자)
+            bizClass="종목"
+        )
+
+        response = easyFinBankService.updateCorpInfo(CorpNum, corpInfo)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def registContact(request):
     """
-    연동회원의 담당자를 신규로 등록합니다.
+    연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
     - https://docs.popbill.com/easyfinbank/python/api#RegistContact
     """
     try:
@@ -745,16 +768,10 @@ def registContact(request):
             personName="담당자명",
 
             # 담당자 연락처 (최대 20자)
-            tel="010-111-222",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            hp="010-111-222",
-
-            # 담당자 팩스번호 (최대 20자)
-            fax="070-111-222",
+            tel="",
 
             # 담당자 이메일 (최대 100자)
-            email="test@test.com",
+            email="",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1
@@ -768,20 +785,17 @@ def registContact(request):
 
 def getContactInfo(request):
     """
-    연동회원의 담당자 정보를 확인합니다.
+    연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
     - https://docs.popbill.com/easyfinbank/python/api#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 담당자 아이디
         contactID = 'testkorea'
 
-        contactInfo = easyFinBankService.getContactInfo(CorpNum, contactID, UserID)
+        contactInfo = easyFinBankService.getContactInfo(CorpNum, contactID)
 
         return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
     except PopbillException as PE:
@@ -789,79 +803,18 @@ def getContactInfo(request):
 
 def listContact(request):
     """
-    연동회원의 담당자 목록을 확인합니다.
+    연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
     - https://docs.popbill.com/easyfinbank/python/api#ListContact
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        listContact = easyFinBankService.listContact(CorpNum, UserID)
+        listContact = easyFinBankService.listContact(CorpNum)
 
         return render(request, 'listContact.html', {'listContact': listContact})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def updateCorpInfo(request):
-    """
-    연동회원사의 회사정보를 수정 합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#UpdateCorpInfo
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # 회사정보
-        corpInfo = CorpInfo(
-
-            # 대표자 성명 (최대 100자)
-            ceoname="대표자_성명",
-
-            # 상호 (최대 200자)
-            corpName="상호",
-
-            # 주소 (최대 300자)
-            addr="주소",
-
-            # 업태 (최대 100자)
-            bizType="업태",
-
-            # 종목 (최대 100자)
-            bizClass="종목"
-        )
-
-        response = easyFinBankService.updateCorpInfo(CorpNum, corpInfo, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getCorpInfo(request):
-    """
-    연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetCorpInfo
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = easyFinBankService.getCorpInfo(CorpNum, UserID)
-
-        return render(request, 'getCorpInfo.html', {'response': response})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def updateContact(request):
     """
@@ -871,9 +824,6 @@ def updateContact(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
 
         # 담당자 정보
         updateInfo = ContactInfo(
@@ -885,22 +835,16 @@ def updateContact(request):
             personName="담당자_성명",
 
             # 담당자 연락처 (최대 20자)
-            tel="010-111-111",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            hp="010-111-111",
-
-            # 담당자 팩스번호 (최대 20자)
-            fax="070-111-222",
+            tel="",
 
             # 담당자 메일주소 (최대 100자)
-            email="test@test.com",
+            email="",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1
         )
 
-        response = easyFinBankService.updateContact(CorpNum, updateInfo, UserID)
+        response = easyFinBankService.updateContact(CorpNum, updateInfo)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:

@@ -7,7 +7,7 @@ urlpatterns = [
     # Index Page
     url(r'^$', views.index, name='index'),
 
-    # 정발행/역발행/위수탁발행
+    # 세금계산서 발행/전송
     url(r'^CheckMgtKeyInUse$', views.checkMgtKeyInUse, name='CheckMgtKeyInUse'),
     url(r'^RegistIssue$', views.registIssue, name='RegistIssue'),
     url(r'^BulkSubmit$', views.bulkSubmit, name='BulkSubmit'),
@@ -16,13 +16,11 @@ urlpatterns = [
     url(r'^Update$', views.update, name='Update'),
     url(r'^Issue$', views.issue, name='Issue'),
     url(r'^CancelIssue$', views.cancelIssue, name='CancelIssue'),
-    url(r'^Delete$', views.delete, name='Delete'),
     url(r'^RegistRequest$', views.registRequest, name='RegistRequest$'),
     url(r'^Request$', views.request, name='Request'),
     url(r'^CancelRequest$', views.cancelRequest, name='CancelRequest'),
     url(r'^Refuse$', views.refuse, name='Refuse'),
-
-    # 국세청 즉시 전송
+    url(r'^Delete$', views.delete, name='Delete'),
     url(r'^SendToNTS$', views.sendToNTS, name='SendToNTS'),
 
     # 세금계산서 정보확인
@@ -33,7 +31,7 @@ urlpatterns = [
     url(r'^GetLogs$', views.getLogs, name='GetLogs'),
     url(r'^GetURL$', views.getURL, name='GetURL'),
 
-    # 세금계산서 보기인쇄
+    # 세금계산서 보기/인쇄
     url(r'^GetPopUpURL$', views.getPopUpURL, name='GetPopUpURL'),
     url(r'^GetViewURL$', views.getViewURL, name='GetViewURL'),
     url(r'^GetPrintURL$', views.getPrintURL, name='GetPrintURL'),
@@ -43,7 +41,7 @@ urlpatterns = [
     url(r'^GetMailURL$', views.getMailURL, name='GetMailURL'),
     url(r'^GetPDFURL$', views.getPDFURL, name='GetPDFURL'),
 
-    # 부가 기능
+    # 부가기능
     url(r'^GetAccessURL', views.getAccessURL, name='GetAccessURL'),
     url(r'^GetSealURL', views.getSealURL, name='GetSealURL'),
     url(r'^AttachFile$', views.attachFile, name='AttachFile'),
@@ -60,7 +58,7 @@ urlpatterns = [
     url(r'^UpdateEmailConfig', views.updateEmailConfig, name='UpdateEmailConfig'),
     url(r'^GetSendToNTSConfig', views.getSendToNTSConfig, name='GetSendToNTSConfig'),
 
-    # 공인인증서 관리
+    # 인증서 관리
     url(r'^GetTaxCertURL', views.getTaxCertURL, name='GetTaxCertURL'),
     url(r'^GetCertificateExpireDate$', views.getCertificateExpireDate, name='GetCertificateExpireDate'),
     url(r'^CheckCertValidation', views.checkCertValidation, name='CheckCertValidation'),

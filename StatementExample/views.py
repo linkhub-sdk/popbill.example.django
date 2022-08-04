@@ -22,11 +22,10 @@ statementService.UseLocalTimeYN = settings.UseLocalTimeYN
 def index(request):
     return render(request, 'Statement/Index.html', {})
 
-
 def checkMgtKeyInUse(request):
     """
     파트너가 전자명세서 관리 목적으로 할당하는 문서번호의 사용여부를 확인합니다.
-    - 최대 24자, 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    - 이미 사용 중인 문서번호는 중복 사용이 불가하고, 전자명세서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
     - https://docs.popbill.com/statement/python/api#CheckMgtKeyInUse
     """
     try:
@@ -34,7 +33,7 @@ def checkMgtKeyInUse(request):
         CorpNum = settings.testCorpNum
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 발신자별 고유번호 생성
-        MgtKey = "20211227-001"
+        MgtKey = "20220803-001"
 
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
@@ -49,11 +48,12 @@ def checkMgtKeyInUse(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def registIssue(request):
     """
     작성된 전자명세서 데이터를 팝빌에 저장과 동시에 발행하여, "발행완료" 상태로 처리합니다.
-    - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
+    - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 
+      전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
+    - 전자명세서 발행 함수 호출시 수신자에게 발행 안내 메일이 발송됩니다.
     - https://docs.popbill.com/statement/python/api#RegistIssue
     """
     try:
@@ -72,25 +72,25 @@ def registIssue(request):
         # 전자명세서 정보
         statement = Statement(
 
-            # [필수] 작성일자 yyyyMMdd
-            writeDate="20210428",
+            # 작성일자 yyyyMMdd
+            writeDate="20220803",
 
-            # [필수] [영수 / 청구] 중 기재
+            # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
 
-            # [필수] 과세형태, [과세 / 영세 / 면세] 중 기재
+            # 과세형태, [과세 / 영세 / 면세] 중 기재
             taxType="과세",
 
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
 
-            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
+            # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
 
-            # [필수] 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20210428-002",
+            # 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
+            mgtKey="20220803-002",
 
-            # [필수] 발신자 사업자번호, '-' 제외 10자리
+            # 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
 
             # 발신자 상호
@@ -115,21 +115,21 @@ def registIssue(request):
             senderContactName="발신자 담당자명",
 
             # 발신자 메일주소
-            senderEmail="test@test.com",
+            senderEmail="",
 
             # 발신자 연락처
-            senderTEL="070-1234-1234",
+            senderTEL="",
 
             # 발신자 휴대폰번호
-            senderHP="010-000-222",
+            senderHP="",
 
-            # [필수] 수신자 사업자번호, '-' 제외 10자리
+            # 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
 
             # 수신자 상호
             receiverCorpName="수신자 상호",
 
-            # [필수] 수신자 대표자 성명
+            # 수신자 대표자 성명
             receiverCEOName="수신자 대표자 성명",
 
             # 수신자 주소
@@ -150,21 +150,21 @@ def registIssue(request):
             # 수신자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            receiverEmail="test@test.com",
+            receiverEmail="",
 
             # 수신자 연락처
-            receiverTEL="070111222",
+            receiverTEL="",
 
             # 수신자 휴대폰번호
-            receiverHP="010-111-222",
+            receiverHP="",
 
-            # [필수] 공급가액 합계
+            # 공급가액 합계
             supplyCostTotal="20000",
 
-            # [필수] 세액 합계
+            # 세액 합계
             taxTotal="2000",
 
-            # [필수] 합계금액, 공금가액 합계 + 세액 합계
+            # 합계금액, 공금가액 합계 + 세액 합계
             totalAmount="22000",
 
             # 기재 상 '일련번호' 항목
@@ -175,11 +175,15 @@ def registIssue(request):
             remark2="비고2",
             remark3="비고3",
 
-            # 사업자등록증 이미지 첨부 여부
+            # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
+            # └ true = 첨부 , false = 미첨부(기본값)
+            # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
 
-            # 통장사본 이미지 첨부 여부
-            bankBookYN=False,
+            # 통장사본 이미지 첨부여부  (true / false 중 택 1)
+            # └ true = 첨부 , false = 미첨부(기본값)
+            # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+            bankBookYN=False
         )
 
         # 상세항목(품목) 정보 (배열 길이 제한 없음)
@@ -189,7 +193,7 @@ def registIssue(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20210422",  # 거래일자
+                purchaseDT="20220803",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -207,7 +211,7 @@ def registIssue(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20210422",  # 거래일자
+                purchaseDT="20220803",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -236,10 +240,10 @@ def registIssue(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def register(request):
     """
     작성된 전자명세서 데이터를 팝빌에 저장합니다.
+    - "임시저장" 상태의 전자명세서는 발행(Issue API) 함수를 호출하여 "발행완료" 처리한 경우에만 수신자에게 발행 안내 메일이 발송됩니다.
     - https://docs.popbill.com/statement/python/api#Register
     """
     try:
@@ -248,25 +252,25 @@ def register(request):
 
         # 전자명세서 정보
         statement = Statement(
-            # [필수] 작성일자 yyyyMMdd
-            writeDate="20210428",
+            # 작성일자 yyyyMMdd
+            writeDate="20220803",
 
-            # [필수] [영수 / 청구] 중 기재
+            # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
 
-            # [필수] 과세형태, [과세 / 영세 / 면세] 중 기재
+            # 과세형태, [과세 / 영세 / 면세] 중 기재
             taxType="과세",
 
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
 
-            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
+            # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
 
-            # [필수] 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20210428-100",
+            # 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
+            mgtKey="20220803-001",
 
-            # [필수] 발신자 사업자번호, '-' 제외 10자리
+            # 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
 
             # 발신자 상호
@@ -291,21 +295,21 @@ def register(request):
             senderContactName="발신자 담당자명",
 
             # 발신자 메일주소
-            senderEmail="test@test.com",
+            senderEmail="",
 
             # 발신자 연락처
-            senderTEL="070-1234-1234",
+            senderTEL="",
 
             # 발신자 휴대폰번호
-            senderHP="010-000-222",
+            senderHP="",
 
-            # [필수] 수신자 사업자번호, '-' 제외 10자리
+            # 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
 
-            # [필수] 수신자 상호
+            # 수신자 상호
             receiverCorpName="수신자 상호",
 
-            # [필수] 수신자 대표자 성명
+            # 수신자 대표자 성명
             receiverCEOName="수신자 대표자 성명",
 
             # 수신자 주소
@@ -326,21 +330,21 @@ def register(request):
             # 수신자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            receiverEmail="test@test.com",
+            receiverEmail="",
 
             # 수신자 연락처
-            receiverTEL="070111222",
+            receiverTEL="",
 
             # 수신자 휴대폰번호
-            receiverHP="010-111-222",
+            receiverHP="",
 
-            # [필수] 공급가액 합계
+            # 공급가액 합계
             supplyCostTotal="20000",
 
-            # [필수] 세액 합계
+            # 세액 합계
             taxTotal="2000",
 
-            # [필수] 합계금액, 공금가액 합계 + 세액 합계
+            # 합계금액, 공금가액 합계 + 세액 합계
             totalAmount="22000",
 
             # 기재 상 '일련번호' 항목
@@ -351,10 +355,14 @@ def register(request):
             remark2="비고2",
             remark3="비고3",
 
-            # 사업자등록증 이미지 첨부 여부
+            # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
+            # └ true = 첨부 , false = 미첨부(기본값)
+            # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
 
-            # 통장사본 이미지 첨부 여부
+            # 통장사본 이미지 첨부여부  (true / false 중 택 1)
+            # └ true = 첨부 , false = 미첨부(기본값)
+            # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
 
         )
@@ -366,7 +374,7 @@ def register(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20210422",  # 거래일자
+                purchaseDT="20220803",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -385,7 +393,7 @@ def register(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20210422",  # 거래일자
+                purchaseDT="20220803",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -414,10 +422,9 @@ def register(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def update(request):
     """
-    "임시저장" 상태의 전자명세서를 수정합니다.건의 전자명세서를 [수정]합니다.
+    "임시저장" 상태의 전자명세서를 수정합니다.
     - https://docs.popbill.com/statement/python/api#Update
     """
     try:
@@ -428,29 +435,29 @@ def update(request):
         ItemCode = 121
 
         # 수정할 전자명세서 문서번호
-        mgtKey = "20210428-1001"
+        mgtKey = "20220803-001"
 
         # 전자명세서 정보
         statement = Statement(
-            # [필수] 작성일자 yyyyMMdd
-            writeDate="20210428",
+            # 작성일자 yyyyMMdd
+            writeDate="20220803",
 
-            # [필수] [영수 / 청구] 중 기재
+            # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
 
-            # [필수] 과세형태, [과세 / 영세 / 면세] 중 기재
+            # 과세형태, [과세 / 영세 / 면세] 중 기재
             taxType="과세",
 
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
 
-            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
+            # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=ItemCode,
 
-            # [필수] 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
+            # 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
             mgtKey=mgtKey,
 
-            # [필수] 발신자 사업자번호, '-' 제외 10자리
+            # 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
 
             # 발신자 상호
@@ -475,21 +482,21 @@ def update(request):
             senderContactName="발신자 담당자명",
 
             # 발신자 메일주소
-            senderEmail="test@test.com",
+            senderEmail="",
 
             # 발신자 연락처
-            senderTEL="070-1234-1234",
+            senderTEL="",
 
             # 발신자 휴대폰번호
-            senderHP="010-000-222",
+            senderHP="",
 
-            # [필수] 수신자 사업자번호, '-' 제외 10자리
+            # 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
 
-            # [필수] 수신자 상호
+            # 수신자 상호
             receiverCorpName="수신자 상호",
 
-            # [필수] 수신자 대표자 성명
+            # 수신자 대표자 성명
             receiverCEOName="수신자 대표자 성명",
 
             # 수신자 주소
@@ -510,21 +517,21 @@ def update(request):
             # 수신자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            receiverEmail="test@test.com",
+            receiverEmail="",
 
             # 수신자 연락처
-            receiverTEL="070111222",
+            receiverTEL="",
 
             # 수신자 휴대폰번호
-            receiverHP="010-111-222",
+            receiverHP="",
 
-            # [필수] 공급가액 합계
+            # 공급가액 합계
             supplyCostTotal="20000",
 
-            # [필수] 세액 합계
+            # 세액 합계
             taxTotal="2000",
 
-            # [필수] 합계금액, 공금가액 합계 + 세액 합계
+            # 합계금액, 공금가액 합계 + 세액 합계
             totalAmount="22000",
 
             # 기재 상 '일련번호' 항목
@@ -535,10 +542,14 @@ def update(request):
             remark2="비고2",
             remark3="비고3",
 
-            # 사업자등록증 이미지 첨부 여부
+            # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
+            # └ true = 첨부 , false = 미첨부(기본값)
+            # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
 
-            # 통장사본 이미지 첨부 여부
+            # 통장사본 이미지 첨부여부  (true / false 중 택 1)
+            # └ true = 첨부 , false = 미첨부(기본값)
+            # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
         )
 
@@ -549,7 +560,7 @@ def update(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20210428",  # 거래일자
+                purchaseDT="20220803",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -567,7 +578,7 @@ def update(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20210428",  # 거래일자
+                purchaseDT="20220803",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -596,12 +607,12 @@ def update(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def issue(request):
     """
     "임시저장" 상태의 전자명세서를 발행하여, "발행완료" 상태로 처리합니다.
-    - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
-    - 전자명세서 발행 함수 호출시 포인트가 과금되며, 수신자에게 발행 안내 메일이 발송됩니다.
+    - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 
+      전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
+    - 전자명세서 발행 함수 호출시 수신자에게 발행 안내 메일이 발송됩니다.
     - https://docs.popbill.com/statement/python/api#StmIssue
     """
     try:
@@ -612,7 +623,7 @@ def issue(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20210428-100"
+        MgtKey = "20220803-001"
 
         response = statementService.issue(CorpNum, ItemCode, MgtKey)
 
@@ -620,10 +631,10 @@ def issue(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def cancel(request):
     """
     발신자가 발행한 전자명세서를 발행취소합니다.
+    - "발행취소" 상태의 전자명세서를 삭제(Delete API) 함수를 이용하면, 전자명세서 관리를 위해 부여했던 문서번호를 재사용 할 수 있습니다.
     - https://docs.popbill.com/statement/python/api#Cancel
     """
     try:
@@ -634,7 +645,7 @@ def cancel(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-002"
+        MgtKey = "20220803-002"
 
         # 메모
         Memo = "발행취소 메모"
@@ -645,12 +656,10 @@ def cancel(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def delete(request):
     """
     삭제 가능한 상태의 전자명세서를 삭제합니다.
     - 삭제 가능한 상태: "임시저장", "취소", "승인거부", "발행취소"
-    - 전자명세서를 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
     - https://docs.popbill.com/statement/python/api#Delete
     """
     try:
@@ -661,14 +670,13 @@ def delete(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-002"
+        MgtKey = "20220803-002"
 
         response = statementService.delete(CorpNum, ItemCode, MgtKey)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def getInfo(request):
     """
@@ -683,7 +691,7 @@ def getInfo(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211201-900"
+        MgtKey = "20220803-001"
 
         statementInfo = statementService.getInfo(CorpNum, ItemCode, MgtKey)
 
@@ -691,10 +699,9 @@ def getInfo(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getInfos(request):
     """
-    다수건의 전자명세서 상태/요약 정보를 확인합니다.
+    다수건의 전자명세서 상태/요약 정보를 확인합니다. (1회 호출 시 최대 1,000건 확인 가능)
     - https://docs.popbill.com/statement/python/api#GetInfos.
     """
     try:
@@ -706,16 +713,14 @@ def getInfos(request):
 
         # 문서번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20211201-001")
-        MgtKeyList.append("20211201-900")
-        MgtKeyList.append("20211201-901")
+        MgtKeyList.append("20220803-001")
+        MgtKeyList.append("20220803-002")
 
         InfoList = statementService.getInfos(CorpNum, ItemCode, MgtKeyList)
 
         return render(request, 'Statement/GetInfos.html', {'InfoList': InfoList})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def getDetailInfo(request):
     """
@@ -730,14 +735,13 @@ def getDetailInfo(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211201-900"
+        MgtKey = "20220803-001"
 
         statement = statementService.getDetailInfo(CorpNum, ItemCode, MgtKey)
 
         return render(request, 'Statement/GetDetailInfo.html', {'statement': statement})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def search(request):
     """
@@ -755,15 +759,18 @@ def search(request):
         DType = "W"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20211201"
+        SDate = "20220701"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20211227"
+        EDate = "20220731"
 
-        # 명세서 상태코드, 2,3번째 자리에 와일드카드(*) 사용 가능
+        # 전자명세서 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
+        # - 미입력시 전체조회
         State = ["2**", "3**"]
 
-        # 명세서 종류 코드 배열, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
+        # 전자명세서 문서유형 배열 (121 , 122 , 123 , 124 , 125 , 126 중 선택. 다중 선택 가능)
+        # 121 = 명세서 , 122 = 청구서 , 123 = 견적서
+        # 124 = 발주서 , 125 = 입금표 , 126 = 영수증
         ItemCode = ["121", "122", "123", "124", "125", "126"]
 
         # 페이지 번호
@@ -775,16 +782,16 @@ def search(request):
         # 정렬방향 D-내림차순, A-오름차순
         Order = "D"
 
-        # 거래처 정보, 거래처 상호 또는 사업자등록번호 기재, 공백처리시 전체조회
+        # 통합검색어, 거래처 상호명 또는 거래처 사업자번호로 조회
+        # - 미입력시 전체조회
         QString = ""
 
         response = statementService.search(CorpNum, DType, SDate, EDate, State, ItemCode,
-                                           Page, PerPage, Order, UserID, QString)
+                                            Page, PerPage, Order, UserID, QString)
 
         return render(request, 'Statement/Search.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def getLogs(request):
     """
@@ -799,14 +806,13 @@ def getLogs(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-001"
+        MgtKey = "20220803-001"
 
         LogList = statementService.getLogs(CorpNum, ItemCode, MgtKey)
 
         return render(request, 'Statement/GetLogs.html', {'LogList': LogList})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def getURL(request):
     """
@@ -830,10 +836,9 @@ def getURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getPopUpURL(request):
     """
-    팝빌 사이트와 동일한 전자명세서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다.
+    전자명세서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/statement/python/api#GetPopUpURL
     """
@@ -841,13 +846,16 @@ def getPopUpURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-001"
+        MgtKey = "20220803-001"
 
-        url = statementService.getPopUpURL(CorpNum, ItemCode, MgtKey)
+        url = statementService.getPopUpURL(CorpNum, ItemCode, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -855,7 +863,7 @@ def getPopUpURL(request):
 
 def getViewURL(request):
     """
-    팝빌 사이트와 동일한 전자명세서 1건의 상세 정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다.
+    전자명세서 1건의 보기 팝업 URL을 반환합니다. (팝빌 사이트의 상단, 좌측 메뉴 및 버튼 제외)
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/statement/python/api#GetViewURL
     """
@@ -863,18 +871,20 @@ def getViewURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-001"
+        MgtKey = "20220803-001"
 
-        url = statementService.getViewURL(CorpNum, ItemCode, MgtKey)
+        url = statementService.getViewURL(CorpNum, ItemCode, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def getPrintURL(request):
     """
@@ -886,22 +896,24 @@ def getPrintURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-001"
+        MgtKey = "20220803-001"
 
-        url = statementService.getPrintURL(CorpNum, ItemCode, MgtKey)
+        url = statementService.getPrintURL(CorpNum, ItemCode, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getEPrintURL(request):
     """
-    "공급받는자" 용 세금계산서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
+    "공급받는자" 용 전자명세서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/statement/python/api#GetEPrintURL
     """
@@ -910,18 +922,20 @@ def getEPrintURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-001"
+        MgtKey = "20220803-001"
 
-        url = statementService.getEPrintURL(CorpNum, ItemCode, MgtKey)
+        url = statementService.getEPrintURL(CorpNum, ItemCode, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def getMassPrintURL(request):
     """
@@ -933,25 +947,26 @@ def getMassPrintURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 인쇄할 문서번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20211227-001")
-        MgtKeyList.append("20211227-002")
-        MgtKeyList.append("20211227-003")
+        MgtKeyList.append("20220803-001")
+        MgtKeyList.append("20220803-002")
 
-        url = statementService.getMassPrintURL(CorpNum, ItemCode, MgtKeyList)
+        url = statementService.getMassPrintURL(CorpNum, ItemCode, MgtKeyList, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getMailURL(request):
     """
-    안내메일과 관련된 전자명세서를 확인 할 수 있는 상세 페이지의 팝업 URL을 반환하며, 해당 URL은 메일 하단의 파란색 버튼의 링크와 같습니다.
+    전자명세서 안내메일의 상세보기 링크 URL을 반환합니다.
     - 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
     - https://docs.popbill.com/statement/python/api#GetMailURL
     """
@@ -959,18 +974,20 @@ def getMailURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-001"
+        MgtKey = "20220803-001"
 
-        url = statementService.getMailURL(CorpNum, ItemCode, MgtKey)
+        url = statementService.getMailURL(CorpNum, ItemCode, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def getAccessURL(request):
     """
@@ -1023,7 +1040,7 @@ def attachFile(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-002"
+        MgtKey = "20220803-002"
 
         # 파일경로
         FilePath = "./StatementExample/static/image/attachfile.png"
@@ -1036,7 +1053,6 @@ def attachFile(request):
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def deleteFile(request):
     """
@@ -1052,7 +1068,7 @@ def deleteFile(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-002"
+        MgtKey = "20220803-002"
 
         # 삭제할 FileID, 첨부파일목록(getFiles API) 응답 전문의 attachedFile 값
         FileID = "0DD20B73-5654-488E-A683-0ABED95C7D07.PBF"
@@ -1066,11 +1082,9 @@ def deleteFile(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getFiles(request):
     """
     전자명세서에 첨부된 파일목록을 확인합니다.
-    - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
     - https://docs.popbill.com/statement/python/api#GetFiles
     """
     try:
@@ -1081,14 +1095,13 @@ def getFiles(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-002"
+        MgtKey = "20220803-002"
 
         fileList = statementService.getFiles(CorpNum, ItemCode, MgtKey)
 
         return render(request, 'Statement/GetFiles.html', {'fileList': fileList})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def sendEmail(request):
     """
@@ -1103,10 +1116,10 @@ def sendEmail(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-002"
+        MgtKey = "20220803-002"
 
         # 수신메일주소
-        ReceiverMail = "test@test.com"
+        ReceiverMail = ""
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1116,7 +1129,6 @@ def sendEmail(request):
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def sendSMS(request):
     """
@@ -1133,13 +1145,13 @@ def sendSMS(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-002"
+        MgtKey = "20220803-002"
 
         # 발신번호
-        Sender = "07000001234"
+        Sender = ""
 
         # 수신번호
-        Receiver = "010111222"
+        Receiver = ""
 
         # 문자메시지내용, 90Byte 초과시 길이가 조정되어 전송됨
         Contents = "전자명세서 API 문자메시지 테스트"
@@ -1152,7 +1164,6 @@ def sendSMS(request):
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def sendFAX(request):
     """
@@ -1168,13 +1179,13 @@ def sendFAX(request):
         ItemCode = 121
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-002"
+        MgtKey = "20220803-002"
 
         # 발신번호
-        Sender = "070222111"
+        Sender = ""
 
         # 수신번호
-        Receiver = "070111222"
+        Receiver = ""
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
@@ -1185,14 +1196,13 @@ def sendFAX(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def FAXSend(request):
     """
     전자명세서를 팩스로 전송하는 함수로, 팝빌에 데이터를 저장하는 과정이 없습니다.
     - 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
     - 함수 호출시 포인트가 과금됩니다.
     - 팩스 발행 요청시 작성한 문서번호는 팩스전송 파일명으로 사용됩니다.
-    - 팩스 전송결과를 확인하기 위해서는 선팩스 전송 요청 시 반환받은 접수번호를 이용하여 팩스 API의 전송결과 확인 (GetFaxDetail) API를 이용하면 됩니다.
+    - 팩스 전송결과를 확인하기 위해서는 선팩스 전송 요청 시 반환받은 접수번호를 이용하여 팩스 API의 전송결과 확인 (GetFaxResult) API를 이용하면 됩니다.
     - https://docs.popbill.com/statement/python/api#FAXSend
     """
     try:
@@ -1203,32 +1213,32 @@ def FAXSend(request):
         UserID = settings.testUserID
 
         # 팩스발신번호
-        SendNum = "070-1234-1234"
+        SendNum = ""
 
         # 팩스수신번호
-        ReceiveNum = "070-1111-2122"
+        ReceiveNum = ""
 
         # 전자명세서 정보
         statement = Statement(
-            # [필수] 작성일자 yyyyMMdd
-            writeDate="20210422",
+            # 작성일자 yyyyMMdd
+            writeDate="20220803",
 
-            # [필수] [영수 / 청구] 중 기재
+            # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
 
-            # [필수] 과세형태, [과세 / 영세 / 면세] 중 기재
+            # 과세형태, [과세 / 영세 / 면세] 중 기재
             taxType="과세",
 
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
 
-            # [필수] 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
+            # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
 
-            # [필수] 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
-            mgtKey="20211227-100",
+            # 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
+            mgtKey="20220803-100",
 
-            # [필수] 발신자 사업자번호, '-' 제외 10자리
+            # 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
 
             # 발신자 상호
@@ -1253,21 +1263,21 @@ def FAXSend(request):
             senderContactName="발신자 담당자명",
 
             # 발신자 메일주소
-            senderEmail="test@test.com",
+            senderEmail="",
 
             # 발신자 연락처
-            senderTEL="070-1234-1234",
+            senderTEL="",
 
             # 발신자 휴대폰번호
-            senderHP="010-000-222",
+            senderHP="",
 
-            # [필수] 수신자 사업자번호, '-' 제외 10자리
+            # 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
 
             # 수신자 상호
             receiverCorpName="수신자 상호",
 
-            # [필수] 수신자 대표자 성명
+            # 수신자 대표자 성명
             receiverCEOName="수신자 대표자 성명",
 
             # 수신자 주소
@@ -1288,21 +1298,21 @@ def FAXSend(request):
             # 수신자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            receiverEmail="test@test.com",
+            receiverEmail="",
 
             # 수신자 연락처
-            receiverTEL="070111222",
+            receiverTEL="",
 
             # 수신자 휴대폰번호
-            receiverHP="010-111-222",
+            receiverHP="",
 
-            # [필수] 공급가액 합계
+            # 공급가액 합계
             supplyCostTotal="20000",
 
-            # [필수] 세액 합계
+            # 세액 합계
             taxTotal="2000",
 
-            # [필수] 합계금액, 공금가액 합계 + 세액 합계
+            # 합계금액, 공금가액 합계 + 세액 합계
             totalAmount="22000",
 
             # 기재 상 '일련번호' 항목
@@ -1313,10 +1323,14 @@ def FAXSend(request):
             remark2="비고2",
             remark3="비고3",
 
-            # 사업자등록증 이미지 첨부 여부
+            # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
+            # └ true = 첨부 , false = 미첨부(기본값)
+            # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
 
-            # 통장사본 이미지 첨부 여부
+            # 통장사본 이미지 첨부여부  (true / false 중 택 1)
+            # └ true = 첨부 , false = 미첨부(기본값)
+            # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
         )
 
@@ -1327,7 +1341,7 @@ def FAXSend(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20210422",  # 거래일자
+                purchaseDT="20220803",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -1339,7 +1353,7 @@ def FAXSend(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20210422",  # 거래일자
+                purchaseDT="20220803",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -1362,7 +1376,6 @@ def FAXSend(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def attachStatement(request):
     """
     하나의 전자명세서에 다른 전자명세서를 첨부합니다.
@@ -1379,20 +1392,19 @@ def attachStatement(request):
         ItemCode = "121"
 
         # 전자명세서 문서번호
-        MgtKey = "20211227-001"
+        MgtKey = "20220803-001"
 
         # 첨부할 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         SubItemCode = "121"
 
         # 첨부할 전자명세서 문서번호
-        SubMgtKey = "20211201-001"
+        SubMgtKey = "20220803-002"
 
         response = statementService.attachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def detachStatement(request):
     """
@@ -1410,20 +1422,19 @@ def detachStatement(request):
         ItemCode = "121"
 
         # 전자명세서 문서번호
-        MgtKey = "20211201-001"
+        MgtKey = "20220803-001"
 
         # 첨부해제할 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         SubItemCode = "121"
 
         # 첨부해제할 전자명세서 문서번호
-        SubMgtKey = "20211201-001"
+        SubMgtKey = "20220803-002"
 
         response = statementService.detachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def listEmailConfig(request):
     """
@@ -1442,7 +1453,6 @@ def listEmailConfig(request):
         return render(request, 'Statement/ListEmailConfig.html', {'EmailConfig': EmailConfig})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def updateEmailConfig(request):
     """
@@ -1475,11 +1485,10 @@ def updateEmailConfig(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를 통해 확인하시기 바랍니다.
+    - https://docs.popbill.com/statement/python/api#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -1495,6 +1504,7 @@ def getChargeURL(request):
     """
     연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+    - https://docs.popbill.com/statement/python/api#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1550,7 +1560,6 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
     - https://docs.popbill.com/statement/python/api#GetPartnerBalance
     """
     try:
@@ -1563,10 +1572,9 @@ def getPartnerBalance(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getPartnerURL(request):
     """
-    파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+    파트너 포인트 충전 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/statement/python/api#GetPartnerURL
     """
@@ -1583,17 +1591,17 @@ def getPartnerURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getUnitCost(request):
     """
     전자명세서 발행시 과금되는 포인트 단가를 확인합니다.
     - https://docs.popbill.com/statement/python/api#GetUnitCost
     """
     try:
-        # 팝빌회원 사업자번호
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        # 명세서 코드 [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
+        # 확인할 전자명세서의 유형 코드 : 121 / 122 / 123 / 124 / 125 / 126 중 택 1
+        # └ 121 = 거래명세서, 122 = 청구서, 123 = 견적서, 124 = 발주서, 125 = 입금표, 126 = 영수증
         ItemCode = 121
 
         result = statementService.getUnitCost(CorpNum, ItemCode)
@@ -1602,28 +1610,24 @@ def getUnitCost(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getChargeInfo(request):
     """
-    전자명세서 발행시 과금되는 포인트 단가를 확인합니다.
-    - https://docs.popbill.com/statement/python/api#GetUnitCost
+    팝빌 전자명세서 API 서비스 과금정보를 확인합니다.
+    - https://docs.popbill.com/statement/python/api#GetChargeInfo
     """
     try:
-        # 팝빌회원 사업자번호
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
+        # 확인할 전자명세서의 유형 코드 : 121 / 122 / 123 / 124 / 125 / 126 중 택 1
+        # └ 121 = 거래명세서, 122 = 청구서, 123 = 견적서, 124 = 발주서, 125 = 입금표, 126 = 영수증
+        ItemCode = 121
 
-        # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
-        ItemCode = "121"
-
-        response = statementService.getChargeInfo(CorpNum, ItemCode, UserID)
+        response = statementService.getChargeInfo(CorpNum, ItemCode)
 
         return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def checkIsMember(request):
     """
@@ -1631,20 +1635,19 @@ def checkIsMember(request):
     - https://docs.popbill.com/statement/python/api#CheckIsMember
     """
     try:
-        # 조회할 사업자등록번호, '-' 제외 10자리
-        targetCorpNum = "1234567890"
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
 
-        response = statementService.checkIsMember(targetCorpNum)
+        response = statementService.checkIsMember(CorpNum)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def checkID(request):
     """
     사용하고자 하는 아이디의 중복여부를 확인합니다.
-    https://docs.popbill.com/statement/python/api#CheckID
+    - https://docs.popbill.com/statement/python/api#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -1656,14 +1659,13 @@ def checkID(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def joinMember(request):
     """
     사용자를 연동회원으로 가입처리합니다.
-    - https://docs.popbill.com/statement/python/api#JoinForm
+    - https://docs.popbill.com/statement/python/api#JoinMember
     """
     try:
-        # 연동회원 가입정보
+        # 회원정보
         newMember = JoinForm(
 
             # 아이디 (6자 이상 50자 미만)
@@ -1695,16 +1697,10 @@ def joinMember(request):
             ContactName="담당자성명",
 
             # 담당자 이메일주소 (최대 100자)
-            ContactEmail="test@test.com",
+            ContactEmail="",
 
             # 담당자 연락처 (최대 20자)
-            ContactTEL="070-111-222",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            ContactHP="010-111-222",
-
-            # 담당자 팩스번호 (최대 20자)
-            ContactFAX="070-111-222"
+            ContactTEL=""
         )
 
         response = statementService.joinMember(newMember)
@@ -1713,18 +1709,14 @@ def joinMember(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/statement/python/api#GetContactInfo
+    - https://docs.popbill.com/statement/python/api#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
 
         response = statementService.getCorpInfo(CorpNum, UserID)
 
@@ -1732,18 +1724,14 @@ def getCorpInfo(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def updateCorpInfo(request):
     """
-    연동회원사의 회사정보를 수정합니다.
+    연동회원사의 회사정보를 수정 합니다.
     - https://docs.popbill.com/statement/python/api#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
 
         # 회사정보
         corpInfo = CorpInfo(
@@ -1764,12 +1752,11 @@ def updateCorpInfo(request):
             bizClass="종목"
         )
 
-        response = statementService.updateCorpInfo(CorpNum, corpInfo, UserID)
+        response = statementService.updateCorpInfo(CorpNum, corpInfo)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def registContact(request):
     """
@@ -1791,22 +1778,16 @@ def registContact(request):
 
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
-            Password="password123!@",
+            Password="password123!@#",
 
             # 담당자명 (최대 100자)
             personName="담당자명",
 
             # 담당자 연락처 (최대 20자)
-            tel="010-111-222",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            hp="010-111-222",
-
-            # 담당자 팩스번호 (최대 20자)
-            fax="070-111-222",
+            tel="",
 
             # 담당자 이메일 (최대 100자)
-            email="test@test.com",
+            email="",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1
@@ -1827,13 +1808,10 @@ def getContactInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 담당자 아이디
         contactID = 'testkorea'
 
-        contactInfo = statementService.getContactInfo(CorpNum, contactID, UserID)
+        contactInfo = statementService.getContactInfo(CorpNum, contactID)
 
         return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
     except PopbillException as PE:
@@ -1848,27 +1826,20 @@ def listContact(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        listContact = statementService.listContact(CorpNum, UserID)
+        listContact = statementService.listContact(CorpNum)
 
         return render(request, 'listContact.html', {'listContact': listContact})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def updateContact(request):
     """
-    연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
+    연동회원의 담당자 정보를 수정합니다.
     - https://docs.popbill.com/statement/python/api#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
 
         # 담당자 정보
         updateInfo = ContactInfo(
@@ -1880,22 +1851,16 @@ def updateContact(request):
             personName="담당자_성명",
 
             # 담당자 연락처 (최대 20자)
-            tel="010-111-111",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            hp="010-111-111",
-
-            # 담당자 팩스번호 (최대 20자)
-            fax="070-111-222",
+            tel="",
 
             # 담당자 메일주소 (최대 100자)
-            email="test@test.com",
+            email="",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1
         )
 
-        response = statementService.updateContact(CorpNum, updateInfo, UserID)
+        response = statementService.updateContact(CorpNum, updateInfo)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:

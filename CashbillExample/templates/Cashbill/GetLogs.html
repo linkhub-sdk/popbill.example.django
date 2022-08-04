@@ -10,12 +10,11 @@
                     <fieldset class="fieldset2">
                         <legend>현금영수증 상태변경 이력 [{{ forloop.counter }}]</legend>
                         <ul>
-                            <li> docLogType (이력유형) : {{ logList.docLogType }}</li>
-                            <li> log (문서이력 설명) : {{ logList.log }}</li>
-                            <li> procType (처리유형) : {{ logList.procType }}</li>
-                            <li> procCorpName (회사명) : {{ logList.procCorpName }}</li>
+                            <li> docLogType (로그타입) : {{ logList.docLogType }}</li>
+                            <li> log (이력정보) : {{ logList.log }}</li>
+                            <li> procType (처리형태) : {{ logList.procType }}</li>
                             <li> procMemo (처리메모) : {{ logList.procMemo }}</li>
-                            <li> regDT (처리일시) : {{ logList.regDT }}</li>
+                            <li> regDT (등록일시) : {{ logList.regDT }}</li>
                             <li> ip (아이피) : {{ logList.ip }}</li>
                         </ul>
                     </fieldset>

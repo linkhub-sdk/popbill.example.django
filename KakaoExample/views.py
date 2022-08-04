@@ -27,11 +27,10 @@ kakaoService.UseLocalTimeYN = settings.UseLocalTimeYN
 def index(request):
     return render(request, 'Kakao/Index.html', {})
 
-
 def getPlusFriendMgtURL(request):
     """
-    카카오톡 채널 계정관리 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    카카오톡 채널을 등록하고 내역을 확인하는 카카오톡 채널 관리 페이지 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetPlusFriendMgtURL
     """
     try:
@@ -49,27 +48,23 @@ def getPlusFriendMgtURL(request):
 
 def listPlusFriendID(request):
     """
-    팝빌에 등록된 카카오톡 채널 목록을 반환 합니다.
+    팝빌에 등록한 연동회원의 카카오톡 채널 목록을 확인합니다.
     - https://docs.popbill.com/kakao/python/api#ListPlusFriendID
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = kakaoService.listPlusFriendID(CorpNum, UserID)
+        response = kakaoService.listPlusFriendID(CorpNum)
 
         return render(request, 'Kakao/ListPlusFriendID.html', {'listPlusFriendID': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getSenderNumberMgtURL(request):
     """
-    발신번호 관리 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    발신번호를 등록하고 내역을 확인하는 카카오톡 발신번호 관리 페이지 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetSenderNumberMgtURL
     """
     try:
@@ -85,10 +80,9 @@ def getSenderNumberMgtURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getSenderNumberList(request):
     """
-    팝빌에 등록된 발신번호 목록을 확인합니다.
+    팝빌에 등록한 연동회원의 카카오톡 발신번호 목록을 확인합니다.
     - https://docs.popbill.com/kakao/python/api#GetSenderNumberList
     """
     try:
@@ -101,11 +95,10 @@ def getSenderNumberList(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getATSTemplateMgtURL(request):
     """
-    알림톡 템플릿관리 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    알림톡 템플릿을 신청하고 승인심사 결과를 확인하며 등록 내역을 확인하는 알림톡 템플릿 관리 페이지 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetATSTemplateMgtURL
     """
     try:
@@ -123,20 +116,17 @@ def getATSTemplateMgtURL(request):
 
 def getATSTemplate(request):
     """
-    등록된 알림톡 템플릿의 정보를 확인합니다.
+    승인된 알림톡 템플릿의 정보를 확인합니다.
     - https://docs.popbill.com/kakao/python/api#GetATSTemplate
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         #템플릿 코드
         templateCode = "021010000076"
 
-        templateInfo = kakaoService.getATSTemplate(CorpNum, templateCode, UserID)
+        templateInfo = kakaoService.getATSTemplate(CorpNum, templateCode)
 
         return render(request, 'Kakao/GetATSTemplateS.html', {'templateInfo' : templateInfo })
     except PopbillException as PE :
@@ -144,28 +134,23 @@ def getATSTemplate(request):
 
 def listATStemplate(request):
     """
-    (주)카카오로 부터 승인된 알림톡 템플릿 목록을 확인 합니다.
-    - 반환항목중 템플릿코드(templateCode)는 알림톡 전송시 사용됩니다.
+    승인된 알림톡 템플릿 목록을 확인합니다.
     - https://docs.popbill.com/kakao/python/api#ListATSTemplate
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        templateList = kakaoService.listATSTemplate(CorpNum, UserID)
+        templateList = kakaoService.listATSTemplate(CorpNum)
 
         return render(request, 'Kakao/ListATSTemplate.html', {'templateList': templateList})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendATS_one(request):
     """
-    단건의 알림톡을 전송합니다.
-    - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
+    승인된 템플릿의 내용을 작성하여 1건의 알림톡 전송을 팝빌에 접수합니다.
+    - 전송실패시 사전에 지정한 변수 'AltSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendATS_one
     """
     try:
@@ -175,12 +160,13 @@ def sendATS_one(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 알림톡 템플릿코드
-        # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetATSTemplateMgtURL API, 혹은 팝빌사이트에서 확인이 가능합니다.
+        # 승인된 알림톡 템플릿코드
+        # └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
+        #   팝빌사이트에서 승인된 알림톡 템플릿 코드를  확인 가능.
         templateCode = "019020000163"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
         # 알림톡 내용 (최대 1000자)
         # 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
@@ -191,23 +177,25 @@ def sendATS_one(request):
         content += "팝빌 파트너센터 : 1600-8536\n"
         content += "support@linkhub.co.kr"
 
-        # 대체문자 내용 (최대 2000byte)
+        # 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
+        # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
         altContent = "알림톡 대체 문자"
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 수신번호
-        receiver = "01011122"
+        receiver = ""
 
         # 수신자 이름
         receiverName = "partner"
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -225,17 +213,17 @@ def sendATS_one(request):
         #)
 
         receiptNum = kakaoService.sendATS(CorpNum, templateCode, snd, content, altContent,
-                                          altSendType, sndDT, receiver, receiverName, UserID, requestNum, btns)
+                                            altSendType, sndDT, receiver, receiverName, UserID, requestNum, btns)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendATS_multi(request):
     """
-    [대량전송] 알림톡 전송을 요청합니다.
+    승인된 템플릿의 내용을 작성하여 다수건의 알림톡 전송을 팝빌에 접수하며, 수신자 별로 개별 내용을 전송합니다. (최대 1,000건)
     - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
+    - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendATS_multi
     """
     try:
@@ -245,11 +233,13 @@ def sendATS_multi(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 알림톡 템플릿 코드
+        # 승인된 알림톡 템플릿코드
+        # └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
+        #   팝빌사이트에서 승인된 알림톡 템플릿 코드를  확인 가능.
         templateCode = "019020000163"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "01043245117"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
         # 알림톡 내용 (최대 1000자)
         # 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
@@ -260,7 +250,8 @@ def sendATS_multi(request):
         content += "팝빌 파트너센터 : 1600-8536\n"
         content += "support@linkhub.co.kr"
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -271,7 +262,7 @@ def sendATS_multi(request):
         for x in range(0, 2):
             KakaoMessages.append(
                 KakaoReceiver(
-                    rcv="010456456",  # 수신번호
+                    rcv="",  # 수신번호
                     rcvnm="linkhub",  # 수신자 이름
                     msg=content,  # 알림톡 내용 (최대 1000자)
                     altmsg="수신번호 010-456-456 알림톡 대체문자",  # 대체문자 내용 (최대 2000byte)
@@ -307,7 +298,7 @@ def sendATS_multi(request):
             # KakaoMessages[x].btns = btns
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -331,11 +322,11 @@ def sendATS_multi(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendATS_same(request):
     """
-    [동보전송] 알림톡 전송을 요청합니다.
+    승인된 템플릿 내용을 작성하여 다수건의 알림톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
     - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
+    - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendATS_same
     """
     try:
@@ -345,12 +336,13 @@ def sendATS_same(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 알림톡 템플릿 코드
-        # 승인된 알림톡 템플릿 코드는 ListATStemplate API, GetATSTemplateMgtURL API, 혹은 팝빌사이트에서 확인이 가능합니다.
+        # 승인된 알림톡 템플릿코드
+        # └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
+        #   팝빌사이트에서 승인된 알림톡 템플릿 코드를  확인 가능.
         templateCode = "019020000163"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
         # 알림톡 내용 (최대 1000자)
         # 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
@@ -364,7 +356,8 @@ def sendATS_same(request):
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "[테스트] 알림톡 대체 문자"
 
-        # 대체문자 유형 [공백-미전송, C-알림톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -375,13 +368,13 @@ def sendATS_same(request):
         for x in range(0, 10):
             KakaoMessages.append(
                 KakaoReceiver(
-                    rcv="010987123",  # 수신번호
+                    rcv="",  # 수신번호
                     rcvnm="popbill"  # 수신자 이름
                 )
             )
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -405,11 +398,11 @@ def sendATS_same(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendFTS_one(request):
     """
-    친구톡(텍스트) 전송을 요청합니다.
-    - 친구톡은 심야 전송(20:00~08:00)이 제한됩니다.
+    텍스트로 구성된 1건의 친구톡 전송을 팝빌에 접수합니다.
+    - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
+    - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendFTS_one
     """
     try:
@@ -422,23 +415,25 @@ def sendFTS_one(request):
         # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
         # 친구톡 내용 (최대 1000자)
         content = "친구톡 내용"
 
-        # 대체문자 내용 (최대 2000byte)
+        # 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
+        # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
         altContent = "대체문자 내용"
 
-        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
         # 수신번호
-        receiver = "01012349876"
+        receiver = ""
 
         # 수신자 이름
         receiverName = "partner"
@@ -466,22 +461,22 @@ def sendFTS_one(request):
         adsYN = False
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
         receiptNum = kakaoService.sendFTS(CorpNum, plusFriendID, snd, content, altContent, altSendType, sndDT,
-                                          receiver, receiverName, KakaoButtons, adsYN, UserID, requestNum)
+                                            receiver, receiverName, KakaoButtons, adsYN, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendFTS_multi(request):
     """
-    [대량전송] 친구톡(텍스트) 전송을 요청합니다.
-    - 친구톡은 심야 전송(20:00~08:00)이 제한됩니다.
+    텍스트로 구성된 다수건의 친구톡 전송을 팝빌에 접수하며, 수신자 별로 개별 내용을 전송합니다. (최대 1,000건)
+    - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
+    - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendFTS_multi
     """
     try:
@@ -494,10 +489,11 @@ def sendFTS_multi(request):
         # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "01043245117"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
-        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -564,7 +560,7 @@ def sendFTS_multi(request):
         adsYN = False
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -575,11 +571,11 @@ def sendFTS_multi(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendFTS_same(request):
     """
-    [동보전송] 친구톡(텍스트) 전송을 요청합니다.
-    - 친구톡은 심야 전송(20:00~08:00)이 제한됩니다.
+    텍스트로 구성된 다수건의 친구톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
+    - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
+    - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendFTS_same
     """
     try:
@@ -592,8 +588,8 @@ def sendFTS_same(request):
         # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
         # [동보] 친구톡 내용 (최대 1000자)
         content = "안녕하세요 팝빌 플친님 파이썬입니다."
@@ -601,7 +597,8 @@ def sendFTS_same(request):
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "(친구톡 대체문자) 안녕하세요 팝빌 플친님 파이썬입니다."
 
-        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -612,7 +609,7 @@ def sendFTS_same(request):
         for x in range(0, 2):
             KakaoMessages.append(
                 KakaoReceiver(
-                    rcv="0101235678",  # 수신번호
+                    rcv="",  # 수신번호
                     rcvnm="팝친"  # 수신자 이름
                 )
             )
@@ -640,7 +637,7 @@ def sendFTS_same(request):
         adsYN = False
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -651,12 +648,12 @@ def sendFTS_same(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendFMS_one(request):
     """
-    친구톡(이미지) 전송을 요청합니다.
-    - 친구톡은 심야 전송(20:00~08:00)이 제한됩니다.
-    - 이미지 전송규격 / jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상
+    이미지가 첨부된 1건의 친구톡 전송을 팝빌에 접수합니다.
+    - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
+    - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
+    - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
     - https://docs.popbill.com/kakao/python/api#SendFMS_one
     """
     try:
@@ -669,30 +666,34 @@ def sendFMS_one(request):
         # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
         # 친구톡 내용 (최대 400자)
         content = "친구톡 내용"
 
-        # 대체문자 내용 (최대 2000byte)
+        # 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
+        # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
         altContent = "대체문자 내용"
 
-        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
-        # 파일경로
+        # 첨부이미지 파일 경로
         # 이미지 전송규격 (jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상)
         filePath = "./KakaoExample/static/image/test.jpg"
 
         # 이미지 링크 URL
+        # └ 수신자가 친구톡 상단 이미지 클릭시 호출되는 URL
+        # 미입력시 첨부된 이미지를 링크 기능 없이 표시
         imageURL = "http://www.linkhub.co.kr"
 
         # 수신번호
-        receiver = "01012345678"
+        receiver = ""
 
         # 수신자 이름
         receiverName = "partner"
@@ -720,24 +721,24 @@ def sendFMS_one(request):
         adsYN = False
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
         receiptNum = kakaoService.sendFMS(CorpNum, plusFriendID, snd, content, altContent,
-                                          altSendType, sndDT, filePath, imageURL, receiver, receiverName,
-                                          KakaoButtons, adsYN, UserID, requestNum)
+                                            altSendType, sndDT, filePath, imageURL, receiver, receiverName,
+                                            akaoButtons, adsYN, UserID, requestNum)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendFMS_multi(request):
     """
-    [대량전송] 친구톡(이미지) 전송을 요청합니다.
-    - 친구톡은 심야 전송(20:00~08:00)이 제한됩니다.
-    - 이미지 전송규격 / jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상
+    이미지가 첨부된 다수건의 친구톡 전송을 팝빌에 접수하며, 수신자 별로 개별 내용을 전송합니다. (최대 1,000건)
+    - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
+    - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
+    - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
     - https://docs.popbill.com/kakao/python/api#SendFMS_multi
     """
     try:
@@ -750,20 +751,23 @@ def sendFMS_multi(request):
         # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
-        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
-        # 파일경로
+        # 첨부이미지 파일 경로
         # 이미지 전송규격 (jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상)
         filePath = "./KakaoExample/static/image/test.jpg"
 
         # 이미지 링크 URL
+        # └ 수신자가 친구톡 상단 이미지 클릭시 호출되는 URL
+        # 미입력시 첨부된 이미지를 링크 기능 없이 표시
         imageURL = "http://www.linkhub.co.kr"
 
         # 수신정보 배열 (최대 1000개 가능)
@@ -771,8 +775,8 @@ def sendFMS_multi(request):
         for x in range(0, 10):
             KakaoMessages.append(
                 KakaoReceiver(
-                    rcv="0101234567",  # 수신번호
-                    rcvnm="김현진",  # 수신자 이름
+                    rcv="",  # 수신번호
+                    rcvnm="",  # 수신자 이름
                     msg="안녕하세요 " + str(x) + "님 링크허브입니다.",  # 친구톡 내용 (최대 400자)
                     altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
                 )
@@ -801,7 +805,7 @@ def sendFMS_multi(request):
         adsYN = False
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -813,12 +817,11 @@ def sendFMS_multi(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def sendFMS_same(request):
     """
-    [동보전송] 친구톡(이미지) 전송을 요청합니다.
-    - 친구톡은 심야 전송(20:00~08:00)이 제한됩니다.
-    - 이미지 전송규격 / jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상
+    이미지가 첨부된 다수건의 친구톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
+    - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
+    - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - https://docs.popbill.com/kakao/python/api#SendFMS_same
     """
     try:
@@ -831,8 +834,8 @@ def sendFMS_same(request):
         # 팝빌에 등록된 카카오톡 채널 아아디
         plusFriendID = "@팝빌"
 
-        # 발신번호 (팝빌에 등록된 발신번호만 이용가능)
-        snd = "07043042992"
+        # 팝빌에 사전 등록된 발신번호
+        snd = ""
 
         # [동보] 친구톡 내용 (최대 400자)
         content = "안녕하세요 팝빌 플친님 파이썬입니다."
@@ -840,17 +843,20 @@ def sendFMS_same(request):
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "(친구톡 대체문자) 안녕하세요 팝빌 플친님 파이썬입니다."
 
-        # 대체문자 유형 [공백-미전송, C-친구톡내용, A-대체문자내용]
+        # 대체문자 유형 (null , "C" , "A" 중 택 1)
+        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
-        # 파일경로
+        # 첨부이미지 파일 경로
         # 이미지 전송규격 (jpg 포맷, 용량 최대 500KByte, 이미지 높이/너비 비율 1.333 이하, 1/2 이상)
         filePath = "./KakaoExample/static/image/test.jpg"
 
         # 이미지 링크 URL
+        # └ 수신자가 친구톡 상단 이미지 클릭시 호출되는 URL
+        # 미입력시 첨부된 이미지를 링크 기능 없이 표시
         imageURL = "http://www.linkhub.co.kr"
 
         # 수신정보 배열 (최대 1000개 가능)
@@ -858,7 +864,7 @@ def sendFMS_same(request):
         for x in range(0, 10):
             KakaoMessages.append(
                 KakaoReceiver(
-                    rcv="0101235678",  # 수신번호
+                    rcv="",  # 수신번호
                     rcvnm="팝친"  # 수신자 이름
                 )
             )
@@ -886,7 +892,7 @@ def sendFMS_same(request):
         adsYN = False
 
         # 전송요청번호
-        # 파트너가 전송 건에 대해 문서번호를 구성하여 관리하는 경우 사용.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -898,11 +904,9 @@ def sendFMS_same(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def cancelReserve(request):
     """
-    알림톡/친구톡 전송요청시 발급받은 접수번호(receiptNum)로 예약전송건을 취소합니다.
-    - 예약취소는 예약전송시간 10분전까지만 가능합니다.
+    팝빌에서 반환받은 접수번호를 통해 예약접수된 카카오톡을 전송 취소합니다. (예약시간 10분 전까지 가능)
     - https://docs.popbill.com/kakao/python/api#CancelReserve
     """
     try:
@@ -918,11 +922,9 @@ def cancelReserve(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def cancelReserveRN(request):
     """
-    전송요청번호(requestNum)를 할당한 알림톡/친구톡 예약전송건을 취소합니다.
-    - 예약취소는 예약전송시간 10분전까지만 가능합니다.
+    파트너가 할당한 전송요청 번호를 통해 예약접수된 카카오톡을 전송 취소합니다. (예약시간 10분 전까지 가능)
     - https://docs.popbill.com/kakao/python/api#CancelReserveRN
     """
     try:
@@ -930,7 +932,7 @@ def cancelReserveRN(request):
         CorpNum = settings.testCorpNum
 
         # 예약전송 요청시 할당한 전송요청번호(requestNum)
-        requestNum = "20211227-001"
+        requestNum = ""
 
         result = kakaoService.cancelReserveRN(CorpNum, requestNum)
 
@@ -938,10 +940,9 @@ def cancelReserveRN(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getMessages(request):
     """
-    알림톡/친구톡 전송요청시 발급받은 접수번호(receiptNum)로 전송결과를 확인합니다.
+    팝빌에서 반환받은 접수번호를 통해 알림톡/친구톡 전송상태 및 결과를 확인합니다.
     - https://docs.popbill.com/kakao/python/api#GetMessages
     """
     try:
@@ -957,10 +958,9 @@ def getMessages(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getMessagesRN(request):
     """
-    전송요청번호(requestNum)를 할당한 알림톡/친구톡 전송내역 및 전송상태를 확인합니다.
+    파트너가 할당한 전송요청 번호를 통해 알림톡/친구톡 전송상태 및 결과를 확인합니다.
     - https://docs.popbill.com/kakao/python/api#GetMessagesRN
     """
     try:
@@ -968,14 +968,13 @@ def getMessagesRN(request):
         CorpNum = settings.testCorpNum
 
         # 알림톡/친구톡 전송 요청시 할당한 전송요청번호(requestNum)
-        requestNum = "20211201-123"
+        requestNum = ""
 
         kakaoInfo = kakaoService.getMessagesRN(CorpNum, requestNum)
 
         return render(request, 'Kakao/GetMessages.html', {'kakaoInfo': kakaoInfo})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def search(request):
     """
@@ -990,28 +989,38 @@ def search(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
+        # 최대 검색기간 : 6개월 이내
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20211201"
+        SDate = "20220701"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20211227"
+        EDate = "20220731"
 
-        # 전송상태 배열 [0-대기, 1-전송중, 2-성공, 3-대체 4-실패, 5-취소]
-        State = ["1", "2", "3", "4", "5"]
+        # 전송상태 배열 ("0" , "1" , "2" , "3" , "4" , "5" 중 선택, 다중 선택 가능)
+        # └ 0 = 전송대기 , 1 = 전송중 , 2 = 전송성공 , 3 = 대체문자 전송 , 4 = 전송실패 , 5 = 전송취소
+        # - 미입력 시 전체조회
+        State = ["0", "1", "2", "3", "4", "5"]
 
-        # 검색대상 [ATS(알림톡) / FTS(친구톡 텍스트) / FMS(친구톡 이미지)]
+        # 검색대상 배열 ("ATS", "FTS", "FMS" 중 선택, 다중 선택 가능)
+        # └ ATS = 알림톡 , FTS = 친구톡(텍스트) , FMS = 친구톡(이미지)
+        # - 미입력 시 전체조회
         Item = ["ATS", "FTS", "FMS"]
 
-        # 예약전송 검색여부, [공백-전체조회, 0-즉시전송조회, 1-예약전송조회]
-        ReserveYN = ""
+        # 전송유형별 조회 (null , "0" , "1" 중 택 1)
+        # └ null = 전체 , 0 = 즉시전송건 , 1 = 예약전송건
+        # - 미입력 시 전체조회
+        ReserveYN = "0"
 
-        # 개인조회여부 [0-전체조회, 1-개인조회]
+        # 사용자권한별 조회 (true / false 중 택 1)
+        # └ false = 접수한 카카오톡 전체 조회 (관리자권한)
+        # └ true = 해당 담당자 계정으로 접수한 카카오톡만 조회 (개인권한)
+        # 미입력시 기본값 false 처리
         SenderYN = "0"
 
-        # 페이지 번호, 기본값 ‘1’
+        # 페이지 번호
         Page = 1
 
-        # 페이지당 검색개수, 기본값 500, 최대값 1000
+        # 페이지당 목록개수
         PerPage = 10
 
         # 정렬방향 [D-내림차순, A-오름차순]
@@ -1021,17 +1030,16 @@ def search(request):
         QString = ""
 
         response = kakaoService.search(CorpNum, SDate, EDate, State, Item, ReserveYN, SenderYN, Page, PerPage, Order,
-                                       UserID, QString)
+                                        UserID, QString)
 
         return render(request, 'Kakao/Search.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getSentListURL(request):
     """
-    카카오톡전송내역 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    카카오톡 전송내역을 확인하는 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetSentListURL
     """
     try:
@@ -1047,54 +1055,9 @@ def getSentListURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
-def getUnitCost(request):
-    """
-    알림톡/친구톡 전송단가를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetUnitCost
-    """
-    try:
-        # 팝빌회원 아이디
-        CorpNum = settings.testCorpNum
-
-        # 전송유형 [ATS(알림톡), FTS(친구톡 텍스트), FMS(친구톡 이미지)]
-        MsgType = "ATS"
-
-        result = kakaoService.getUnitCost(CorpNum, MsgType)
-
-        return render(request, 'result.html', {'result': result})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getChargeInfo(request):
-    """
-    연동회원의 알림톡,친구톡 API 서비스 과금정보를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetChargeInfo
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # 전송유형 [ATS(알림톡), FTS(친구톡 텍스트), FMS(친구톡 이미지)]
-        MsgType = "ATS"
-
-        response = kakaoService.getChargeInfo(CorpNum, MsgType, UserID)
-
-        return render(request, 'getChargeInfo.html', {'response': response})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-    pass
-
-
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
     - https://docs.popbill.com/kakao/python/api#GetBalance
     """
     try:
@@ -1107,11 +1070,10 @@ def getBalance(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getChargeURL(request):
     """
-    팝빌 연동회원 포인트 충전 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetChargeURL
     """
     try:
@@ -1129,8 +1091,8 @@ def getChargeURL(request):
 
 def getPaymentURL(request):
     """
-    팝빌 연동회원 포인트 결재내역 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetPaymentURL
     """
     try:
@@ -1148,8 +1110,8 @@ def getPaymentURL(request):
 
 def getUseHistoryURL(request):
     """
-    팝빌 연동회원 포인트 사용내역 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetUseHistoryURL
     """
     try:
@@ -1168,7 +1130,6 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
     - https://docs.popbill.com/kakao/python/api#GetPartnerBalance
     """
     try:
@@ -1181,11 +1142,10 @@ def getPartnerBalance(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetPartnerURL
     """
     try:
@@ -1201,10 +1161,50 @@ def getPartnerURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getUnitCost(request):
+    """
+    카카오톡 전송시 과금되는 포인트 단가를 확인합니다.
+    - https://docs.popbill.com/kakao/python/api#GetUnitCost
+    """
+    try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
+        CorpNum = settings.testCorpNum
+
+        # 카카오톡 전송유형 : ATS / FTS / FMS 중 택 1
+        # └ ATS = 알림톡, FTS = 친구톡(텍스트) , FMS = 친구톡(이미지)
+        MsgType = "ATS"
+
+        result = kakaoService.getUnitCost(CorpNum, MsgType)
+
+        return render(request, 'result.html', {'result': result})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def getChargeInfo(request):
+    """
+    팝빌 카카오톡 API 서비스 과금정보를 확인합니다.
+    - https://docs.popbill.com/kakao/python/api#GetChargeInfo
+    """
+    try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+        
+        # 카카오톡 전송유형 : ATS / FTS / FMS 중 택 1
+        # └ ATS = 알림톡, FTS = 친구톡(텍스트) , FMS = 친구톡(이미지)
+        MsgType = "ATS"
+
+        response = kakaoService.getChargeInfo(CorpNum, MsgType)
+
+        return render(request, 'getChargeInfo.html', {'response': response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def checkIsMember(request):
     """
-    해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+    사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
     - https://docs.popbill.com/kakao/python/api#CheckIsMember
     """
     try:
@@ -1217,10 +1217,9 @@ def checkIsMember(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def checkID(request):
     """
-    팝빌 회원아이디 중복여부를 확인합니다.
+    사용하고자 하는 아이디의 중복여부를 확인합니다.
     - https://docs.popbill.com/kakao/python/api#CheckID
     """
     try:
@@ -1233,11 +1232,9 @@ def checkID(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def joinMember(request):
     """
-    파트너의 연동회원으로 회원가입을 요청합니다.
-    - 아이디 중복확인은 (CheckID API)를 참조하시길 바랍니다.
+    사용자를 연동회원으로 가입처리합니다.
     - https://docs.popbill.com/kakao/python/api#JoinMember
     """
     try:
@@ -1273,16 +1270,10 @@ def joinMember(request):
             ContactName="담당자성명",
 
             # 담당자 이메일주소 (최대 100자)
-            ContactEmail="test@test.com",
+            ContactEmail="",
 
             # 담당자 연락처 (최대 20자)
-            ContactTEL="070-111-222",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            ContactHP="010-111-222",
-
-            # 담당자 팩스번호 (최대 20자)
-            ContactFAX="070-111-222"
+            ContactTEL=""
         )
 
         response = kakaoService.joinMember(newMember)
@@ -1291,11 +1282,10 @@ def joinMember(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-
 def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-    - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://docs.popbill.com/kakao/python/api#GetAccessURL
     """
     try:
@@ -1311,10 +1301,58 @@ def getAccessURL(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def getCorpInfo(request):
+    """
+    연동회원의 회사정보를 확인합니다.
+    - https://docs.popbill.com/kakao/python/api#GetCorpInfo
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        response = kakaoService.getCorpInfo(CorpNum, UserID)
+
+        return render(request, 'getCorpInfo.html', {'response': response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def updateCorpInfo(request):
+    """
+    연동회원사의 회사정보를 수정 합니다.
+    - https://docs.popbill.com/kakao/python/api#UpdateCorpInfo
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 회사정보
+        corpInfo = CorpInfo(
+
+            # 대표자 성명 (최대 100자)
+            ceoname="대표자_성명",
+
+            # 상호 (최대 200자)
+            corpName="상호",
+
+            # 주소 (최대 300자)
+            addr="주소",
+
+            # 업태 (최대 100자)
+            bizType="업태",
+
+            # 종목 (최대 100자)
+            bizClass="종목"
+        )
+
+        response = kakaoService.updateCorpInfo(CorpNum, corpInfo)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
 def registContact(request):
     """
-    연동회원의 담당자를 신규로 등록합니다.
+    연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
     - https://docs.popbill.com/kakao/python/api#RegistContact
     """
     try:
@@ -1338,16 +1376,10 @@ def registContact(request):
             personName="담당자명",
 
             # 담당자 연락처 (최대 20자)
-            tel="010-111-222",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            hp="010-111-222",
-
-            # 담당자 팩스번호 (최대 20자)
-            fax="070-111-222",
+            tel="",
 
             # 담당자 이메일 (최대 100자)
-            email="test@test.com",
+            email="",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1
@@ -1361,20 +1393,17 @@ def registContact(request):
 
 def getContactInfo(request):
     """
-    연동회원의 담당자 정보를 확인합니다.
+    연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
     - https://docs.popbill.com/kakao/python/api#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 담당자 아이디
         contactID = 'testkorea'
 
-        contactInfo = kakaoService.getContactInfo(CorpNum, contactID, UserID)
+        contactInfo = kakaoService.getContactInfo(CorpNum, contactID)
 
         return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
     except PopbillException as PE:
@@ -1382,79 +1411,18 @@ def getContactInfo(request):
 
 def listContact(request):
     """
-    연동회원의 담당자 목록을 확인합니다.
+    연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
     - https://docs.popbill.com/kakao/python/api#ListContact
     """
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        listContact = kakaoService.listContact(CorpNum, UserID)
+        listContact = kakaoService.listContact(CorpNum)
 
         return render(request, 'listContact.html', {'listContact': listContact})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def updateCorpInfo(request):
-    """
-    연동회원사의 회사정보를 수정 합니다.
-    - https://docs.popbill.com/kakao/python/api#UpdateCorpInfo
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # 회사정보
-        corpInfo = CorpInfo(
-
-            # 대표자 성명 (최대 100자)
-            ceoname="대표자_성명",
-
-            # 상호 (최대 200자)
-            corpName="상호",
-
-            # 주소 (최대 300자)
-            addr="주소",
-
-            # 업태 (최대 100자)
-            bizType="업태",
-
-            # 종목 (최대 100자)
-            bizClass="종목"
-        )
-
-        response = kakaoService.updateCorpInfo(CorpNum, corpInfo, UserID)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-
-def getCorpInfo(request):
-    """
-    연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetCorpInfo
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = kakaoService.getCorpInfo(CorpNum, UserID)
-
-        return render(request, 'getCorpInfo.html', {'response': response})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 
 def updateContact(request):
     """
@@ -1464,9 +1432,6 @@ def updateContact(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
 
         # 담당자 정보
         updateInfo = ContactInfo(
@@ -1478,22 +1443,16 @@ def updateContact(request):
             personName="담당자_성명",
 
             # 담당자 연락처 (최대 20자)
-            tel="010-111-111",
-
-            # 담당자 휴대폰번호 (최대 20자)
-            hp="010-111-111",
-
-            # 담당자 팩스번호 (최대 20자)
-            fax="070-111-222",
+            tel="",
 
             # 담당자 메일주소 (최대 100자)
-            email="test@test.com",
+            email="",
 
             #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1
         )
 
-        response = kakaoService.updateContact(CorpNum, updateInfo, UserID)
+        response = kakaoService.updateContact(CorpNum, updateInfo)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:

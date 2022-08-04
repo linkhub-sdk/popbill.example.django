@@ -29,6 +29,9 @@ urlpatterns = [
     url(r'^CheckLoginDeptUser', views.checkLoginDeptUser, name='CheckLoginDeptUser'),
     url(r'^DeleteDeptUser', views.deleteDeptUser, name='DeleteDeptUser'),
 
+    # 정액제 신청 / 포인트 관리
+    url(r'^GetFlatRatePopUpURL$', views.getFlatRatePopUpURL, name='GetFlatRatePopUpURL'),
+    url(r'^GetFlatRateState$', views.getFlatRateState, name='GetFlatRateState'),
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
     url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
     url(r'^GetPaymentURL', views.getPaymentURL, name='GetPaymentURL'),
@@ -36,8 +39,6 @@ urlpatterns = [
     url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
     url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
-    url(r'^GetFlatRatePopUpURL$', views.getFlatRatePopUpURL, name='GetFlatRatePopUpURL'),
-    url(r'^GetFlatRateState$', views.getFlatRateState, name='GetFlatRateState'),
 
     # 회원정보
     url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),

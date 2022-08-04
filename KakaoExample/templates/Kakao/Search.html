@@ -16,20 +16,22 @@
                     <fieldset class="fieldset2">
                         <legend>카카오톡 전송내역 조회 결과 [{{ forloop.counter }}]</legend>
                         <ul>
-                            <li> state (전송 상태코드) : {{ messageInfo.state }}</li>
+                            <li> state (전송상태 코드) : {{ messageInfo.state }}</li>
                             <li> sendDT (전송일시) : {{ messageInfo.sendDT }}</li>
-                            <li> result (전송결과 코드) : {{ messageInfo.result }}</li>
-                            <li> resultDT (전송결과 수신일시) : {{ messageInfo.resultDT }}</li>
-                            <li> contentType (카카오톡 유형) : {{ messageInfo.contentType }}</li>
+                            <li> result (알림톡/친구톡 전송결과 코드) : {{ messageInfo.result }}</li>
+                            <li> resultDT (알림톡/친구톡 전송결과 수신일시) : {{ messageInfo.resultDT }}</li>
+                            <li> contentType (카카오톡 전송유형) : {{ messageInfo.contentType }}</li>
                             <li> receiveNum (수신번호) : {{ messageInfo.receiveNum }}</li>
                             <li> receiveName (수신자명) : {{ messageInfo.receiveName }}</li>
                             <li> content (알림톡/친구톡 내용) : {{ messageInfo.content }}</li>
-                            <li> altContentType (대체문자 전송타입) : {{ messageInfo.altContentType }}</li>
+                            <li> altContent (대체문자 내용) : {{ messageInfo.altContent }}</li>
+                            <li> altContentType (대체문자 전송유형) : {{ messageInfo.altContentType }}</li>
                             <li> altSendDT (대체문자 전송일시) : {{ messageInfo.altSendDT }}</li>
                             <li> altResult (대체문자 전송결과 코드) : {{ messageInfo.altResult }}</li>
                             <li> altResultDT (대체문자 전송결과 수신일시) : {{ messageInfo.altResultDT }}</li>
                             <li> receiptNum (접수번호) : {{ messageInfo.receiptNum }}</li>
                             <li> requestNum (요청번호) : {{ messageInfo.requestNum }}</li>
+                            <li> interOPRefKey (파트너 지정키) : {{ messageInfo.interOPRefKey }}</li>
                         </ul>
                     </fieldset>
                 {% endfor %}

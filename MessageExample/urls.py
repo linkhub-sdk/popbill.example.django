@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^GetMessages$', views.getMessages, name='GetMessages'),
     url(r'^GetMessagesRN$', views.getMessagesRN, name='GetMessagesRN'),
     url(r'^Search$', views.search, name='Search'),
-    url(r'^GetStates$', views.getStates, name='GetStates$'),
+    # url(r'^GetStates$', views.getStates, name='GetStates$'),
     url(r'^GetSentListURL', views.getSentListURL, name='GetSentListURL'),
     url(r'^GetAutoDenyList$', views.getAutoDenyList, name='GetAutoDenyList'),
 

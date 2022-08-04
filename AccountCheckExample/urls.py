@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^CheckDepositorInfo$', views.checkDepositorInfo, name='CheckDepositorInfo'),
 
 
-    # 포인트 관리 / 정액제 신청
+    # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),
     url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
     url(r'^GetPaymentURL', views.getPaymentURL, name='GetPaymentURL'),
