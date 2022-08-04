@@ -109,7 +109,7 @@ def registIssue(request):
             # 발행형태, {정발행, 위수탁} 중 기재
             issueType="정발행",
 
-            # {영수, 청구, 없음} 중 기재 
+            # {영수, 청구, 없음} 중 기재
             purposeType="영수",
 
             # 과세형태, {과세, 영세, 면세} 중 기재
@@ -388,7 +388,7 @@ def bulkSubmit(request):
                     # 발행형태, {정발행, 위수탁} 중 기재
                     issueType="정발행",
 
-                    # {영수, 청구, 없음} 중 기재 
+                    # {영수, 청구, 없음} 중 기재
                     purposeType="영수",
 
                     # 과세형태, {과세, 영세, 면세} 중 기재
@@ -635,7 +635,7 @@ def register(request):
             # 발행형태, {정발행, 역발행, 위수탁} 중 기재
             issueType="정발행",
 
-            # {영수, 청구, 없음} 중 기재 
+            # {영수, 청구, 없음} 중 기재
             purposeType="영수",
 
             # 과세형태, {과세, 영세, 면세} 중 기재
@@ -908,7 +908,7 @@ def update(request):
             # 발행형태, {정발행, 역발행, 위수탁} 중 기재
             issueType="정발행",
 
-            # {영수, 청구, 없음} 중 기재 
+            # {영수, 청구, 없음} 중 기재
             purposeType="영수",
 
             # 과세형태, {과세, 영세, 면세} 중 기재
@@ -1253,7 +1253,7 @@ def registRequest(request):
             # 발행형태, {역발행} 중 기재
             issueType="역발행",
 
-            # {영수, 청구, 없음} 중 기재 
+            # {영수, 청구, 없음} 중 기재
             purposeType="영수",
 
             # 과세형태, {과세, 영세, 면세} 중 기재
@@ -2439,6 +2439,24 @@ def checkCertValidation(request):
         response = taxinvoiceService.checkCertValidation(CorpNum)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def getTaxCertInfo(request):
+    '''
+    팝빌 인증서버에 등록된 공동인증서의 정보를 확인합니다.
+    - https://docs.popbill.com/taxinvoice/python/api#GetTaxCertInfo
+    '''
+
+    try:
+        print("=" * 15 + " 인증서 정보 확인 " + "=" * 15)
+
+        # 팝빌회원 사업자번호
+        CorpNum = testValue.testCorpNum
+
+        taxinvoiceCertificate = taxinvoiceService.getTaxCertInfo(CorpNum)
+
+        return render(request, 'Taxinvoice/GetTaxCertInfo.html', {'taxinvoiceCertificate': taxinvoiceCertificate})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 

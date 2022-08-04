@@ -62,6 +62,7 @@ urlpatterns = [
     url(r'^GetTaxCertURL', views.getTaxCertURL, name='GetTaxCertURL'),
     url(r'^GetCertificateExpireDate$', views.getCertificateExpireDate, name='GetCertificateExpireDate'),
     url(r'^CheckCertValidation', views.checkCertValidation, name='CheckCertValidation'),
+    url(r'^GetTaxCertInfo', views.getTaxCertInfo, name='GetTaxCertInfo'),
 
     # 포인트 관리
     url(r'^GetBalance$', views.getBalance, name='GetBalance'),

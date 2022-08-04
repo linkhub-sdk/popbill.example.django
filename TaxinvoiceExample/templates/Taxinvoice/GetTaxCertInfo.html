@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 세금계산서 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>인증서 정보 확인</legend>
+            <ul>
+                <li> regDT (등록일시) : {{ taxinvoiceCertificate.regDT }}</li>
+                <li> expireDT (만료일시) : {{ taxinvoiceCertificate.expireDT }}</li>
+                <li> issuerDN (인증서 발급자 DN) : {{ taxinvoiceCertificate.issuerDN }}</li>
+                <li> subjectDN (등록된 인증서 DN) : {{ taxinvoiceCertificate.subjectDN }}</li>
+                <li> issuerName (인증서 종류) : {{ taxinvoiceCertificate.issuerName }}</li>
+                <li> oid (OID) : {{ taxinvoiceCertificate.oid }}</li>
+                <li> regContactName (등록 담당자 성명) : {{ taxinvoiceCertificate.regContactName }}</li>
+                <li> regContactID (등록 담당자 아이디) : {{ taxinvoiceCertificate.regContactID }}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
