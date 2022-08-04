@@ -52,7 +52,7 @@ def registIssue(request):
     """
     작성된 전자명세서 데이터를 팝빌에 저장과 동시에 발행하여, "발행완료" 상태로 처리합니다.
     - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 
-      전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
+        전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
     - 전자명세서 발행 함수 호출시 수신자에게 발행 안내 메일이 발송됩니다.
     - https://docs.popbill.com/statement/python/api#RegistIssue
     """
@@ -611,7 +611,7 @@ def issue(request):
     """
     "임시저장" 상태의 전자명세서를 발행하여, "발행완료" 상태로 처리합니다.
     - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 
-      전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
+        전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
     - 전자명세서 발행 함수 호출시 수신자에게 발행 안내 메일이 발송됩니다.
     - https://docs.popbill.com/statement/python/api#StmIssue
     """
@@ -1046,10 +1046,7 @@ def attachFile(request):
         # 파일경로
         FilePath = "./StatementExample/static/image/attachfile.png"
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = statementService.attachFile(CorpNum, ItemCode, MgtKey, FilePath, UserID)
+        response = statementService.attachFile(CorpNum, ItemCode, MgtKey, FilePath)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1074,10 +1071,7 @@ def deleteFile(request):
         # 삭제할 FileID, 첨부파일목록(getFiles API) 응답 전문의 attachedFile 값
         FileID = "0DD20B73-5654-488E-A683-0ABED95C7D07.PBF"
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = statementService.deleteFile(CorpNum, ItemCode, MgtKey, FileID, UserID)
+        response = statementService.deleteFile(CorpNum, ItemCode, MgtKey, FileID)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1122,10 +1116,7 @@ def sendEmail(request):
         # 수신메일주소
         ReceiverMail = ""
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = statementService.sendEmail(CorpNum, ItemCode, MgtKey, ReceiverMail, UserID)
+        response = statementService.sendEmail(CorpNum, ItemCode, MgtKey, ReceiverMail)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1157,10 +1148,7 @@ def sendSMS(request):
         # 문자메시지내용, 90Byte 초과시 길이가 조정되어 전송됨
         Contents = "전자명세서 API 문자메시지 테스트"
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = statementService.sendSMS(CorpNum, ItemCode, MgtKey, Sender, Receiver, Contents, UserID)
+        response = statementService.sendSMS(CorpNum, ItemCode, MgtKey, Sender, Receiver, Contents)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1188,10 +1176,7 @@ def sendFAX(request):
         # 수신번호
         Receiver = ""
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = statementService.sendFAX(CorpNum, ItemCode, MgtKey, Sender, Receiver, UserID)
+        response = statementService.sendFAX(CorpNum, ItemCode, MgtKey, Sender, Receiver)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1209,9 +1194,6 @@ def FAXSend(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
 
         # 팩스발신번호
         SendNum = ""
@@ -1371,7 +1353,7 @@ def FAXSend(request):
             'CBalance': "25000"  # 현잔액
         }
 
-        result = statementService.FAXSend(CorpNum, statement, SendNum, ReceiveNum, UserID)
+        result = statementService.FAXSend(CorpNum, statement, SendNum, ReceiveNum)
 
         return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
@@ -1386,9 +1368,6 @@ def attachStatement(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         ItemCode = "121"
 
@@ -1401,7 +1380,7 @@ def attachStatement(request):
         # 첨부할 전자명세서 문서번호
         SubMgtKey = "20220803-002"
 
-        response = statementService.attachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
+        response = statementService.attachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1416,9 +1395,6 @@ def detachStatement(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서 125-입금표, 126-영수증
         ItemCode = "121"
 
@@ -1431,7 +1407,7 @@ def detachStatement(request):
         # 첨부해제할 전자명세서 문서번호
         SubMgtKey = "20220803-002"
 
-        response = statementService.detachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey, UserID)
+        response = statementService.detachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1446,10 +1422,7 @@ def listEmailConfig(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        EmailConfig = statementService.listEmailConfig(CorpNum, UserID)
+        EmailConfig = statementService.listEmailConfig(CorpNum)
 
         return render(request, 'Statement/ListEmailConfig.html', {'EmailConfig': EmailConfig})
     except PopbillException as PE:
@@ -1477,10 +1450,7 @@ def updateEmailConfig(request):
         # 전송 여부 (True = 전송, False = 미전송)
         SendYN = True
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = statementService.updateEmailConfig(CorpNum, EmailType, SendYN, UserID)
+        response = statementService.updateEmailConfig(CorpNum, EmailType, SendYN)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1719,7 +1689,7 @@ def getCorpInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        response = statementService.getCorpInfo(CorpNum, UserID)
+        response = statementService.getCorpInfo(CorpNum)
 
         return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
@@ -1768,9 +1738,6 @@ def registContact(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 담당자 정보
         newContact = ContactInfo(
 
@@ -1794,7 +1761,7 @@ def registContact(request):
             searchRole=1
         )
 
-        response = statementService.registContact(CorpNum, newContact, UserID)
+        response = statementService.registContact(CorpNum, newContact)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1841,6 +1808,9 @@ def updateContact(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
 
         # 담당자 정보
         updateInfo = ContactInfo(

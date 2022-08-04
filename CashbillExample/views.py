@@ -162,9 +162,6 @@ def bulkSubmit(request):
         #최대 36자리 영문, 숫자, '-' 조합으로 구성
         submitID = 'PYTHON-DJANGO-BULK'
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 현금영수증 객체정보 리스트
         cashbillList = []
         for i in range(1, 101):
@@ -250,7 +247,7 @@ def bulkSubmit(request):
                     smssendYN=False
                 )
             )
-        bulkResponse = cashbillService.bulkSubmit(CorpNum, submitID, cashbillList, UserID)
+        bulkResponse = cashbillService.bulkSubmit(CorpNum, submitID, cashbillList)
 
         return render(request, 'Cashbill/BulkResponse.html', {'code' : bulkResponse.code, 'message' : bulkResponse.message, 'receiptID' : bulkResponse.receiptID})
     except PopbillException as PE:
@@ -270,10 +267,7 @@ def getBulkResult(request):
         #최대 36자리 영문, 숫자, '-' 조합으로 구성
         submitID = 'PYTHON-DJANGO-BULK'
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        bulkCashbillResult = cashbillService.getBulkResult(CorpNum, submitID, UserID)
+        bulkCashbillResult = cashbillService.getBulkResult(CorpNum, submitID)
 
         return render(request, 'Cashbill/BulkResult.html', {'bulkCashbillResult' : bulkCashbillResult})
     except PopbillException as PE:
@@ -334,9 +328,6 @@ def revokeRegistIssue(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
         mgtKey = "20220803-002"
 
@@ -352,8 +343,7 @@ def revokeRegistIssue(request):
         # 즉시발행 메모
         memo = "취소현금영수증 즉시발행 메모"
 
-        response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
-                                                        UserID)
+        response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
     except PopbillException as PE:
@@ -610,10 +600,13 @@ def getPopUpURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 현금영수증 문서번호
         MgtKey = "20220803-001"
 
-        url = cashbillService.getPopUpURL(CorpNum, MgtKey)
+        url = cashbillService.getPopUpURL(CorpNum, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -629,10 +622,13 @@ def getViewURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 현금영수증 문서번호
         MgtKey = "20220803-001"
 
-        url = cashbillService.getViewURL(CorpNum, MgtKey)
+        url = cashbillService.getViewURL(CorpNum, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -648,10 +644,13 @@ def getPrintURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 현금영수증 문서번호
         MgtKey = "20220803-001"
 
-        url = cashbillService.getPrintURL(CorpNum, MgtKey)
+        url = cashbillService.getPrintURL(CorpNum, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -667,13 +666,16 @@ def getMassPrintURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 문서번호 배열, 최대 100건
         MgtKeyList = []
         MgtKeyList.append("20220803-001")
         MgtKeyList.append("20220803-002")
         MgtKeyList.append("20220803-003")
 
-        url = cashbillService.getMassPrintURL(CorpNum, MgtKeyList)
+        url = cashbillService.getMassPrintURL(CorpNum, MgtKeyList, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -689,10 +691,13 @@ def getMailURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 현금영수증 문서번호
         MgtKey = "20220803-001"
 
-        url = cashbillService.getMailURL(CorpNum, MgtKey)
+        url = cashbillService.getMailURL(CorpNum, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -708,10 +713,13 @@ def getPDFURL(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 현금영수증 문서번호
         MgtKey = "20220803-001"
 
-        url = cashbillService.getPDFURL(CorpNum, MgtKey)
+        url = cashbillService.getPDFURL(CorpNum, MgtKey, UserID)
 
         return render(request, 'url.html', {'url': url})
     except PopbillException as PE:
@@ -753,10 +761,7 @@ def sendEmail(request):
         # 실제 거래처의 메일주소가 기재되지 않도록 주의
         Receiver = ""
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = cashbillService.sendEmail(CorpNum, MgtKey, Receiver, UserID)
+        response = cashbillService.sendEmail(CorpNum, MgtKey, Receiver)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -785,10 +790,7 @@ def sendSMS(request):
         # 메시지내용, 메시지 길이가 90Byte 초과시 길이가 조정되어 전송됨
         Contents = "현금영수증 문자메시지 전송 테스트"
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = cashbillService.sendSMS(CorpNum, MgtKey, Sender, Receiver, Contents, UserID)
+        response = cashbillService.sendSMS(CorpNum, MgtKey, Sender, Receiver, Contents)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -813,10 +815,7 @@ def sendFAX(request):
         # 수신팩스번호
         Receiver = ""
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = cashbillService.sendFAX(CorpNum, MgtKey, Sender, Receiver, UserID)
+        response = cashbillService.sendFAX(CorpNum, MgtKey, Sender, Receiver)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -837,10 +836,7 @@ def assignMgtKey(request):
         # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 최대 24자리, 사업자번호별 중복없는 고유번호 할당
         MgtKey = "20220803-004"
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = cashbillService.assignMgtKey(CorpNum, ItemKey, MgtKey, UserID)
+        response = cashbillService.assignMgtKey(CorpNum, ItemKey, MgtKey)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -855,10 +851,7 @@ def listEmailConfig(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        EmailConfig = cashbillService.listEmailConfig(CorpNum, UserID)
+        EmailConfig = cashbillService.listEmailConfig(CorpNum)
 
         return render(request, 'Cashbill/ListEmailConfig.html', {'EmailConfig': EmailConfig})
     except PopbillException as PE:
@@ -883,10 +876,7 @@ def updateEmailConfig(request):
         # 전송 여부 (True = 전송, False = 미전송)
         SendYN = True
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        response = cashbillService.updateEmailConfig(CorpNum, EmailType, SendYN, UserID)
+        response = cashbillService.updateEmailConfig(CorpNum, EmailType, SendYN)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1117,7 +1107,7 @@ def getCorpInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        response = cashbillService.getCorpInfo(CorpNum, UserID)
+        response = cashbillService.getCorpInfo(CorpNum)
 
         return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
@@ -1166,9 +1156,6 @@ def registContact(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 담당자 정보
         newContact = ContactInfo(
 
@@ -1192,7 +1179,7 @@ def registContact(request):
             searchRole=1
         )
 
-        response = cashbillService.registContact(CorpNum, newContact, UserID)
+        response = cashbillService.registContact(CorpNum, newContact)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -1239,6 +1226,9 @@ def updateContact(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
 
         # 담당자 정보
         updateInfo = ContactInfo(

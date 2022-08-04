@@ -333,7 +333,7 @@ def getCorpInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        response = accountCheckService.getCorpInfo(CorpNum, UserID)
+        response = accountCheckService.getCorpInfo(CorpNum)
 
         return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
@@ -382,9 +382,6 @@ def registContact(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 담당자 정보
         newContact = ContactInfo(
 
@@ -408,7 +405,7 @@ def registContact(request):
             searchRole=1
         )
 
-        response = accountCheckService.registContact(CorpNum, newContact, UserID)
+        response = accountCheckService.registContact(CorpNum, newContact)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:

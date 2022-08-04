@@ -196,9 +196,6 @@ def closeBankAccount(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 기관코드
         # 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
         # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
@@ -214,7 +211,7 @@ def closeBankAccount(request):
         # └ 중도일 경우, 정액제 잔여기간은 일할로 계산되어 포인트 환불(무료 이용기간에 해지하면 전액 환불)
         CloseType = "중도"
 
-        response = easyFinBankService.closeBankAccount(CorpNum, BankCode, AccountNumber, CloseType, UserID)
+        response = easyFinBankService.closeBankAccount(CorpNum, BankCode, AccountNumber, CloseType)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -370,7 +367,7 @@ def search(request):
         Order = "D"
 
         response = easyFinBankService.search(CorpNum, JobID, TradeType, SearchString,
-            Page, PerPage, Order, UserID)
+            Page, PerPage, Order)
 
         return render(request, 'EasyFinBank/Search.html', {'response': response})
     except PopbillException as PE:
@@ -386,9 +383,6 @@ def summary(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 수집요청(requestJob)시 발급받은 작업아이디
         JobID = "020010314000000035"
 
@@ -403,7 +397,7 @@ def summary(request):
         # - 미입력시 전체조회
         SearchString = ""
 
-        response = easyFinBankService.summary(CorpNum, JobID, TradeType, SearchString, UserID)
+        response = easyFinBankService.summary(CorpNum, JobID, TradeType, SearchString)
 
         return render(request, 'EasyFinBank/Summary.html', {'response': response})
     except PopbillException as PE:
@@ -418,16 +412,13 @@ def saveMemo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 거래내역 아이디, Search API 거래내역의 tid 항목
         TID = "01912181100000000120191231000001"
 
         # 메모
         Memo = "memo"
 
-        response = easyFinBankService.saveMemo(CorpNum, TID, Memo, UserID)
+        response = easyFinBankService.saveMemo(CorpNum, TID, Memo)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -702,7 +693,7 @@ def getCorpInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        response = easyFinBankService.getCorpInfo(CorpNum, UserID)
+        response = easyFinBankService.getCorpInfo(CorpNum)
 
         return render(request, 'getCorpInfo.html', {'response': response})
     except PopbillException as PE:
@@ -751,9 +742,6 @@ def registContact(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
         # 담당자 정보
         newContact = ContactInfo(
 
@@ -777,7 +765,7 @@ def registContact(request):
             searchRole=1
         )
 
-        response = easyFinBankService.registContact(CorpNum, newContact, UserID)
+        response = easyFinBankService.registContact(CorpNum, newContact)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -824,6 +812,9 @@ def updateContact(request):
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
 
         # 담당자 정보
         updateInfo = ContactInfo(
