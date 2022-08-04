@@ -7,7 +7,7 @@ urlpatterns = [
     # Index Page
     url(r'^$', views.index, name='index'),
 
-    # 플러스친구 계정관리
+    # 카카오톡 채널 관리
     url(r'^GetPlusFriendMgtURL', views.getPlusFriendMgtURL, name='GetPlusFriendMgtURL'),
     url(r'^ListPlusFriendID$', views.listPlusFriendID, name='ListPlusFriendID'),
 

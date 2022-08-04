@@ -198,6 +198,10 @@ def sendATS_one(request):
         content += "팝빌 파트너센터 : 1600-8536\n"
         content += "support@linkhub.co.kr"
 
+        # 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        altSubject = "대체문자 제목"
+
         # 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
         altContent = "알림톡 대체 문자"
@@ -234,7 +238,7 @@ def sendATS_one(request):
         #)
 
         receiptNum = kakaoService.sendATS(CorpNum, templateCode, snd, content, altContent,
-                                            altSendType, sndDT, receiver, receiverName, UserID, requestNum, btns)
+                                            altSendType, sndDT, receiver, receiverName, UserID, requestNum, btns, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -274,6 +278,12 @@ def sendATS_multi(request):
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
+        # 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        # - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        # - 모든 수신자에게 다른 제목을 보낼 경우 altsjt 를 이용.
+        altSubject = "대체문자 제목"
+
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
@@ -284,8 +294,17 @@ def sendATS_multi(request):
                 KakaoReceiver(
                     rcv="",  # 수신번호
                     rcvnm="linkhub",  # 수신자 이름
-                    msg=content,  # 알림톡 내용 (최대 1000자)
-                    altmsg="수신번호 010-456-456 알림톡 대체문자",  # 대체문자 내용 (최대 2000byte)
+                    msg=content,  # 알림톡 내용 (최대 400자)
+
+                    # 대체문자 제목
+                    # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+                    # - 모든 수신자에게 동일한 제목을 보낼 경우 배열의 모든 원소에 동일한 값을 입력하거나
+                    #   값을 입력하지 않고 altSubject 를 이용
+                    altsjt="(알림톡 대체문자 제목) [링크허브]",
+
+                    # 대체문자 내용 (최대 2000byte)
+                    altmsg="(알림톡 대체문자) 안녕하세요 링크허브입니다.",
+
                     interOPRefKey ="2021-"+str(x), # 파트너 지정키, 수신자 구분용 메모
                 )
             )
@@ -372,6 +391,10 @@ def sendATS_same(request):
         content += "팝빌 파트너센터 : 1600-8536\n"
         content += "support@linkhub.co.kr"
 
+        # 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        altSubject = "대체문자 제목"
+
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "[테스트] 알림톡 대체 문자"
 
@@ -388,7 +411,8 @@ def sendATS_same(request):
             KakaoMessages.append(
                 KakaoReceiver(
                     rcv="",  # 수신번호
-                    rcvnm="popbill"  # 수신자 이름
+                    rcvnm="popbill",  # 수신자 이름
+                    interOPRefKey="20220803" + str(x) # 파트너 지정키
                 )
             )
 
@@ -411,7 +435,7 @@ def sendATS_same(request):
         # )
 
         receiptNum = kakaoService.sendATS_same(CorpNum, templateCode, snd, content, altContent,
-                                                altSendType, sndDT, KakaoMessages, UserID, requestNum, btns)
+                                                altSendType, sndDT, KakaoMessages, UserID, requestNum, btns, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -439,6 +463,10 @@ def sendFTS_one(request):
 
         # 친구톡 내용 (최대 1000자)
         content = "친구톡 내용"
+
+        # 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        altSubject = "대체문자 제목"
 
         # 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -487,7 +515,7 @@ def sendFTS_one(request):
         requestNum = ""
 
         receiptNum = kakaoService.sendFTS(CorpNum, plusFriendID, snd, content, altContent, altSendType, sndDT,
-                                            receiver, receiverName, KakaoButtons, adsYN, UserID, requestNum)
+                                            receiver, receiverName, KakaoButtons, adsYN, UserID, requestNum, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -517,6 +545,12 @@ def sendFTS_multi(request):
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
+        # 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        # - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        # - 모든 수신자에게 다른 제목을 보낼 경우 altsjt 를 이용.
+        altSubject = "대체문자 제목"
+
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
@@ -528,7 +562,17 @@ def sendFTS_multi(request):
                     rcv="0101234567",  # 수신번호
                     rcvnm="TESTER",  # 수신자 이름
                     msg="안녕하세요 " + str(x) + "님 링크허브입니다.",  # 친구톡 내용 (최대 1000자)
-                    altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
+
+                    # 대체문자 제목
+                    # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+                    # - 모든 수신자에게 동일한 제목을 보낼 경우 배열의 모든 원소에 동일한 값을 입력하거나
+                    #   값을 입력하지 않고 altSubject 를 이용
+                    altsjt="(친구톡 대체문자 제목) [링크허브]",
+
+                    # 대체문자 내용 (최대 2000byte)
+                    altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다.",
+
+                    interOPRefKey="20220803-"+str(x)    # 파트너 지정키, 수신자 구별용 메모
                 )
             )
             # 수신자별 개별 버튼내용 전송하는 경우
@@ -588,7 +632,7 @@ def sendFTS_multi(request):
         requestNum = ""
 
         receiptNum = kakaoService.sendFTS_multi(CorpNum, plusFriendID, snd, "", "", altSendType,
-                                                sndDT, KakaoMessages, KakaoButtons, adsYN, UserID, requestNum)
+                                                sndDT, KakaoMessages, KakaoButtons, adsYN, UserID, requestNum, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -616,6 +660,10 @@ def sendFTS_same(request):
 
         # [동보] 친구톡 내용 (최대 1000자)
         content = "안녕하세요 팝빌 플친님 파이썬입니다."
+
+        # [동보] 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        altSubject = "대체문자 제목"
 
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "(친구톡 대체문자) 안녕하세요 팝빌 플친님 파이썬입니다."
@@ -667,7 +715,7 @@ def sendFTS_same(request):
         requestNum = ""
 
         receiptNum = kakaoService.sendFTS_multi(CorpNum, plusFriendID, snd, content, altContent, altSendType,
-                                                sndDT, KakaoMessages, KakaoButtons, adsYN, UserID, requestNum)
+                                                sndDT, KakaoMessages, KakaoButtons, adsYN, UserID, requestNum, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -696,6 +744,10 @@ def sendFMS_one(request):
 
         # 친구톡 내용 (최대 400자)
         content = "친구톡 내용"
+
+        # 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        altSubject = "대체문자 제목"
 
         # 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -754,7 +806,7 @@ def sendFMS_one(request):
 
         receiptNum = kakaoService.sendFMS(CorpNum, plusFriendID, snd, content, altContent,
                                             altSendType, sndDT, filePath, imageURL, receiver, receiverName,
-                                            akaoButtons, adsYN, UserID, requestNum)
+                                            akaoButtons, adsYN, UserID, requestNum, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -785,6 +837,12 @@ def sendFMS_multi(request):
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = "A"
 
+        # 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        # - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        # - 모든 수신자에게 다른 제목을 보낼 경우 altsjt 를 이용.
+        altSubject = "대체문자 제목"
+
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
 
@@ -805,7 +863,17 @@ def sendFMS_multi(request):
                     rcv="",  # 수신번호
                     rcvnm="",  # 수신자 이름
                     msg="안녕하세요 " + str(x) + "님 링크허브입니다.",  # 친구톡 내용 (최대 400자)
-                    altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다."  # 대체문자 내용 (최대 2000byte)
+
+                    # 대체문자 제목
+                    # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+                    # - 모든 수신자에게 동일한 제목을 보낼 경우 배열의 모든 원소에 동일한 값을 입력하거나
+                    #   값을 입력하지 않고 altSubject 를 이용
+                    altsjt="(친구톡 대체문자 제목) [링크허브]",
+
+                    # 대체문자 내용 (최대 2000byte)
+                    altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다.",
+
+                    interOPRefKey="20220803-"+str(x)    # 파트너 지정키, 수신자 구별용 메모
                 )
             )
 
@@ -840,7 +908,7 @@ def sendFMS_multi(request):
 
         receiptNum = kakaoService.sendFMS_multi(CorpNum, plusFriendID, snd, "", "",
                                                 altSendType, sndDT, filePath, imageURL, KakaoMessages,
-                                                KakaoButtons, adsYN, UserID, requestNum)
+                                                KakaoButtons, adsYN, UserID, requestNum, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -869,6 +937,10 @@ def sendFMS_same(request):
 
         # [동보] 친구톡 내용 (최대 400자)
         content = "안녕하세요 팝빌 플친님 파이썬입니다."
+
+        # 대체문자 제목
+        # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        altSubject = "대체문자 제목"
 
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "(친구톡 대체문자) 안녕하세요 팝빌 플친님 파이썬입니다."
@@ -930,7 +1002,7 @@ def sendFMS_same(request):
 
         receiptNum = kakaoService.sendFMS_multi(CorpNum, plusFriendID, snd, content, altContent,
                                                 altSendType, sndDT, filePath, imageURL, KakaoMessages,
-                                                KakaoButtons, adsYN, UserID, requestNum)
+                                                KakaoButtons, adsYN, UserID, requestNum, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
