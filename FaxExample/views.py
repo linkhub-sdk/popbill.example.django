@@ -166,6 +166,7 @@ def sendFAX_multi(request):
                 FaxReceiver(
                     receiveNum="",  # 수신번호
                     receiveName="수신자명" + str(x),  # 수신자명
+                    interOPRefKey = '20220803-'+str(x) # 파트너 지정키
                 )
             )
 
@@ -275,6 +276,7 @@ def sendFAXBinary_multi(request):
                 FaxReceiver(
                     receiveNum="",  # 수신번호
                     receiveName="수신자명" + str(x),  # 수신자명
+                    interOPRefKey = '20220803-'+str(x) # 파트너 지정키
                 )
             )
 
@@ -439,6 +441,7 @@ def resendFAX_multi(request):
                 FaxReceiver(
                     receiveNum = "", # 수신번호
                     receiveName = "수신자명"+str(x), # 수신자명
+                    interOPRefKey = '20220803-'+str(x) # 파트너 지정키
                 )
             )
         """
@@ -495,6 +498,7 @@ def resendFAXRN_multi(request):
                 FaxReceiver(
                     receiveNum = '', # 수신번호
                     receiveName = '수신자명'+str(x), # 수신자명
+                    interOPRefKey = '20220803-'+str(x) # 파트너 지정키
                 )
             )
         """
