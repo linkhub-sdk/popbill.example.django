@@ -796,7 +796,12 @@ def getUnitCost(request):
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        result = faxService.getUnitCost(CorpNum)
+        # 수신번호 유형 : "일반" / "지능" 중 택 1
+        # └ 일반망 : 지능망을 제외한 번호
+        # └ 지능망 : 030*, 050*, 070*, 080*, 대표번호
+        receiveNumType = "지능"
+
+        result = faxService.getUnitCost(CorpNum, receiveNumType)
 
         return render(request, 'result.html', {'result': result})
     except PopbillException as PE:
@@ -811,7 +816,12 @@ def getChargeInfo(request):
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        response = faxService.getChargeInfo(CorpNum)
+        # 수신번호 유형 : "일반" / "지능" 중 택 1
+        # └ 일반망 : 지능망을 제외한 번호
+        # └ 지능망 : 030*, 050*, 070*, 080*, 대표번호
+        receiveNumType = "지능"
+
+        response = faxService.getChargeInfo(CorpNum, receiveNumType)
 
         return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
