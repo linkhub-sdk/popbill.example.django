@@ -42,7 +42,7 @@ def checkSenderNumber(request):
         # 확인할 발신번호
         senderNumber = ""
 
-        result = messageService.checkSenderNumber(CorpNum, senderNumber)
+        response = messageService.checkSenderNumber(CorpNum, senderNumber)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -164,7 +164,7 @@ def sendSMS_multi(request):
                     rcv='',  # 수신번호
                     rcvnm='수신자명' + str(x),  # 수신자명
                     msg='단문 문자 API TEST',  # 메시지 내용, msg값이 없는경우 동보전송 메시지로 전송됨, 90Byte 초과시 길이가 조정되 전송됨
-                    interOPRefKey='20220803-'+str(x) # 파트너 지정키
+                    interOPRefKey='20220805-'+str(x) # 파트너 지정키
                 )
             )
 
@@ -269,7 +269,7 @@ def sendLMS_multi(request):
                     rcvnm='수신자명' + str(x),  # 수신자명
                     msg='장문 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨. 2000Byte 초과시 길이가 조정되어 전송됨.
                     sjt='장문문자제목',  # 장문 메시지 제목
-                    interOPRefKey='20220803-'+str(x) # 파트너 지정키
+                    interOPRefKey='20220805-'+str(x) # 파트너 지정키
                 )
             )
 
@@ -383,7 +383,7 @@ def sendMMS_multi(request):
                     rcvnm='수신자명' + str(x),  # 수신자명
                     msg='멀티 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨. 2000Byte 초과시 길이가 조정되어 전송됨.
                     sjt='멀티 문자제목',  # 장문 메시지 제목
-                    interOPRefKey='20220803-'+str(x) # 파트너 지정키
+                    interOPRefKey='20220805-'+str(x) # 파트너 지정키
                 )
             )
 
@@ -489,7 +489,7 @@ def sendXMS_multi(request):
                     rcvnm='수신자명' + str(x),  # 수신자명
                     msg='문자 API TEST',  # 90Byte를 기준으로 단/장문을 자동으로 인식하여 전송
                     sjt='장문문자제목',  # 장문메시지 제목
-                    interOPRefKey='20220803-'+str(x) # 파트너 지정키
+                    interOPRefKey='20220805-'+str(x) # 파트너 지정키
                 )
             )
 

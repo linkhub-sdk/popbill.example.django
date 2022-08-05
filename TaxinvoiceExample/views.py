@@ -41,7 +41,7 @@ def checkMgtKeyInUse(request):
         MgtKeyType = "SELL"
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         keyInUse = taxinvoiceService.checkMgtKeyInUse(CorpNum, MgtKeyType, MgtKey)
 
@@ -69,7 +69,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         # 지연발행 강제여부  (true / false 중 택 1)
         # └ true = 가능 , false = 불가능
@@ -97,8 +97,8 @@ def registIssue(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20220803
-            writeDate="20220803",
+            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+            writeDate="20220805",
 
             # 과금방향, {정과금} 기재
             chargeDirection="정과금",
@@ -288,7 +288,7 @@ def registIssue(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220803",  # 거래일자, yyyyMMdd
+                purchaseDT="20220805",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -302,7 +302,7 @@ def registIssue(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220803",  # 거래일자, yyyyMMdd
+                purchaseDT="20220805",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -373,8 +373,8 @@ def bulkSubmit(request):
         for i in range(0,20):
             taxinvoicelist.append(
                 Taxinvoice(
-                    # 작성일자, 날짜형식(yyyyMMdd) ex)20220803
-                    writeDate="20220803",
+                    # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+                    writeDate="20220805",
 
                     # 과금방향, [정과금(공급자)] 기재
                     chargeDirection="정과금",
@@ -548,7 +548,7 @@ def bulkSubmit(request):
                     detailList=[
                         TaxinvoiceDetail(
                             serialNum=1,
-                            purchaseDT='20220803',
+                            purchaseDT='20220805',
                             itemName="품목1",
                             spec='규격',
                             qty=1,
@@ -603,7 +603,7 @@ def register(request):
 
         # 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 거래명세서 동시작성여부 (true / false 중 택 1)
         # └ true = 사용 , false = 미사용
@@ -613,8 +613,8 @@ def register(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20220803
-            writeDate="20220803",
+            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+            writeDate="20220805",
 
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -809,7 +809,7 @@ def register(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220803",  # 거래일자, yyyyMMdd
+                purchaseDT="20220805",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -823,7 +823,7 @@ def register(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220803",  # 거래일자, yyyyMMdd
+                purchaseDT="20220805",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -878,13 +878,13 @@ def update(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20220803
-            writeDate="20220803",
+            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+            writeDate="20220805",
 
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -1079,7 +1079,7 @@ def update(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220803",  # 거래일자, yyyyMMdd
+                purchaseDT="20220805",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1093,7 +1093,7 @@ def update(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220803",  # 거래일자, yyyyMMdd
+                purchaseDT="20220805",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1153,7 +1153,7 @@ def issue(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 메모
         Memo = "발행 메모"
@@ -1188,7 +1188,7 @@ def cancelIssue(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         # 메모
         Memo = "발행취소 메모"
@@ -1214,13 +1214,13 @@ def registRequest(request):
 
         # 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
         # 사업자별로 중복되지 않도록 구성
-        MgtKey = "20220803-003"
+        MgtKey = "20220805-003"
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
 
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20220803
-            writeDate="20220803",
+            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+            writeDate="20220805",
 
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
@@ -1410,7 +1410,7 @@ def registRequest(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220803",  # 거래일자, yyyyMMdd
+                purchaseDT="20220805",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1424,7 +1424,7 @@ def registRequest(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220803",  # 거래일자, yyyyMMdd
+                purchaseDT="20220805",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1459,7 +1459,7 @@ def request(request):
         MgtKeyType = "BUY"
 
         # 문서번호
-        MgtKey = "20220803-999"
+        MgtKey = "20220805-999"
 
         # 메모
         Memo = "역발행 요청 메모"
@@ -1485,7 +1485,7 @@ def cancelRequest(request):
         MgtKeyType = "BUY"
 
         # 문서번호
-        MgtKey = "20220803-003"
+        MgtKey = "20220805-003"
 
         # 메모
         Memo = "처리시 메모"
@@ -1509,7 +1509,7 @@ def refuse(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-003"
+        MgtKey = "20220805-003"
 
         # 메모
         Memo = "발행 메모"
@@ -1535,7 +1535,7 @@ def delete(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         response = taxinvoiceService.delete(CorpNum, MgtKeyType, MgtKey)
 
@@ -1557,7 +1557,7 @@ def sendToNTS(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         response = taxinvoiceService.sendToNTS(CorpNum, MgtKeyType, MgtKey)
 
@@ -1580,7 +1580,7 @@ def getInfo(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         taxinvoiceInfo = taxinvoiceService.getInfo(CorpNum, MgtKeyType, MgtKey)
 
@@ -1604,8 +1604,8 @@ def getInfos(request):
 
         # 문서번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20220803-001")
-        MgtKeyList.append("20220803-002")
+        MgtKeyList.append("20220805-001")
+        MgtKeyList.append("20220805-002")
 
         InfoList = taxinvoiceService.getInfos(CorpNum, MgtKeyType, MgtKeyList)
 
@@ -1626,7 +1626,7 @@ def getDetailInfo(request):
         MgtKeyType = "SELL"
 
         # 문서 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         taxinvoice = taxinvoiceService.getDetailInfo(CorpNum, MgtKeyType, MgtKey)
 
@@ -1647,7 +1647,7 @@ def getXML(request):
         MgtKeyType = "SELL"
 
         # 문서 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         taxinvoiceXML = taxinvoiceService.getXML(CorpNum, MgtKeyType, MgtKey)
 
@@ -1773,7 +1773,7 @@ def getLogs(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         LogList = taxinvoiceService.getLogs(CorpNum, MgtKeyType, MgtKey)
 
@@ -1821,7 +1821,7 @@ def getPopUpURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = taxinvoiceService.getPopUpURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
@@ -1846,7 +1846,7 @@ def getViewURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = taxinvoiceService.getViewURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
@@ -1871,7 +1871,7 @@ def getPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = taxinvoiceService.getPrintURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
@@ -1896,7 +1896,7 @@ def getOldPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = taxinvoiceService.getOldPrintURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
@@ -1921,7 +1921,7 @@ def getEPrintURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = taxinvoiceService.getEPrintURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
@@ -1947,8 +1947,8 @@ def getMassPrintURL(request):
 
         # 인쇄할 문서번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20220803-001")
-        MgtKeyList.append("20220803-002")
+        MgtKeyList.append("20220805-001")
+        MgtKeyList.append("20220805-002")
 
         url = taxinvoiceService.getMassPrintURL(CorpNum, MgtKeyType, MgtKeyList, UserID)
 
@@ -1973,7 +1973,7 @@ def getMailURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = taxinvoiceService.getMailURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
@@ -1998,7 +1998,7 @@ def getPDFURL(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = taxinvoiceService.getPDFURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
@@ -2057,7 +2057,7 @@ def attachFile(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 파일경로
         FilePath = "./TaxinvoiceExample/static/image/attachfile.png"
@@ -2082,7 +2082,7 @@ def deleteFile(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 첨부파일 아이디, GetFiles API의 응답항목(attachedFile) 확인.
         FileID = "8D13F961-CD77-4856-9501-1FB59CAFEE9E.PBF"
@@ -2107,7 +2107,7 @@ def getFiles(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         fileList = taxinvoiceService.getFiles(CorpNum, MgtKeyType, MgtKey)
 
@@ -2128,7 +2128,7 @@ def sendEmail(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         # 수신메일주소
         ReceiverMail = ""
@@ -2154,7 +2154,7 @@ def sendSMS(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         # 발신번호
         Sender = ""
@@ -2185,7 +2185,7 @@ def sendFAX(request):
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220803-002"
+        MgtKey = "20220805-002"
 
         # 발신번호
         Sender = ""
@@ -2212,13 +2212,13 @@ def attachStatement(request):
         MgtKeyType = "SELL"
 
         # 세금계산서 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 전자명세서 종류코드, 121-명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
         ItemCode = "121"
 
         # 전자명세서 문서번호
-        StmtMgtKey = "20220803-001"
+        StmtMgtKey = "20220805-001"
 
         response = taxinvoiceService.attachStatement(CorpNum, MgtKeyType, MgtKey, ItemCode, StmtMgtKey)
 
@@ -2239,13 +2239,13 @@ def detachStatement(request):
         MgtKeyType = "SELL"
 
         # 문서 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 전자명세서 종류코드, 121-거래명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
         ItemCode = "121"
 
         # 전자명세서 문서번호
-        StmtMgtKey = "20220803-001"
+        StmtMgtKey = "20220805-001"
 
         response = taxinvoiceService.detachStatement(CorpNum, MgtKeyType, MgtKey, ItemCode, StmtMgtKey)
 
@@ -2285,7 +2285,7 @@ def assignMgtKey(request):
 
         # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
         # 사업자번호별 중복없는 고유번호 할당
-        MgtKey = "20220803-003"
+        MgtKey = "20220805-003"
 
         response = taxinvoiceService.assignMgtKey(CorpNum, MgtKeyType, ItemKey, MgtKey)
 
@@ -2432,7 +2432,7 @@ def getTaxCertInfo(request):
         print("=" * 15 + " 인증서 정보 확인 " + "=" * 15)
 
         # 팝빌회원 사업자번호
-        CorpNum = testValue.testCorpNum
+        CorpNum = settings.testCorpNum
 
         taxinvoiceCertificate = taxinvoiceService.getTaxCertInfo(CorpNum)
 

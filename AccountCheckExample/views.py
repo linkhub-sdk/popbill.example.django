@@ -457,7 +457,7 @@ def updateContact(request):
         updateInfo = ContactInfo(
 
             # 담당자 아이디
-            id=UserID,
+            id='testkorea',
 
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",

@@ -75,7 +75,7 @@ def checkSenderNumber(request):
         # 확인할 발신번호
         senderNumber = ""
 
-        result = kakaoService.checkSenderNumber(CorpNum, senderNumber)
+        response = kakaoService.checkSenderNumber(CorpNum, senderNumber)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -412,7 +412,7 @@ def sendATS_same(request):
                 KakaoReceiver(
                     rcv="",  # 수신번호
                     rcvnm="popbill",  # 수신자 이름
-                    interOPRefKey="20220803" + str(x) # 파트너 지정키
+                    interOPRefKey="20220805" + str(x) # 파트너 지정키
                 )
             )
 
@@ -572,7 +572,7 @@ def sendFTS_multi(request):
                     # 대체문자 내용 (최대 2000byte)
                     altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다.",
 
-                    interOPRefKey="20220803-"+str(x)    # 파트너 지정키, 수신자 구별용 메모
+                    interOPRefKey="20220805-"+str(x)    # 파트너 지정키, 수신자 구별용 메모
                 )
             )
             # 수신자별 개별 버튼내용 전송하는 경우
@@ -806,7 +806,7 @@ def sendFMS_one(request):
 
         receiptNum = kakaoService.sendFMS(CorpNum, plusFriendID, snd, content, altContent,
                                             altSendType, sndDT, filePath, imageURL, receiver, receiverName,
-                                            akaoButtons, adsYN, UserID, requestNum, altSubject)
+                                            KakaoButtons, adsYN, UserID, requestNum, altSubject)
 
         return render(request, 'Kakao/ReceiptNum.html', {'receiptNum': receiptNum})
     except PopbillException as PE:
@@ -873,7 +873,7 @@ def sendFMS_multi(request):
                     # 대체문자 내용 (최대 2000byte)
                     altmsg="(친구톡 대체문자) 안녕하세요 링크허브입니다.",
 
-                    interOPRefKey="20220803-"+str(x)    # 파트너 지정키, 수신자 구별용 메모
+                    interOPRefKey="20220805-"+str(x)    # 파트너 지정키, 수신자 구별용 메모
                 )
             )
 
@@ -1295,7 +1295,7 @@ def getChargeInfo(request):
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        
+
         # 카카오톡 전송유형 : ATS / FTS / FMS 중 택 1
         # └ ATS = 알림톡, FTS = 친구톡(텍스트) , FMS = 친구톡(이미지)
         MsgType = "ATS"

@@ -148,7 +148,7 @@ def getBankAccountInfo(request):
 
         response = easyFinBankService.getBankAccountInfo(CorpNum, BankCode, AccountNumber)
 
-        return render(request, 'EasyFinBank/getBankAccountInfo.html', {'response': response})
+        return render(request, 'EasyFinBank/GetBankAccountInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -310,7 +310,7 @@ def getJobState(request):
         CorpNum = settings.testCorpNum
 
         # 수집요청(requestJob) 호출시 발급받은 작업아이디
-        jobID = "020010314000000028"
+        jobID = "022080515000000594"
 
         response = easyFinBankService.getJobState(CorpNum, jobID)
 
@@ -344,7 +344,7 @@ def search(request):
         CorpNum = settings.testCorpNum
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "020072814000000001"
+        JobID = "022080515000000594"
 
         # 거래유형 배열 ("I" 와 "O" 중 선택, 다중 선택 가능)
         # └ I = 입금 , O = 출금
@@ -384,7 +384,7 @@ def summary(request):
         CorpNum = settings.testCorpNum
 
         # 수집요청(requestJob)시 발급받은 작업아이디
-        JobID = "020010314000000035"
+        JobID = "022080515000000594"
 
         # 거래유형 배열 ("I" 와 "O" 중 선택, 다중 선택 가능)
         # └ I = 입금 , O = 출금
@@ -413,10 +413,10 @@ def saveMemo(request):
         CorpNum = settings.testCorpNum
 
         # 거래내역 아이디, Search API 거래내역의 tid 항목
-        TID = "01912181100000000120191231000001"
+        TID = "02208051200000000120220804000001"
 
         # 메모
-        Memo = "memo"
+        Memo = "saveMemo TEST"
 
         response = easyFinBankService.saveMemo(CorpNum, TID, Memo)
 
@@ -435,7 +435,7 @@ def getFlatRatePopUpURL(request):
         CorpNum = settings.testCorpNum
 
         # 팝빌회원 아이디
-        UserID = testValue.testUserID
+        UserID = settings.testUserID
 
         url = easyFinBankService.getFlatRatePopUpURL(CorpNum, UserID)
 

@@ -36,7 +36,7 @@ def checkSenderNumber(request):
         # 확인할 발신번호
         senderNumber = ""
 
-        result = faxService.checkSenderNumber(CorpNum, senderNumber)
+        response = faxService.checkSenderNumber(CorpNum, senderNumber)
 
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
@@ -166,7 +166,7 @@ def sendFAX_multi(request):
                 FaxReceiver(
                     receiveNum="",  # 수신번호
                     receiveName="수신자명" + str(x),  # 수신자명
-                    interOPRefKey = '20220803-'+str(x) # 파트너 지정키
+                    interOPRefKey = '20220805-'+str(x) # 파트너 지정키
                 )
             )
 
@@ -209,7 +209,7 @@ def sendFAXBinary(request):
 
         #전송 파일 객체정보 리스트, 최대 20개
         FileDatas = []
-        with open("./test.pdf", "rb") as f:
+        with open("./FaxExample/static/file/test.pdf", "rb") as f:
             FileDatas.append(
                 FileData(
                     fileName='test.pdf', #전송 파일명
@@ -276,13 +276,13 @@ def sendFAXBinary_multi(request):
                 FaxReceiver(
                     receiveNum="",  # 수신번호
                     receiveName="수신자명" + str(x),  # 수신자명
-                    interOPRefKey = '20220803-'+str(x) # 파트너 지정키
+                    interOPRefKey = '20220805-'+str(x) # 파트너 지정키
                 )
             )
 
         #전송 파일 객체정보 리스트, 최대 20개
         FileDatas = []
-        with open("./test.pdf", "rb") as f:
+        with open("./FaxExample/static/file/test.pdf", "rb") as f:
             FileDatas.append(
                 FileData(
                     fileName='test.pdf', #전송 파일명
@@ -318,7 +318,7 @@ def resendFAX(request):
         UserID = settings.testUserID
 
         # 팩스전송 요청시 발급받은 접수번호
-        ReceiptNum = "018120517165400001"
+        ReceiptNum = "022080515503200001"
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
         Sender = ""
@@ -416,7 +416,7 @@ def resendFAX_multi(request):
         UserID = settings.testUserID
 
         # 팩스전송 요청시 발급받은 접수번호
-        ReceiptNum = "018012215401700001"
+        ReceiptNum = "022080515503200001"
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
         Sender = ""
@@ -441,7 +441,7 @@ def resendFAX_multi(request):
                 FaxReceiver(
                     receiveNum = "", # 수신번호
                     receiveName = "수신자명"+str(x), # 수신자명
-                    interOPRefKey = '20220803-'+str(x) # 파트너 지정키
+                    interOPRefKey = '20220805-'+str(x) # 파트너 지정키
                 )
             )
         """
@@ -498,7 +498,7 @@ def resendFAXRN_multi(request):
                 FaxReceiver(
                     receiveNum = '', # 수신번호
                     receiveName = '수신자명'+str(x), # 수신자명
-                    interOPRefKey = '20220803-'+str(x) # 파트너 지정키
+                    interOPRefKey = '20220805-'+str(x) # 파트너 지정키
                 )
             )
         """
@@ -525,7 +525,7 @@ def cancelReserve(request):
         CorpNum = settings.testCorpNum
 
         # 팩스 예약전송 요청시 반환받은 접수번호
-        receiptNum = "018020617315000001"
+        receiptNum = "022080515534100001"
 
         response = faxService.cancelReserve(CorpNum, receiptNum)
 
@@ -561,7 +561,7 @@ def getFaxResult(request):
         CorpNum = settings.testCorpNum
 
         # 팩스전송 요청시 반환받은 접수번호 (receiptNum)
-        receiptNum = "019012311143200001"
+        receiptNum = "022080515534100001"
 
         resultList = faxService.getFaxResult(CorpNum, receiptNum)
 
@@ -594,7 +594,11 @@ def search(request):
     - https://docs.popbill.com/fax/python/api#Search
     """
     try:
-        CorpNum = testValue.testCorpNum
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
 
         # 최대 검색기간 : 6개월 이내
         # 시작일자, 날짜형식(yyyyMMdd)
@@ -816,12 +820,15 @@ def getChargeInfo(request):
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
         # 수신번호 유형 : "일반" / "지능" 중 택 1
         # └ 일반망 : 지능망을 제외한 번호
         # └ 지능망 : 030*, 050*, 070*, 080*, 대표번호
         receiveNumType = "지능"
 
-        response = faxService.getChargeInfo(CorpNum, receiveNumType)
+        response = faxService.getChargeInfo(CorpNum, UserID, receiveNumType)
 
         return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:

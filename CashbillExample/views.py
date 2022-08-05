@@ -33,7 +33,7 @@ def checkMgtKeyInUse(request):
         CorpNum = settings.testCorpNum
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         bIsInUse = cashbillService.checkMgtKeyInUse(CorpNum, MgtKey)
         if bIsInUse:
@@ -69,7 +69,7 @@ def registIssue(request):
         cashbill = Cashbill(
 
             # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="20220803-001",
+            mgtKey="20220805-001",
 
             # 문서형태, 승인거래 기재
             tradeType="승인거래",
@@ -284,7 +284,7 @@ def cancelIssue(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 메모
         Memo = "발행취소 메모"
@@ -307,7 +307,7 @@ def delete(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         response = cashbillService.delete(CorpNum, MgtKey)
 
@@ -329,13 +329,13 @@ def revokeRegistIssue(request):
         CorpNum = settings.testCorpNum
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20220803-002"
+        mgtKey = "20220805-002"
 
         # 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "TB0000014"
+        orgConfirmNum = "TB0000176"
 
         # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20220801"
+        orgTradeDate = "20220802"
 
         # 발행안내문자 전송여부
         smssendYN = False
@@ -366,13 +366,13 @@ def revokeRegistIssue_part(request):
         UserID = settings.testUserID
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-        mgtKey = "20220803-003"
+        mgtKey = "20220805-003"
 
         # 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
-        orgConfirmNum = "TB0000014"
+        orgConfirmNum = "TB0000174"
 
         # 원본현금영수증 거래일자, 문서정보확인(GetInfo API)로 확인가능
-        orgTradeDate = "20220801"
+        orgTradeDate = "20220802"
 
         # 현금영수증 발행시 알림문자 전송여부 : true / false 중 택 1
         # └ true = 전송, false = 미전송
@@ -395,12 +395,12 @@ def revokeRegistIssue_part(request):
         # [취소] 공급가액
         # - 현금영수증 취소유형이 true 인 경우 취소할 공급가액 입력
         # - 현금영수증 취소유형이 false 인 경우 미입력
-        supplyCost = "10000"
+        supplyCost = "1000"
 
         # [취소] 부가세
         # - 현금영수증 취소유형이 true 인 경우 취소할 부가세 입력
         # - 현금영수증 취소유형이 false 인 경우 미입력
-        tax = "1000"
+        tax = "100"
 
         # [취소] 봉사료
         # - 현금영수증 취소유형이 true 인 경우 취소할 봉사료 입력
@@ -410,7 +410,7 @@ def revokeRegistIssue_part(request):
         # [취소] 거래금액 (공급가액+부가세+봉사료)
         # - 현금영수증 취소유형이 true 인 경우 취소할 거래금액 입력
         # - 현금영수증 취소유형이 false 인 경우 미입력
-        totalAmount = "11000"
+        totalAmount = "1100"
 
         response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
                                                     UserID, isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
@@ -431,7 +431,7 @@ def getInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         cashbillInfo = cashbillService.getInfo(CorpNum, MgtKey)
 
@@ -452,9 +452,9 @@ def getInfos(request):
 
         # 현금영수증 문서번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20220803-001")
-        MgtKeyList.append("20220803-002")
-        MgtKeyList.append("20220803-003")
+        MgtKeyList.append("20220805-001")
+        MgtKeyList.append("20220805-002")
+        MgtKeyList.append("20220805-003")
 
         InfoList = cashbillService.getInfos(CorpNum, MgtKeyList)
 
@@ -472,7 +472,7 @@ def getDetailInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         cashbill = cashbillService.getDetailInfo(CorpNum, MgtKey)
 
@@ -559,7 +559,7 @@ def getLogs(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         LogList = cashbillService.getLogs(CorpNum, MgtKey)
 
@@ -604,7 +604,7 @@ def getPopUpURL(request):
         UserID = settings.testUserID
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = cashbillService.getPopUpURL(CorpNum, MgtKey, UserID)
 
@@ -626,7 +626,7 @@ def getViewURL(request):
         UserID = settings.testUserID
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = cashbillService.getViewURL(CorpNum, MgtKey, UserID)
 
@@ -648,7 +648,7 @@ def getPrintURL(request):
         UserID = settings.testUserID
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = cashbillService.getPrintURL(CorpNum, MgtKey, UserID)
 
@@ -671,9 +671,9 @@ def getMassPrintURL(request):
 
         # 문서번호 배열, 최대 100건
         MgtKeyList = []
-        MgtKeyList.append("20220803-001")
-        MgtKeyList.append("20220803-002")
-        MgtKeyList.append("20220803-003")
+        MgtKeyList.append("20220805-001")
+        MgtKeyList.append("20220805-002")
+        MgtKeyList.append("20220805-003")
 
         url = cashbillService.getMassPrintURL(CorpNum, MgtKeyList, UserID)
 
@@ -695,7 +695,7 @@ def getMailURL(request):
         UserID = settings.testUserID
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = cashbillService.getMailURL(CorpNum, MgtKey, UserID)
 
@@ -717,7 +717,7 @@ def getPDFURL(request):
         UserID = settings.testUserID
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         url = cashbillService.getPDFURL(CorpNum, MgtKey, UserID)
 
@@ -754,7 +754,7 @@ def sendEmail(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 수신메일주소
         # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
@@ -779,7 +779,7 @@ def sendSMS(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 발신번호
         Sender = ""
@@ -807,7 +807,7 @@ def sendFAX(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220803-001"
+        MgtKey = "20220805-001"
 
         # 발신번호
         Sender = ""
@@ -831,10 +831,10 @@ def assignMgtKey(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 아이템키, 문서 목록조회(Search) API의 반환항목중 ItemKey 참조
-        ItemKey = '020072815420200001'
+        ItemKey = '022071308525600001'
 
         # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 최대 24자리, 사업자번호별 중복없는 고유번호 할당
-        MgtKey = "20220803-004"
+        MgtKey = "20220805-004"
 
         response = cashbillService.assignMgtKey(CorpNum, ItemKey, MgtKey)
 
@@ -1269,7 +1269,7 @@ def updateContact(request):
 #         cashbill = Cashbill(
 
 #             # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-#             mgtKey="20220803_DPY002",
+#             mgtKey="20220805_DPY002",
 
 #             # 문서형태, [승인거래 / 취소거래]
 #             tradeType="승인거래",
@@ -1363,7 +1363,7 @@ def updateContact(request):
 #         CorpNum = settings.testCorpNum
 
 #         # 수정하고자하는 현금영수증 문서번호
-#         MgtKey = '20220803-002'
+#         MgtKey = '20220805-002'
 
 #         # 현금영수증 정보
 #         cashbill = Cashbill(
@@ -1463,7 +1463,7 @@ def updateContact(request):
 #         CorpNum = settings.testCorpNum
 
 #         # 문서번호
-#         MgtKey = "20220803_DPY001"
+#         MgtKey = "20220805_DPY001"
 
 #         # 메모
 #         Memo = "발행 메모"
@@ -1488,7 +1488,7 @@ def updateContact(request):
 #         UserID = settings.testUserID
 
 #         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-#         mgtKey = "20220803-103"
+#         mgtKey = "20220805-103"
 
 #         # 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
 #         orgConfirmNum = "158814020"
@@ -1519,7 +1519,7 @@ def updateContact(request):
 #         UserID = settings.testUserID
 
 #         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-#         mgtKey = "20220803-123"
+#         mgtKey = "20220805-123"
 
 #         # 원본현금영수증 국세청승인번호, 문서정보확인(GetInfo API)로 확인가능
 #         orgConfirmNum = "760661092"
@@ -1566,7 +1566,7 @@ def updateContact(request):
 #         CorpNum = settings.testCorpNum
 
 #         # 현금영수증 문서번호
-#         MgtKey = "20220803-001"
+#         MgtKey = "20220805-001"
 
 #         url = cashbillService.getEPrintURL(CorpNum, MgtKey)
 
