@@ -206,8 +206,8 @@ def sendATS_one(request):
         # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
         altContent = "알림톡 대체 문자"
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -274,8 +274,8 @@ def sendATS_multi(request):
         content += "팝빌 파트너센터 : 1600-8536\n"
         content += "support@linkhub.co.kr"
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 대체문자 제목
@@ -398,8 +398,8 @@ def sendATS_same(request):
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "[테스트] 알림톡 대체 문자"
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -472,8 +472,8 @@ def sendFTS_one(request):
         # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
         altContent = "대체문자 내용"
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -541,8 +541,8 @@ def sendFTS_multi(request):
         # 팝빌에 사전 등록된 발신번호
         snd = ""
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 대체문자 제목
@@ -668,8 +668,8 @@ def sendFTS_same(request):
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "(친구톡 대체문자) 안녕하세요 팝빌 플친님 파이썬입니다."
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -753,8 +753,8 @@ def sendFMS_one(request):
         # └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
         altContent = "대체문자 내용"
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -833,8 +833,8 @@ def sendFMS_multi(request):
         # 팝빌에 사전 등록된 발신번호
         snd = ""
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 대체문자 제목
@@ -945,8 +945,8 @@ def sendFMS_same(request):
         # [동보] 대체문자 내용 (최대 2000byte)
         altContent = "(친구톡 대체문자) 안녕하세요 팝빌 플친님 파이썬입니다."
 
-        # 대체문자 유형 (null , "C" , "A" 중 택 1)
-        # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
+        # 대체문자 유형 (None , "C" , "A" 중 택 1)
+        # None = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
@@ -1110,8 +1110,8 @@ def search(request):
         # - 미입력 시 전체조회
         Item = ["ATS", "FTS", "FMS"]
 
-        # 전송유형별 조회 (null , "0" , "1" 중 택 1)
-        # └ null = 전체 , 0 = 즉시전송건 , 1 = 예약전송건
+        # 전송유형별 조회 (None , "0" , "1" 중 택 1)
+        # └ None = 전체 , 0 = 즉시전송건 , 1 = 예약전송건
         # - 미입력 시 전체조회
         ReserveYN = "0"
 
