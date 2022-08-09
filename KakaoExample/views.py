@@ -208,7 +208,7 @@ def sendATS_one(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
@@ -276,7 +276,7 @@ def sendATS_multi(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 대체문자 제목
         # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
@@ -400,7 +400,7 @@ def sendATS_same(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
@@ -474,7 +474,7 @@ def sendFTS_one(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
@@ -543,7 +543,7 @@ def sendFTS_multi(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 대체문자 제목
         # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
@@ -670,7 +670,7 @@ def sendFTS_same(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
@@ -755,7 +755,7 @@ def sendFMS_one(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""
@@ -835,7 +835,7 @@ def sendFMS_multi(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 대체문자 제목
         # - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
@@ -947,7 +947,7 @@ def sendFMS_same(request):
 
         # 대체문자 유형 (null , "C" , "A" 중 택 1)
         # null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        altSendType = "A"
+        altSendType = ""
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         sndDT = ""

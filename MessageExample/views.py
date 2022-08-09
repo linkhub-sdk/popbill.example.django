@@ -1071,22 +1071,3 @@ def updateContact(request):
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
-# def getStates(request):
-#     """
-#     문자 전송내역 요약정보를 확인합니다. (최대 1000건)
-#     """
-#     try:
-#         # 팝빌회원 사업자번호
-#         CorpNum = settings.testCorpNum
-
-#         # 문자전송 요청시 반환받은 접수번호
-#         receiptNumList = []
-#         receiptNumList.append("018041717000000018")
-#         receiptNumList.append("018041717000000019")
-
-#         resultList = messageService.getStates(CorpNum, receiptNumList)
-
-#         return render(request, 'Message/GetStates.html', {'resultList': resultList})
-#     except PopbillException as PE:
-#         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})

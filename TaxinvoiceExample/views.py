@@ -1625,7 +1625,7 @@ def getDetailInfo(request):
         # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서 문서번호
+        # 문서번호
         MgtKey = "20220805-002"
 
         taxinvoice = taxinvoiceService.getDetailInfo(CorpNum, MgtKeyType, MgtKey)
@@ -1646,7 +1646,7 @@ def getXML(request):
         # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서 문서번호
+        # 문서번호
         MgtKey = "20220805-002"
 
         taxinvoiceXML = taxinvoiceService.getXML(CorpNum, MgtKeyType, MgtKey)
@@ -2238,7 +2238,7 @@ def detachStatement(request):
         # 세금계산서 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
-        # 문서 문서번호
+        # 세금계산서 문서번호
         MgtKey = "20220805-001"
 
         # 전자명세서 종류코드, 121-거래명세서, 122-청구서, 123-견적서, 124-발주서, 125-입금표, 126-영수증
