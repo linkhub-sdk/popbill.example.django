@@ -34,7 +34,7 @@ def checkBizInfo(request):
         # 조회 사업자번호
         targetCorpNum = "1234567890"
 
-        bizCheckInfo = bizInfoCheckService.checkBizInfo(CorpNum, targetCorpNum, '')
+        bizCheckInfo = bizInfoCheckService.checkBizInfo(CorpNum, targetCorpNum)
 
         return render(request, 'BizInfoCheck/CheckBizInfo.html', {'bizCheckInfo': bizCheckInfo})
     except PopbillException as PE:
