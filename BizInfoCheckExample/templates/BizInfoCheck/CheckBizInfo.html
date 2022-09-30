@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">팝빌 기업정보조회 Django Example.</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <br>
+            <legend>기업정보조회 - 단건</legend>
+            <ul>
+                <li> corpNum (사업자번호) : {{bizCheckInfo.corpNum}}</li>
+                <li> companyRegNum (법인번호) : {{bizCheckInfo.companyRegNum}}</li>
+                <li> checkDT (확인일시) : {{bizCheckInfo.checkDT}}</li>
+                <li> corpName (상호) : {{bizCheckInfo.corpName}}</li>
+                <li> corpCode (기업형태코드) : {{bizCheckInfo.corpCode}}</li>
+                <li> corpScaleCode (기업규모코드) : {{bizCheckInfo.corpScaleCode}}</li>
+                <li> personCorpCode (개인법인코드) : {{bizCheckInfo.personCorpCode}}</li>
+                <li> headOfficeCode (본점지점코드) : {{bizCheckInfo.headOfficeCode}}</li>
+                <li> industryCode (산업코드) : {{bizCheckInfo.industryCode}}</li>
+                <li> establishCode (설립구분코드) : {{bizCheckInfo.establishCode}}</li>
+                <li> establishDate (설립일자) : {{bizCheckInfo.establishDate}}</li>
+                <li> CEOName (대표자명) : {{bizCheckInfo.ceoname}}</li>
+                <li> workPlaceCode (사업장구분코드) : {{bizCheckInfo.workPlaceCode}}</li>
+                <li> addrCode (주소구분코드) : {{bizCheckInfo.addrCode}}</li>
+                <li> zipCode (우편번호) : {{bizCheckInfo.zipCode}}</li>
+                <li> addr (주소) : {{bizCheckInfo.addr}}</li>
+                <li> addrDetail (상세주소) : {{bizCheckInfo.addrDetail}}</li>
+                <li> enAddr (영문주소) : {{bizCheckInfo.enAddr}}</li>
+                <li> bizClass (업종) : {{bizCheckInfo.bizClass}}</li>
+                <li> bizType (업태) : {{bizCheckInfo.bizType}}</li>
+                <li> result (결과코드) : {{bizCheckInfo.result}}</li>
+                <li> resultMessage (결과메시지) : {{bizCheckInfo.resultMessage}}</li>
+                <li> closeDownTaxType (사업자과세유형) : {{bizCheckInfo.closeDownTaxType}}</li>
+                <li> closeDownTaxTypeDate (과세유형전환일자) : {{bizCheckInfo.closeDownTaxTypeDate}}</li>
+                <li> closeDownState (휴폐업상태) : {{bizCheckInfo.closeDownState}}</li>
+                <li> closeDownStateDate (휴폐업일자) : {{bizCheckInfo.closeDownStateDate}}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
