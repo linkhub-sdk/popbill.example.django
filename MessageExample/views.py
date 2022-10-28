@@ -541,6 +541,46 @@ def cancelReserveRN(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def cancelReservebyRCV(request):
+    """
+    팝빌에서 반환받은 접수번호와 수신번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
+    - https://docs.popbill.com/message/python/api#CancelReservebyRCV
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 예약문자 전송요청시 팝빌로부터 반환 받은 접수번호
+        receiptNum = ""
+        # 예약문자 전송요청시 파트너가 요청한 수신번호
+        receiveNum = ""
+
+        response = messageService.cancelReservebyRCV(CorpNum, receiptNum, receiveNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def cancelReserveRNbyRCV(request):
+    """
+    파트너가 할당한 전송요청 번호와 수신번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
+    - https://docs.popbill.com/message/python/api#CancelReserveRNbyRCV
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 예약문자 전송요청시 파트너가 할당한 전송요청 번호
+        requestNum = ""
+        # 예약문자 전송요청시 파트너가 요청한 수신번호
+        receiveNum = ""
+
+        response = messageService.cancelReserveRNbyRCV(CorpNum, requestNum, receiveNum)
+
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
 def getMessages(request):
     """
     팝빌에서 반환받은 접수번호를 통해 문자 전송상태 및 결과를 확인합니다.

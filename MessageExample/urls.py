@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^SendXMS_multi$', views.sendXMS_multi, name='SendXMS_multi'),
     url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
     url(r'^CancelReserveRN$', views.cancelReserveRN, name='CancelReserveRN'),
+    url(r'^CancelReservebyRCV$', views.cancelReservebyRCV, name='CancelReservebyRCV'),
+    url(r'^CancelReserveRNbyRCV$', views.cancelReserveRNbyRCV, name='CancelReserveRNbyRCV'),
 
     # 정보확인
     url(r'^GetMessages$', views.getMessages, name='GetMessages'),
