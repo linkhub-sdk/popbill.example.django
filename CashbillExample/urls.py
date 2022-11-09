@@ -15,7 +15,6 @@ urlpatterns = [
     # url(r'^Register$', views.register, name='Register'),
     # url(r'^Update$', views.update, name='Update'),
     # url(r'^Issue$', views.issue, name='Issue'),
-    url(r'^CancelIssue$', views.cancelIssue, name='CancelIssue'),
     url(r'^Delete$', views.delete, name='Delete'),
 
     # 취소현금영수증 발행

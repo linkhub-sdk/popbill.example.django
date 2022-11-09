@@ -273,32 +273,10 @@ def getBulkResult(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
-def cancelIssue(request):
-    """
-    국세청 전송 이전 "발행완료" 상태의 현금영수증을 "발행취소"하고 국세청 신고 대상에서 제외합니다.
-    - 삭제(Delete API) 함수를 호출하여 "발행취소" 상태의 현금영수증을 삭제하면, 문서번호 재사용이 가능합니다.
-    - https://docs.popbill.com/cashbill/python/api#CancelIssue
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 현금영수증 문서번호
-        MgtKey = "20220805-001"
-
-        # 메모
-        Memo = "발행취소 메모"
-
-        response = cashbillService.cancelIssue(CorpNum, MgtKey, Memo)
-
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
-    except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
-
 def delete(request):
     """
     삭제 가능한 상태의 현금영수증을 삭제합니다.
-    - 삭제 가능한 상태: "임시저장", "발행취소", "전송실패"
+    - 삭제 가능한 상태: "전송실패"
     - 현금영수증을 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
     - https://docs.popbill.com/cashbill/python/api#Delete
     """
@@ -320,7 +298,6 @@ def revokeRegistIssue(request):
     취소 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
     - 취소 현금영수증의 금액은 원본 금액을 넘을 수 없습니다.
     - 현금영수증 국세청 전송 정책 [https://docs.popbill.com/cashbill/ntsSendPolicy?lang=python]
-    - "발행완료"된 취소 현금영수증은 국세청 전송 이전에 발행취소(cancelIssue API) 함수로 국세청 신고 대상에서 제외할 수 있습니다.
     - 취소 현금영수증 발행 시 구매자 메일주소로 발행 안내 베일이 전송되니 유의하시기 바랍니다.
     - https://docs.popbill.com/cashbill/python/api#RevokeRegistIssue
     """
@@ -354,7 +331,6 @@ def revokeRegistIssue_part(request):
     작성된 (부분)취소 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
     - 취소 현금영수증의 금액은 원본 금액을 넘을 수 없습니다.
     - 현금영수증 국세청 전송 정책 [https://docs.popbill.com/cashbill/ntsSendPolicy?lang=python]
-    - "발행완료"된 취소 현금영수증은 국세청 전송 이전에 발행취소(cancelIssue API) 함수로 국세청 신고 대상에서 제외할 수 있습니다.
     - 취소 현금영수증 발행 시 구매자 메일주소로 발행 안내 베일이 전송되니 유의하시기 바랍니다.
     - https://docs.popbill.com/cashbill/python/api#RevokeRegistIssue
     """
@@ -411,6 +387,7 @@ def revokeRegistIssue_part(request):
         # - 현금영수증 취소유형이 true 인 경우 취소할 거래금액 입력
         # - 현금영수증 취소유형이 false 인 경우 미입력
         totalAmount = "1100"
+        
 
         response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
                                                     UserID, isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
@@ -503,7 +480,7 @@ def search(request):
 
         # 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         # - 미입력시 전체조회
-        State = ["3**", "4**"]
+        State = ["3**"]
 
         # 문서형태 배열 ("N" , "C" 중 선택, 다중 선택 가능)
         # - N = 일반 현금영수증 , C = 취소 현금영수증
