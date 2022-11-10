@@ -49,7 +49,6 @@ def registIssue(request):
     """
     작성된 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
     - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=python
-    - "발행완료"된 현금영수증은 국세청 전송 이전에 발행취소(CancelIssue API) 함수로 국세청 신고 대상에서 제외할 수 있습니다.
     - https://docs.popbill.com/cashbill/python/api#RegistIssue
     """
     try:
@@ -139,12 +138,16 @@ def registIssue(request):
 
             # 발행시 알림문자 전송여부
             # 문자전송시 포인트가 차감되며 전송실패시 환불처리됨.
-            smssendYN=False
+            smssendYN=False,
+
+            # 거래일시, 날짜(yyyyMMddHHmmss)
+            # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
+            tradeDT = "20221108000000"
         )
 
         response = cashbillService.registIssue(CorpNum, cashbill, Memo, UserID, EmailSubject)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate, 'tradeDT' : response.tradeDT})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
@@ -244,7 +247,11 @@ def bulkSubmit(request):
 
                     # 발행시 알림문자 전송여부
                     # 문자전송시 포인트가 차감되며 전송실패시 환불처리됨.
-                    smssendYN=False
+                    smssendYN=False,
+                    
+                    # 거래일시, 날짜(yyyyMMddHHmmss)
+                    # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
+                    tradeDT = "20221108000000"
                 )
             )
         bulkResponse = cashbillService.bulkSubmit(CorpNum, submitID, cashbillList)
@@ -387,12 +394,18 @@ def revokeRegistIssue_part(request):
         # - 현금영수증 취소유형이 true 인 경우 취소할 거래금액 입력
         # - 현금영수증 취소유형이 false 인 경우 미입력
         totalAmount = "1100"
+
+        # 안내메일 제목, 공백처리시 기본양식으로 전송
+        emailSubject = "메일제목 테스트"
         
+        # 거래일시, 날짜(yyyyMMddHHmmss)
+        # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
+        tradeDT = "20221108000000"
 
         response = cashbillService.revokeRegistIssue(CorpNum, mgtKey, orgConfirmNum, orgTradeDate, smssendYN, memo,
-                                                    UserID, isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount)
+                                                    UserID, isPartCancel, cancelType, supplyCost, tax, serviceFee, totalAmount, emailSubject, tradeDT)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate})
+        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'confirmNum' : response.confirmNum, 'tradeDate' : response.tradeDate, 'tradeDT' : response.tradeDT})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
