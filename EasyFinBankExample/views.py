@@ -27,7 +27,7 @@ def index(request):
 def registBankAccount(request):
     """
     팝빌에 계좌정보를 등록합니다.
-    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#RegistBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/manage#RegistBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -84,7 +84,7 @@ def registBankAccount(request):
 def updateBankAccount(request):
     """
     팝빌에 등록된 계좌정보를 수정합니다.
-    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#UpdateBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/manage#UpdateBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -128,7 +128,7 @@ def updateBankAccount(request):
 def getBankAccountInfo(request):
     """
     팝빌에 등록된 계좌정보를 확인합니다.
-    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#GetBankAccountInfo
+    - https://developers.popbill.com/reference/easyfinbank/python/api/manage#GetBankAccountInfo
     """
     try:
 
@@ -153,7 +153,7 @@ def getBankAccountInfo(request):
 def listBankAccount(request):
     """
     팝빌에 등록된 계좌 목록을 확인합니다.
-    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#ListBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/manage#ListBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -170,7 +170,7 @@ def getBankAccountMgtURL(request):
     """
     계좌 관리 팝업 URL을 반환 합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#GetBankAccountMgtURL
+    - https://developers.popbill.com/reference/easyfinbank/python/api/manage#GetBankAccountMgtURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -188,7 +188,7 @@ def getBankAccountMgtURL(request):
 def closeBankAccount(request):
     """
     계좌의 정액제 해지를 요청합니다.
-    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#CloseBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/manage#CloseBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -218,7 +218,7 @@ def closeBankAccount(request):
 def revokeCloseBankAccount(request):
     """
     신청한 정액제 해지요청을 취소합니다.
-    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#RevokeCloseBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/manage#RevokeCloseBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -242,7 +242,7 @@ def revokeCloseBankAccount(request):
 def deleteBankAccount(request):
     """
     종량제 이용시 등록된 계좌를 삭제합니다.
-    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#DeleteBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/manage#DeleteBankAccount
     """
     try:
         # 팝빌회원 사업자번호

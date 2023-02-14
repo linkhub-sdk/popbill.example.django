@@ -183,7 +183,7 @@ def sendSMS_multi(request):
 def sendLMS(request):
     """
     최대 2,000byte의 장문(LMS) 메시지 1건 전송을 팝빌에 접수합니다.
-    - https://developers.popbill.com/reference/sms/python/api/send#sendLMSOne
+    - https://developers.popbill.com/reference/sms/python/api/send#SendLMSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -289,7 +289,7 @@ def sendMMS(request):
     """
     최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 1건 전송을 팝빌에 접수합니다.
     - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG, JPG), 가로/세로 1,000px 이하 권장
-    - https://developers.popbill.com/reference/sms/python/api/send#sendMMSOne
+    - https://developers.popbill.com/reference/sms/python/api/send#SendMMSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -402,7 +402,7 @@ def sendMMS_multi(request):
 def sendXMS(request):
     """
     메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
-    - https://developers.popbill.com/reference/sms/python/api/send#sendXMSOne
+    - https://developers.popbill.com/reference/sms/python/api/send#SendXMSOne
     """
     try:
         # 팝빌회원 사업자번호
