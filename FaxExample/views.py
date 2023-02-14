@@ -26,7 +26,7 @@ def checkSenderNumber(request):
     '''
     팩스 발신번호 등록여부를 확인합니다.
     - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
-    - https://docs.popbill.com/fax/python/api#CheckSenderNumber
+    - https://developers.popbill.com/reference/fax/python/api/sendnum#CheckSenderNumber
     '''
 
     try:
@@ -46,7 +46,7 @@ def getSenderNumberMgtURL(request):
     """
     발신번호를 등록하고 내역을 확인하는 팩스 발신번호 관리 페이지 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#GetSenderNumberMgtURL
+    - https://developers.popbill.com/reference/fax/python/api/sendnum#GetSenderNumberMgtURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -64,7 +64,7 @@ def getSenderNumberMgtURL(request):
 def getSenderNumberList(request):
     """
     팝빌에 등록한 연동회원의 팩스 발신번호 목록을 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetSenderNumberList
+    - https://developers.popbill.com/reference/fax/python/api/sendnum#GetSenderNumberList
     """
     try:
         # 팝빌회원 사업자번호
@@ -79,7 +79,7 @@ def getSenderNumberList(request):
 def sendFAX(request):
     """
     팩스 1건을 팝빌에 접수합니다. (최대 전송파일 개수: 20개)
-    - https://docs.popbill.com/fax/python/api#SendFAX
+    - https://developers.popbill.com/reference/fax/python/api/send#SendFAX
     """
     try:
         # 팝빌회원 사업자번호
@@ -130,7 +130,7 @@ def sendFAX(request):
 def sendFAX_multi(request):
     """
     동일한 팩스파일을 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수 : 20개) (최대 1,000건)
-    - https://docs.popbill.com/fax/python/api#SendFAX_Multi
+    - https://developers.popbill.com/reference/fax/python/api/send#SendFAXMulti
     """
     try:
         # 팝빌회원 사업자번호
@@ -185,7 +185,7 @@ def sendFAX_multi(request):
 def sendFAXBinary(request):
     """
     전송할 파일의 바이너리 데이터로 팩스 1건을 팝빌에 접수합니다. (최대 전송파일 개수: 20개)
-    - https://docs.popbill.com/fax/python/api#SendFAXBinary
+    - https://developers.popbill.com/reference/fax/python/api/send#SendFAXBinary
     """
     try:
         # 팝빌회원 사업자번호
@@ -243,7 +243,7 @@ def sendFAXBinary(request):
 def sendFAXBinary_multi(request):
     """
     전송할 파일의 바이너리 데이터로 다수의 수신자에게 팩스를 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수 : 20개) (최대 1,000건)
-    - https://docs.popbill.com/fax/python/api#SendFAXBinary_Multi
+    - https://developers.popbill.com/reference/fax/python/api/send#SendFAXBinaryMulti
     """
     try:
         # 팝빌회원 사업자번호
@@ -308,7 +308,7 @@ def resendFAX(request):
     - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
     - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#ResendFAX
+    - https://developers.popbill.com/reference/fax/python/api/send#ResendFAX
     """
     try:
         # 팝빌회원 사업자번호
@@ -357,7 +357,7 @@ def resendFAXRN(request):
     - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
     - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#ResendFAXRN
+    - https://developers.popbill.com/reference/fax/python/api/send#ResendFAXRN
     """
     try:
         # 팝빌회원 사업자번호
@@ -406,7 +406,7 @@ def resendFAX_multi(request):
     - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
     - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
     - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#ResendFAX_multi
+    - https://developers.popbill.com/reference/fax/python/api/send#ResendFAXMulti
     """
     try:
         # 팝빌회원 사업자번호
@@ -463,7 +463,7 @@ def resendFAXRN_multi(request):
 - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
 - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
 - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#ResendFAXRN_multi
+    - https://developers.popbill.com/reference/fax/python/api/send#ResendFAXRNMulti
     """
     try:
         # 팝빌회원 사업자번호
@@ -518,7 +518,7 @@ def resendFAXRN_multi(request):
 def cancelReserve(request):
     """
     팝빌에서 반환받은 접수번호를 통해 예약접수된 팩스 전송을 취소합니다. (예약시간 10분 전까지 가능)
-    - https://docs.popbill.com/fax/python/api#CancelReserve
+    - https://developers.popbill.com/reference/fax/python/api/send#CancelReserve
     """
     try:
         # 팝빌회원 사업자번호
@@ -536,7 +536,7 @@ def cancelReserve(request):
 def cancelReserveRN(request):
     """
     파트너가 할당한 전송요청 번호를 통해 예약접수된 팩스 전송을 취소합니다. (예약시간 10분 전까지 가능)
-    - https://docs.popbill.com/fax/python/api#CancelReserveRN
+    - https://developers.popbill.com/reference/fax/python/api/send#CancelReserveRN
     """
     try:
         # 팝빌회원 사업자번호
@@ -554,7 +554,7 @@ def cancelReserveRN(request):
 def getFaxResult(request):
     """
     팝빌에서 반환 받은 접수번호를 통해 팩스 전송상태 및 결과를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetFaxResult
+    - https://developers.popbill.com/reference/fax/python/api/info#GetFaxResult
     """
     try:
         # 팝빌회원 사업자번호
@@ -572,7 +572,7 @@ def getFaxResult(request):
 def getFaxResultRN(request):
     """
     파트너가 할당한 전송요청 번호를 통해 팩스 전송상태 및 결과를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetFaxResultRN
+    - https://developers.popbill.com/reference/fax/python/api/info#GetFaxResultRN
     """
     try:
         # 팝빌회원 사업자번호
@@ -591,7 +591,7 @@ def search(request):
     """
     검색조건에 해당하는 팩스 전송내역 목록을 조회합니다. (조회기간 단위 : 최대 2개월)
     - 팩스 접수일시로부터 2개월 이내 접수건만 조회할 수 있습니다.
-    - https://docs.popbill.com/fax/python/api#Search
+    - https://developers.popbill.com/reference/fax/python/api/info#Search
     """
     try:
         # 팝빌회원 사업자번호
@@ -647,7 +647,7 @@ def getSentListURL(request):
     """
     팩스 전송내역 확인 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#GetSentListURL
+    - https://developers.popbill.com/reference/fax/python/api/info#GetSentListURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -666,7 +666,7 @@ def getPreviewURL(request):
     """
     팩스 미리보기 팝업 URL을 반환하며, 팩스전송을 위한 TIF 포맷 변환 완료 후 호출 할 수 있습니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#GetPreviewURL
+    - https://developers.popbill.com/reference/fax/python/api/info#GetPreviewURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -688,7 +688,7 @@ def getPreviewURL(request):
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetBalance
+    - https://developers.popbill.com/reference/fax/python/api/point#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -704,7 +704,7 @@ def getChargeURL(request):
     """
     연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#GetChargeURL
+    - https://developers.popbill.com/reference/fax/python/api/point#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -723,7 +723,7 @@ def getPaymentURL(request):
     """
     연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#GetPaymentURL
+    - https://developers.popbill.com/reference/fax/python/api/point#GetPaymentURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -742,7 +742,7 @@ def getUseHistoryURL(request):
     """
     연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#GetUseHistoryURL
+    - https://developers.popbill.com/reference/fax/python/api/point#GetUseHistoryURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -760,7 +760,7 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetPartnerBalance
+    - https://developers.popbill.com/reference/fax/python/api/point#GetPartnerBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -776,7 +776,7 @@ def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#GetPartnerURL
+    - https://developers.popbill.com/reference/fax/python/api/point#GetPartnerURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -794,7 +794,7 @@ def getPartnerURL(request):
 def getUnitCost(request):
     """
     팩스 전송시 과금되는 포인트 단가를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetUnitCost
+    - https://developers.popbill.com/reference/fax/python/api/point#GetUnitCost
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -814,7 +814,7 @@ def getUnitCost(request):
 def getChargeInfo(request):
     """
     팝빌 팩스 API 서비스 과금정보를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetChargeInfo
+    - https://developers.popbill.com/reference/fax/python/api/point#GetChargeInfo
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -837,7 +837,7 @@ def getChargeInfo(request):
 def checkIsMember(request):
     """
     사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#CheckIsMember
+    - https://developers.popbill.com/reference/fax/python/api/member#CheckIsMember
     """
     try:
         # 팝빌회원 사업자번호
@@ -852,7 +852,7 @@ def checkIsMember(request):
 def checkID(request):
     """
     사용하고자 하는 아이디의 중복여부를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#CheckID
+    - https://developers.popbill.com/reference/fax/python/api/member#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -867,7 +867,7 @@ def checkID(request):
 def joinMember(request):
     """
     사용자를 연동회원으로 가입처리합니다.
-    - https://docs.popbill.com/fax/python/api#JoinMember
+    - https://developers.popbill.com/reference/fax/python/api/member#JoinMember
     """
     try:
         # 회원정보
@@ -918,7 +918,7 @@ def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/fax/python/api#GetAccessURL
+    - https://developers.popbill.com/reference/fax/python/api/member#GetAccessURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -936,7 +936,7 @@ def getAccessURL(request):
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetCorpInfo
+    - https://developers.popbill.com/reference/fax/python/api/member#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -951,7 +951,7 @@ def getCorpInfo(request):
 def updateCorpInfo(request):
     """
     연동회원사의 회사정보를 수정 합니다.
-    - https://docs.popbill.com/fax/python/api#UpdateCorpInfo
+    - https://developers.popbill.com/reference/fax/python/api/member#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -985,7 +985,7 @@ def updateCorpInfo(request):
 def registContact(request):
     """
     연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-    - https://docs.popbill.com/fax/python/api#RegistContact
+    - https://developers.popbill.com/reference/fax/python/api/member#RegistContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -1023,7 +1023,7 @@ def registContact(request):
 def getContactInfo(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-    - https://docs.popbill.com/fax/python/api#GetContactInfo
+    - https://developers.popbill.com/reference/fax/python/api/member#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1041,7 +1041,7 @@ def getContactInfo(request):
 def listContact(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-    - https://docs.popbill.com/fax/python/api#ListContact
+    - https://developers.popbill.com/reference/fax/python/api/member#ListContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -1056,7 +1056,7 @@ def listContact(request):
 def updateContact(request):
     """
     연동회원의 담당자 정보를 수정합니다.
-    - https://docs.popbill.com/fax/python/api#UpdateContact
+    - https://developers.popbill.com/reference/fax/python/api/member#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호

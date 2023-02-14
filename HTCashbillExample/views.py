@@ -32,7 +32,7 @@ def index(request):
 def requestJob(request):
     """
     홈택스에 신고된 현금영수증 매입/매출 내역 수집을 팝빌에 요청합니다. (조회기간 단위 : 최대 3개월)
-    - https://docs.popbill.com/htcashbill/python/api#RequestJob
+    - https://developers.popbill.com/reference/htcashbill/python/api/job#RequestJob
     """
     try:
         # 팝빌회원 사업자번호
@@ -62,7 +62,7 @@ def getJobState(request):
     수집 결과 조회(Search) 또는 수집 결과 요약 정보 조회(Summary) 를 해야합니다.
     - 작업 상태(jobState)가 3(완료)이지만 수집 결과 코드(errorCode)가 1(수집성공)이 아닌 경우에는
     오류메시지(errorReason)로 수집 실패에 대한 원인을 파악할 수 있습니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetJobState
+    - https://developers.popbill.com/reference/htcashbill/python/api/job#GetJobState
     """
     try:
         # 팝빌회원 사업자번호
@@ -81,7 +81,7 @@ def listActiveJob(request):
     """
     현금영수증 매입/매출 내역 수집요청에 대한 상태 목록을 확인합니다.
     - 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
-    - https://docs.popbill.com/htcashbill/python/api#ListActiveJob
+    - https://developers.popbill.com/reference/htcashbill/python/api/job#ListActiveJob
     """
     try:
         # 팝빌회원 사업자번호
@@ -96,7 +96,7 @@ def listActiveJob(request):
 def search(request):
     """
     수집 상태 확인(GetJobState API) 함수를 통해 상태 정보 확인된 작업아이디를 활용하여 현금영수증 매입/매출 내역을 조회합니다.
-    - https://docs.popbill.com/htcashbill/python/api#Search
+    - https://developers.popbill.com/reference/htcashbill/python/api/search#Search
     """
     try:
         # 팝빌회원 사업자번호
@@ -135,7 +135,7 @@ def summary(request):
     """
     수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 현금영수증 매입/매출 내역의 요약 정보를 조회합니다.
     - 요약 정보 : 현금영수증 수집 건수, 공급가액 합계, 세액 합계, 봉사료 합계, 합계 금액
-    - https://docs.popbill.com/htcashbill/python/api#Summary
+    - https://developers.popbill.com/reference/htcashbill/python/api/search#Summary
     """
     try:
         # 팝빌회원 사업자번호
@@ -164,7 +164,7 @@ def getCertificatePopUpURL(request):
     """
     홈택스연동 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetCertificatePopUpURL
+    - https://developers.popbill.com/reference/htcashbill/python/api/cert#GetCertificatePopUpURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -183,7 +183,7 @@ def getCertificatePopUpURL(request):
 def getCertificateExpireDate(request):
     """
     팝빌에 등록된 인증서 만료일자를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetCertificateExpireDate
+    - https://developers.popbill.com/reference/htcashbill/python/api/cert#GetCertificateExpireDate
     """
     try:
         # 팝빌회원 사업자번호
@@ -198,7 +198,7 @@ def getCertificateExpireDate(request):
 def checkCertValidation(request):
     """
     팝빌에 등록된 인증서로 홈택스 로그인 가능 여부를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#CheckCertValidation
+    - https://developers.popbill.com/reference/htcashbill/python/api/cert#CheckCertValidation
     """
     try:
         # 팝빌회원 사업자번호
@@ -213,7 +213,7 @@ def checkCertValidation(request):
 def registDeptUser(request):
     """
     홈택스연동 인증을 위해 팝빌에 현금영수증 자료조회 부서사용자 계정을 등록합니다.
-    - https://docs.popbill.com/htcashbill/python/api#RegistDeptUser
+    - https://developers.popbill.com/reference/htcashbill/python/api/cert#RegistDeptUser
     """
     try:
         # 팝빌회원 사업자번호
@@ -234,7 +234,7 @@ def registDeptUser(request):
 def checkDeptUser(request):
     """
     홈택스연동 인증을 위해 팝빌에 등록된 현금영수증 자료조회 부서사용자 계정을 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#CheckDeptUser
+    - https://developers.popbill.com/reference/htcashbill/python/api/cert#CheckDeptUser
     """
     try:
         # 팝빌회원 사업자번호
@@ -249,7 +249,7 @@ def checkDeptUser(request):
 def checkLoginDeptUser(request):
     """
     팝빌에 등록된 현금영수증 자료조회 부서사용자 계정 정보로 홈택스 로그인 가능 여부를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#CheckLoginDeptUser
+    - https://developers.popbill.com/reference/htcashbill/python/api/cert#CheckLoginDeptUser
     """
     try:
         # 팝빌회원 사업자번호
@@ -264,7 +264,7 @@ def checkLoginDeptUser(request):
 def deleteDeptUser(request):
     """
     팝빌에 등록된 홈택스 현금영수증 자료조회 부서사용자 계정을 삭제합니다.
-    - https://docs.popbill.com/htcashbill/python/api#DeleteDeptUser
+    - https://developers.popbill.com/reference/htcashbill/python/api/cert#DeleteDeptUser
     """
     try:
         # 팝빌회원 사업자번호
@@ -280,7 +280,7 @@ def getFlatRatePopUpURL(request):
     """
     홈택스연동 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetFlatRatePopUpURL
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetFlatRatePopUpURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -298,7 +298,7 @@ def getFlatRatePopUpURL(request):
 def getFlatRateState(request):
     """
     홈택스연동 정액제 서비스 상태를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetFlatRateState
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetFlatRateState
     """
     try:
         # 팝빌회원 사업자번호
@@ -313,7 +313,7 @@ def getFlatRateState(request):
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetBalance
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -329,7 +329,7 @@ def getChargeURL(request):
     """
     연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetChargeURL
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -348,7 +348,7 @@ def getPaymentURL(request):
     """
     연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetPaymentURL
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetPaymentURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -367,7 +367,7 @@ def getUseHistoryURL(request):
     """
     연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetUseHistoryURL
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetUseHistoryURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -385,7 +385,7 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetPartnerBalance
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetPartnerBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -401,7 +401,7 @@ def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetPartnerURL
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetPartnerURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -419,7 +419,7 @@ def getPartnerURL(request):
 def getChargeInfo(request):
     """
     팝빌 홈택스연동(현금) API 서비스 과금정보를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetChargeInfo
+    - https://developers.popbill.com/reference/htcashbill/python/api/point#GetChargeInfo
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -434,7 +434,7 @@ def getChargeInfo(request):
 def checkIsMember(request):
     """
     사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#CheckIsMember
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#CheckIsMember
     """
     try:
         # 팝빌회원 사업자번호
@@ -449,7 +449,7 @@ def checkIsMember(request):
 def checkID(request):
     """
     사용하고자 하는 아이디의 중복여부를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#CheckID
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -464,7 +464,7 @@ def checkID(request):
 def joinMember(request):
     """
     사용자를 연동회원으로 가입처리합니다.
-    - https://docs.popbill.com/htcashbill/python/api#JoinMember
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#JoinMember
     """
     try:
         # 회원정보
@@ -515,7 +515,7 @@ def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetAccessURL
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#GetAccessURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -533,7 +533,7 @@ def getAccessURL(request):
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetCorpInfo
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -548,7 +548,7 @@ def getCorpInfo(request):
 def updateCorpInfo(request):
     """
     연동회원사의 회사정보를 수정 합니다.
-    - https://docs.popbill.com/htcashbill/python/api#UpdateCorpInfo
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -582,7 +582,7 @@ def updateCorpInfo(request):
 def registContact(request):
     """
     연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-    - https://docs.popbill.com/htcashbill/python/api#RegistContact
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#RegistContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -620,7 +620,7 @@ def registContact(request):
 def getContactInfo(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#GetContactInfo
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -638,7 +638,7 @@ def getContactInfo(request):
 def listContact(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-    - https://docs.popbill.com/htcashbill/python/api#ListContact
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#ListContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -653,7 +653,7 @@ def listContact(request):
 def updateContact(request):
     """
     연동회원의 담당자 정보를 수정합니다.
-    - https://docs.popbill.com/htcashbill/python/api#UpdateContact
+    - https://developers.popbill.com/reference/htcashbill/python/api/member#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호

@@ -25,7 +25,7 @@ def index(request):
 def checkBizInfo(request):
     """
     사업자번호 1건에 대한 기업정보를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#CheckBinInfo
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/check#CheckBizInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -43,7 +43,7 @@ def checkBizInfo(request):
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetBalance
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -59,7 +59,7 @@ def getChargeURL(request):
     """
     연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetChargeURL
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -78,7 +78,7 @@ def getPaymentURL(request):
     """
     연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetPaymentURL
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetPaymentURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -97,7 +97,7 @@ def getUseHistoryURL(request):
     """
     연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetUseHistoryURL
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetUseHistoryURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -115,7 +115,7 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetPartnerBalance
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetPartnerBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -131,7 +131,7 @@ def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetPartnerURL
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetPartnerURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -149,7 +149,7 @@ def getPartnerURL(request):
 def getUnitCost(request):
     """
     휴폐업 조회시 과금되는 포인트 단가를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetUnitCost
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetUnitCost
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -164,7 +164,7 @@ def getUnitCost(request):
 def getChargeInfo(request):
     """
     팝빌 휴폐업조회 API 서비스 과금정보를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetChargeInfo
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetChargeInfo
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -179,7 +179,7 @@ def getChargeInfo(request):
 def checkIsMember(request):
     """
     사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#CheckIsMember
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#CheckIsMember
     """
     try:
         # 팝빌회원 사업자번호
@@ -194,7 +194,7 @@ def checkIsMember(request):
 def checkID(request):
     """
     사용하고자 하는 아이디의 중복여부를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#CheckID
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -209,7 +209,7 @@ def checkID(request):
 def joinMember(request):
     """
     사용자를 연동회원으로 가입처리합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#JoinMember
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#JoinMember
     """
     try:
         # 회원정보
@@ -260,7 +260,7 @@ def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetAccessURL
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#GetAccessURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -278,7 +278,7 @@ def getAccessURL(request):
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetCorpInfo
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -293,7 +293,7 @@ def getCorpInfo(request):
 def updateCorpInfo(request):
     """
     연동회원사의 회사정보를 수정 합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#UpdateCorpInfo
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -327,7 +327,7 @@ def updateCorpInfo(request):
 def registContact(request):
     """
     연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#RegistContact
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#RegistContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -365,7 +365,7 @@ def registContact(request):
 def getContactInfo(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#GetContactInfo
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -383,7 +383,7 @@ def getContactInfo(request):
 def listContact(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#ListContact
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#ListContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -398,7 +398,7 @@ def listContact(request):
 def updateContact(request):
     """
     연동회원의 담당자 정보를 수정합니다.
-    - https://docs.popbill.com/bizinfocheck/python/api#UpdateContact
+    - https://developers.popbill.com/reference/bizinfocheck/python/api/member#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호

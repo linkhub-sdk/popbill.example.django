@@ -31,7 +31,7 @@ def getPlusFriendMgtURL(request):
     """
     카카오톡 채널을 등록하고 내역을 확인하는 카카오톡 채널 관리 페이지 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/kakao/python/api#GetPlusFriendMgtURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/channel#GetPlusFriendMgtURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -49,7 +49,7 @@ def getPlusFriendMgtURL(request):
 def listPlusFriendID(request):
     """
     팝빌에 등록한 연동회원의 카카오톡 채널 목록을 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#ListPlusFriendID
+    - https://developers.popbill.com/reference/kakaotalk/python/api/channel#ListPlusFriendID
     """
     try:
         # 팝빌회원 사업자번호
@@ -65,7 +65,7 @@ def checkSenderNumber(request):
     '''
     카카오톡 발신번호 등록여부를 확인합니다.
     - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
-    - https://docs.popbill.com/kakao/python/api#CheckSenderNumber
+    - https://developers.popbill.com/reference/kakaotalk/python/api/sendnum#CheckSenderNumber
     '''
 
     try:
@@ -85,7 +85,7 @@ def getSenderNumberMgtURL(request):
     """
     발신번호를 등록하고 내역을 확인하는 카카오톡 발신번호 관리 페이지 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/kakao/python/api#GetSenderNumberMgtURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/sendnum#GetSenderNumberMgtURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -103,7 +103,7 @@ def getSenderNumberMgtURL(request):
 def getSenderNumberList(request):
     """
     팝빌에 등록한 연동회원의 카카오톡 발신번호 목록을 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetSenderNumberList
+    - https://developers.popbill.com/reference/kakaotalk/python/api/sendnum#GetSenderNumberList
     """
     try:
         # 팝빌회원 사업자번호
@@ -120,7 +120,7 @@ def getATSTemplateMgtURL(request):
     알림톡 템플릿을 신청하고 승인심사 결과를 확인하며 등록 내역을 확인하는 알림톡 템플릿 관리 페이지 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - 승인된 알림톡 템플릿은 수정이 불가하고, 변경이 필요한 경우 새롭게 템플릿 신청을 해야합니다.
-    - https://docs.popbill.com/kakao/python/api#GetATSTemplateMgtURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/template#GetATSTemplateMgtURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -138,7 +138,7 @@ def getATSTemplateMgtURL(request):
 def getATSTemplate(request):
     """
     승인된 알림톡 템플릿의 정보를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetATSTemplate
+    - https://developers.popbill.com/reference/kakaotalk/python/api/template#GetATSTemplate
     """
     try:
         # 팝빌회원 사업자번호
@@ -156,7 +156,7 @@ def getATSTemplate(request):
 def listATStemplate(request):
     """
     승인된 알림톡 템플릿 목록을 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#ListATSTemplate
+    - https://developers.popbill.com/reference/kakaotalk/python/api/template#ListATSTemplate
     """
     try:
         # 팝빌회원 사업자번호
@@ -172,7 +172,7 @@ def sendATS_one(request):
     """
     승인된 템플릿의 내용을 작성하여 1건의 알림톡 전송을 팝빌에 접수합니다.
     - 전송실패시 사전에 지정한 변수 'AltSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-    - https://docs.popbill.com/kakao/python/api#SendATS_one
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendATSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -248,7 +248,7 @@ def sendATS_multi(request):
     """
     승인된 템플릿의 내용을 작성하여 다수건의 알림톡 전송을 팝빌에 접수하며, 수신자 별로 개별 내용을 전송합니다. (최대 1,000건)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-    - https://docs.popbill.com/kakao/python/api#SendATS_multi
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendATSMulti
     """
     try:
         # 팝빌회원 사업자번호
@@ -365,7 +365,7 @@ def sendATS_same(request):
     """
     승인된 템플릿 내용을 작성하여 다수건의 알림톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-    - https://docs.popbill.com/kakao/python/api#SendATS_same
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendATSSame
     """
     try:
         # 팝빌회원 사업자번호
@@ -446,7 +446,7 @@ def sendFTS_one(request):
     텍스트로 구성된 1건의 친구톡 전송을 팝빌에 접수합니다.
     - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-    - https://docs.popbill.com/kakao/python/api#SendFTS_one
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendFTSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -526,7 +526,7 @@ def sendFTS_multi(request):
     텍스트로 구성된 다수건의 친구톡 전송을 팝빌에 접수하며, 수신자 별로 개별 내용을 전송합니다. (최대 1,000건)
     - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-    - https://docs.popbill.com/kakao/python/api#SendFTS_multi
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendFTSMulti
     """
     try:
         # 팝빌회원 사업자번호
@@ -643,7 +643,7 @@ def sendFTS_same(request):
     텍스트로 구성된 다수건의 친구톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
     - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-    - https://docs.popbill.com/kakao/python/api#SendFTS_same
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendFTSSame
     """
     try:
         # 팝빌회원 사업자번호
@@ -727,7 +727,7 @@ def sendFMS_one(request):
     - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
-    - https://docs.popbill.com/kakao/python/api#SendFMS_one
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendFMSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -818,7 +818,7 @@ def sendFMS_multi(request):
     - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
-    - https://docs.popbill.com/kakao/python/api#SendFMS_multi
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendFMSMulti
     """
     try:
         # 팝빌회원 사업자번호
@@ -920,7 +920,7 @@ def sendFMS_same(request):
     - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
     - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
     - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
-    - https://docs.popbill.com/kakao/python/api#SendFMS_same
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#SendFMSSame
     """
     try:
         # 팝빌회원 사업자번호
@@ -1011,7 +1011,7 @@ def sendFMS_same(request):
 def cancelReserve(request):
     """
     팝빌에서 반환받은 접수번호를 통해 예약접수된 카카오톡을 전송 취소합니다. (예약시간 10분 전까지 가능)
-    - https://docs.popbill.com/kakao/python/api#CancelReserve
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#CancelReserve
     """
     try:
         # 팝빌회원 사업자번호
@@ -1029,7 +1029,7 @@ def cancelReserve(request):
 def cancelReserveRN(request):
     """
     파트너가 할당한 전송요청 번호를 통해 예약접수된 카카오톡을 전송 취소합니다. (예약시간 10분 전까지 가능)
-    - https://docs.popbill.com/kakao/python/api#CancelReserveRN
+    - https://developers.popbill.com/reference/kakaotalk/python/api/send#CancelReserveRN
     """
     try:
         # 팝빌회원 사업자번호
@@ -1047,7 +1047,7 @@ def cancelReserveRN(request):
 def getMessages(request):
     """
     팝빌에서 반환받은 접수번호를 통해 알림톡/친구톡 전송상태 및 결과를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetMessages
+    - https://developers.popbill.com/reference/kakaotalk/python/api/info#GetMessages
     """
     try:
         # 팝빌회원 사업자번호
@@ -1065,7 +1065,7 @@ def getMessages(request):
 def getMessagesRN(request):
     """
     파트너가 할당한 전송요청 번호를 통해 알림톡/친구톡 전송상태 및 결과를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetMessagesRN
+    - https://developers.popbill.com/reference/kakaotalk/python/api/info#GetMessagesRN
     """
     try:
         # 팝빌회원 사업자번호
@@ -1084,7 +1084,7 @@ def search(request):
     """
     검색조건을 사용하여 알림톡/친구톡 전송 내역을 조회합니다. (조회기간 단위 : 최대 2개월)
     - 카카오톡 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
-    - https://docs.popbill.com/kakao/python/api#Search
+    - https://developers.popbill.com/reference/kakaotalk/python/api/info#Search
     """
     try:
         # 팝빌회원 사업자번호
@@ -1144,7 +1144,7 @@ def getSentListURL(request):
     """
     카카오톡 전송내역을 확인하는 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/kakao/python/api#GetSentListURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/info#GetSentListURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1162,7 +1162,7 @@ def getSentListURL(request):
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetBalance
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -1178,7 +1178,7 @@ def getChargeURL(request):
     """
     연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/kakao/python/api#GetChargeURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1197,7 +1197,7 @@ def getPaymentURL(request):
     """
     연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/kakao/python/api#GetPaymentURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetPaymentURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1216,7 +1216,7 @@ def getUseHistoryURL(request):
     """
     연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/kakao/python/api#GetUseHistoryURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetUseHistoryURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1234,7 +1234,7 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetPartnerBalance
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetPartnerBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -1250,7 +1250,7 @@ def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/kakao/python/api#GetPartnerURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetPartnerURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1268,7 +1268,7 @@ def getPartnerURL(request):
 def getUnitCost(request):
     """
     카카오톡 전송시 과금되는 포인트 단가를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetUnitCost
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetUnitCost
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -1287,7 +1287,7 @@ def getUnitCost(request):
 def getChargeInfo(request):
     """
     팝빌 카카오톡 API 서비스 과금정보를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetChargeInfo
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetChargeInfo
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -1309,7 +1309,7 @@ def getChargeInfo(request):
 def checkIsMember(request):
     """
     사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#CheckIsMember
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#CheckIsMember
     """
     try:
         # 팝빌회원 사업자번호
@@ -1324,7 +1324,7 @@ def checkIsMember(request):
 def checkID(request):
     """
     사용하고자 하는 아이디의 중복여부를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#CheckID
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -1339,7 +1339,7 @@ def checkID(request):
 def joinMember(request):
     """
     사용자를 연동회원으로 가입처리합니다.
-    - https://docs.popbill.com/kakao/python/api#JoinMember
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#JoinMember
     """
     try:
         # 회원정보
@@ -1390,7 +1390,7 @@ def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/kakao/python/api#GetAccessURL
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#GetAccessURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -1408,7 +1408,7 @@ def getAccessURL(request):
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetCorpInfo
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1423,7 +1423,7 @@ def getCorpInfo(request):
 def updateCorpInfo(request):
     """
     연동회원사의 회사정보를 수정 합니다.
-    - https://docs.popbill.com/kakao/python/api#UpdateCorpInfo
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1457,7 +1457,7 @@ def updateCorpInfo(request):
 def registContact(request):
     """
     연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-    - https://docs.popbill.com/kakao/python/api#RegistContact
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#RegistContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -1495,7 +1495,7 @@ def registContact(request):
 def getContactInfo(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#GetContactInfo
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1513,7 +1513,7 @@ def getContactInfo(request):
 def listContact(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-    - https://docs.popbill.com/kakao/python/api#ListContact
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#ListContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -1528,7 +1528,7 @@ def listContact(request):
 def updateContact(request):
     """
     연동회원의 담당자 정보를 수정합니다.
-    - https://docs.popbill.com/kakao/python/api#UpdateContact
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호

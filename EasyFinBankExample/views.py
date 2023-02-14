@@ -27,7 +27,7 @@ def index(request):
 def registBankAccount(request):
     """
     팝빌에 계좌정보를 등록합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#RegistBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#RegistBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -84,7 +84,7 @@ def registBankAccount(request):
 def updateBankAccount(request):
     """
     팝빌에 등록된 계좌정보를 수정합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#UpdateBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#UpdateBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -128,7 +128,7 @@ def updateBankAccount(request):
 def getBankAccountInfo(request):
     """
     팝빌에 등록된 계좌정보를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetBankAccountInfo
+    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#GetBankAccountInfo
     """
     try:
 
@@ -153,7 +153,7 @@ def getBankAccountInfo(request):
 def listBankAccount(request):
     """
     팝빌에 등록된 계좌 목록을 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#ListBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#ListBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -170,7 +170,7 @@ def getBankAccountMgtURL(request):
     """
     계좌 관리 팝업 URL을 반환 합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetBankAccountMgtURL
+    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#GetBankAccountMgtURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -188,7 +188,7 @@ def getBankAccountMgtURL(request):
 def closeBankAccount(request):
     """
     계좌의 정액제 해지를 요청합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#CloseBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#CloseBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -218,7 +218,7 @@ def closeBankAccount(request):
 def revokeCloseBankAccount(request):
     """
     신청한 정액제 해지요청을 취소합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#RevokeCloseBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#RevokeCloseBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -242,7 +242,7 @@ def revokeCloseBankAccount(request):
 def deleteBankAccount(request):
     """
     종량제 이용시 등록된 계좌를 삭제합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#DeleteBankAccount
+    - https://developers.popbill.com/reference/easyfinbank/python/api/issue#DeleteBankAccount
     """
     try:
         # 팝빌회원 사업자번호
@@ -268,7 +268,7 @@ def requestJob(request):
     계좌 거래내역을 확인하기 위해 팝빌에 수집요청을 합니다. (조회기간 단위 : 최대 1개월)
     - 조회일로부터 최대 3개월 이전 내역까지 조회할 수 있습니다.
     - 반환 받은 작업아이디는 함수 호출 시점부터 1시간 동안 유효합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#RequestJob
+    - https://developers.popbill.com/reference/easyfinbank/python/api/job#RequestJob
     """
     try:
         # 팝빌회원 사업자번호
@@ -301,7 +301,7 @@ def getJobState(request):
     거래 내역 조회(Search) 또는 거래 요약 정보 조회(Summary) 를 해야합니다.
     - 작업 상태(jobState)가 3(완료)이지만 수집 결과 코드(errorCode)가 1(수집성공)이 아닌 경우에는
     오류메시지(errorReason)로 수집 실패에 대한 원인을 파악할 수 있습니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetJobState
+    - https://developers.popbill.com/reference/easyfinbank/python/api/job#GetJobState
     """
     try:
         # 팝빌회원 사업자번호
@@ -320,7 +320,7 @@ def listActiveJob(request):
     """
     수집 요청(RequestJob API) 함수를 통해 반환 받은 작업아이디의 목록을 확인합니다.
     - 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
-    - https://docs.popbill.com/easyfinbank/python/api#ListActiveJob
+    - https://developers.popbill.com/reference/easyfinbank/python/api/job#ListActiveJob
     """
     try:
         # 팝빌회원 사업자번호
@@ -335,7 +335,7 @@ def listActiveJob(request):
 def search(request):
     """
     수집 상태 확인(getJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 계좌 거래 내역을 조회합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#Search
+    - https://developers.popbill.com/reference/easyfinbank/python/api/search#Search
     """
     try:
         # 팝빌회원 사업자번호
@@ -375,7 +375,7 @@ def summary(request):
     """
     수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 계좌 거래내역의 요약 정보를 조회합니다.
     - 요약 정보 : 입·출 금액 합계, 입·출 거래 건수
-    - https://docs.popbill.com/easyfinbank/python/api#Summary
+    - https://developers.popbill.com/reference/easyfinbank/python/api/search#Summary
     """
     try:
         # 팝빌회원 사업자번호
@@ -404,7 +404,7 @@ def summary(request):
 def saveMemo(request):
     """
     한 건의 거래 내역에 메모를 저장합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#SaveMemo
+    - https://developers.popbill.com/reference/easyfinbank/python/api/search#SaveMemo
     """
     try:
         # 팝빌회원 사업자번호
@@ -426,7 +426,7 @@ def getFlatRatePopUpURL(request):
     """
     정액제 서비스 신청 팝업 URL을 반환 합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetFlatRatePopUpURL
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetFlatRatePopUpURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -444,7 +444,7 @@ def getFlatRatePopUpURL(request):
 def getFlatRateState(request):
     """
     계좌조회 정액제 서비스 상태를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetFlatRateState
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetFlatRateState
     """
     try:
         # 팝빌회원 사업자번호
@@ -465,7 +465,7 @@ def getFlatRateState(request):
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetBalance
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -481,7 +481,7 @@ def getChargeURL(request):
     """
     연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetChargeURL
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -500,7 +500,7 @@ def getPaymentURL(request):
     """
     연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetPaymentURL
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetPaymentURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -519,7 +519,7 @@ def getUseHistoryURL(request):
     """
     연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetUseHistoryURL
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetUseHistoryURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -537,7 +537,7 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetPartnerBalance
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetPartnerBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -553,7 +553,7 @@ def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetPartnerURL
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetPartnerURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -571,7 +571,7 @@ def getPartnerURL(request):
 def getChargeInfo(request):
     """
     팝빌 계좌조회 API 서비스 과금정보를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetChargeInfo
+    - https://developers.popbill.com/reference/easyfinbank/python/api/point#GetChargeInfo
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -586,7 +586,7 @@ def getChargeInfo(request):
 def checkIsMember(request):
     """
     사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#CheckIsMember
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#CheckIsMember
     """
     try:
         # 팝빌회원 사업자번호
@@ -601,7 +601,7 @@ def checkIsMember(request):
 def checkID(request):
     """
     사용하고자 하는 아이디의 중복여부를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#CheckID
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -616,7 +616,7 @@ def checkID(request):
 def joinMember(request):
     """
     사용자를 연동회원으로 가입처리합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#JoinMember
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#JoinMember
     """
     try:
         # 회원정보
@@ -667,7 +667,7 @@ def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetAccessURL
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#GetAccessURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -685,7 +685,7 @@ def getAccessURL(request):
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetCorpInfo
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -700,7 +700,7 @@ def getCorpInfo(request):
 def updateCorpInfo(request):
     """
     연동회원사의 회사정보를 수정 합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#UpdateCorpInfo
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -734,7 +734,7 @@ def updateCorpInfo(request):
 def registContact(request):
     """
     연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#RegistContact
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#RegistContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -772,7 +772,7 @@ def registContact(request):
 def getContactInfo(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#GetContactInfo
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -790,7 +790,7 @@ def getContactInfo(request):
 def listContact(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#ListContact
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#ListContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -805,7 +805,7 @@ def listContact(request):
 def updateContact(request):
     """
     연동회원의 담당자 정보를 수정합니다.
-    - https://docs.popbill.com/easyfinbank/python/api#UpdateContact
+    - https://developers.popbill.com/reference/easyfinbank/python/api/member#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호

@@ -32,7 +32,7 @@ def checkSenderNumber(request):
     '''
     문자 발신번호 등록여부를 확인합니다.
     - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
-    - https://docs.popbill.com/message/python/api#CheckSenderNumber
+    - https://developers.popbill.com/reference/sms/python/api/sendnum#CheckSenderNumber
     '''
 
     try:
@@ -52,7 +52,7 @@ def getSenderNumberMgtURL(request):
     """
     발신번호를 등록하고 내역을 확인하는 문자 발신번호 관리 페이지 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/message/python/api#GetSenderNumberMgtURL
+    - https://developers.popbill.com/reference/sms/python/api/sendnum#GetSenderNumberMgtURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -70,7 +70,7 @@ def getSenderNumberMgtURL(request):
 def getSenderNumberList(request):
     """
     팝빌에 등록한 연동회원의 문자 발신번호 목록을 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetSenderNumberList
+    - https://developers.popbill.com/reference/sms/python/api/sendnum#GetSenderNumberList
     """
     try:
         # 팝빌회원 사업자번호
@@ -85,7 +85,7 @@ def getSenderNumberList(request):
 def sendSMS(request):
     """
     최대 90byte의 단문(SMS) 메시지 1건 전송을 팝빌에 접수합니다.
-    - https://docs.popbill.com/message/python/api#SendSMS
+    - https://developers.popbill.com/reference/sms/python/api/send#SendSMSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -132,7 +132,7 @@ def sendSMS_multi(request):
     """
     최대 90byte의 단문(SMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
     - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
-    - https://docs.popbill.com/message/python/api#SendSMS_Multi
+    - https://developers.popbill.com/reference/sms/python/api/send#SendSMSAll
     """
     try:
         # 팝빌회원 사업자번호
@@ -183,7 +183,7 @@ def sendSMS_multi(request):
 def sendLMS(request):
     """
     최대 2,000byte의 장문(LMS) 메시지 1건 전송을 팝빌에 접수합니다.
-    - https://docs.popbill.com/message/python/api#SendLMS
+    - https://developers.popbill.com/reference/sms/python/api/send#sendLMSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -233,7 +233,7 @@ def sendLMS_multi(request):
     """
     최대 2,000byte의 장문(LMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
     - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
-    - https://docs.popbill.com/message/python/api#SendLMS_Multi
+    - https://developers.popbill.com/reference/sms/python/api/send#SendLMSAll
     """
     try:
         # 팝빌회원 사업자번호
@@ -289,7 +289,7 @@ def sendMMS(request):
     """
     최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 1건 전송을 팝빌에 접수합니다.
     - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG, JPG), 가로/세로 1,000px 이하 권장
-    - https://docs.popbill.com/message/python/api#SendMMS
+    - https://developers.popbill.com/reference/sms/python/api/send#sendMMSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -344,7 +344,7 @@ def sendMMS_multi(request):
     최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
     - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG), 가로/세로 1,000px 이하 권장
     - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
-    - https://docs.popbill.com/message/python/api#SendMMS_Multi
+    - https://developers.popbill.com/reference/sms/python/api/send#SendMMSAll
     """
     try:
         # 팝빌회원 사업자번호
@@ -402,7 +402,7 @@ def sendMMS_multi(request):
 def sendXMS(request):
     """
     메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
-    - https://docs.popbill.com/message/python/api#SendXMS
+    - https://developers.popbill.com/reference/sms/python/api/send#sendXMSOne
     """
     try:
         # 팝빌회원 사업자번호
@@ -453,7 +453,7 @@ def sendXMS_multi(request):
     메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
     - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
     - 단문(SMS) = 90byte 이하의 메시지, 장문(LMS) = 2000byte 이하의 메시지.
-    - https://docs.popbill.com/message/python/api#SendXMS_Multi
+    - https://developers.popbill.com/reference/sms/python/api/send#SendXMSAll
     """
     try:
         # 팝빌회원 사업자번호
@@ -508,7 +508,7 @@ def sendXMS_multi(request):
 def cancelReserve(request):
     """
     팝빌에서 반환받은 접수번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
-    - https://docs.popbill.com/message/python/api#CancelReserve
+    - https://developers.popbill.com/reference/sms/python/api/send#CancelReserve
     """
     try:
         # 팝빌회원 사업자번호
@@ -526,7 +526,7 @@ def cancelReserve(request):
 def cancelReserveRN(request):
     """
     파트너가 할당한 전송요청 번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
-    - https://docs.popbill.com/message/python/api#CancelReserveRN
+    - https://developers.popbill.com/reference/sms/python/api/send#CancelReserveRN
     """
     try:
         # 팝빌회원 사업자번호
@@ -544,7 +544,7 @@ def cancelReserveRN(request):
 def cancelReservebyRCV(request):
     """
     팝빌에서 반환받은 접수번호와 수신번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
-    - https://docs.popbill.com/message/python/api#CancelReservebyRCV
+    - https://developers.popbill.com/reference/sms/python/api/send#CancelReservebyRCV
     """
     try:
         # 팝빌회원 사업자번호
@@ -564,7 +564,7 @@ def cancelReservebyRCV(request):
 def cancelReserveRNbyRCV(request):
     """
     파트너가 할당한 전송요청 번호와 수신번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
-    - https://docs.popbill.com/message/python/api#CancelReserveRNbyRCV
+    - https://developers.popbill.com/reference/sms/python/api/send#CancelReserveRNbyRCV
     """
     try:
         # 팝빌회원 사업자번호
@@ -584,7 +584,7 @@ def cancelReserveRNbyRCV(request):
 def getMessages(request):
     """
     팝빌에서 반환받은 접수번호를 통해 문자 전송상태 및 결과를 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetMessages
+    - https://developers.popbill.com/reference/sms/python/api/info#GetMessages
     """
     try:
         # 팝빌회원 사업자번호
@@ -602,7 +602,7 @@ def getMessages(request):
 def getMessagesRN(request):
     """
     파트너가 할당한 전송요청 번호를 통해 문자 전송상태 및 결과를 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetMessagesRN
+    - https://developers.popbill.com/reference/sms/python/api/info#GetMessagesRN
     """
     try:
         # 팝빌회원 사업자번호
@@ -621,7 +621,7 @@ def search(request):
     """
     검색조건을 사용하여 문자전송 내역을 조회합니다. (조회기간 단위 : 최대 2개월)
     - 문자 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
-    - https://docs.popbill.com/message/python/api#Search
+    - https://developers.popbill.com/reference/sms/python/api/info#Search
     """
     try:
         # 팝빌회원 사업자번호
@@ -682,7 +682,7 @@ def getSentListURL(request):
     """
     문자 전송내역 확인 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/message/python/api#GetSentListURL
+    - https://developers.popbill.com/reference/sms/python/api/info#GetSentListURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -700,7 +700,7 @@ def getSentListURL(request):
 def getAutoDenyList(request):
     """
     전용 080 번호에 등록된 수신거부 목록을 반환합니다.
-    - https://docs.popbill.com/message/python/api#GetAutoDenyList
+    - https://developers.popbill.com/reference/sms/python/api/info#GetAutoDenyList
     """
     try:
         # 팝빌회원 사업자번호
@@ -715,7 +715,7 @@ def getAutoDenyList(request):
 def getBalance(request):
     """
     연동회원의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetBalance
+    - https://developers.popbill.com/reference/sms/python/api/point#GetBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -731,7 +731,7 @@ def getChargeURL(request):
     """
     연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/message/python/api#GetChargeURL
+    - https://developers.popbill.com/reference/sms/python/api/point#GetChargeURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -750,7 +750,7 @@ def getPaymentURL(request):
     """
     연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/message/python/api#GetPaymentURL
+    - https://developers.popbill.com/reference/sms/python/api/point#GetPaymentURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -769,7 +769,7 @@ def getUseHistoryURL(request):
     """
     연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/message/python/api#GetUseHistoryURL
+    - https://developers.popbill.com/reference/sms/python/api/point#GetUseHistoryURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -787,7 +787,7 @@ def getUseHistoryURL(request):
 def getPartnerBalance(request):
     """
     파트너의 잔여포인트를 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetPartnerBalance
+    - https://developers.popbill.com/reference/sms/python/api/point#GetPartnerBalance
     """
     try:
         # 팝빌회원 사업자번호
@@ -803,7 +803,7 @@ def getPartnerURL(request):
     """
     파트너 포인트 충전 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/message/python/api#GetPartnerURL
+    - https://developers.popbill.com/reference/sms/python/api/point#GetPartnerURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -821,7 +821,7 @@ def getPartnerURL(request):
 def getUnitCost(request):
     """
     문자 전송시 과금되는 포인트 단가를 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetUnitCost
+    - https://developers.popbill.com/reference/sms/python/api/point#GetUnitCost
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -840,7 +840,7 @@ def getUnitCost(request):
 def getChargeInfo(request):
     """
     팝빌 문자 API 서비스 과금정보를 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetChargeInfo
+    - https://developers.popbill.com/reference/sms/python/api/point#GetChargeInfo
     """
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
@@ -859,7 +859,7 @@ def getChargeInfo(request):
 def checkIsMember(request):
     """
     사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-    - https://docs.popbill.com/message/python/api#CheckIsMember
+    - https://developers.popbill.com/reference/sms/python/api/member#CheckIsMember
     """
     try:
         # 팝빌회원 사업자번호
@@ -874,7 +874,7 @@ def checkIsMember(request):
 def checkID(request):
     """
     사용하고자 하는 아이디의 중복여부를 확인합니다.
-    - https://docs.popbill.com/message/python/api#CheckID
+    - https://developers.popbill.com/reference/sms/python/api/member#CheckID
     """
     try:
         # 중복확인할 아이디
@@ -889,7 +889,7 @@ def checkID(request):
 def joinMember(request):
     """
     사용자를 연동회원으로 가입처리합니다.
-    - https://docs.popbill.com/message/python/api#JoinMember
+    - https://developers.popbill.com/reference/sms/python/api/member#JoinMember
     """
     try:
         # 회원정보
@@ -940,7 +940,7 @@ def getAccessURL(request):
     """
     팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://docs.popbill.com/message/python/api#GetAccessURL
+    - https://developers.popbill.com/reference/sms/python/api/member#GetAccessURL
     """
     try:
         # 팝빌회원 사업자번호
@@ -958,7 +958,7 @@ def getAccessURL(request):
 def getCorpInfo(request):
     """
     연동회원의 회사정보를 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetCorpInfo
+    - https://developers.popbill.com/reference/sms/python/api/member#GetCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -973,7 +973,7 @@ def getCorpInfo(request):
 def updateCorpInfo(request):
     """
     연동회원사의 회사정보를 수정 합니다.
-    - https://docs.popbill.com/message/python/api#UpdateCorpInfo
+    - https://developers.popbill.com/reference/sms/python/api/member#UpdateCorpInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1007,7 +1007,7 @@ def updateCorpInfo(request):
 def registContact(request):
     """
     연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-    - https://docs.popbill.com/message/python/api#RegistContact
+    - https://developers.popbill.com/reference/sms/python/api/member#RegistContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -1045,7 +1045,7 @@ def registContact(request):
 def getContactInfo(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-    - https://docs.popbill.com/message/python/api#GetContactInfo
+    - https://developers.popbill.com/reference/sms/python/api/member#GetContactInfo
     """
     try:
         # 팝빌회원 사업자번호
@@ -1063,7 +1063,7 @@ def getContactInfo(request):
 def listContact(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-    - https://docs.popbill.com/message/python/api#ListContact
+    - https://developers.popbill.com/reference/sms/python/api/member#ListContact
     """
     try:
         # 팝빌회원 사업자번호
@@ -1078,7 +1078,7 @@ def listContact(request):
 def updateContact(request):
     """
     연동회원의 담당자 정보를 수정합니다.
-    - https://docs.popbill.com/message/python/api#UpdateContact
+    - https://developers.popbill.com/reference/sms/python/api/member#UpdateContact
     """
     try:
         # 팝빌회원 사업자번호
