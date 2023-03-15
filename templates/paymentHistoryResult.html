@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">포인트 결제내역 확인</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>{{ request.path }}</legend>
+            <ul>
+                <li>code (API 처리에 대한 응답코드) : {{response.code}}</li>
+                <li>total (총 검색결과 건수) : {{response.total}}</li>
+                <li>perPage (페이지당 검색개수) : {{response.perPage}}</li>
+                <li>pageNum (페이지 번호) : {{response.pageNum}}</li>
+                <li>pageCount (페이지 개수) : {{response.pageCount}}</li>
+
+                {% for paymentHistory in response.list %}
+                <fieldset class="fieldset2">
+                    <legend>paymentHistory (사용내역) [ {{ forloop.counter }} ]</legend>
+                    <ul>
+                        <li>productType (결제 내용) : {{paymentHistory.productType}}</li>
+                        <li>productName (정액제 상품명) : {{paymentHistory.productName}}</li>
+                        <li>settleType (결제유형) : {{paymentHistory.settleType}}</li>
+                        <li>settlerName (담당자명) : {{paymentHistory.settlerName}}</li>
+                        <li>settlerEmail (담당자메일) : {{paymentHistory.settlerEmail}}</li>
+                        <li>settleCost (결제금액) : {{paymentHistory.settleCost}}</li>
+                        <li>settlePoint (충전포인트) : {{paymentHistory.settlePoint}}</li>
+                        <li>settleState (결제상태) : {{paymentHistory.settleState}}</li>
+                        <li>regDT (등록일시) : {{paymentHistory.regDT}}</li>
+                        <li>stateDT (상태일시) : {{paymentHistory.stateDT}}</li>
+                    </ul>
+                </fieldset>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">무통장 입금신청</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>{{ request.path }}</legend>
+            <ul>
+                <li>code	(응답코드) : {{response.code}}</li>
+                <li>message	(응답메시지) : {{response.message}}</li>
+                <li>settleCode	(정산코드) : {{response.settleCode}}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

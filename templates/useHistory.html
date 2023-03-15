@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">무통장 입금신청</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>{{ request.path }}</legend>
+            <ul>
+                <li>itemCode (서비스코드) : {{response.itemCode}}</li>
+                <li>txType (포인트 증감 유형) : {{response.txType}}</li>
+                <li>txPoint (증감 포인트) : {{response.txPoint}}</li>
+                <li>balance (잔여 포인트) : {{response.balance}}</li>
+                <li>txDT (포인트 증감 일시) : {{response.txDT}}</li>
+                <li>userID (담당자 아이디) : {{response.userID}}</li>
+                <li>userName (담당자명) : {{response.userName}}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

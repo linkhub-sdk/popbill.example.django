@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">포인트 결제내역 확인</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>{{ request.path }}</legend>
+            <ul>
+                <li>code (API 처리에 대한 응답코드) : {{response.code}}</li>
+                <li>total (총 검색결과 건수) : {{response.total}}</li>
+                <li>perPage (페이지당 검색개수) : {{response.perPage}}</li>
+                <li>pageNum (페이지 번호) : {{response.pageNum}}</li>
+                <li>pageCount (페이지 개수) : {{response.pageCount}}</li>
+
+
+                {% for refundHistory in response.list %}
+                <fieldset class="fieldset2">
+                    <legend>RefundHistory (사용내역) [ {{ forloop.counter }} ]</legend>
+                    <ul>
+                        <li>reqDT (신청일시) : {{refundHistory.reqDT}}</li>
+                        <li>requestPoint (환불 신청포인트) : {{refundHistory.requestPoint}}</li>
+                        <li>accountBank (환불계좌 은행명) : {{refundHistory.accountBank}}</li>
+                        <li>accountNum (환불계좌번호) : {{refundHistory.accountNum}}</li>
+                        <li>accountName (환불계좌 예금주명) : {{refundHistory.accountName}}</li>
+                        <li>state (상태) : {{refundHistory.state}}</li>
+                        <li>reason (환불사유) : {{refundHistory.reason}}</li>
+                    </ul>
+                </fieldset>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

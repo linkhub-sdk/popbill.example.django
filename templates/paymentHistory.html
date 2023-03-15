@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">무통장 입금신청 정보확인</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>{{ request.path }}</legend>
+            <ul>
+                <li>productType (결제 내용) : {{response.productType}}</li>
+                <li>productName (정액제 상품명) : {{response.productName}}</li>
+                <li>settleType (결제유형) : {{response.settleType}}</li>
+                <li>settlerName (담당자명) : {{response.settlerName}}</li>
+                <li>settlerEmail (담당자메일) : {{response.settlerEmail}}</li>
+                <li>settleCost (결제금액) : {{response.settleCost}}</li>
+                <li>settlePoint (충전포인트) : {{response.settlePoint}}</li>
+                <li>settleState (결제상태) : {{response.settleState}}</li>
+                <li>regDT (등록일시) : {{response.regDT}}</li>
+                <li>stateDT (상태일시) : {{response.stateDT}}</li>
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}

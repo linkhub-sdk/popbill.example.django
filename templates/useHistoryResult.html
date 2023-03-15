@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div id="content">
+        <p class="heading1">포인트 결제내역 확인</p>
+        <br/>
+        <fieldset class="fieldset1">
+            <legend>{{ request.path }}</legend>
+            <ul>
+                <li>code (API 처리에 대한 응답코드) : {{response.code}}</li>
+                <li>total (총 검색결과 건수) : {{response.total}}</li>
+                <li>perPage (페이지당 검색개수) : {{response.perPage}}</li>
+                <li>pageNum (페이지 번호) : {{response.pageNum}}</li>
+                <li>pageCount (페이지 개수) : {{response.pageCount}}</li>
+
+                {% for useHistory in response.list %}
+                <fieldset class="fieldset2">
+                    <legend>useHistory (사용내역) [ {{ forloop.counter }} ]</legend>
+
+                    <ul>
+                        <li>itemCode (서비스코드) : {{useHistory.itemCode}}</li>
+                        <li>txType (포인트 증감 유형) : {{useHistory.txType}}</li>
+                        <li>txPoint (증감 포인트) : {{useHistory.txPoint}}</li>
+                        <li>balance (잔여 포인트) : {{useHistory.balance}}</li>
+                        <li>txDT (포인트 증감 일시) : {{useHistory.txDT}}</li>
+                        <li>userID (담당자 아이디) : {{useHistory.userID}}</li>
+                        <li>userName (담당자명) : {{useHistory.userName}}</li>
+                    </ul>
+                </fieldset>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    </div>
+{% endblock contents %}
