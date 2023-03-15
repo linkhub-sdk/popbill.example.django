@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import CashbillService, PopbillException, Cashbill, ContactInfo, CorpInfo, JoinForm
+from popbill import CashbillService, PopbillException, Cashbill, ContactInfo, CorpInfo, JoinForm, RefundForm
 
 from config import settings
 
@@ -248,7 +248,7 @@ def bulkSubmit(request):
                     # 발행시 알림문자 전송여부
                     # 문자전송시 포인트가 차감되며 전송실패시 환불처리됨.
                     smssendYN=False,
-                    
+
                     # 거래일시, 날짜(yyyyMMddHHmmss)
                     # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
                     tradeDT = "20221108000000"
@@ -397,7 +397,7 @@ def revokeRegistIssue_part(request):
 
         # 안내메일 제목, 공백처리시 기본양식으로 전송
         emailSubject = "메일제목 테스트"
-        
+
         # 거래일시, 날짜(yyyyMMddHHmmss)
         # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
         tradeDT = "20221108000000"
@@ -989,6 +989,110 @@ def getChargeInfo(request):
         return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def paymentRequest(request):
+    """
+        연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+        - https://developers.popbill.com/reference/cashbill/python/api/point#PaymentRequest
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = cashbillService.paymentRequest(CorpNum, UserID)
+        return render(request, 'paymentResponse.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getSettleResult(request):
+    """
+        연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+        - https://developers.popbill.com/reference/cashbill/python/api/point#GetSettleResult
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = cashbillService.getSettleResult(CorpNum, UserID)
+
+        return render(request, 'paymentHistory.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getPaymentHistory(request):
+    """
+        연동회원의 포인트 결제내역을 확인합니다.
+        - https://developers.popbill.com/reference/cashbill/python/api/point#GetPaymentHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        SDate	= "20230101"
+        EDate =	"20230110"
+        Page	= 1
+        PerPage	= 500
+        UserID = settings.testUserID
+
+        response = cashbillService.getPaymentHistory(CorpNum, SDate,EDate,Page,PerPage, UserID)
+        return render(request, 'paymentHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getUseHistory(request):
+    """
+        연동회원의 포인트 사용내역을 확인합니다.
+        - https://developers.popbill.com/reference/cashbill/python/api/point#GetUseHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        SDate	= "20230101"
+        EDate =	"20230110"
+        Page	= 1
+        PerPage	= 500
+        Order	= "D"
+        UserID = settings.testUserID
+        response =        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = cashbillService.getUseHistory(CorpNum,SDate,EDate,Page,PerPage,Order, UserID)
+        return render(request, 'useHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def refund(request):
+    """
+        연동회원 포인트를 환불 신청합니다.
+        - https://developers.popbill.com/reference/cashbill/python/api/point#Refund
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        refundForm = RefundForm(
+            contactname="환불신청테스트",
+            tel="01077777777",
+            requestpoint="10",
+            accountbank="국민",
+            accountnum="123123123-123",
+            accountname="예금주",
+            reason="테스트 환불 사유",
+        )
+        UserID = settings.testUserID
+        response = cashbillService.refund(CorpNum, refundForm, UserID)
+        return render(request, 'response.html', {'response':response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getRefundHistory(request):
+    """
+        연동회원의 포인트 환불신청내역을 확인합니다.
+        - - https://developers.popbill.com/reference/cashbill/python/api/point#GetRefundHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        Page = 1
+        PerPage = 500
+        UserID = settings.testUserID
+
+        response = cashbillService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+        return render(request, 'refundHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
 
 def checkIsMember(request):
     """

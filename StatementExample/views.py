@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import StatementService, PopbillException, Statement, StatementDetail, JoinForm, ContactInfo, CorpInfo
+from popbill import StatementService, PopbillException, Statement, StatementDetail, JoinForm, ContactInfo, CorpInfo, RefundForm
 
 from config import settings
 
@@ -51,7 +51,7 @@ def checkMgtKeyInUse(request):
 def registIssue(request):
     """
     작성된 전자명세서 데이터를 팝빌에 저장과 동시에 발행하여, "발행완료" 상태로 처리합니다.
-    - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 
+    - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해
         전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
     - 전자명세서 발행 함수 호출시 수신자에게 발행 안내 메일이 발송됩니다.
     - https://developers.popbill.com/reference/statement/python/api/issue#RegistIssue
@@ -610,7 +610,7 @@ def update(request):
 def issue(request):
     """
     "임시저장" 상태의 전자명세서를 발행하여, "발행완료" 상태로 처리합니다.
-    - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 
+    - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해
         전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
     - 전자명세서 발행 함수 호출시 수신자에게 발행 안내 메일이 발송됩니다.
     - https://developers.popbill.com/reference/statement/python/api/issue#Issue
@@ -1599,6 +1599,110 @@ def getChargeInfo(request):
         return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def paymentRequest(request):
+    """
+        연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+        - https://developers.popbill.com/reference/statement/python/api/point#PaymentRequest
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = statementService.paymentRequest(CorpNum, UserID)
+        return render(request, 'paymentResponse.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getSettleResult(request):
+    """
+        연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+        - https://developers.popbill.com/reference/statement/python/api/point#GetSettleResult
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = statementService.getSettleResult(CorpNum, UserID)
+
+        return render(request, 'paymentHistory.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getPaymentHistory(request):
+    """
+        연동회원의 포인트 결제내역을 확인합니다.
+        - https://developers.popbill.com/reference/statement/python/api/point#GetPaymentHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        SDate	= "20230101"
+        EDate =	"20230110"
+        Page	= 1
+        PerPage	= 500
+        UserID = settings.testUserID
+
+        response = statementService.getPaymentHistory(CorpNum, SDate,EDate,Page,PerPage, UserID)
+        return render(request, 'paymentHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getUseHistory(request):
+    """
+        연동회원의 포인트 사용내역을 확인합니다.
+        - https://developers.popbill.com/reference/statement/python/api/point#GetUseHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        SDate	= "20230101"
+        EDate =	"20230110"
+        Page	= 1
+        PerPage	= 500
+        Order	= "D"
+        UserID = settings.testUserID
+        response =        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = statementService.getUseHistory(CorpNum,SDate,EDate,Page,PerPage,Order, UserID)
+        return render(request, 'useHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def refund(request):
+    """
+        연동회원 포인트를 환불 신청합니다.
+        - https://developers.popbill.com/reference/statement/python/api/point#Refund
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        refundForm = RefundForm(
+            contactname="환불신청테스트",
+            tel="01077777777",
+            requestpoint="10",
+            accountbank="국민",
+            accountnum="123123123-123",
+            accountname="예금주",
+            reason="테스트 환불 사유",
+        )
+        UserID = settings.testUserID
+        response = statementService.refund(CorpNum, refundForm, UserID)
+        return render(request, 'response.html', {'response':response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getRefundHistory(request):
+    """
+        연동회원의 포인트 환불신청내역을 확인합니다.
+        - - https://developers.popbill.com/reference/statement/python/api/point#GetRefundHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        Page = 1
+        PerPage = 500
+        UserID = settings.testUserID
+
+        response = statementService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+        return render(request, 'refundHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
 
 def checkIsMember(request):
     """

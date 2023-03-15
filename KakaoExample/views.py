@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import PopbillException, ContactInfo, CorpInfo, JoinForm, KakaoService, KakaoReceiver, \
-    KakaoButton
+    KakaoButton, RefundForm
 
 from config import settings
 
@@ -1315,6 +1315,110 @@ def getChargeInfo(request):
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
 
+def paymentRequest(request):
+    """
+        연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+        - https://developers.popbill.com/reference/kakaotalk/python/api/point#PaymentRequest
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = kakaoService.paymentRequest(CorpNum, UserID)
+        return render(request, 'paymentResponse.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getSettleResult(request):
+    """
+        연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+        - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetSettleResult
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = kakaoService.getSettleResult(CorpNum, UserID)
+
+        return render(request, 'paymentHistory.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getPaymentHistory(request):
+    """
+        연동회원의 포인트 결제내역을 확인합니다.
+        - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetPaymentHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        SDate	= "20230101"
+        EDate =	"20230110"
+        Page	= 1
+        PerPage	= 500
+        UserID = settings.testUserID
+
+        response = kakaoService.getPaymentHistory(CorpNum, SDate,EDate,Page,PerPage, UserID)
+        return render(request, 'paymentHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getUseHistory(request):
+    """
+        연동회원의 포인트 사용내역을 확인합니다.
+        - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetUseHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        SDate	= "20230101"
+        EDate =	"20230110"
+        Page	= 1
+        PerPage	= 500
+        Order	= "D"
+        UserID = settings.testUserID
+        response =        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = kakaoService.getUseHistory(CorpNum,SDate,EDate,Page,PerPage,Order, UserID)
+        return render(request, 'useHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def refund(request):
+    """
+        연동회원 포인트를 환불 신청합니다.
+        - https://developers.popbill.com/reference/kakaotalk/python/api/point#Refund
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        refundForm = RefundForm(
+            contactname="환불신청테스트",
+            tel="01077777777",
+            requestpoint="10",
+            accountbank="국민",
+            accountnum="123123123-123",
+            accountname="예금주",
+            reason="테스트 환불 사유",
+        )
+        UserID = settings.testUserID
+        response = kakaoService.refund(CorpNum, refundForm, UserID)
+        return render(request, 'response.html', {'response':response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getRefundHistory(request):
+    """
+        연동회원의 포인트 환불신청내역을 확인합니다.
+        - - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetRefundHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        Page = 1
+        PerPage = 500
+        UserID = settings.testUserID
+
+        response = kakaoService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+        return render(request, 'refundHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+
 def checkIsMember(request):
     """
     사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
@@ -1570,3 +1674,34 @@ def updateContact(request):
         return render(request, 'response.html', {'code': response.code, 'message': response.message})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def cancelReservebyRCV(request):
+    """
+    팝빌에서 반환받은 접수번호로 접수 건을 식별하여 수신번호에 예약된 카카오톡을 전송 취소합니다. (예약시간 10분 전까지 가능)
+    - https://developers.popbill.com/reference/kakaotalk/java/api/send#CancelReservebyRCV
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        receiptNum=""
+        receiveNum=""
+        UserID = settings.testUserID
+        response = kakaoService.CancelReservebyRCV(CorpNum,receiptNum,receiveNum,UserID )
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def cancelReserveRNbyRCV(request):
+    """
+        파트너가 할당한 전송 요청번호로 접수 건을 식별하여 수신번호에 예약된 카카오톡을 전송 취소합니다. (예약시간 10분 전까지 가능)
+
+        - https://developers.popbill.com/reference/kakaotalk/java/api/send#CancelReserveRNbyRCV
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        requestNum = ""
+        receiveNum = ""
+        UserID = settings.testUserID
+        response = kakaoService.CancelReserveRNbyRCV(CorpNum,requestNum,receiveNum,UserID )
+        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})

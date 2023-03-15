@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^SendFMS_multi$', views.sendFMS_multi, name='SendFMS_multi'),
     url(r'^CancelReserve$', views.cancelReserve, name='CancelReserve'),
     url(r'^CancelReserveRN$', views.cancelReserveRN, name='CancelReserveRN'),
+    url(r'^CancelReservebyRCV$', views.cancelReservebyRCV, name='CancelReservebyRCV'),
+    url(r'^CancelReserveRNbyRCV$', views.cancelReserveRNbyRCV, name='CancelReserveRNbyRCV'),
 
     # 정보확인
     url(r'^GetMessages$', views.getMessages, name='GetMessages'),
@@ -41,14 +43,20 @@ urlpatterns = [
     url(r'^GetSentListURL', views.getSentListURL, name='GetSentListURL'),
 
     # 포인트 관리
-    url(r'^GetBalance$', views.getBalance, name='GetBalance'),
-    url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
-    url(r'^GetPaymentURL', views.getPaymentURL, name='GetPaymentURL'),
-    url(r'^GetUseHistoryURL', views.getUseHistoryURL, name='GetUseHistoryURL'),
-    url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
-    url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
     url(r'^GetUnitCost$', views.getUnitCost, name='GetUnitCost'),
     url(r'^GetChargeInfo$', views.getChargeInfo, name='GetChargeInfo'),
+    url(r'^GetBalance$', views.getBalance, name='GetBalance'),
+    url(r'^GetChargeURL', views.getChargeURL, name='GetChargeURL'),
+    url(r'^PaymentRequest$', views.paymentRequest, name='PaymentRequest'),
+    url(r'^GetSettleResult$', views.getSettleResult, name='GetSettleResult'),
+    url(r'^GetPaymentHistory$', views.getPaymentHistory, name='GetPaymentHistory'),
+    url(r'^GetPaymentURL', views.getPaymentURL, name='GetPaymentURL'),
+    url(r'^GetUseHistory$', views.getUseHistory, name='GetUseHistory'),
+    url(r'^GetUseHistoryURL', views.getUseHistoryURL, name='GetUseHistoryURL'),
+    url(r'^Refund$', views.refund, name='Refund'),
+    url(r'^GetRefundHistory$', views.getRefundHistory, name='GetRefundHistory'),
+    url(r'^GetPartnerBalance$', views.getPartnerBalance, name='GetPartnerBalance'),
+    url(r'^GetPartnerURL$', views.getPartnerURL, name='GetPartnerURL'),
 
     # 회원정보
     url(r'^CheckIsMember$', views.checkIsMember, name='CheckIsMember'),

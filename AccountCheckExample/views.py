@@ -215,7 +215,7 @@ def getChargeInfo(request):
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        
+
         # 서비스 유형, 계좌성명조회 - 성명 , 계좌실명조회 - 실명
         serviceType = "성명"
 
@@ -224,6 +224,110 @@ def getChargeInfo(request):
         return render(request, 'getChargeInfo.html', {'response': response})
     except PopbillException as PE:
         return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+
+def paymentRequest(request):
+    """
+        연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+        - https://developers.popbill.com/reference/accountcheck/python/api/point#PaymentRequest
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = accountCheckService.paymentRequest(CorpNum, UserID)
+        return render(request, 'paymentResponse.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getSettleResult(request):
+    """
+        연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+        - https://developers.popbill.com/reference/accountcheck/python/api/point#GetSettleResult
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = accountCheckService.getSettleResult(CorpNum, UserID)
+
+        return render(request, 'paymentHistory.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getPaymentHistory(request):
+    """
+        연동회원의 포인트 결제내역을 확인합니다.
+        - https://developers.popbill.com/reference/accountcheck/python/api/point#GetPaymentHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        SDate	= "20230101"
+        EDate =	"20230110"
+        Page	= 1
+        PerPage	= 500
+        UserID = settings.testUserID
+
+        response = accountCheckService.getPaymentHistory(CorpNum, SDate,EDate,Page,PerPage, UserID)
+        return render(request, 'paymentHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getUseHistory(request):
+    """
+        연동회원의 포인트 사용내역을 확인합니다.
+        - https://developers.popbill.com/reference/accountcheck/python/api/point#GetUseHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        SDate	= "20230101"
+        EDate =	"20230110"
+        Page	= 1
+        PerPage	= 500
+        Order	= "D"
+        UserID = settings.testUserID
+        response =        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+        response = accountCheckService.getUseHistory(CorpNum,SDate,EDate,Page,PerPage,Order, UserID)
+        return render(request, 'useHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def refund(request):
+    """
+        연동회원 포인트를 환불 신청합니다.
+        - https://developers.popbill.com/reference/accountcheck/python/api/point#Refund
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        refundForm = RefundForm(
+            contactname="환불신청테스트",
+            tel="01077777777",
+            requestpoint="10",
+            accountbank="국민",
+            accountnum="123123123-123",
+            accountname="예금주",
+            reason="테스트 환불 사유",
+        )
+        UserID = settings.testUserID
+        response = accountCheckService.refund(CorpNum, refundForm, UserID)
+        return render(request, 'response.html', {'response':response.code, 'message': response.message})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
+def getRefundHistory(request):
+    """
+        연동회원의 포인트 환불신청내역을 확인합니다.
+        - - https://developers.popbill.com/reference/accountcheck/python/api/point#GetRefundHistory
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        Page = 1
+        PerPage = 500
+        UserID = settings.testUserID
+
+        response = accountCheckService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+        return render(request, 'refundHistoryResult.html', {'response':response})
+    except PopbillException as PE:
+        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+
 
 def checkIsMember(request):
     """
