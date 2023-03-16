@@ -8,7 +8,7 @@ popbill.sdk.example.django
 * requirements
 
   * Python 2.7+
-  * Django 1.11+
+  * Django 2.2+
   * popbill [ https://github.com/linkhub-sdk/popbill.py ]
 
 * install pip by
@@ -37,7 +37,7 @@ how to test ?
 
 연동 API 목차
 ------------------------------
-* 전자세금계산서 API 연동가이드 `<https://linkhub.tistory.com/146/>`_
+* 전자세금계산서 API 연동가이드
 * 현금영수증 API
 * 전자명세서 API
 * 홈택스 전자(세금)계산서 연계 API
