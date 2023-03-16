@@ -1,2 +1,2 @@
 popbill==1.59.2
-django==1.11.29
+django==2.2.28
