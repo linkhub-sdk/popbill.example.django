@@ -1,7 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import TaxinvoiceService, PopbillException, Taxinvoice, TaxinvoiceDetail, Contact, ContactInfo, JoinForm, \
-    CorpInfo,RefundForm
+from popbill import (
+    Contact,
+    ContactInfo,
+    CorpInfo,
+    JoinForm,
+    PopbillException,
+    RefundForm,
+    Taxinvoice,
+    TaxinvoiceDetail,
+    TaxinvoiceService,
+)
 
 from config import settings
 
@@ -17,15 +26,17 @@ taxinvoiceService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
 taxinvoiceService.UseStaticIP = settings.UseStaticIP
 
-#로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, 권장(True)
 taxinvoiceService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 # 전자세금계산서 발행을 위해 인증서를 등록합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
 # 1. 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [인증서 관리] 메뉴에서 등록
 # 2. 인증서 등록 팝업 URL (getTaxCertURL API)을 이용하여 등록
 
+
 def index(request):
-    return render(request, 'Taxinvoice/Index.html', {})
+    return render(request, "Taxinvoice/Index.html", {})
+
 
 def checkMgtKeyInUse(request):
     """
@@ -50,9 +61,12 @@ def checkMgtKeyInUse(request):
         else:
             result = "미사용중"
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def registIssue(request):
     """
@@ -96,185 +110,134 @@ def registIssue(request):
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
-
             # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
             writeDate="20220805",
-
             # 과금방향, {정과금} 기재
             chargeDirection="정과금",
-
             # 발행형태, {정발행, 위수탁} 중 기재
             issueType="정발행",
-
             # {영수, 청구, 없음} 중 기재
             purposeType="영수",
-
             # 과세형태, {과세, 영세, 면세} 중 기재
             taxType="과세",
-
             ######################################################################
             #                             공급자 정보
             ######################################################################
-
             # 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
-
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
-
             # 공급자 상호
             invoicerCorpName="공급자 상호",
-
             # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
             # 사업자별로 중복되지 않도록 구성
             invoicerMgtKey=MgtKey,
-
             # 공급자 대표자 성명
             invoicerCEOName="공급자 대표자 성명",
-
             # 공급자 주소
             invoicerAddr="공급자 주소",
-
             # 공급자 종목
             invoicerBizClass="공급자 종목",
-
             # 공급자 업태
             invoicerBizType="공급자 업태",
-
             # 공급자 담당자 성명
             invoicerContactName="공급자 담당자명",
-
             # 공급자 담당자 메일주소
             invoicerEmail="",
-
             # 공급자 담당자 연락처
             invoicerTEL="",
-
             # 공급자 담당자 휴대폰 번호
-            invoicerHP='',
-
+            invoicerHP="",
             # 발행 안내 문자 전송여부 (true / false 중 택 1)
             # └ true = 전송 , false = 미전송
             # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
             # - 전송 시 포인트 차감되며, 전송실패시 환불처리
             invoicerSMSSendYN=False,
-
             ######################################################################
             #                            공급받는자 정보
             ######################################################################
-
             # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
             invoiceeType="사업자",
-
             # 공급받는자 사업자번호
             # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
             # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
             # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
             invoiceeCorpNum="8888888888",
-
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoiceeTaxRegID=None,
-
             # 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
-
             # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoiceeMgtKey=None,
-
             # 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
-
             # 공급받는자 주소
             invoiceeAddr="공급받는자 주소",
-
             # 공급받는자 종목
             invoiceeBizClass="공급받는자 종목",
-
             # 공급받는자 업태
             invoiceeBizType="공급받는자 업태",
-
             # 공급받는자 담당자 성명
             invoiceeContactName1="공급받는자 담당자",
-
             # 공급받는자 담당자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             invoiceeEmail1="",
-
             # 공급받는자 연락처
             invoiceeTEL1="",
-
             # 공급받는자 담당자 휴대폰번호
             invoiceeHP1="",
-
             # 공급받는자 담당자 팩스번호
             invoiceeFAX1="",
-
             ######################################################################
             #                          세금계산서 기재정보
             ######################################################################
-
             # 공급가액 합계
             supplyCostTotal="100000",
-
             # 세액 합계
             taxTotal="10000",
-
             # 합계금액, 공급가액 합계 + 세액 합계
             totalAmount="110000",
-
             # 기재상 '일련번호' 항목
             serialNum="123",
-
             # 기재상 '현금' 항목
             cash=None,
-
             # 기재상 '수표' 항목
             chkBill=None,
-
             # 기재상 '어음' 항목
             note=None,
-
             # 기재상 '외상미수금' 항목
             credit="",
-
             # 비고
             # {invoiceeType}이 "외국인" 이면 remark1 필수
             # - 외국인 등록번호 또는 여권번호 입력
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-
             # 기재상 '권' 항목, 최대값 32767
             # 미기재시 kwon=None,
             kwon=1,
-
             # 기재상 '호' 항목, 최대값 32767
             # 미기재시 ho=None,
             ho=2,
-
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
-
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
-
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
             # - [참고] 수정세금계산서 작성방법 안내 - https://developers.popbill.com/guide/taxinvoice/python/introduction/modified-taxinvoice
             ######################################################################
-
             # 수정세금계산서 정보 수정사유별로 1~6중 선택기재
             # 수정사유코드
             modifyCode=None,
-
             # 원본세금계산서 국세청승인번호 기재
-            orgNTSConfirmNum=None
+            orgNTSConfirmNum=None,
         )
 
         ######################################################################
@@ -295,7 +258,7 @@ def registIssue(request):
                 unitCost="50000",  # 단가
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
-                remark="품목비고"  # 비고
+                remark="품목비고",  # 비고
             )
         )
 
@@ -309,7 +272,7 @@ def registIssue(request):
                 unitCost="50000",  # 단가
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
-                remark="품목비고"  # 비고
+                remark="품목비고",  # 비고
             )
         )
 
@@ -326,7 +289,7 @@ def registIssue(request):
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
-                email="test1@test.com"  # 메일주소
+                email="test1@test.com",  # 메일주소
             )
         )
 
@@ -334,16 +297,34 @@ def registIssue(request):
             Contact(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
-                email="test1@test.com"  # 메일주소
+                email="test1@test.com",  # 메일주소
             )
         )
 
-        response = taxinvoiceService.registIssue(CorpNum, taxinvoice, writeSpecification,
-                                                    forceIssue, dealInvoiceMgtKey, memo, emailSubject)
+        response = taxinvoiceService.registIssue(
+            CorpNum,
+            taxinvoice,
+            writeSpecification,
+            forceIssue,
+            dealInvoiceMgtKey,
+            memo,
+            emailSubject,
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'ntsConfirmNum': response.ntsConfirmNum})
+        return render(
+            request,
+            "response.html",
+            {
+                "code": response.code,
+                "message": response.message,
+                "ntsConfirmNum": response.ntsConfirmNum,
+            },
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def bulkSubmit(request):
     """
@@ -356,9 +337,9 @@ def bulkSubmit(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        #제출아이디
-        #최대 36자리 영문, 숫자, '-' 조합으로 구성
-        submitID = 'PYTHON-DJANGO-BULK'
+        # 제출아이디
+        # 최대 36자리 영문, 숫자, '-' 조합으로 구성
+        submitID = "PYTHON-DJANGO-BULK"
 
         # 지연발행 강제여부  (true / false 중 택 1)
         # └ true = 가능 , false = 불가능
@@ -368,204 +349,168 @@ def bulkSubmit(request):
         #   true로 선언하여 발행(Issue API)를 호출하시면 됩니다.
         forceIssue = False
 
-        #세금계산서 객체정보 리스트
+        # 세금계산서 객체정보 리스트
         taxinvoicelist = []
-        for i in range(0,20):
+        for i in range(0, 20):
             taxinvoicelist.append(
                 Taxinvoice(
                     # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
                     writeDate="20220805",
-
                     # 과금방향, [정과금(공급자)] 기재
                     chargeDirection="정과금",
-
                     # 발행형태, {정발행, 위수탁} 중 기재
                     issueType="정발행",
-
                     # {영수, 청구, 없음} 중 기재
                     purposeType="영수",
-
                     # 과세형태, {과세, 영세, 면세} 중 기재
                     taxType="과세",
-
                     ######################################################################
                     #                             공급자 정보
                     ######################################################################
-
                     # 공급자 사업자번호 , '-' 없이 10자리 기재.
                     invoicerCorpNum=settings.testCorpNum,
-
                     # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
                     invoicerTaxRegID=None,
-
                     # 공급자 상호
                     invoicerCorpName="공급자 상호",
-
                     # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
                     # 사업자별로 중복되지 않도록 구성
-                    invoicerMgtKey=submitID + '-' + str(i),
-
+                    invoicerMgtKey=submitID + "-" + str(i),
                     # 공급자 대표자 성명
                     invoicerCEOName="공급자 대표자 성명",
-
                     # 공급자 주소
                     invoicerAddr="공급자 주소",
-
                     # 공급자 종목
                     invoicerBizClass="공급자 종목",
-
                     # 공급자 업태
                     invoicerBizType="공급자 업태",
-
                     # 공급자 담당자 성명
                     invoicerContactName="공급자 담당자명",
-
                     # 공급자 담당자 메일주소
                     invoicerEmail="",
-
                     # 공급자 담당자 연락처
                     invoicerTEL="",
-
                     # 공급자 담당자 휴대폰 번호
-                    invoicerHP='',
-
+                    invoicerHP="",
                     # 발행 안내 문자 전송여부 (true / false 중 택 1)
                     # └ true = 전송 , false = 미전송
                     # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
                     # - 전송 시 포인트 차감되며, 전송실패시 환불처리
                     invoicerSMSSendYN=False,
-
                     ######################################################################
                     #                            공급받는자 정보
                     ######################################################################
-
                     # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
                     invoiceeType="사업자",
-
                     # 공급받는자 사업자번호
                     # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
                     # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
                     # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
                     invoiceeCorpNum="8888888888",
-
                     # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
                     invoiceeTaxRegID=None,
-
                     # 공급받는자 상호
                     invoiceeCorpName="BulkTEST 상호",
-
                     # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
                     invoiceeMgtKey=None,
-
                     # 공급받는자 대표자 성명
                     invoiceeCEOName="BulkTEST 대표자 성명",
-
                     # 공급받는자 주소
                     invoiceeAddr="BulkTEST 주소",
-
                     # 공급받는자 종목
                     invoiceeBizClass="BulkTEST 종목",
-
                     # 공급받는자 업태
                     invoiceeBizType="BulkTEST 업태",
-
                     # 공급받는자 담당자 성명
                     invoiceeContactName1="BulkTEST 담당자",
-
                     # 공급받는자 담당자 메일주소
                     # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
                     # 실제 거래처의 메일주소가 기재되지 않도록 주의
                     invoiceeEmail1="",
-
                     # 공급받는자 연락처
                     invoiceeTEL1="",
-
                     # 공급받는자 담당자 휴대폰번호
                     invoiceeHP1="",
-
                     # 공급받는자 담당자 팩스번호
                     invoiceeFAX1="",
-
                     ######################################################################
                     #                          세금계산서 기재정보
                     ######################################################################
-
                     # 공급가액 합계
                     supplyCostTotal="100000",
-
                     # 세액 합계
                     taxTotal="10000",
-
                     # 합계금액, 공급가액 합계 + 세액 합계
                     totalAmount="110000",
-
                     # 기재상 '일련번호' 항목
                     serialNum="123",
-
                     # 기재상 '현금' 항목
                     cash=None,
-
                     # 기재상 '수표' 항목
                     chkBill=None,
-
                     # 기재상 '어음' 항목
                     note=None,
-
                     # 기재상 '외상미수금' 항목
                     credit="",
-
                     # 비고
                     # {invoiceeType}이 "외국인" 이면 remark1 필수
                     # - 외국인 등록번호 또는 여권번호 입력
                     remark1="비고1",
                     remark2="비고2",
                     remark3="비고3",
-
                     # 기재상 '권' 항목, 최대값 32767
                     # 미기재시 kwon=None,
                     kwon=1,
-
                     # 기재상 '호' 항목, 최대값 32767
                     # 미기재시 ho=None,
                     ho=2,
-
                     # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
                     # └ true = 첨부 , false = 미첨부(기본값)
                     # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
                     businessLicenseYN=False,
-
                     # 통장사본 이미지 첨부여부  (true / false 중 택 1)
                     # └ true = 첨부 , false = 미첨부(기본값)
                     # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
                     bankBookYN=False,
-
                     ######################################################################
                     #                           상세항목(품목) 정보
                     ######################################################################
-
                     # 상세항목 0~99개 까지 작성가능.
                     # 일련번호 (serialNum) 는 1부터 99까지 순차기재.
                     detailList=[
                         TaxinvoiceDetail(
                             serialNum=1,
-                            purchaseDT='20220805',
+                            purchaseDT="20220805",
                             itemName="품목1",
-                            spec='규격',
+                            spec="규격",
                             qty=1,
-                            unitCost='100000',
-                            supplyCost='100000',
-                            tax='10000',
-                            remark='품목비고'
+                            unitCost="100000",
+                            supplyCost="100000",
+                            tax="10000",
+                            remark="품목비고",
                         )
-                    ]
+                    ],
                 )
             )
 
-        bulkResponse = taxinvoiceService.bulkSubmit(CorpNum, submitID, taxinvoicelist, forceIssue)
+        bulkResponse = taxinvoiceService.bulkSubmit(
+            CorpNum, submitID, taxinvoicelist, forceIssue
+        )
 
-        return render(request, 'Taxinvoice/BulkResponse.html', {'code' : bulkResponse.code, 'message' : bulkResponse.message, 'receiptID' : bulkResponse.receiptID})
+        return render(
+            request,
+            "Taxinvoice/BulkResponse.html",
+            {
+                "code": bulkResponse.code,
+                "message": bulkResponse.message,
+                "receiptID": bulkResponse.receiptID,
+            },
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getBulkResult(request):
     """
@@ -577,15 +522,22 @@ def getBulkResult(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        #제출아이디
-        #최대 36자리 영문, 숫자, '-' 조합으로 구성
-        submitID = 'PYTHON-DJANGO-BULK'
+        # 제출아이디
+        # 최대 36자리 영문, 숫자, '-' 조합으로 구성
+        submitID = "PYTHON-DJANGO-BULK"
 
         bulkTaxinvoiceResult = taxinvoiceService.getBulkResult(CorpNum, submitID)
 
-        return render(request, 'Taxinvoice/BulkResult.html', {'bulkTaxinvoiceResult' : bulkTaxinvoiceResult})
+        return render(
+            request,
+            "Taxinvoice/BulkResult.html",
+            {"bulkTaxinvoiceResult": bulkTaxinvoiceResult},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def register(request):
     """
@@ -612,190 +564,138 @@ def register(request):
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
-
             # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
             writeDate="20220805",
-
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
-
             # 발행형태, {정발행, 역발행, 위수탁} 중 기재
             issueType="정발행",
-
             # {영수, 청구, 없음} 중 기재
             purposeType="영수",
-
             # 과세형태, {과세, 영세, 면세} 중 기재
             taxType="과세",
-
             ######################################################################
             #                             공급자 정보
             ######################################################################
-
             # 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
-
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
-
             # 공급자 상호
             invoicerCorpName="공급자 상호",
-
             # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_')조합으로 사업자별로 중복되지 않도록 구성
             invoicerMgtKey=MgtKey,
-
             # 공급자 대표자 성명
             invoicerCEOName="공급자 대표자 성명",
-
             # 공급자 주소
             invoicerAddr="공급자 주소",
-
             # 공급자 종목
             invoicerBizClass="공급자 종목",
-
             # 공급자 업태
             invoicerBizType="공급자 업태",
-
             # 공급자 담당자 성명
             invoicerContactName="공급자 담당자명",
-
             # 공급자 담당자 메일주소
             invoicerEmail="",
-
             # 공급자 담당자 연락처
             invoicerTEL="",
-
             # 공급자 담당자 휴대폰 번호
-            invoicerHP='',
-
+            invoicerHP="",
             # 발행 안내 문자 전송여부 (true / false 중 택 1)
             # └ true = 전송 , false = 미전송
             # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
             # - 전송 시 포인트 차감되며, 전송실패시 환불처리
             invoicerSMSSendYN=False,
-
             ######################################################################
             #                            공급받는자 정보
             ######################################################################
-
             # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
             invoiceeType="사업자",
-
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoiceeTaxRegID=None,
-
             # 공급받는자 사업자번호
             # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
             # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
             # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
             invoiceeCorpNum="8888888888",
-
             # 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
-
             # [역발행시 필수] 공급받는자 문서번호, , 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoiceeMgtKey=None,
-
             # 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
-
             # 공급받는자 주소
             invoiceeAddr="공급받는자 주소",
-
             # 공급받는자 종목
             invoiceeBizClass="공급받는자 종목",
-
             # 공급받는자 업태
             invoiceeBizType="공급받는자 업태",
-
             # 공급받는자 담당자 성명
             invoiceeContactName1="공급받는자 담당자",
-
             # 공급받는자 담당자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             invoiceeEmail1="",
-
             # 공급받는자 연락처
             invoiceeTEL1="",
-
             # 공급받는자 담당자 휴대폰번호
             invoiceeHP1="",
-
             # 공급받는자 담당자 팩스번호
             invoiceeFAX1="",
-
             # 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
             # - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
             # - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
             invoiceeSMSSendYN=False,
-
             ######################################################################
             #                          세금계산서 기재정보
             ######################################################################
-
             # 공급가액 합계
             supplyCostTotal="100000",
-
             # 세액 합계
             taxTotal="10000",
-
             # 합계금액, 공급가액 합계 + 세액 합계
             totalAmount="110000",
-
             # 기재상 '일련번호' 항목
             serialNum="123",
-
             # 기재상 '현금' 항목
             cash=None,
-
             # 기재상 '수표' 항목
             chkBill=None,
-
             # 기재상 '어음' 항목
             note=None,
-
             # 기재상 '외상미수금' 항목
             credit="",
-
             # 비고
             # {invoiceeType}이 "외국인" 이면 remark1 필수
             # - 외국인 등록번호 또는 여권번호 입력
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-
             # 기재상 '권' 항목, 최대값 32767
             # 미기재시 kwon=None,
             kwon=1,
-
             # 기재상 '호' 항목, 최대값 32767
             # 미기재시 ho=None,
             ho=2,
-
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
-
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
-
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
             # - [참고] 수정세금계산서 작성방법 안내 - https://developers.popbill.com/guide/taxinvoice/python/introduction/modified-taxinvoice
             ######################################################################
-
             # 수정세금계산서 정보
             # 수정사유코드, 수정사유별로 1~6중 선택기재
             modifyCode=None,
-
             # 원본세금계산서 국세청승인번호 기재
-            orgNTSConfirmNum=None
+            orgNTSConfirmNum=None,
         )
 
         ######################################################################
@@ -816,7 +716,7 @@ def register(request):
                 unitCost="50000",  # 단가
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
-                remark="품목비고"  # 비고
+                remark="품목비고",  # 비고
             )
         )
 
@@ -830,7 +730,7 @@ def register(request):
                 unitCost="50000",  # 단가
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
-                remark="품목비고"  # 비고
+                remark="품목비고",  # 비고
             )
         )
 
@@ -847,7 +747,7 @@ def register(request):
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
-                email="test1@test.com"  # 메일주소
+                email="test1@test.com",  # 메일주소
             )
         )
 
@@ -855,15 +755,22 @@ def register(request):
             Contact(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
-                email="test1@test.com"  # 메일주소
+                email="test1@test.com",  # 메일주소
             )
         )
 
         response = taxinvoiceService.register(CorpNum, taxinvoice, writeSpecification)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def update(request):
     """
@@ -882,190 +789,138 @@ def update(request):
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
-
             # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
             writeDate="20220805",
-
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
-
             # 발행형태, {정발행, 역발행, 위수탁} 중 기재
             issueType="정발행",
-
             # {영수, 청구, 없음} 중 기재
             purposeType="영수",
-
             # 과세형태, {과세, 영세, 면세} 중 기재
             taxType="과세",
-
             ######################################################################
             #                             공급자 정보
             ######################################################################
-
             # 공급자 사업자번호 , '-' 없이 10자리 기재.
             invoicerCorpNum=settings.testCorpNum,
-
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
-
             # 공급자 상호
             invoicerCorpName="공급자 상호",
-
             # 공급자 문서번호
             invoicerMgtKey=MgtKey,
-
             # 공급자 대표자 성명
             invoicerCEOName="공급자 대표자 성명",
-
             # 공급자 주소
             invoicerAddr="공급자 주소_수정",
-
             # 공급자 종목
             invoicerBizClass="공급자 종목",
-
             # 공급자 업태
             invoicerBizType="공급자 업태",
-
             # 공급자 담당자 성명
             invoicerContactName="공급자 담당자명",
-
             # 공급자 담당자 메일주소
             invoicerEmail="",
-
             # 공급자 담당자 연락처
             invoicerTEL="",
-
             # 공급자 담당자 휴대폰 번호
             invoicerHP="",
-
             # 발행 안내 문자 전송여부 (true / false 중 택 1)
             # └ true = 전송 , false = 미전송
             # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
             # - 전송 시 포인트 차감되며, 전송실패시 환불처리
             invoicerSMSSendYN=False,
-
             ######################################################################
             #                            공급받는자 정보
             ######################################################################
-
             # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
-            invoiceeType='사업자',
-
+            invoiceeType="사업자",
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoiceeTaxRegID=None,
-
             # 공급받는자 사업자번호
             # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
             # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
             # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
             invoiceeCorpNum="8888888888",
-
             # 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
-
             # [역발행시 필수] 공급받는자 문서번호
             invoiceeMgtKey=None,
-
             # 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
-
             # 공급받는자 주소
             invoiceeAddr="공급받는자 주소",
-
             # 공급받는자 종목
             invoiceeBizClass="공급받는자 종목",
-
             # 공급받는자 업태
             invoiceeBizType="공급받는자 업태",
-
             # 공급받는자 담당자 성명
             invoiceeContactName1="공급받는자 담당자",
-
             # 공급받는자 담당자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             invoiceeEmail1="",
-
             # 공급받는자 연락처
             invoiceeTEL1="",
-
             # 공급받는자 담당자 휴대폰번호
             invoiceeHP1="",
-
             # 공급받는자 담당자 팩스번호
             invoiceeFAX1="",
-
             # 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
             # - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
             # - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
             invoiceeSMSSendYN=False,
-
             ######################################################################
             #                          세금계산서 기재정보
             ######################################################################
-
             # 공급가액 합계
             supplyCostTotal="100000",
-
             # 세액 합계
             taxTotal="10000",
-
             # 합계금액, 공급가액 합계 + 세액 합계
             totalAmount="110000",
-
             # 기재상 '일련번호' 항목
             serialNum="123",
-
             # 기재상 '현금' 항목
             cash=None,
-
             # 기재상 '수표' 항목
             chkBill=None,
-
             # 기재상 '어음' 항목
             note=None,
-
             # 기재상 '외상미수금' 항목
             credit="",
-
             # 비고
             # {invoiceeType}이 "외국인" 이면 remark1 필수
             # - 외국인 등록번호 또는 여권번호 입력
-            remark1='비고1',
-            remark2='비고2',
-            remark3='비고3',
-
+            remark1="비고1",
+            remark2="비고2",
+            remark3="비고3",
             # 기재상 '권' 항목, 최대값 32767
             # 미기재시 kwon=None,
             kwon=1,
-
             # 기재상 '호' 항목, 최대값 32767
             # 미기재시 ho=None,
             ho=2,
-
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
-
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
-
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
             # - [참고] 수정세금계산서 작성방법 안내 - https://developers.popbill.com/guide/taxinvoice/python/introduction/modified-taxinvoice
             ######################################################################
-
             # 수정세금계산서 정보
             # 수정사유코드, 수정사유별로 1~6중 선택기재
             modifyCode=None,
-
             # 원본세금계산서 국세청승인번호 기재
-            orgNTSConfirmNum=None
+            orgNTSConfirmNum=None,
         )
 
         ######################################################################
@@ -1086,7 +941,7 @@ def update(request):
                 unitCost="50000",  # 단가
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
-                remark="품목비고"  # 비고
+                remark="품목비고",  # 비고
             )
         )
 
@@ -1100,7 +955,7 @@ def update(request):
                 unitCost="50000",  # 단가
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
-                remark="품목비고"  # 비고
+                remark="품목비고",  # 비고
             )
         )
 
@@ -1117,7 +972,7 @@ def update(request):
             Contact(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
-                email="test1@test.com"  # 메일주소
+                email="test1@test.com",  # 메일주소
             )
         )
 
@@ -1125,15 +980,22 @@ def update(request):
             Contact(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 contactName="추가담당자 성명",  # 담당자명
-                email="test1@test.com"  # 메일주소
+                email="test1@test.com",  # 메일주소
             )
         )
 
         response = taxinvoiceService.update(CorpNum, MgtKeyType, MgtKey, taxinvoice)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def issue(request):
     """
@@ -1167,12 +1029,24 @@ def issue(request):
         # 발행(Issue API)을 호출할 수 있습니다.
         ForceIssue = False
 
-        response = taxinvoiceService.issue(CorpNum, MgtKeyType, MgtKey, Memo,
-                                            EmailSubject, ForceIssue)
+        response = taxinvoiceService.issue(
+            CorpNum, MgtKeyType, MgtKey, Memo, EmailSubject, ForceIssue
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'ntsConfirmNum': response.ntsConfirmNum})
+        return render(
+            request,
+            "response.html",
+            {
+                "code": response.code,
+                "message": response.message,
+                "ntsConfirmNum": response.ntsConfirmNum,
+            },
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancelIssue(request):
     """
@@ -1195,9 +1069,16 @@ def cancelIssue(request):
 
         response = taxinvoiceService.cancelIssue(CorpNum, MgtKeyType, MgtKey, Memo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def registRequest(request):
     """
@@ -1218,185 +1099,133 @@ def registRequest(request):
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
-
             # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
             writeDate="20220805",
-
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
-
             # 발행형태, {역발행} 중 기재
             issueType="역발행",
-
             # {영수, 청구, 없음} 중 기재
             purposeType="영수",
-
             # 과세형태, {과세, 영세, 면세} 중 기재
             taxType="과세",
-
             ######################################################################
             #                             공급자 정보
             ######################################################################
-
             # 공급자 사업자번호 , '-' 없이 10자리 기재.
-            invoicerCorpNum='8888888888',
-
+            invoicerCorpNum="8888888888",
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoicerTaxRegID=None,
-
             # 공급자 상호
             invoicerCorpName="공급자 상호",
-
             # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoicerMgtKey="",
-
             # 공급자 대표자 성명
             invoicerCEOName="공급자 대표자 성명",
-
             # 공급자 주소
             invoicerAddr="공급자 주소",
-
             # 공급자 종목
             invoicerBizClass="공급자 종목",
-
             # 공급자 업태
             invoicerBizType="공급자 업태",
-
             # 공급자 담당자 성명
             invoicerContactName="공급자 담당자명",
-
             # 공급자 담당자 메일주소
             invoicerEmail="",
-
             # 공급자 담당자 연락처
             invoicerTEL="",
-
             # 공급자 담당자 휴대폰 번호
-            invoicerHP='',
-
+            invoicerHP="",
             # 정발행시 공급받는자에게 발행안내문자 전송여부
             invoicerSMSSendYN=False,
-
             ######################################################################
             #                            공급받는자 정보
             ######################################################################
-
             # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
             invoiceeType="사업자",
-
             # 공급받는자 사업자번호
             # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
             # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
             # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
             invoiceeCorpNum=CorpNum,
-
             # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
             invoiceeTaxRegID=None,
-
             # 공급받는자 상호
             invoiceeCorpName="공급받는자 상호",
-
             # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
             invoiceeMgtKey=MgtKey,
-
             # 공급받는자 대표자 성명
             invoiceeCEOName="공급받는자 대표자 성명",
-
             # 공급받는자 주소
             invoiceeAddr="공급받는자 주소",
-
             # 공급받는자 종목
             invoiceeBizClass="공급받는자 종목",
-
             # 공급받는자 업태
             invoiceeBizType="공급받는자 업태",
-
             # 공급받는자 담당자 성명
             invoiceeContactName1="공급받는자 담당자",
-
             # 공급받는자 담당자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             invoiceeEmail1="",
-
             # 공급받는자 연락처
             invoiceeTEL1="",
-
             # 공급받는자 담당자 휴대폰번호
             invoiceeHP1="",
-
             # 공급받는자 담당자 팩스번호
             invoiceeFAX1="",
-
             # 역발행시 공급자에게 발행안내문자 전송여부
             invoiceeSMSSendYN=False,
-
             ######################################################################
             #                          세금계산서 기재정보
             ######################################################################
-
             # 공급가액 합계
             supplyCostTotal="100000",
-
             # 세액 합계
             taxTotal="10000",
-
             # 합계금액, 공급가액 합계 + 세액 합계
             totalAmount="110000",
-
             # 기재상 '일련번호' 항목
             serialNum="",
-
             # 기재상 '현금' 항목
             cash=None,
-
             # 기재상 '수표' 항목
             chkBill=None,
-
             # 기재상 '어음' 항목
             note=None,
-
             # 기재상 '외상미수금' 항목
             credit="",
-
             # 비고
             # {invoiceeType}이 "외국인" 이면 remark1 필수
             # - 외국인 등록번호 또는 여권번호 입력
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-
             # 기재상 '권' 항목, 최대값 32767
             # 미기재시 kwon=None,
             kwon=1,
-
             # 기재상 '호' 항목, 최대값 32767
             # 미기재시 ho=None,
             ho=2,
-
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
-
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
-
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
             # - [참고] 수정세금계산서 작성방법 안내 - https://developers.popbill.com/guide/taxinvoice/python/introduction/modified-taxinvoice
             ######################################################################
-
             # 수정세금계산서 정보 수정사유별로 1~6중 선택기재
             # 수정사유코드
             modifyCode=None,
-
             # 원본세금계산서 국세청승인번호 기재
-            orgNTSConfirmNum=None
+            orgNTSConfirmNum=None,
         )
 
         ######################################################################
@@ -1417,7 +1246,7 @@ def registRequest(request):
                 unitCost="50000",  # 단가
                 supplyCost="50000",  # 공급가액
                 tax="5000",  # 세액
-                remark="품목비고"  # 비고
+                remark="품목비고",  # 비고
             )
         )
 
@@ -1431,7 +1260,7 @@ def registRequest(request):
                 unitCost="50000",  # 단가
                 supplyCost="50000",  # 공가액
                 tax="5000",  # 세액
-                remark="품목비고"  # 비고
+                remark="품목비고",  # 비고
             )
         )
 
@@ -1439,9 +1268,16 @@ def registRequest(request):
 
         response = taxinvoiceService.registRequest(CorpNum, taxinvoice, memo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def request(request):
     """
@@ -1466,9 +1302,16 @@ def request(request):
 
         response = taxinvoiceService.request(CorpNum, MgtKeyType, MgtKey, Memo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancelRequest(request):
     """
@@ -1492,9 +1335,16 @@ def cancelRequest(request):
 
         response = taxinvoiceService.cancelRequest(CorpNum, MgtKeyType, MgtKey, Memo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def refuse(request):
     """
@@ -1516,9 +1366,16 @@ def refuse(request):
 
         response = taxinvoiceService.refuse(CorpNum, MgtKeyType, MgtKey, Memo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def delete(request):
     """
@@ -1539,9 +1396,16 @@ def delete(request):
 
         response = taxinvoiceService.delete(CorpNum, MgtKeyType, MgtKey)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendToNTS(request):
     """
@@ -1561,9 +1425,16 @@ def sendToNTS(request):
 
         response = taxinvoiceService.sendToNTS(CorpNum, MgtKeyType, MgtKey)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getInfo(request):
     """
@@ -1584,9 +1455,14 @@ def getInfo(request):
 
         taxinvoiceInfo = taxinvoiceService.getInfo(CorpNum, MgtKeyType, MgtKey)
 
-        return render(request, 'Taxinvoice/GetInfo.html', {'taxinvoiceInfo': taxinvoiceInfo})
+        return render(
+            request, "Taxinvoice/GetInfo.html", {"taxinvoiceInfo": taxinvoiceInfo}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getInfos(request):
     """
@@ -1609,9 +1485,12 @@ def getInfos(request):
 
         InfoList = taxinvoiceService.getInfos(CorpNum, MgtKeyType, MgtKeyList)
 
-        return render(request, 'Taxinvoice/GetInfos.html', {'InfoList': InfoList})
+        return render(request, "Taxinvoice/GetInfos.html", {"InfoList": InfoList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getDetailInfo(request):
     """
@@ -1630,9 +1509,14 @@ def getDetailInfo(request):
 
         taxinvoice = taxinvoiceService.getDetailInfo(CorpNum, MgtKeyType, MgtKey)
 
-        return render(request, 'Taxinvoice/GetDetailInfo.html', {'taxinvoice': taxinvoice})
+        return render(
+            request, "Taxinvoice/GetDetailInfo.html", {"taxinvoice": taxinvoice}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getXML(request):
     """
@@ -1651,9 +1535,14 @@ def getXML(request):
 
         taxinvoiceXML = taxinvoiceService.getXML(CorpNum, MgtKeyType, MgtKey)
 
-        return render(request, 'Taxinvoice/GetXML.html', {'taxinvoiceXML': taxinvoiceXML})
+        return render(
+            request, "Taxinvoice/GetXML.html", {"taxinvoiceXML": taxinvoiceXML}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def search(request):
     """
@@ -1751,14 +1640,37 @@ def search(request):
         # - 미입력시 전체조회
         MgtKey = ""
 
-        response = taxinvoiceService.search(CorpNum, MgtKeyType, DType, SDate, EDate, State,
-                                        Type, TaxType, LateOnly, TaxRegIDYN, TaxRegIDType, TaxRegID,
-                                        Page, PerPage, Order, UserID, QString, InterOPYN, IssueType,
-                                        RegType, CloseDownState, MgtKey)
+        response = taxinvoiceService.search(
+            CorpNum,
+            MgtKeyType,
+            DType,
+            SDate,
+            EDate,
+            State,
+            Type,
+            TaxType,
+            LateOnly,
+            TaxRegIDYN,
+            TaxRegIDType,
+            TaxRegID,
+            Page,
+            PerPage,
+            Order,
+            UserID,
+            QString,
+            InterOPYN,
+            IssueType,
+            RegType,
+            CloseDownState,
+            MgtKey,
+        )
 
-        return render(request, 'Taxinvoice/Search.html', {'response': response})
+        return render(request, "Taxinvoice/Search.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getLogs(request):
     """
@@ -1777,9 +1689,12 @@ def getLogs(request):
 
         LogList = taxinvoiceService.getLogs(CorpNum, MgtKeyType, MgtKey)
 
-        return render(request, 'Taxinvoice/GetLogs.html', {'LogList': LogList})
+        return render(request, "Taxinvoice/GetLogs.html", {"LogList": LogList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getURL(request):
     """
@@ -1800,9 +1715,12 @@ def getURL(request):
 
         url = taxinvoiceService.getURL(CorpNum, UserID, TOGO)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPopUpURL(request):
     """
@@ -1825,9 +1743,12 @@ def getPopUpURL(request):
 
         url = taxinvoiceService.getPopUpURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getViewURL(request):
     """
@@ -1850,9 +1771,12 @@ def getViewURL(request):
 
         url = taxinvoiceService.getViewURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPrintURL(request):
     """
@@ -1875,9 +1799,12 @@ def getPrintURL(request):
 
         url = taxinvoiceService.getPrintURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getOldPrintURL(request):
     """
@@ -1900,9 +1827,12 @@ def getOldPrintURL(request):
 
         url = taxinvoiceService.getOldPrintURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getEPrintURL(request):
     """
@@ -1925,9 +1855,12 @@ def getEPrintURL(request):
 
         url = taxinvoiceService.getEPrintURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getMassPrintURL(request):
     """
@@ -1952,9 +1885,12 @@ def getMassPrintURL(request):
 
         url = taxinvoiceService.getMassPrintURL(CorpNum, MgtKeyType, MgtKeyList, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getMailURL(request):
     """
@@ -1977,9 +1913,12 @@ def getMailURL(request):
 
         url = taxinvoiceService.getMailURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPDFURL(request):
     """
@@ -2002,9 +1941,12 @@ def getPDFURL(request):
 
         url = taxinvoiceService.getPDFURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getAccessURL(request):
     """
@@ -2021,9 +1963,12 @@ def getAccessURL(request):
 
         url = taxinvoiceService.getAccessURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSealURL(request):
     """
@@ -2040,9 +1985,12 @@ def getSealURL(request):
 
         url = taxinvoiceService.getSealURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def attachFile(request):
     """
@@ -2064,9 +2012,16 @@ def attachFile(request):
 
         response = taxinvoiceService.attachFile(CorpNum, MgtKeyType, MgtKey, FilePath)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def deleteFile(request):
     """
@@ -2089,9 +2044,16 @@ def deleteFile(request):
 
         response = taxinvoiceService.deleteFile(CorpNum, MgtKeyType, MgtKey, FileID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getFiles(request):
     """
@@ -2111,9 +2073,12 @@ def getFiles(request):
 
         fileList = taxinvoiceService.getFiles(CorpNum, MgtKeyType, MgtKey)
 
-        return render(request, 'Taxinvoice/GetFiles.html', {'fileList': fileList})
+        return render(request, "Taxinvoice/GetFiles.html", {"fileList": fileList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendEmail(request):
     """
@@ -2133,11 +2098,20 @@ def sendEmail(request):
         # 수신메일주소
         ReceiverMail = ""
 
-        response = taxinvoiceService.sendEmail(CorpNum, MgtKeyType, MgtKey, ReceiverMail)
+        response = taxinvoiceService.sendEmail(
+            CorpNum, MgtKeyType, MgtKey, ReceiverMail
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendSMS(request):
     """
@@ -2165,11 +2139,20 @@ def sendSMS(request):
         # 메시지 내용, 최대 90byte 초과시 길이가 조정되어 전송됨
         Contents = "발신문자 내용"
 
-        response = taxinvoiceService.sendSMS(CorpNum, MgtKeyType, MgtKey, Sender, Receiver, Contents)
+        response = taxinvoiceService.sendSMS(
+            CorpNum, MgtKeyType, MgtKey, Sender, Receiver, Contents
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendFAX(request):
     """
@@ -2193,11 +2176,20 @@ def sendFAX(request):
         # 수신팩스번호
         Receiver = ""
 
-        response = taxinvoiceService.sendFax(CorpNum, MgtKeyType, MgtKey, Sender, Receiver)
+        response = taxinvoiceService.sendFax(
+            CorpNum, MgtKeyType, MgtKey, Sender, Receiver
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def attachStatement(request):
     """
@@ -2220,11 +2212,20 @@ def attachStatement(request):
         # 전자명세서 문서번호
         StmtMgtKey = "20220805-001"
 
-        response = taxinvoiceService.attachStatement(CorpNum, MgtKeyType, MgtKey, ItemCode, StmtMgtKey)
+        response = taxinvoiceService.attachStatement(
+            CorpNum, MgtKeyType, MgtKey, ItemCode, StmtMgtKey
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def detachStatement(request):
     """
@@ -2247,11 +2248,20 @@ def detachStatement(request):
         # 전자명세서 문서번호
         StmtMgtKey = "20220805-001"
 
-        response = taxinvoiceService.detachStatement(CorpNum, MgtKeyType, MgtKey, ItemCode, StmtMgtKey)
+        response = taxinvoiceService.detachStatement(
+            CorpNum, MgtKeyType, MgtKey, ItemCode, StmtMgtKey
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getEmailPublicKeys(request):
     """
@@ -2264,9 +2274,14 @@ def getEmailPublicKeys(request):
 
         aspList = taxinvoiceService.getEmailPublicKeys(CorpNum)
 
-        return render(request, 'Taxinvoice/GetEmailPublicKeys.html', {'aspList': aspList})
+        return render(
+            request, "Taxinvoice/GetEmailPublicKeys.html", {"aspList": aspList}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def assignMgtKey(request):
     """
@@ -2281,7 +2296,7 @@ def assignMgtKey(request):
         MgtKeyType = "SELL"
 
         # 세금계산서 아이템키, 문서 목록조회(Search) API의 반환항목중 ItemKey 참조
-        ItemKey = '019011609280500001'
+        ItemKey = "019011609280500001"
 
         # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
         # 사업자번호별 중복없는 고유번호 할당
@@ -2289,9 +2304,16 @@ def assignMgtKey(request):
 
         response = taxinvoiceService.assignMgtKey(CorpNum, MgtKeyType, ItemKey, MgtKey)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def listEmailConfig(request):
     """
@@ -2304,9 +2326,14 @@ def listEmailConfig(request):
 
         EmailConfig = taxinvoiceService.listEmailConfig(CorpNum)
 
-        return render(request, 'Taxinvoice/ListEmailConfig.html', {'EmailConfig': EmailConfig})
+        return render(
+            request, "Taxinvoice/ListEmailConfig.html", {"EmailConfig": EmailConfig}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateEmailConfig(request):
     """
@@ -2344,16 +2371,23 @@ def updateEmailConfig(request):
         CorpNum = settings.testCorpNum
 
         # 메일 전송 유형
-        EmailType = 'TAX_ISSUE'
+        EmailType = "TAX_ISSUE"
 
         # 전송 여부 (True = 전송, False = 미전송)
         SendYN = True
 
         response = taxinvoiceService.updateEmailConfig(CorpNum, EmailType, SendYN)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSendToNTSConfig(request):
     """
@@ -2368,9 +2402,14 @@ def getSendToNTSConfig(request):
 
         sendToNTSConfig = taxinvoiceService.getSendToNTSConfig(CorpNum)
 
-        return render(request, 'Taxinvoice/SendToNTSConfig.html', {'sendToNTS' : sendToNTSConfig})
+        return render(
+            request, "Taxinvoice/SendToNTSConfig.html", {"sendToNTS": sendToNTSConfig}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getTaxCertURL(request):
     """
@@ -2388,9 +2427,12 @@ def getTaxCertURL(request):
 
         url = taxinvoiceService.getTaxCertURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getCertificateExpireDate(request):
     """
@@ -2403,9 +2445,16 @@ def getCertificateExpireDate(request):
 
         expiredate = taxinvoiceService.getCertificateExpireDate(CorpNum)
 
-        return render(request, 'Taxinvoice/GetCertificateExpireDate.html', {'expiredate': expiredate})
+        return render(
+            request,
+            "Taxinvoice/GetCertificateExpireDate.html",
+            {"expiredate": expiredate},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def checkCertValidation(request):
     """
@@ -2418,15 +2467,22 @@ def checkCertValidation(request):
 
         response = taxinvoiceService.checkCertValidation(CorpNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getTaxCertInfo(request):
-    '''
+    """
     팝빌 인증서버에 등록된 공동인증서의 정보를 확인합니다.
     - https://developers.popbill.com/reference/taxinvoice/python/api/cert#GetTaxCertInfo
-    '''
+    """
 
     try:
         print("=" * 15 + " 인증서 정보 확인 " + "=" * 15)
@@ -2436,9 +2492,16 @@ def getTaxCertInfo(request):
 
         taxinvoiceCertificate = taxinvoiceService.getTaxCertInfo(CorpNum)
 
-        return render(request, 'Taxinvoice/GetTaxCertInfo.html', {'taxinvoiceCertificate': taxinvoiceCertificate})
+        return render(
+            request,
+            "Taxinvoice/GetTaxCertInfo.html",
+            {"taxinvoiceCertificate": taxinvoiceCertificate},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getBalance(request):
     """
@@ -2451,9 +2514,12 @@ def getBalance(request):
 
         result = taxinvoiceService.getBalance(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getChargeURL(request):
     """
@@ -2470,9 +2536,12 @@ def getChargeURL(request):
 
         url = taxinvoiceService.getChargeURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPaymentURL(request):
     """
@@ -2489,9 +2558,12 @@ def getPaymentURL(request):
 
         url = taxinvoiceService.getPaymentURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUseHistoryURL(request):
     """
@@ -2508,9 +2580,12 @@ def getUseHistoryURL(request):
 
         url = taxinvoiceService.getUseHistoryURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPartnerBalance(request):
     """
@@ -2523,9 +2598,12 @@ def getPartnerBalance(request):
 
         result = taxinvoiceService.getPartnerBalance(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPartnerURL(request):
     """
@@ -2542,9 +2620,12 @@ def getPartnerURL(request):
 
         url = taxinvoiceService.getPartnerURL(CorpNum, TOGO)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUnitCost(request):
     """
@@ -2557,9 +2638,12 @@ def getUnitCost(request):
 
         result = taxinvoiceService.getUnitCost(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getChargeInfo(request):
     """
@@ -2572,112 +2656,169 @@ def getChargeInfo(request):
 
         response = taxinvoiceService.getChargeInfo(CorpNum)
 
-        return render(request, 'getChargeInfo.html', {'response': response})
+        return render(request, "getChargeInfo.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def paymentRequest(request):
     """
-        연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
-        - https://developers.popbill.com/reference/taxinvoice/python/api/point#PaymentRequest
+    연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+    - https://developers.popbill.com/reference/taxinvoice/python/api/point#PaymentRequest
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = taxinvoiceService.paymentRequest(CorpNum, UserID)
-        return render(request, 'paymentResponse.html', {'response':response})
+        return render(request, "paymentResponse.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSettleResult(request):
     """
-        연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
-        - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetSettleResult
+    연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+    - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetSettleResult
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = taxinvoiceService.getSettleResult(CorpNum, UserID)
 
-        return render(request, 'paymentHistory.html', {'response':response})
+        return render(request, "paymentHistory.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPaymentHistory(request):
     """
-        연동회원의 포인트 결제내역을 확인합니다.
-        - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetPaymentHistory
+    연동회원의 포인트 결제내역을 확인합니다.
+    - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetPaymentHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        SDate	= "20230101"
-        EDate =	"20230110"
-        Page	= 1
-        PerPage	= 500
+        # 조회 기간의 시작일자 (형식 : yyyyMMdd)
+        SDate = "20230101"
+        # 조회 기간의 종료일자 (형식 : yyyyMMdd)
+        EDate = "20230110"
+        # 목록 페이지번호 (기본값 1)
+        Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
+        PerPage = 500
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = taxinvoiceService.getPaymentHistory(CorpNum, SDate,EDate,Page,PerPage, UserID)
-        return render(request, 'paymentHistoryResult.html', {'response':response})
+        response = taxinvoiceService.getPaymentHistory(
+            CorpNum, SDate, EDate, Page, PerPage, UserID
+        )
+        return render(request, "paymentHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUseHistory(request):
     """
-        연동회원의 포인트 사용내역을 확인합니다.
-        - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetUseHistory
+    연동회원의 포인트 사용내역을 확인합니다.
+    - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetUseHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        SDate	= "20230101"
-        EDate =	"20230110"
-        Page	= 1
-        PerPage	= 500
-        Order	= "D"
+        # 조회 기간의 시작일자 (형식 : yyyyMMdd)
+        SDate = "20230101"
+        # 조회 기간의 종료일자 (형식 : yyyyMMdd)
+        EDate = "20230110"
+        # 목록 페이지번호 (기본값 1)
+        Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
+        PerPage = 500
+        # 거래일자를 기준으로 하는 목록 정렬 방향 : "D" / "A" 중 택 1
+        Order = "D"
+        # 팝빌회원 아이디
         UserID = settings.testUserID
-        response =        CorpNum = settings.testCorpNum
-        UserID = settings.testUserID
-        response = taxinvoiceService.getUseHistory(CorpNum,SDate,EDate,Page,PerPage,Order, UserID)
-        return render(request, 'useHistoryResult.html', {'response':response})
+        response = taxinvoiceService.getUseHistory(
+            CorpNum, SDate, EDate, Page, PerPage, Order, UserID
+        )
+        return render(request, "useHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def refund(request):
     """
-        연동회원 포인트를 환불 신청합니다.
-        - https://developers.popbill.com/reference/taxinvoice/python/api/point#Refund
+    연동회원 포인트를 환불 신청합니다.
+    - https://developers.popbill.com/reference/taxinvoice/python/api/point#Refund
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 환불신청 객체정보
         refundForm = RefundForm(
+            # 담당자명
             contactname="환불신청테스트",
+            # 담당자 연락처
             tel="01077777777",
+            # 환불 신청 포인트
             requestpoint="10",
+            # 은행명
             accountbank="국민",
+            # 계좌번호
             accountnum="123123123-123",
+            # 예금주명
             accountname="예금주",
+            # 환불사유
             reason="테스트 환불 사유",
         )
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = taxinvoiceService.refund(CorpNum, refundForm, UserID)
-        return render(request, 'response.html', {'response':response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"response": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getRefundHistory(request):
     """
-        연동회원의 포인트 환불신청내역을 확인합니다.
-        - - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetRefundHistory
+    연동회원의 포인트 환불신청내역을 확인합니다.
+    - - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetRefundHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 목록 페이지번호 (기본값 1)
         Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
         response = taxinvoiceService.getRefundHistory(CorpNum, Page, PerPage, UserID)
-        return render(request, 'refundHistoryResult.html', {'response':response})
+        return render(request, "refundHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
 
 
 def checkIsMember(request):
@@ -2691,9 +2832,16 @@ def checkIsMember(request):
 
         response = taxinvoiceService.checkIsMember(CorpNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def checkID(request):
     """
@@ -2706,9 +2854,16 @@ def checkID(request):
 
         response = taxinvoiceService.checkID(memberID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def joinMember(request):
     """
@@ -2718,47 +2873,43 @@ def joinMember(request):
     try:
         # 회원정보
         newMember = JoinForm(
-
             # 아이디 (6자 이상 50자 미만)
             ID="join_id_test",
-
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
-
             # 사업자번호 "-" 제외
             CorpNum="0000000000",
-
             # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
-
             # 상호 (최대 200자)
             CorpName="테스트가입상호",
-
             # 주소 (최대 300자)
             Addr="테스트회사주소",
-
             # 업태 (최대 100자)
             BizType="테스트업태",
-
             # 종목 (최대 100자)
             BizClass="테스트업종",
-
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
-
             # 담당자 이메일주소 (최대 100자)
             ContactEmail="",
-
             # 담당자 연락처 (최대 20자)
-            ContactTEL=""
+            ContactTEL="",
         )
 
         response = taxinvoiceService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getCorpInfo(request):
     """
@@ -2771,9 +2922,12 @@ def getCorpInfo(request):
 
         response = taxinvoiceService.getCorpInfo(CorpNum)
 
-        return render(request, 'getCorpInfo.html', {'response': response})
+        return render(request, "getCorpInfo.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateCorpInfo(request):
     """
@@ -2786,28 +2940,30 @@ def updateCorpInfo(request):
 
         # 회사정보
         corpInfo = CorpInfo(
-
             # 대표자 성명 (최대 100자)
             ceoname="대표자_성명",
-
             # 상호 (최대 200자)
             corpName="상호",
-
             # 주소 (최대 300자)
             addr="주소",
-
             # 업태 (최대 100자)
             bizType="업태",
-
             # 종목 (최대 100자)
-            bizClass="종목"
+            bizClass="종목",
         )
 
         response = taxinvoiceService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def registContact(request):
     """
@@ -2820,32 +2976,33 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-
             # 아이디 (6자 이상 50자 미만)
             id="popbill_test_id",
-
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
-
             # 담당자명 (최대 100자)
             personName="담당자명",
-
             # 담당자 연락처 (최대 20자)
             tel="",
-
             # 담당자 이메일 (최대 100자)
             email="",
-
-            #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1
+            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=1,
         )
 
         response = taxinvoiceService.registContact(CorpNum, newContact)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getContactInfo(request):
     """
@@ -2857,13 +3014,16 @@ def getContactInfo(request):
         CorpNum = settings.testCorpNum
 
         # 담당자 아이디
-        contactID = 'testkorea'
+        contactID = "testkorea"
 
         contactInfo = taxinvoiceService.getContactInfo(CorpNum, contactID)
 
-        return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
+        return render(request, "getContactInfo.html", {"contactInfo": contactInfo})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def listContact(request):
     """
@@ -2876,9 +3036,12 @@ def listContact(request):
 
         listContact = taxinvoiceService.listContact(CorpNum)
 
-        return render(request, 'listContact.html', {'listContact': listContact})
+        return render(request, "listContact.html", {"listContact": listContact})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateContact(request):
     """
@@ -2894,25 +3057,26 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-
             # 담당자 아이디
             id=UserID,
-
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
-
             # 담당자 연락처 (최대 20자)
             tel="",
-
             # 담당자 메일주소 (최대 100자)
             email="",
-
-            #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1
+            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=1,
         )
 
         response = taxinvoiceService.updateContact(CorpNum, updateInfo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )

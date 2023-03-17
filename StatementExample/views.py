@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import StatementService, PopbillException, Statement, StatementDetail, JoinForm, ContactInfo, CorpInfo, RefundForm
+from popbill import (
+    ContactInfo,
+    CorpInfo,
+    JoinForm,
+    PopbillException,
+    RefundForm,
+    Statement,
+    StatementDetail,
+    StatementService,
+)
 
 from config import settings
 
@@ -16,11 +25,13 @@ statementService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
 statementService.UseStaticIP = settings.UseStaticIP
 
-#로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, 권장(True)
 statementService.UseLocalTimeYN = settings.UseLocalTimeYN
 
+
 def index(request):
-    return render(request, 'Statement/Index.html', {})
+    return render(request, "Statement/Index.html", {})
+
 
 def checkMgtKeyInUse(request):
     """
@@ -44,9 +55,12 @@ def checkMgtKeyInUse(request):
         else:
             result = "미사용중"
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def registIssue(request):
     """
@@ -71,119 +85,84 @@ def registIssue(request):
 
         # 전자명세서 정보
         statement = Statement(
-
             # 작성일자 yyyyMMdd
             writeDate="20220805",
-
             # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
-
             # 과세형태, [과세 / 영세 / 면세] 중 기재
             taxType="과세",
-
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
-
             # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
-
             # 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
             mgtKey="20220805-002",
-
             # 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
-
             # 발신자 상호
             senderCorpName="발신자 상호",
-
             # 발신자 주소
             senderAddr="발신자 주소",
-
             # 발신자 대표자 성명
             senderCEOName="발신자 대표자 성명",
-
             # 발신자 종사업장 식별번호, 필요시 4자리 숫자값 기재
             senderTaxRegID="",
-
             # 발신자 종목
             senderBizClass="종목",
-
             # 발신자 업태
             senderBizType="업태",
-
             # 발신자 담당자 성명
             senderContactName="발신자 담당자명",
-
             # 발신자 메일주소
             senderEmail="",
-
             # 발신자 연락처
             senderTEL="",
-
             # 발신자 휴대폰번호
             senderHP="",
-
             # 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
-
             # 수신자 상호
             receiverCorpName="수신자 상호",
-
             # 수신자 대표자 성명
             receiverCEOName="수신자 대표자 성명",
-
             # 수신자 주소
             receiverAddr="수신자 주소",
-
             # 수신자 종사업장식별번호, 필요시 4자리 숫자값 기재
             receiverTaxRegID="",
-
             # 수신자 종목
             receiverBizClass="수신자 종목",
-
             # 수신자 업태
             receiverBizType="수신자 업태",
-
             # 수신자 담당자 성명
             receiverContactName="수신자 담당자명",
-
             # 수신자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             receiverEmail="",
-
             # 수신자 연락처
             receiverTEL="",
-
             # 수신자 휴대폰번호
             receiverHP="",
-
             # 공급가액 합계
             supplyCostTotal="20000",
-
             # 세액 합계
             taxTotal="2000",
-
             # 합계금액, 공금가액 합계 + 세액 합계
             totalAmount="22000",
-
             # 기재 상 '일련번호' 항목
             serialNum="123",
-
             # 기재 상 '비고' 항목
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
-
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
-            bankBookYN=False
+            bankBookYN=False,
         )
 
         # 상세항목(품목) 정보 (배열 길이 제한 없음)
@@ -229,16 +208,29 @@ def registIssue(request):
         # 추가속성정보, 명세서 종류별 추가적인 속성을{key:value}형식의 Dictionary로 정의
         # 자세한 정보는 "전자명세서 API 연동매뉴얼 > [5.2. 기본양식 추가속성 테이블] 참조
         statement.propertyBag = {
-            'Balance': "20000",  # 전잔액
-            'Deposit': "5000",  # 입금액
-            'CBalance': "25000"  # 현잔액
+            "Balance": "20000",  # 전잔액
+            "Deposit": "5000",  # 입금액
+            "CBalance": "25000",  # 현잔액
         }
 
-        response = statementService.registIssue(CorpNum, statement, Memo, UserID, EmailSubject)
+        response = statementService.registIssue(
+            CorpNum, statement, Memo, UserID, EmailSubject
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message, 'invoiceNum' : response.invoiceNum})
+        return render(
+            request,
+            "response.html",
+            {
+                "code": response.code,
+                "message": response.message,
+                "invoiceNum": response.invoiceNum,
+            },
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def register(request):
     """
@@ -254,117 +246,82 @@ def register(request):
         statement = Statement(
             # 작성일자 yyyyMMdd
             writeDate="20220805",
-
             # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
-
             # 과세형태, [과세 / 영세 / 면세] 중 기재
             taxType="과세",
-
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
-
             # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
-
             # 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
             mgtKey="20220805-001",
-
             # 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
-
             # 발신자 상호
             senderCorpName="발신자 상호",
-
             # 발신자 주소
             senderAddr="발신자 주소",
-
             # 발신자 대표자 성명
             senderCEOName="발신자 대표자 성명",
-
             # 발신자 종사업장 식별번호, 필요시 4자리 숫자값 기재
             senderTaxRegID="",
-
             # 발신자 종목
             senderBizClass="종목",
-
             # 발신자 업태
             senderBizType="업태",
-
             # 발신자 담당자 성명
             senderContactName="발신자 담당자명",
-
             # 발신자 메일주소
             senderEmail="",
-
             # 발신자 연락처
             senderTEL="",
-
             # 발신자 휴대폰번호
             senderHP="",
-
             # 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
-
             # 수신자 상호
             receiverCorpName="수신자 상호",
-
             # 수신자 대표자 성명
             receiverCEOName="수신자 대표자 성명",
-
             # 수신자 주소
             receiverAddr="수신자 주소",
-
             # 수신자 종사업장식별번호, 필요시 4자리 숫자값 기재
             receiverTaxRegID="",
-
             # 수신자 종목
             receiverBizClass="수신자 종목",
-
             # 수신자 업태
             receiverBizType="수신자 업태",
-
             # 수신자 담당자 성명
             receiverContactName="수신자 담당자명",
-
             # 수신자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             receiverEmail="",
-
             # 수신자 연락처
             receiverTEL="",
-
             # 수신자 휴대폰번호
             receiverHP="",
-
             # 공급가액 합계
             supplyCostTotal="20000",
-
             # 세액 합계
             taxTotal="2000",
-
             # 합계금액, 공금가액 합계 + 세액 합계
             totalAmount="22000",
-
             # 기재 상 '일련번호' 항목
             serialNum="123",
-
             # 기재 상 '비고' 항목
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
-
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
-
         )
 
         # 상세항목(품목) 정보 (배열 길이 제한 없음)
@@ -386,7 +343,6 @@ def register(request):
                 spare3="여분3",  # 여분3
                 spare4="여분4",  # 여분4
                 spare5="여분5",  # 여분5
-
             )
         )
         statement.detailList.append(
@@ -411,16 +367,23 @@ def register(request):
         # 추가속성정보, 명세서 종류별 추가적인 속성을{key:value}형식의 Dictionary로 정의
         # 자세한 정보는 "전자명세서 API 연동매뉴얼 > [5.2. 기본양식 추가속성 테이블] 참조
         statement.propertyBag = {
-            'Balance': "20000",  # 전잔액
-            'Deposit': "5000",  # 입금액
-            'CBalance': "25000"  # 현잔액
+            "Balance": "20000",  # 전잔액
+            "Deposit": "5000",  # 입금액
+            "CBalance": "25000",  # 현잔액
         }
 
         response = statementService.register(CorpNum, statement)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def update(request):
     """
@@ -441,112 +404,78 @@ def update(request):
         statement = Statement(
             # 작성일자 yyyyMMdd
             writeDate="20220805",
-
             # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
-
             # 과세형태, [과세 / 영세 / 면세] 중 기재
             taxType="과세",
-
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
-
             # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=ItemCode,
-
             # 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
             mgtKey=mgtKey,
-
             # 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
-
             # 발신자 상호
             senderCorpName="발신자 상호_수정",
-
             # 발신자 주소
             senderAddr="발신자 주소",
-
             # 발신자 대표자 성명
             senderCEOName="발신자 대표자 성명",
-
             # 발신자 종사업장 식별번호, 필요시 4자리 숫자값 기재
             senderTaxRegID="",
-
             # 발신자 종목
             senderBizClass="종목",
-
             # 발신자 업태
             senderBizType="업태",
-
             # 발신자 담당자 성명
             senderContactName="발신자 담당자명",
-
             # 발신자 메일주소
             senderEmail="",
-
             # 발신자 연락처
             senderTEL="",
-
             # 발신자 휴대폰번호
             senderHP="",
-
             # 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
-
             # 수신자 상호
             receiverCorpName="수신자 상호",
-
             # 수신자 대표자 성명
             receiverCEOName="수신자 대표자 성명",
-
             # 수신자 주소
             receiverAddr="수신자 주소",
-
             # 수신자 종사업장식별번호, 필요시 4자리 숫자값 기재
             receiverTaxRegID="",
-
             # 수신자 종목
             receiverBizClass="수신자 종목",
-
             # 수신자 업태
             receiverBizType="수신자 업태",
-
             # 수신자 담당자 성명
             receiverContactName="수신자 담당자명",
-
             # 수신자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             receiverEmail="",
-
             # 수신자 연락처
             receiverTEL="",
-
             # 수신자 휴대폰번호
             receiverHP="",
-
             # 공급가액 합계
             supplyCostTotal="20000",
-
             # 세액 합계
             taxTotal="2000",
-
             # 합계금액, 공금가액 합계 + 세액 합계
             totalAmount="22000",
-
             # 기재 상 '일련번호' 항목
             serialNum="123",
-
             # 기재 상 '비고' 항목
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
-
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
@@ -596,16 +525,23 @@ def update(request):
         # 추가속성정보, 명세서 종류별 추가적인 속성을{key:value}형식의 Dictionary로 정의
         # 자세한 정보는 "전자명세서 API 연동매뉴얼 > [5.2. 기본양식 추가속성 테이블] 참조
         statement.propertyBag = {
-            'Balance': "20000",  # 전잔액
-            'Deposit': "5000",  # 입금액
-            'CBalance': "25000"  # 현잔액
+            "Balance": "20000",  # 전잔액
+            "Deposit": "5000",  # 입금액
+            "CBalance": "25000",  # 현잔액
         }
 
         response = statementService.update(CorpNum, ItemCode, mgtKey, statement)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def issue(request):
     """
@@ -627,9 +563,16 @@ def issue(request):
 
         response = statementService.issue(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancel(request):
     """
@@ -652,9 +595,16 @@ def cancel(request):
 
         response = statementService.cancel(CorpNum, ItemCode, MgtKey, Memo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def delete(request):
     """
@@ -674,9 +624,16 @@ def delete(request):
 
         response = statementService.delete(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getInfo(request):
     """
@@ -695,9 +652,14 @@ def getInfo(request):
 
         statementInfo = statementService.getInfo(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/GetInfo.html', {'statementInfo': statementInfo})
+        return render(
+            request, "Statement/GetInfo.html", {"statementInfo": statementInfo}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getInfos(request):
     """
@@ -718,9 +680,12 @@ def getInfos(request):
 
         InfoList = statementService.getInfos(CorpNum, ItemCode, MgtKeyList)
 
-        return render(request, 'Statement/GetInfos.html', {'InfoList': InfoList})
+        return render(request, "Statement/GetInfos.html", {"InfoList": InfoList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getDetailInfo(request):
     """
@@ -739,9 +704,12 @@ def getDetailInfo(request):
 
         statement = statementService.getDetailInfo(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/GetDetailInfo.html', {'statement': statement})
+        return render(request, "Statement/GetDetailInfo.html", {"statement": statement})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def search(request):
     """
@@ -786,12 +754,26 @@ def search(request):
         # - 미입력시 전체조회
         QString = ""
 
-        response = statementService.search(CorpNum, DType, SDate, EDate, State, ItemCode,
-                                            Page, PerPage, Order, UserID, QString)
+        response = statementService.search(
+            CorpNum,
+            DType,
+            SDate,
+            EDate,
+            State,
+            ItemCode,
+            Page,
+            PerPage,
+            Order,
+            UserID,
+            QString,
+        )
 
-        return render(request, 'Statement/Search.html', {'response': response})
+        return render(request, "Statement/Search.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getLogs(request):
     """
@@ -810,9 +792,12 @@ def getLogs(request):
 
         LogList = statementService.getLogs(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/GetLogs.html', {'LogList': LogList})
+        return render(request, "Statement/GetLogs.html", {"LogList": LogList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getURL(request):
     """
@@ -832,9 +817,12 @@ def getURL(request):
 
         url = statementService.getURL(CorpNum, UserID, TOGO)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPopUpURL(request):
     """
@@ -857,9 +845,12 @@ def getPopUpURL(request):
 
         url = statementService.getPopUpURL(CorpNum, ItemCode, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getViewURL(request):
     """
@@ -882,9 +873,12 @@ def getViewURL(request):
 
         url = statementService.getViewURL(CorpNum, ItemCode, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPrintURL(request):
     """
@@ -907,9 +901,12 @@ def getPrintURL(request):
 
         url = statementService.getPrintURL(CorpNum, ItemCode, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getEPrintURL(request):
     """
@@ -934,9 +931,12 @@ def getEPrintURL(request):
 
         url = statementService.getEPrintURL(CorpNum, ItemCode, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getMassPrintURL(request):
     """
@@ -961,9 +961,12 @@ def getMassPrintURL(request):
 
         url = statementService.getMassPrintURL(CorpNum, ItemCode, MgtKeyList, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getMailURL(request):
     """
@@ -986,9 +989,12 @@ def getMailURL(request):
 
         url = statementService.getMailURL(CorpNum, ItemCode, MgtKey, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getAccessURL(request):
     """
@@ -1005,9 +1011,12 @@ def getAccessURL(request):
 
         url = statementService.getAccessURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSealURL(request):
     """
@@ -1024,9 +1033,12 @@ def getSealURL(request):
 
         url = statementService.getSealURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def attachFile(request):
     """
@@ -1048,9 +1060,16 @@ def attachFile(request):
 
         response = statementService.attachFile(CorpNum, ItemCode, MgtKey, FilePath)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def deleteFile(request):
     """
@@ -1073,9 +1092,16 @@ def deleteFile(request):
 
         response = statementService.deleteFile(CorpNum, ItemCode, MgtKey, FileID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getFiles(request):
     """
@@ -1094,9 +1120,12 @@ def getFiles(request):
 
         fileList = statementService.getFiles(CorpNum, ItemCode, MgtKey)
 
-        return render(request, 'Statement/GetFiles.html', {'fileList': fileList})
+        return render(request, "Statement/GetFiles.html", {"fileList": fileList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendEmail(request):
     """
@@ -1118,9 +1147,16 @@ def sendEmail(request):
 
         response = statementService.sendEmail(CorpNum, ItemCode, MgtKey, ReceiverMail)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendSMS(request):
     """
@@ -1148,11 +1184,20 @@ def sendSMS(request):
         # 문자메시지내용, 90Byte 초과시 길이가 조정되어 전송됨
         Contents = "전자명세서 API 문자메시지 테스트"
 
-        response = statementService.sendSMS(CorpNum, ItemCode, MgtKey, Sender, Receiver, Contents)
+        response = statementService.sendSMS(
+            CorpNum, ItemCode, MgtKey, Sender, Receiver, Contents
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendFAX(request):
     """
@@ -1178,9 +1223,16 @@ def sendFAX(request):
 
         response = statementService.sendFAX(CorpNum, ItemCode, MgtKey, Sender, Receiver)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def FAXSend(request):
     """
@@ -1205,112 +1257,78 @@ def FAXSend(request):
         statement = Statement(
             # 작성일자 yyyyMMdd
             writeDate="20220805",
-
             # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
-
             # 과세형태, [과세 / 영세 / 면세] 중 기재
             taxType="과세",
-
             # 맞춤양식코드, 미기재시 기본양식으로 처리
             formCode="",
-
             # 명세서 코드, [121-거래명세서], [122-청구서], [123-견적서], [124-발주서], [125-입금표], [126-영수증]
             itemCode=121,
-
             # 전자명세서 문서번호, 1~24자리, 영문,숫자,-,_ 조합으로 발신자별 고유번호 생성
             mgtKey="20220805-100",
-
             # 발신자 사업자번호, '-' 제외 10자리
             senderCorpNum=CorpNum,
-
             # 발신자 상호
             senderCorpName="발신자 상호",
-
             # 발신자 주소
             senderAddr="발신자 주소",
-
             # 발신자 대표자 성명
             senderCEOName="발신자 대표자 성명",
-
             # 발신자 종사업장 식별번호, 필요시 4자리 숫자값 기재
             senderTaxRegID="",
-
             # 발신자 종목
             senderBizClass="종목",
-
             # 발신자 업태
             senderBizType="업태",
-
             # 발신자 담당자 성명
             senderContactName="발신자 담당자명",
-
             # 발신자 메일주소
             senderEmail="",
-
             # 발신자 연락처
             senderTEL="",
-
             # 발신자 휴대폰번호
             senderHP="",
-
             # 수신자 사업자번호, '-' 제외 10자리
             receiverCorpNum="8888888888",
-
             # 수신자 상호
             receiverCorpName="수신자 상호",
-
             # 수신자 대표자 성명
             receiverCEOName="수신자 대표자 성명",
-
             # 수신자 주소
             receiverAddr="수신자 주소",
-
             # 수신자 종사업장식별번호, 필요시 4자리 숫자값 기재
             receiverTaxRegID="",
-
             # 수신자 종목
             receiverBizClass="수신자 종목",
-
             # 수신자 업태
             receiverBizType="수신자 업태",
-
             # 수신자 담당자 성명
             receiverContactName="수신자 담당자명",
-
             # 수신자 메일주소
             # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             receiverEmail="",
-
             # 수신자 연락처
             receiverTEL="",
-
             # 수신자 휴대폰번호
             receiverHP="",
-
             # 공급가액 합계
             supplyCostTotal="20000",
-
             # 세액 합계
             taxTotal="2000",
-
             # 합계금액, 공금가액 합계 + 세액 합계
             totalAmount="22000",
-
             # 기재 상 '일련번호' 항목
             serialNum="123",
-
             # 기재 상 '비고' 항목
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
-
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
@@ -1329,7 +1347,7 @@ def FAXSend(request):
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
                 supplyCost="10000",  # 공급가액
-                tax="1000"  # 세액
+                tax="1000",  # 세액
             )
         )
         statement.detailList.append(
@@ -1341,23 +1359,26 @@ def FAXSend(request):
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
                 supplyCost="10000",  # 공급가액
-                tax="1000"  # 세액
+                tax="1000",  # 세액
             )
         )
 
         # 추가속성정보, 명세서 종류별 추가적인 속성을{key:value}형식의 Dictionary로 정의
         # 자세한 정보는 "전자명세서 API 연동매뉴얼 > [5.2. 기본양식 추가속성 테이블] 참조
         statement.propertyBag = {
-            'Balance': "20000",  # 전잔액
-            'Deposit': "5000",  # 입금액
-            'CBalance': "25000"  # 현잔액
+            "Balance": "20000",  # 전잔액
+            "Deposit": "5000",  # 입금액
+            "CBalance": "25000",  # 현잔액
         }
 
         result = statementService.FAXSend(CorpNum, statement, SendNum, ReceiveNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def attachStatement(request):
     """
@@ -1380,11 +1401,20 @@ def attachStatement(request):
         # 첨부할 전자명세서 문서번호
         SubMgtKey = "20220805-002"
 
-        response = statementService.attachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey)
+        response = statementService.attachStatement(
+            CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def detachStatement(request):
     """
@@ -1407,11 +1437,20 @@ def detachStatement(request):
         # 첨부해제할 전자명세서 문서번호
         SubMgtKey = "20220805-002"
 
-        response = statementService.detachStatement(CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey)
+        response = statementService.detachStatement(
+            CorpNum, ItemCode, MgtKey, SubItemCode, SubMgtKey
+        )
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def listEmailConfig(request):
     """
@@ -1424,9 +1463,14 @@ def listEmailConfig(request):
 
         EmailConfig = statementService.listEmailConfig(CorpNum)
 
-        return render(request, 'Statement/ListEmailConfig.html', {'EmailConfig': EmailConfig})
+        return render(
+            request, "Statement/ListEmailConfig.html", {"EmailConfig": EmailConfig}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateEmailConfig(request):
     """
@@ -1445,16 +1489,23 @@ def updateEmailConfig(request):
         CorpNum = settings.testCorpNum
 
         # 메일 전송 유형
-        EmailType = 'SMT_ISSUE'
+        EmailType = "SMT_ISSUE"
 
         # 전송 여부 (True = 전송, False = 미전송)
         SendYN = True
 
         response = statementService.updateEmailConfig(CorpNum, EmailType, SendYN)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getBalance(request):
     """
@@ -1467,9 +1518,12 @@ def getBalance(request):
 
         result = statementService.getBalance(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getChargeURL(request):
     """
@@ -1486,9 +1540,12 @@ def getChargeURL(request):
 
         url = statementService.getChargeURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPaymentURL(request):
     """
@@ -1505,9 +1562,12 @@ def getPaymentURL(request):
 
         url = statementService.getPaymentURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUseHistoryURL(request):
     """
@@ -1524,9 +1584,12 @@ def getUseHistoryURL(request):
 
         url = statementService.getUseHistoryURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPartnerBalance(request):
     """
@@ -1539,9 +1602,12 @@ def getPartnerBalance(request):
 
         result = statementService.getPartnerBalance(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPartnerURL(request):
     """
@@ -1558,9 +1624,12 @@ def getPartnerURL(request):
 
         url = statementService.getPartnerURL(CorpNum, TOGO)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUnitCost(request):
     """
@@ -1577,9 +1646,12 @@ def getUnitCost(request):
 
         result = statementService.getUnitCost(CorpNum, ItemCode)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getChargeInfo(request):
     """
@@ -1596,112 +1668,169 @@ def getChargeInfo(request):
 
         response = statementService.getChargeInfo(CorpNum, ItemCode)
 
-        return render(request, 'getChargeInfo.html', {'response': response})
+        return render(request, "getChargeInfo.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def paymentRequest(request):
     """
-        연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
-        - https://developers.popbill.com/reference/statement/python/api/point#PaymentRequest
+    연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+    - https://developers.popbill.com/reference/statement/python/api/point#PaymentRequest
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = statementService.paymentRequest(CorpNum, UserID)
-        return render(request, 'paymentResponse.html', {'response':response})
+        return render(request, "paymentResponse.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSettleResult(request):
     """
-        연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
-        - https://developers.popbill.com/reference/statement/python/api/point#GetSettleResult
+    연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+    - https://developers.popbill.com/reference/statement/python/api/point#GetSettleResult
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = statementService.getSettleResult(CorpNum, UserID)
 
-        return render(request, 'paymentHistory.html', {'response':response})
+        return render(request, "paymentHistory.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPaymentHistory(request):
     """
-        연동회원의 포인트 결제내역을 확인합니다.
-        - https://developers.popbill.com/reference/statement/python/api/point#GetPaymentHistory
+    연동회원의 포인트 결제내역을 확인합니다.
+    - https://developers.popbill.com/reference/statement/python/api/point#GetPaymentHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        SDate	= "20230101"
-        EDate =	"20230110"
-        Page	= 1
-        PerPage	= 500
+        # 조회 기간의 시작일자 (형식 : yyyyMMdd)
+        SDate = "20230101"
+        # 조회 기간의 종료일자 (형식 : yyyyMMdd)
+        EDate = "20230110"
+        # 목록 페이지번호 (기본값 1)
+        Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
+        PerPage = 500
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = statementService.getPaymentHistory(CorpNum, SDate,EDate,Page,PerPage, UserID)
-        return render(request, 'paymentHistoryResult.html', {'response':response})
+        response = statementService.getPaymentHistory(
+            CorpNum, SDate, EDate, Page, PerPage, UserID
+        )
+        return render(request, "paymentHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUseHistory(request):
     """
-        연동회원의 포인트 사용내역을 확인합니다.
-        - https://developers.popbill.com/reference/statement/python/api/point#GetUseHistory
+    연동회원의 포인트 사용내역을 확인합니다.
+    - https://developers.popbill.com/reference/statement/python/api/point#GetUseHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        SDate	= "20230101"
-        EDate =	"20230110"
-        Page	= 1
-        PerPage	= 500
-        Order	= "D"
+        # 조회 기간의 시작일자 (형식 : yyyyMMdd)
+        SDate = "20230101"
+        # 조회 기간의 종료일자 (형식 : yyyyMMdd)
+        EDate = "20230110"
+        # 목록 페이지번호 (기본값 1)
+        Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
+        PerPage = 500
+        # 거래일자를 기준으로 하는 목록 정렬 방향 : "D" / "A" 중 택 1
+        Order = "D"
+        # 팝빌회원 아이디
         UserID = settings.testUserID
-        response =        CorpNum = settings.testCorpNum
-        UserID = settings.testUserID
-        response = statementService.getUseHistory(CorpNum,SDate,EDate,Page,PerPage,Order, UserID)
-        return render(request, 'useHistoryResult.html', {'response':response})
+        response = statementService.getUseHistory(
+            CorpNum, SDate, EDate, Page, PerPage, Order, UserID
+        )
+        return render(request, "useHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def refund(request):
     """
-        연동회원 포인트를 환불 신청합니다.
-        - https://developers.popbill.com/reference/statement/python/api/point#Refund
+    연동회원 포인트를 환불 신청합니다.
+    - https://developers.popbill.com/reference/statement/python/api/point#Refund
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 환불신청 객체정보
         refundForm = RefundForm(
+            # 담당자명
             contactname="환불신청테스트",
+            # 담당자 연락처
             tel="01077777777",
+            # 환불 신청 포인트
             requestpoint="10",
+            # 은행명
             accountbank="국민",
+            # 계좌번호
             accountnum="123123123-123",
+            # 예금주명
             accountname="예금주",
+            # 환불사유
             reason="테스트 환불 사유",
         )
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = statementService.refund(CorpNum, refundForm, UserID)
-        return render(request, 'response.html', {'response':response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"response": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getRefundHistory(request):
     """
-        연동회원의 포인트 환불신청내역을 확인합니다.
-        - - https://developers.popbill.com/reference/statement/python/api/point#GetRefundHistory
+    연동회원의 포인트 환불신청내역을 확인합니다.
+    - - https://developers.popbill.com/reference/statement/python/api/point#GetRefundHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 목록 페이지번호 (기본값 1)
         Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
         response = statementService.getRefundHistory(CorpNum, Page, PerPage, UserID)
-        return render(request, 'refundHistoryResult.html', {'response':response})
+        return render(request, "refundHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
 
 
 def checkIsMember(request):
@@ -1715,9 +1844,16 @@ def checkIsMember(request):
 
         response = statementService.checkIsMember(CorpNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def checkID(request):
     """
@@ -1730,9 +1866,16 @@ def checkID(request):
 
         response = statementService.checkID(memberID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def joinMember(request):
     """
@@ -1742,47 +1885,43 @@ def joinMember(request):
     try:
         # 회원정보
         newMember = JoinForm(
-
             # 아이디 (6자 이상 50자 미만)
             ID="join_id_test",
-
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
-
             # 사업자번호 "-" 제외
             CorpNum="0000000000",
-
             # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
-
             # 상호 (최대 200자)
             CorpName="테스트가입상호",
-
             # 주소 (최대 300자)
             Addr="테스트회사주소",
-
             # 업태 (최대 100자)
             BizType="테스트업태",
-
             # 종목 (최대 100자)
             BizClass="테스트업종",
-
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
-
             # 담당자 이메일주소 (최대 100자)
             ContactEmail="",
-
             # 담당자 연락처 (최대 20자)
-            ContactTEL=""
+            ContactTEL="",
         )
 
         response = statementService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getCorpInfo(request):
     """
@@ -1795,9 +1934,12 @@ def getCorpInfo(request):
 
         response = statementService.getCorpInfo(CorpNum)
 
-        return render(request, 'getCorpInfo.html', {'response': response})
+        return render(request, "getCorpInfo.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateCorpInfo(request):
     """
@@ -1810,28 +1952,30 @@ def updateCorpInfo(request):
 
         # 회사정보
         corpInfo = CorpInfo(
-
             # 대표자 성명 (최대 100자)
             ceoname="대표자_성명",
-
             # 상호 (최대 200자)
             corpName="상호",
-
             # 주소 (최대 300자)
             addr="주소",
-
             # 업태 (최대 100자)
             bizType="업태",
-
             # 종목 (최대 100자)
-            bizClass="종목"
+            bizClass="종목",
         )
 
         response = statementService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def registContact(request):
     """
@@ -1844,32 +1988,33 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-
             # 아이디 (6자 이상 50자 미만)
             id="popbill_test_id",
-
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
-
             # 담당자명 (최대 100자)
             personName="담당자명",
-
             # 담당자 연락처 (최대 20자)
             tel="",
-
             # 담당자 이메일 (최대 100자)
             email="",
-
-            #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1
+            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=1,
         )
 
         response = statementService.registContact(CorpNum, newContact)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getContactInfo(request):
     """
@@ -1881,13 +2026,16 @@ def getContactInfo(request):
         CorpNum = settings.testCorpNum
 
         # 담당자 아이디
-        contactID = 'testkorea'
+        contactID = "testkorea"
 
         contactInfo = statementService.getContactInfo(CorpNum, contactID)
 
-        return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
+        return render(request, "getContactInfo.html", {"contactInfo": contactInfo})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def listContact(request):
     """
@@ -1900,9 +2048,12 @@ def listContact(request):
 
         listContact = statementService.listContact(CorpNum)
 
-        return render(request, 'listContact.html', {'listContact': listContact})
+        return render(request, "listContact.html", {"listContact": listContact})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateContact(request):
     """
@@ -1918,25 +2069,26 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-
             # 담당자 아이디
             id=UserID,
-
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
-
             # 담당자 연락처 (최대 20자)
             tel="",
-
             # 담당자 메일주소 (최대 100자)
             email="",
-
-            #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1
+            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=1,
         )
 
         response = statementService.updateContact(CorpNum, updateInfo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )

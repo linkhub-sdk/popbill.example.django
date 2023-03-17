@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import FaxService, PopbillException, ContactInfo, JoinForm, FaxReceiver, FileData, CorpInfo, RefundForm
+from popbill import (
+    ContactInfo,
+    CorpInfo,
+    FaxReceiver,
+    FaxService,
+    FileData,
+    JoinForm,
+    PopbillException,
+    RefundForm,
+)
 
 from config import settings
 
@@ -16,18 +25,20 @@ faxService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
 faxService.UseStaticIP = settings.UseStaticIP
 
-#로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, 권장(True)
 faxService.UseLocalTimeYN = settings.UseLocalTimeYN
 
+
 def index(request):
-    return render(request, 'Fax/Index.html', {})
+    return render(request, "Fax/Index.html", {})
+
 
 def checkSenderNumber(request):
-    '''
+    """
     팩스 발신번호 등록여부를 확인합니다.
     - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
     - https://developers.popbill.com/reference/fax/python/api/sendnum#CheckSenderNumber
-    '''
+    """
 
     try:
         # 팝빌회원 사업자번호
@@ -38,9 +49,16 @@ def checkSenderNumber(request):
 
         response = faxService.checkSenderNumber(CorpNum, senderNumber)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSenderNumberMgtURL(request):
     """
@@ -57,9 +75,12 @@ def getSenderNumberMgtURL(request):
 
         url = faxService.getSenderNumberMgtURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSenderNumberList(request):
     """
@@ -72,9 +93,14 @@ def getSenderNumberList(request):
 
         senderList = faxService.getSenderNumberList(CorpNum)
 
-        return render(request, 'Fax/GetSenderNumberList.html', {'senderList': senderList})
+        return render(
+            request, "Fax/GetSenderNumberList.html", {"senderList": senderList}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendFAX(request):
     """
@@ -102,7 +128,10 @@ def sendFAX(request):
         ReceiverName = "수신자명"
 
         # 파일경로 (해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개)
-        FilePath = ["./FaxExample/static/file/faxfile.jpg", "./FaxExample/static/file/test.pdf"]
+        FilePath = [
+            "./FaxExample/static/file/faxfile.jpg",
+            "./FaxExample/static/file/test.pdf",
+        ]
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         ReserveDT = ""
@@ -120,12 +149,26 @@ def sendFAX(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = faxService.sendFax(CorpNum, Sender, Receiver, ReceiverName,
-                                        FilePath, ReserveDT, UserID, SenderName, AdsYN, Title, RequestNum)
+        receiptNum = faxService.sendFax(
+            CorpNum,
+            Sender,
+            Receiver,
+            ReceiverName,
+            FilePath,
+            ReserveDT,
+            UserID,
+            SenderName,
+            AdsYN,
+            Title,
+            RequestNum,
+        )
 
-        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Fax/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendFAX_multi(request):
     """
@@ -147,7 +190,10 @@ def sendFAX_multi(request):
         SenderName = "발신자명"
 
         # 파일경로 (해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개)
-        FilePath = ["./FaxExample/static/file/faxfile.jpg", "./FaxExample/static/file/test.pdf"]
+        FilePath = [
+            "./FaxExample/static/file/faxfile.jpg",
+            "./FaxExample/static/file/test.pdf",
+        ]
 
         # 광고팩스 전송여부 , true / false 중 택 1
         # └ true = 광고 , false = 일반
@@ -166,7 +212,7 @@ def sendFAX_multi(request):
                 FaxReceiver(
                     receiveNum="",  # 수신번호
                     receiveName="수신자명" + str(x),  # 수신자명
-                    interOPRefKey = '20220805-'+str(x) # 파트너 지정키
+                    interOPRefKey="20220805-" + str(x),  # 파트너 지정키
                 )
             )
 
@@ -175,12 +221,25 @@ def sendFAX_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = faxService.sendFax_multi(CorpNum, Sender, Receivers,
-                                                FilePath, ReserveDT, UserID, SenderName, AdsYN, Title, RequestNum)
+        receiptNum = faxService.sendFax_multi(
+            CorpNum,
+            Sender,
+            Receivers,
+            FilePath,
+            ReserveDT,
+            UserID,
+            SenderName,
+            AdsYN,
+            Title,
+            RequestNum,
+        )
 
-        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Fax/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendFAXBinary(request):
     """
@@ -207,13 +266,12 @@ def sendFAXBinary(request):
         # 수신자명
         ReceiverName = "수신자명"
 
-        #전송 파일 객체정보 리스트, 최대 20개
+        # 전송 파일 객체정보 리스트, 최대 20개
         FileDatas = []
         with open("./FaxExample/static/file/test.pdf", "rb") as f:
             FileDatas.append(
                 FileData(
-                    fileName='test.pdf', #전송 파일명
-                    fileData=f.read()    #전송 파일 바이너리 데이터
+                    fileName="test.pdf", fileData=f.read()  # 전송 파일명  # 전송 파일 바이너리 데이터
                 )
             )
 
@@ -233,12 +291,26 @@ def sendFAXBinary(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = faxService.sendFaxBinary(CorpNum, Sender, Receiver, ReceiverName,
-                                        FileDatas, ReserveDT, UserID, SenderName, AdsYN, Title, RequestNum)
+        receiptNum = faxService.sendFaxBinary(
+            CorpNum,
+            Sender,
+            Receiver,
+            ReceiverName,
+            FileDatas,
+            ReserveDT,
+            UserID,
+            SenderName,
+            AdsYN,
+            Title,
+            RequestNum,
+        )
 
-        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Fax/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendFAXBinary_multi(request):
     """
@@ -276,17 +348,16 @@ def sendFAXBinary_multi(request):
                 FaxReceiver(
                     receiveNum="",  # 수신번호
                     receiveName="수신자명" + str(x),  # 수신자명
-                    interOPRefKey = '20220805-'+str(x) # 파트너 지정키
+                    interOPRefKey="20220805-" + str(x),  # 파트너 지정키
                 )
             )
 
-        #전송 파일 객체정보 리스트, 최대 20개
+        # 전송 파일 객체정보 리스트, 최대 20개
         FileDatas = []
         with open("./FaxExample/static/file/test.pdf", "rb") as f:
             FileDatas.append(
                 FileData(
-                    fileName='test.pdf', #전송 파일명
-                    fileData=f.read()    #전송 파일 바이너리 데이터
+                    fileName="test.pdf", fileData=f.read()  # 전송 파일명  # 전송 파일 바이너리 데이터
                 )
             )
 
@@ -295,12 +366,25 @@ def sendFAXBinary_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = faxService.sendFaxBinary_multi(CorpNum, Sender, Receivers,
-                                                FileDatas, ReserveDT, UserID, SenderName, AdsYN, Title, RequestNum)
+        receiptNum = faxService.sendFaxBinary_multi(
+            CorpNum,
+            Sender,
+            Receivers,
+            FileDatas,
+            ReserveDT,
+            UserID,
+            SenderName,
+            AdsYN,
+            Title,
+            RequestNum,
+        )
 
-        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Fax/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def resendFAX(request):
     """
@@ -344,12 +428,25 @@ def resendFAX(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = faxService.resendFax(CorpNum, ReceiptNum, Sender, SenderName,
-                                            Receiver, ReceiverName, ReserveDT, UserID, Title, RequestNum)
+        receiptNum = faxService.resendFax(
+            CorpNum,
+            ReceiptNum,
+            Sender,
+            SenderName,
+            Receiver,
+            ReceiverName,
+            ReserveDT,
+            UserID,
+            Title,
+            RequestNum,
+        )
 
-        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Fax/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def resendFAXRN(request):
     """
@@ -367,13 +464,13 @@ def resendFAXRN(request):
         UserID = settings.testUserID
 
         # 원본 팩스 전송시 할당한 전송요청번호
-        OrgRequestNum = ''
+        OrgRequestNum = ""
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
-        Sender = ''
+        Sender = ""
 
         # 발신자명, 공백처리시 기존전송정보로 재전송
-        SenderName = '발신자명'
+        SenderName = "발신자명"
 
         # 수신번호/수신자명 모두 공백처리시 기존전송정보로 재전송
         # 수신번호
@@ -386,19 +483,32 @@ def resendFAXRN(request):
         ReserveDT = ""
 
         # 팩스제목
-        Title = '팩스 재전송 제목'
+        Title = "팩스 재전송 제목"
 
         # 재전송 팩스의 전송요청번호
         # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = faxService.resendFaxRN(CorpNum, OrgRequestNum, Sender, SenderName,
-                                            Receiver, ReceiverName, ReserveDT, UserID, Title, RequestNum)
+        receiptNum = faxService.resendFaxRN(
+            CorpNum,
+            OrgRequestNum,
+            Sender,
+            SenderName,
+            Receiver,
+            ReceiverName,
+            ReserveDT,
+            UserID,
+            Title,
+            RequestNum,
+        )
 
-        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Fax/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def resendFAX_multi(request):
     """
@@ -450,20 +560,32 @@ def resendFAX_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = faxService.resendFax_multi(CorpNum, ReceiptNum, Sender,
-                                                SenderName, Receivers, ReserveDT, UserID, Title, RequestNum)
+        receiptNum = faxService.resendFax_multi(
+            CorpNum,
+            ReceiptNum,
+            Sender,
+            SenderName,
+            Receivers,
+            ReserveDT,
+            UserID,
+            Title,
+            RequestNum,
+        )
 
-        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Fax/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def resendFAXRN_multi(request):
     """
-파트너가 할당한 전송요청번호를 통해 다수의 수신자에게 팩스를 재전송합니다. (최대 1,000건)
-- 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
-- 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-- 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
-    - https://developers.popbill.com/reference/fax/python/api/send#ResendFAXRN_multi
+    파트너가 할당한 전송요청번호를 통해 다수의 수신자에게 팩스를 재전송합니다. (최대 1,000건)
+    - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
+    - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+    - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
+        - https://developers.popbill.com/reference/fax/python/api/send#ResendFAXRN_multi
     """
     try:
         # 팝빌회원 사업자번호
@@ -473,13 +595,13 @@ def resendFAXRN_multi(request):
         UserID = settings.testUserID
 
         # 원본 팩스 전송시 할당한 전송요청번호
-        OrgRequestNum = ''
+        OrgRequestNum = ""
 
         # 발신번호, 공백처리시 기존전송정보로 재전송
-        Sender = ''
+        Sender = ""
 
         # 발신자명, 공백처리시 기존전송정보로 재전송
-        SenderName = '발신자명'
+        SenderName = "발신자명"
 
         # 예약전송시간, 작성형식:yyyyMMddHHmmss, 공백 기재시 즉시전송
         ReserveDT = ""
@@ -488,7 +610,7 @@ def resendFAXRN_multi(request):
         Receivers = None
 
         # 팩스제목
-        Title = 'Python 팩스동보 재전송'
+        Title = "Python 팩스동보 재전송"
 
         # 수신자 정보가 기존전송정보와 다를경우 아래의 코드 참조
         """
@@ -508,12 +630,24 @@ def resendFAXRN_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = faxService.resendFaxRN_multi(CorpNum, OrgRequestNum, Sender,
-                                                    SenderName, Receivers, ReserveDT, UserID, Title, RequestNum)
+        receiptNum = faxService.resendFaxRN_multi(
+            CorpNum,
+            OrgRequestNum,
+            Sender,
+            SenderName,
+            Receivers,
+            ReserveDT,
+            UserID,
+            Title,
+            RequestNum,
+        )
 
-        return render(request, 'Fax/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Fax/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancelReserve(request):
     """
@@ -529,9 +663,16 @@ def cancelReserve(request):
 
         response = faxService.cancelReserve(CorpNum, receiptNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancelReserveRN(request):
     """
@@ -547,9 +688,16 @@ def cancelReserveRN(request):
 
         response = faxService.cancelReserveRN(CorpNum, requestNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getFaxResult(request):
     """
@@ -565,9 +713,12 @@ def getFaxResult(request):
 
         resultList = faxService.getFaxResult(CorpNum, receiptNum)
 
-        return render(request, 'Fax/GetFaxResult.html', {'resultList': resultList})
+        return render(request, "Fax/GetFaxResult.html", {"resultList": resultList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getFaxResultRN(request):
     """
@@ -583,9 +734,12 @@ def getFaxResultRN(request):
 
         resultList = faxService.getFaxResultRN(CorpNum, requestNum)
 
-        return render(request, 'Fax/GetFaxResult.html', {'resultList': resultList})
+        return render(request, "Fax/GetFaxResult.html", {"resultList": resultList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def search(request):
     """
@@ -636,12 +790,26 @@ def search(request):
         # 미입력시 전체조회
         QString = ""
 
-        response = faxService.search(CorpNum, SDate, EDate, State, ReserveYN, SenderOnly,
-                                        Page, PerPage, Order, UserID, QString)
+        response = faxService.search(
+            CorpNum,
+            SDate,
+            EDate,
+            State,
+            ReserveYN,
+            SenderOnly,
+            Page,
+            PerPage,
+            Order,
+            UserID,
+            QString,
+        )
 
-        return render(request, 'Fax/Search.html', {'response': response})
+        return render(request, "Fax/Search.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSentListURL(request):
     """
@@ -658,9 +826,12 @@ def getSentListURL(request):
 
         url = faxService.getSentListURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPreviewURL(request):
     """
@@ -680,9 +851,11 @@ def getPreviewURL(request):
 
         url = faxService.getPreviewURL(CorpNum, ReceiptNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
 
 
 def getBalance(request):
@@ -696,9 +869,12 @@ def getBalance(request):
 
         result = faxService.getBalance(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getChargeURL(request):
     """
@@ -715,9 +891,12 @@ def getChargeURL(request):
 
         url = faxService.getChargeURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPaymentURL(request):
     """
@@ -734,9 +913,12 @@ def getPaymentURL(request):
 
         url = faxService.getPaymentURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUseHistoryURL(request):
     """
@@ -753,9 +935,12 @@ def getUseHistoryURL(request):
 
         url = faxService.getUseHistoryURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPartnerBalance(request):
     """
@@ -768,9 +953,12 @@ def getPartnerBalance(request):
 
         result = faxService.getPartnerBalance(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPartnerURL(request):
     """
@@ -787,9 +975,12 @@ def getPartnerURL(request):
 
         url = faxService.getPartnerURL(CorpNum, TOGO)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUnitCost(request):
     """
@@ -807,9 +998,12 @@ def getUnitCost(request):
 
         result = faxService.getUnitCost(CorpNum, receiveNumType)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getChargeInfo(request):
     """
@@ -830,112 +1024,169 @@ def getChargeInfo(request):
 
         response = faxService.getChargeInfo(CorpNum, UserID, receiveNumType)
 
-        return render(request, 'getChargeInfo.html', {'response': response})
+        return render(request, "getChargeInfo.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def paymentRequest(request):
     """
-        연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
-        - https://developers.popbill.com/reference/fax/python/api/point#PaymentRequest
+    연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+    - https://developers.popbill.com/reference/fax/python/api/point#PaymentRequest
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = faxService.paymentRequest(CorpNum, UserID)
-        return render(request, 'paymentResponse.html', {'response':response})
+        return render(request, "paymentResponse.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSettleResult(request):
     """
-        연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
-        - https://developers.popbill.com/reference/fax/python/api/point#GetSettleResult
+    연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+    - https://developers.popbill.com/reference/fax/python/api/point#GetSettleResult
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = faxService.getSettleResult(CorpNum, UserID)
 
-        return render(request, 'paymentHistory.html', {'response':response})
+        return render(request, "paymentHistory.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPaymentHistory(request):
     """
-        연동회원의 포인트 결제내역을 확인합니다.
-        - https://developers.popbill.com/reference/fax/python/api/point#GetPaymentHistory
+    연동회원의 포인트 결제내역을 확인합니다.
+    - https://developers.popbill.com/reference/fax/python/api/point#GetPaymentHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        SDate	= "20230101"
-        EDate =	"20230110"
-        Page	= 1
-        PerPage	= 500
+        # 조회 기간의 시작일자 (형식 : yyyyMMdd)
+        SDate = "20230101"
+        # 조회 기간의 종료일자 (형식 : yyyyMMdd)
+        EDate = "20230110"
+        # 목록 페이지번호 (기본값 1)
+        Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
+        PerPage = 500
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = faxService.getPaymentHistory(CorpNum, SDate,EDate,Page,PerPage, UserID)
-        return render(request, 'paymentHistoryResult.html', {'response':response})
+        response = faxService.getPaymentHistory(
+            CorpNum, SDate, EDate, Page, PerPage, UserID
+        )
+        return render(request, "paymentHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUseHistory(request):
     """
-        연동회원의 포인트 사용내역을 확인합니다.
-        - https://developers.popbill.com/reference/fax/python/api/point#GetUseHistory
+    연동회원의 포인트 사용내역을 확인합니다.
+    - https://developers.popbill.com/reference/fax/python/api/point#GetUseHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        SDate	= "20230101"
-        EDate =	"20230110"
-        Page	= 1
-        PerPage	= 500
-        Order	= "D"
+        # 조회 기간의 시작일자 (형식 : yyyyMMdd)
+        SDate = "20230101"
+        # 조회 기간의 종료일자 (형식 : yyyyMMdd)
+        EDate = "20230110"
+        # 목록 페이지번호 (기본값 1)
+        Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
+        PerPage = 500
+        # 거래일자를 기준으로 하는 목록 정렬 방향 : "D" / "A" 중 택 1
+        Order = "D"
+        # 팝빌회원 아이디
         UserID = settings.testUserID
-        response =        CorpNum = settings.testCorpNum
-        UserID = settings.testUserID
-        response = faxService.getUseHistory(CorpNum,SDate,EDate,Page,PerPage,Order, UserID)
-        return render(request, 'useHistoryResult.html', {'response':response})
+        response = faxService.getUseHistory(
+            CorpNum, SDate, EDate, Page, PerPage, Order, UserID
+        )
+        return render(request, "useHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def refund(request):
     """
-        연동회원 포인트를 환불 신청합니다.
-        - https://developers.popbill.com/reference/fax/python/api/point#Refund
+    연동회원 포인트를 환불 신청합니다.
+    - https://developers.popbill.com/reference/fax/python/api/point#Refund
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 환불신청 객체정보
         refundForm = RefundForm(
+            # 담당자명
             contactname="환불신청테스트",
+            # 담당자 연락처
             tel="01077777777",
+            # 환불 신청 포인트
             requestpoint="10",
+            # 은행명
             accountbank="국민",
+            # 계좌번호
             accountnum="123123123-123",
+            # 예금주명
             accountname="예금주",
+            # 환불사유
             reason="테스트 환불 사유",
         )
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = faxService.refund(CorpNum, refundForm, UserID)
-        return render(request, 'response.html', {'response':response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"response": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getRefundHistory(request):
     """
-        연동회원의 포인트 환불신청내역을 확인합니다.
-        - - https://developers.popbill.com/reference/fax/python/api/point#GetRefundHistory
+    연동회원의 포인트 환불신청내역을 확인합니다.
+    - - https://developers.popbill.com/reference/fax/python/api/point#GetRefundHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 목록 페이지번호 (기본값 1)
         Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
         response = faxService.getRefundHistory(CorpNum, Page, PerPage, UserID)
-        return render(request, 'refundHistoryResult.html', {'response':response})
+        return render(request, "refundHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
 
 
 def checkIsMember(request):
@@ -949,9 +1200,16 @@ def checkIsMember(request):
 
         response = faxService.checkIsMember(CorpNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def checkID(request):
     """
@@ -964,9 +1222,16 @@ def checkID(request):
 
         response = faxService.checkID(memberID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def joinMember(request):
     """
@@ -976,47 +1241,43 @@ def joinMember(request):
     try:
         # 회원정보
         newMember = JoinForm(
-
             # 아이디 (6자 이상 50자 미만)
             ID="join_id_test",
-
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
-
             # 사업자번호 "-" 제외
             CorpNum="0000000000",
-
             # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
-
             # 상호 (최대 200자)
             CorpName="테스트가입상호",
-
             # 주소 (최대 300자)
             Addr="테스트회사주소",
-
             # 업태 (최대 100자)
             BizType="테스트업태",
-
             # 종목 (최대 100자)
             BizClass="테스트업종",
-
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
-
             # 담당자 이메일주소 (최대 100자)
             ContactEmail="",
-
             # 담당자 연락처 (최대 20자)
-            ContactTEL=""
+            ContactTEL="",
         )
 
         response = faxService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getAccessURL(request):
     """
@@ -1033,9 +1294,12 @@ def getAccessURL(request):
 
         url = faxService.getAccessURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getCorpInfo(request):
     """
@@ -1048,9 +1312,12 @@ def getCorpInfo(request):
 
         response = faxService.getCorpInfo(CorpNum)
 
-        return render(request, 'getCorpInfo.html', {'response': response})
+        return render(request, "getCorpInfo.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateCorpInfo(request):
     """
@@ -1063,28 +1330,30 @@ def updateCorpInfo(request):
 
         # 회사정보
         corpInfo = CorpInfo(
-
             # 대표자 성명 (최대 100자)
             ceoname="대표자_성명",
-
             # 상호 (최대 200자)
             corpName="상호",
-
             # 주소 (최대 300자)
             addr="주소",
-
             # 업태 (최대 100자)
             bizType="업태",
-
             # 종목 (최대 100자)
-            bizClass="종목"
+            bizClass="종목",
         )
 
         response = faxService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def registContact(request):
     """
@@ -1097,32 +1366,33 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-
             # 아이디 (6자 이상 50자 미만)
             id="popbill_test_id",
-
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
-
             # 담당자명 (최대 100자)
             personName="담당자명",
-
             # 담당자 연락처 (최대 20자)
             tel="",
-
             # 담당자 이메일 (최대 100자)
             email="",
-
-            #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1
+            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=1,
         )
 
         response = faxService.registContact(CorpNum, newContact)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getContactInfo(request):
     """
@@ -1134,13 +1404,16 @@ def getContactInfo(request):
         CorpNum = settings.testCorpNum
 
         # 담당자 아이디
-        contactID = 'testkorea'
+        contactID = "testkorea"
 
         contactInfo = faxService.getContactInfo(CorpNum, contactID)
 
-        return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
+        return render(request, "getContactInfo.html", {"contactInfo": contactInfo})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def listContact(request):
     """
@@ -1153,9 +1426,12 @@ def listContact(request):
 
         listContact = faxService.listContact(CorpNum)
 
-        return render(request, 'listContact.html', {'listContact': listContact})
+        return render(request, "listContact.html", {"listContact": listContact})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateContact(request):
     """
@@ -1171,25 +1447,26 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-
             # 담당자 아이디
             id=UserID,
-
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
-
             # 담당자 연락처 (최대 20자)
             tel="",
-
             # 담당자 메일주소 (최대 100자)
             email="",
-
-            #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1
+            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=1,
         )
 
         response = faxService.updateContact(CorpNum, updateInfo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )

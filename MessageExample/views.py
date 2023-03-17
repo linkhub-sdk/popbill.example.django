@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from popbill import PopbillException, ContactInfo, CorpInfo, JoinForm, MessageService, \
-    MessageReceiver, RefundForm
+from popbill import (
+    ContactInfo,
+    CorpInfo,
+    JoinForm,
+    MessageReceiver,
+    MessageService,
+    PopbillException,
+    RefundForm,
+)
 
 from config import settings
 
@@ -17,7 +24,7 @@ messageService.IPRestrictOnOff = settings.IPRestrictOnOff
 # 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
 messageService.UseStaticIP = settings.UseStaticIP
 
-#로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, 권장(True)
 messageService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 # 문자를 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
@@ -26,14 +33,15 @@ messageService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 
 def index(request):
-    return render(request, 'Message/Index.html', {})
+    return render(request, "Message/Index.html", {})
+
 
 def checkSenderNumber(request):
-    '''
+    """
     문자 발신번호 등록여부를 확인합니다.
     - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
     - https://developers.popbill.com/reference/sms/python/api/sendnum#CheckSenderNumber
-    '''
+    """
 
     try:
         # 팝빌회원 사업자번호
@@ -44,9 +52,16 @@ def checkSenderNumber(request):
 
         response = messageService.checkSenderNumber(CorpNum, senderNumber)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSenderNumberMgtURL(request):
     """
@@ -63,9 +78,12 @@ def getSenderNumberMgtURL(request):
 
         url = messageService.getSenderNumberMgtURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSenderNumberList(request):
     """
@@ -78,9 +96,14 @@ def getSenderNumberList(request):
 
         senderList = messageService.getSenderNumberList(CorpNum)
 
-        return render(request, 'Message/GetSenderNumberList.html', {'senderList': senderList})
+        return render(
+            request, "Message/GetSenderNumberList.html", {"senderList": senderList}
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendSMS(request):
     """
@@ -121,12 +144,25 @@ def sendSMS(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendSMS(CorpNum, Sender, ReceiverNum, ReceiverName,
-                                            Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
+        receiptNum = messageService.sendSMS(
+            CorpNum,
+            Sender,
+            ReceiverNum,
+            ReceiverName,
+            Contents,
+            reserveDT,
+            adsYN,
+            UserID,
+            SenderName,
+            RequestNum,
+        )
 
-        return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendSMS_multi(request):
     """
@@ -159,12 +195,12 @@ def sendSMS_multi(request):
         for x in range(0, 10):
             messages.append(
                 MessageReceiver(
-                    snd='',  # 발신번호
-                    sndnm='발신자명',  # 발신자명
-                    rcv='',  # 수신번호
-                    rcvnm='수신자명' + str(x),  # 수신자명
-                    msg='단문 문자 API TEST',  # 메시지 내용, msg값이 없는경우 동보전송 메시지로 전송됨, 90Byte 초과시 길이가 조정되 전송됨
-                    interOPRefKey='20220805-'+str(x) # 파트너 지정키
+                    snd="",  # 발신번호
+                    sndnm="발신자명",  # 발신자명
+                    rcv="",  # 수신번호
+                    rcvnm="수신자명" + str(x),  # 수신자명
+                    msg="단문 문자 API TEST",  # 메시지 내용, msg값이 없는경우 동보전송 메시지로 전송됨, 90Byte 초과시 길이가 조정되 전송됨
+                    interOPRefKey="20220805-" + str(x),  # 파트너 지정키
                 )
             )
 
@@ -173,12 +209,16 @@ def sendSMS_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendSMS_multi(CorpNum, Sender, Contents, messages,
-                                                    reserveDT, adsYN, UserID, RequestNum)
+        receiptNum = messageService.sendSMS_multi(
+            CorpNum, Sender, Contents, messages, reserveDT, adsYN, UserID, RequestNum
+        )
 
-        return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendLMS(request):
     """
@@ -222,12 +262,26 @@ def sendLMS(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendLMS(CorpNum, Sender, ReceiverNum, ReceiverName,
-                                            Subject, Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
+        receiptNum = messageService.sendLMS(
+            CorpNum,
+            Sender,
+            ReceiverNum,
+            ReceiverName,
+            Subject,
+            Contents,
+            reserveDT,
+            adsYN,
+            UserID,
+            SenderName,
+            RequestNum,
+        )
 
-        return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendLMS_multi(request):
     """
@@ -263,13 +317,13 @@ def sendLMS_multi(request):
         for x in range(0, 100):
             messages.append(
                 MessageReceiver(
-                    snd='',  # 발신번호
-                    sndnm='발신자명',  # 발신자명
-                    rcv='',  # 수신번호
-                    rcvnm='수신자명' + str(x),  # 수신자명
-                    msg='장문 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨. 2000Byte 초과시 길이가 조정되어 전송됨.
-                    sjt='장문문자제목',  # 장문 메시지 제목
-                    interOPRefKey='20220805-'+str(x) # 파트너 지정키
+                    snd="",  # 발신번호
+                    sndnm="발신자명",  # 발신자명
+                    rcv="",  # 수신번호
+                    rcvnm="수신자명" + str(x),  # 수신자명
+                    msg="장문 문자 API TEST",  # msg값이 없는 경우 동보전송용 메시지로 전송됨. 2000Byte 초과시 길이가 조정되어 전송됨.
+                    sjt="장문문자제목",  # 장문 메시지 제목
+                    interOPRefKey="20220805-" + str(x),  # 파트너 지정키
                 )
             )
 
@@ -278,12 +332,24 @@ def sendLMS_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendLMS_multi(CorpNum, Sender, Subject, Contents,
-                                                messages, reserveDT, adsYN, UserID, RequestNum)
+        receiptNum = messageService.sendLMS_multi(
+            CorpNum,
+            Sender,
+            Subject,
+            Contents,
+            messages,
+            reserveDT,
+            adsYN,
+            UserID,
+            RequestNum,
+        )
 
-        return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendMMS(request):
     """
@@ -320,7 +386,7 @@ def sendMMS(request):
         reserveDT = ""
 
         # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1000px 이하 권장)
-        FilePath = './MessageExample/static/image/mms.jpg'
+        FilePath = "./MessageExample/static/image/mms.jpg"
 
         # 광고성 메시지 여부 ( true , false 중 택 1)
         # └ true = 광고 , false = 일반
@@ -331,13 +397,27 @@ def sendMMS(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendMMS(CorpNum, Sender, ReceiverNum, ReceiverName,
-                                            Subject, Contents, FilePath, reserveDT, adsYN, UserID, SenderName,
-                                            RequestNum)
+        receiptNum = messageService.sendMMS(
+            CorpNum,
+            Sender,
+            ReceiverNum,
+            ReceiverName,
+            Subject,
+            Contents,
+            FilePath,
+            reserveDT,
+            adsYN,
+            UserID,
+            SenderName,
+            RequestNum,
+        )
 
-        return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendMMS_multi(request):
     """
@@ -366,7 +446,7 @@ def sendMMS_multi(request):
         reserveDT = ""
 
         # 전송할 파일경로 (이미지 파일의 크기는 최대 300Kbyte(JPEG), 가로/세로 1000px 이하 권장)
-        filePath = './MessageExample/static/image/mms.jpg'
+        filePath = "./MessageExample/static/image/mms.jpg"
 
         # 광고성 메시지 여부 ( true , false 중 택 1)
         # └ true = 광고 , false = 일반
@@ -377,13 +457,13 @@ def sendMMS_multi(request):
         for x in range(0, 5):
             messages.append(
                 MessageReceiver(
-                    snd='',  # 발신번호
-                    sndnm='발신자명',  # 발신자명
-                    rcv='',  # 수신번호
-                    rcvnm='수신자명' + str(x),  # 수신자명
-                    msg='멀티 문자 API TEST',  # msg값이 없는 경우 동보전송용 메시지로 전송됨. 2000Byte 초과시 길이가 조정되어 전송됨.
-                    sjt='멀티 문자제목',  # 장문 메시지 제목
-                    interOPRefKey='20220805-'+str(x) # 파트너 지정키
+                    snd="",  # 발신번호
+                    sndnm="발신자명",  # 발신자명
+                    rcv="",  # 수신번호
+                    rcvnm="수신자명" + str(x),  # 수신자명
+                    msg="멀티 문자 API TEST",  # msg값이 없는 경우 동보전송용 메시지로 전송됨. 2000Byte 초과시 길이가 조정되어 전송됨.
+                    sjt="멀티 문자제목",  # 장문 메시지 제목
+                    interOPRefKey="20220805-" + str(x),  # 파트너 지정키
                 )
             )
 
@@ -392,12 +472,25 @@ def sendMMS_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendMMS_Multi(CorpNum, Sender, Subject, Contents,
-                                                messages, filePath, reserveDT, adsYN, UserID, RequestNum)
+        receiptNum = messageService.sendMMS_Multi(
+            CorpNum,
+            Sender,
+            Subject,
+            Contents,
+            messages,
+            filePath,
+            reserveDT,
+            adsYN,
+            UserID,
+            RequestNum,
+        )
 
-        return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendXMS(request):
     """
@@ -441,12 +534,26 @@ def sendXMS(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendXMS(CorpNum, Sender, ReceiverNum, ReceiverName,
-                                            Subject, Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
+        receiptNum = messageService.sendXMS(
+            CorpNum,
+            Sender,
+            ReceiverNum,
+            ReceiverName,
+            Subject,
+            Contents,
+            reserveDT,
+            adsYN,
+            UserID,
+            SenderName,
+            RequestNum,
+        )
 
-        return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def sendXMS_multi(request):
     """
@@ -483,13 +590,13 @@ def sendXMS_multi(request):
         for x in range(0, 10):
             messages.append(
                 MessageReceiver(
-                    snd='',  # 발신번호
-                    sndnm='발신자명',  # 발신자명
-                    rcv='',  # 수신번호
-                    rcvnm='수신자명' + str(x),  # 수신자명
-                    msg='문자 API TEST',  # 90Byte를 기준으로 단/장문을 자동으로 인식하여 전송
-                    sjt='장문문자제목',  # 장문메시지 제목
-                    interOPRefKey='20220805-'+str(x) # 파트너 지정키
+                    snd="",  # 발신번호
+                    sndnm="발신자명",  # 발신자명
+                    rcv="",  # 수신번호
+                    rcvnm="수신자명" + str(x),  # 수신자명
+                    msg="문자 API TEST",  # 90Byte를 기준으로 단/장문을 자동으로 인식하여 전송
+                    sjt="장문문자제목",  # 장문메시지 제목
+                    interOPRefKey="20220805-" + str(x),  # 파트너 지정키
                 )
             )
 
@@ -498,12 +605,24 @@ def sendXMS_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendXMS_multi(CorpNum, Sender, Subject, Contents,
-                                                    messages, reserveDT, adsYN, UserID, RequestNum)
+        receiptNum = messageService.sendXMS_multi(
+            CorpNum,
+            Sender,
+            Subject,
+            Contents,
+            messages,
+            reserveDT,
+            adsYN,
+            UserID,
+            RequestNum,
+        )
 
-        return render(request, 'Message/ReceiptNum.html', {'receiptNum': receiptNum})
+        return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancelReserve(request):
     """
@@ -519,9 +638,16 @@ def cancelReserve(request):
 
         response = messageService.cancelReserve(CorpNum, receiptNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancelReserveRN(request):
     """
@@ -537,9 +663,16 @@ def cancelReserveRN(request):
 
         response = messageService.cancelReserveRN(CorpNum, requestNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancelReservebyRCV(request):
     """
@@ -557,9 +690,16 @@ def cancelReservebyRCV(request):
 
         response = messageService.cancelReservebyRCV(CorpNum, receiptNum, receiveNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def cancelReserveRNbyRCV(request):
     """
@@ -577,9 +717,16 @@ def cancelReserveRNbyRCV(request):
 
         response = messageService.cancelReserveRNbyRCV(CorpNum, requestNum, receiveNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getMessages(request):
     """
@@ -595,9 +742,12 @@ def getMessages(request):
 
         resultList = messageService.getMessages(CorpNum, receiptNum)
 
-        return render(request, 'Message/GetMessages.html', {'resultList': resultList})
+        return render(request, "Message/GetMessages.html", {"resultList": resultList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getMessagesRN(request):
     """
@@ -609,13 +759,16 @@ def getMessagesRN(request):
         CorpNum = settings.testCorpNum
 
         # 문자 전송요청시 파트너가 할당한 전송요청 번호
-        requestNum = ''
+        requestNum = ""
 
         resultList = messageService.getMessagesRN(CorpNum, requestNum)
 
-        return render(request, 'Message/GetMessages.html', {'resultList': resultList})
+        return render(request, "Message/GetMessages.html", {"resultList": resultList})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def search(request):
     """
@@ -640,23 +793,23 @@ def search(request):
         # 전송상태 배열 ("1" , "2" , "3" , "4" 중 선택, 다중 선택 가능)
         # └ 1 = 대기 , 2 = 성공 , 3 = 실패 , 4 = 취소
         # - 미입력 시 전체조회
-        State = ['1', '2', '3', '4']
+        State = ["1", "2", "3", "4"]
 
         # 검색대상 배열 ("SMS" , "LMS" , "MMS" 중 선택, 다중 선택 가능)
         # └ SMS = 단문 , LMS = 장문 , MMS = 포토문자
         # - 미입력 시 전체조회
-        Item = ['SMS', 'LMS', 'MMS']
+        Item = ["SMS", "LMS", "MMS"]
 
         # 예약여부 (false , true 중 택 1)
         # └ false = 전체조회, true = 예약전송건 조회
         # - 미입력시 기본값 false 처리
-        ReserveYN = '0'
+        ReserveYN = "0"
 
         # 개인조회 여부 (false , true 중 택 1)
         # false = 접수한 문자 전체 조회 (관리자권한)
         # true = 해당 담당자 계정으로 접수한 문자만 조회 (개인권한)
         # 미입력시 기본값 false 처리
-        SenderYN = '0'
+        SenderYN = "0"
 
         # 페이지 번호
         Page = 1
@@ -671,12 +824,27 @@ def search(request):
         # - 미입력시 전체조회
         QString = ""
 
-        response = messageService.search(CorpNum, SDate, EDate, State, Item, ReserveYN,
-                                            SenderYN, Page, PerPage, Order, UserID, QString)
+        response = messageService.search(
+            CorpNum,
+            SDate,
+            EDate,
+            State,
+            Item,
+            ReserveYN,
+            SenderYN,
+            Page,
+            PerPage,
+            Order,
+            UserID,
+            QString,
+        )
 
-        return render(request, 'Message/Search.html', {'response': response})
+        return render(request, "Message/Search.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSentListURL(request):
     """
@@ -693,9 +861,12 @@ def getSentListURL(request):
 
         url = messageService.getSentListURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getAutoDenyList(request):
     """
@@ -708,9 +879,12 @@ def getAutoDenyList(request):
 
         response = messageService.getAutoDenyList(CorpNum)
 
-        return render(request, 'Message/GetAutoDenyList.html', {'response': response})
+        return render(request, "Message/GetAutoDenyList.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getBalance(request):
     """
@@ -723,9 +897,12 @@ def getBalance(request):
 
         result = messageService.getBalance(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getChargeURL(request):
     """
@@ -742,9 +919,12 @@ def getChargeURL(request):
 
         url = messageService.getChargeURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPaymentURL(request):
     """
@@ -761,9 +941,12 @@ def getPaymentURL(request):
 
         url = messageService.getPaymentURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUseHistoryURL(request):
     """
@@ -780,9 +963,12 @@ def getUseHistoryURL(request):
 
         url = messageService.getUseHistoryURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPartnerBalance(request):
     """
@@ -795,9 +981,12 @@ def getPartnerBalance(request):
 
         result = messageService.getPartnerBalance(CorpNum)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPartnerURL(request):
     """
@@ -814,9 +1003,12 @@ def getPartnerURL(request):
 
         url = messageService.getPartnerURL(CorpNum, TOGO)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUnitCost(request):
     """
@@ -833,9 +1025,12 @@ def getUnitCost(request):
 
         result = messageService.getUnitCost(CorpNum, MsgType)
 
-        return render(request, 'result.html', {'result': result})
+        return render(request, "result.html", {"result": result})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getChargeInfo(request):
     """
@@ -852,112 +1047,169 @@ def getChargeInfo(request):
 
         response = messageService.getChargeInfo(CorpNum, MsgType)
 
-        return render(request, 'getChargeInfo.html', {'response': response})
+        return render(request, "getChargeInfo.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def paymentRequest(request):
     """
-        연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
-        - https://developers.popbill.com/reference/sms/python/api/point#PaymentRequest
+    연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+    - https://developers.popbill.com/reference/sms/python/api/point#PaymentRequest
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = messageService.paymentRequest(CorpNum, UserID)
-        return render(request, 'paymentResponse.html', {'response':response})
+        return render(request, "paymentResponse.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getSettleResult(request):
     """
-        연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
-        - https://developers.popbill.com/reference/sms/python/api/point#GetSettleResult
+    연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+    - https://developers.popbill.com/reference/sms/python/api/point#GetSettleResult
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = messageService.getSettleResult(CorpNum, UserID)
 
-        return render(request, 'paymentHistory.html', {'response':response})
+        return render(request, "paymentHistory.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getPaymentHistory(request):
     """
-        연동회원의 포인트 결제내역을 확인합니다.
-        - https://developers.popbill.com/reference/sms/python/api/point#GetPaymentHistory
+    연동회원의 포인트 결제내역을 확인합니다.
+    - https://developers.popbill.com/reference/sms/python/api/point#GetPaymentHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        SDate	= "20230101"
-        EDate =	"20230110"
-        Page	= 1
-        PerPage	= 500
+        # 조회 기간의 시작일자 (형식 : yyyyMMdd)
+        SDate = "20230101"
+        # 조회 기간의 종료일자 (형식 : yyyyMMdd)
+        EDate = "20230110"
+        # 목록 페이지번호 (기본값 1)
+        Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
+        PerPage = 500
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = messageService.getPaymentHistory(CorpNum, SDate,EDate,Page,PerPage, UserID)
-        return render(request, 'paymentHistoryResult.html', {'response':response})
+        response = messageService.getPaymentHistory(
+            CorpNum, SDate, EDate, Page, PerPage, UserID
+        )
+        return render(request, "paymentHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getUseHistory(request):
     """
-        연동회원의 포인트 사용내역을 확인합니다.
-        - https://developers.popbill.com/reference/sms/python/api/point#GetUseHistory
+    연동회원의 포인트 사용내역을 확인합니다.
+    - https://developers.popbill.com/reference/sms/python/api/point#GetUseHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
-        SDate	= "20230101"
-        EDate =	"20230110"
-        Page	= 1
-        PerPage	= 500
-        Order	= "D"
+        # 조회 기간의 시작일자 (형식 : yyyyMMdd)
+        SDate = "20230101"
+        # 조회 기간의 종료일자 (형식 : yyyyMMdd)
+        EDate = "20230110"
+        # 목록 페이지번호 (기본값 1)
+        Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
+        PerPage = 500
+        # 거래일자를 기준으로 하는 목록 정렬 방향 : "D" / "A" 중 택 1
+        Order = "D"
+        # 팝빌회원 아이디
         UserID = settings.testUserID
-        response =        CorpNum = settings.testCorpNum
-        UserID = settings.testUserID
-        response = messageService.getUseHistory(CorpNum,SDate,EDate,Page,PerPage,Order, UserID)
-        return render(request, 'useHistoryResult.html', {'response':response})
+        response = messageService.getUseHistory(
+            CorpNum, SDate, EDate, Page, PerPage, Order, UserID
+        )
+        return render(request, "useHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def refund(request):
     """
-        연동회원 포인트를 환불 신청합니다.
-        - https://developers.popbill.com/reference/sms/python/api/point#Refund
+    연동회원 포인트를 환불 신청합니다.
+    - https://developers.popbill.com/reference/sms/python/api/point#Refund
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 환불신청 객체정보
         refundForm = RefundForm(
+            # 담당자명
             contactname="환불신청테스트",
+            # 담당자 연락처
             tel="01077777777",
+            # 환불 신청 포인트
             requestpoint="10",
+            # 은행명
             accountbank="국민",
+            # 계좌번호
             accountnum="123123123-123",
+            # 예금주명
             accountname="예금주",
+            # 환불사유
             reason="테스트 환불 사유",
         )
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = messageService.refund(CorpNum, refundForm, UserID)
-        return render(request, 'response.html', {'response':response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"response": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getRefundHistory(request):
     """
-        연동회원의 포인트 환불신청내역을 확인합니다.
-        - - https://developers.popbill.com/reference/sms/python/api/point#GetRefundHistory
+    연동회원의 포인트 환불신청내역을 확인합니다.
+    - - https://developers.popbill.com/reference/sms/python/api/point#GetRefundHistory
     """
     try:
+        # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 목록 페이지번호 (기본값 1)
         Page = 1
+        # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
         response = messageService.getRefundHistory(CorpNum, Page, PerPage, UserID)
-        return render(request, 'refundHistoryResult.html', {'response':response})
+        return render(request, "refundHistoryResult.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code':PE.code, 'message':PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
 
 
 def checkIsMember(request):
@@ -971,9 +1223,16 @@ def checkIsMember(request):
 
         response = messageService.checkIsMember(CorpNum)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def checkID(request):
     """
@@ -986,9 +1245,16 @@ def checkID(request):
 
         response = messageService.checkID(memberID)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def joinMember(request):
     """
@@ -998,47 +1264,43 @@ def joinMember(request):
     try:
         # 회원정보
         newMember = JoinForm(
-
             # 아이디 (6자 이상 50자 미만)
             ID="join_id_test",
-
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
-
             # 사업자번호 "-" 제외
             CorpNum="0000000000",
-
             # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
-
             # 상호 (최대 200자)
             CorpName="테스트가입상호",
-
             # 주소 (최대 300자)
             Addr="테스트회사주소",
-
             # 업태 (최대 100자)
             BizType="테스트업태",
-
             # 종목 (최대 100자)
             BizClass="테스트업종",
-
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
-
             # 담당자 이메일주소 (최대 100자)
             ContactEmail="",
-
             # 담당자 연락처 (최대 20자)
-            ContactTEL=""
+            ContactTEL="",
         )
 
         response = messageService.joinMember(newMember)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getAccessURL(request):
     """
@@ -1055,9 +1317,12 @@ def getAccessURL(request):
 
         url = messageService.getAccessURL(CorpNum, UserID)
 
-        return render(request, 'url.html', {'url': url})
+        return render(request, "url.html", {"url": url})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getCorpInfo(request):
     """
@@ -1070,9 +1335,12 @@ def getCorpInfo(request):
 
         response = messageService.getCorpInfo(CorpNum)
 
-        return render(request, 'getCorpInfo.html', {'response': response})
+        return render(request, "getCorpInfo.html", {"response": response})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateCorpInfo(request):
     """
@@ -1085,28 +1353,30 @@ def updateCorpInfo(request):
 
         # 회사정보
         corpInfo = CorpInfo(
-
             # 대표자 성명 (최대 100자)
             ceoname="대표자_성명",
-
             # 상호 (최대 200자)
             corpName="상호",
-
             # 주소 (최대 300자)
             addr="주소",
-
             # 업태 (최대 100자)
             bizType="업태",
-
             # 종목 (최대 100자)
-            bizClass="종목"
+            bizClass="종목",
         )
 
         response = messageService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def registContact(request):
     """
@@ -1119,32 +1389,33 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-
             # 아이디 (6자 이상 50자 미만)
             id="popbill_test_id",
-
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
-
             # 담당자명 (최대 100자)
             personName="담당자명",
-
             # 담당자 연락처 (최대 20자)
             tel="",
-
             # 담당자 이메일 (최대 100자)
             email="",
-
-            #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1
+            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=1,
         )
 
         response = messageService.registContact(CorpNum, newContact)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def getContactInfo(request):
     """
@@ -1156,13 +1427,16 @@ def getContactInfo(request):
         CorpNum = settings.testCorpNum
 
         # 담당자 아이디
-        contactID = 'testkorea'
+        contactID = "testkorea"
 
         contactInfo = messageService.getContactInfo(CorpNum, contactID)
 
-        return render(request, 'getContactInfo.html', {'contactInfo' : contactInfo})
+        return render(request, "getContactInfo.html", {"contactInfo": contactInfo})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def listContact(request):
     """
@@ -1175,9 +1449,12 @@ def listContact(request):
 
         listContact = messageService.listContact(CorpNum)
 
-        return render(request, 'listContact.html', {'listContact': listContact})
+        return render(request, "listContact.html", {"listContact": listContact})
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
 
 def updateContact(request):
     """
@@ -1193,25 +1470,51 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-
             # 담당자 아이디
             id=UserID,
-
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
-
             # 담당자 연락처 (최대 20자)
             tel="",
-
             # 담당자 메일주소 (최대 100자)
             email="",
-
-            #담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1
+            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=1,
         )
 
         response = messageService.updateContact(CorpNum, updateInfo)
 
-        return render(request, 'response.html', {'code': response.code, 'message': response.message})
+        return render(
+            request,
+            "response.html",
+            {"code": response.code, "message": response.message},
+        )
     except PopbillException as PE:
-        return render(request, 'exception.html', {'code': PE.code, 'message': PE.message})
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )
+
+
+def checkAutoDenyNumber(request):
+    """
+    팝빌회원에 등록된 080 수신거부 번호 정보를 확인합니다.
+    - https://developers.popbill.com/reference/sms/python/api/info#CheckAutoDenyNumber
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
+        UserID = settings.testUserID
+
+        response = messageService.checkAutoDenyNumber(CorpNum, UserID)
+        return render(
+            request,
+            "Message/AutoDenyNumberInfo.html",
+            {"number": response.smsdenyNumber, "regDT": response.regDT},
+        )
+
+    except PopbillException as PE:
+        return render(
+            request, "exception.html", {"code": PE.code, "message": PE.message}
+        )

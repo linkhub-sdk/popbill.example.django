@@ -47,7 +47,7 @@
                 <li> receiverHP (수신자 휴대전화) : {{ statement.receiverHP }}</li>
                 <li> receiverEmail (수신자 이메일주소) : {{ statement.receiverEmail }}</li>
                 <li> receiverFAX (수신자 팩스주소) : {{ statement.receiverFAX }}</li>
-                
+
                 {% if statement.propertyBag %}
                     <fieldset class="fieldset2">
                         <legend>기본양식 추가속성</legend>
@@ -63,7 +63,7 @@
                 <li> bankBookYN (통장사본 첨부 여부) : {{ statement.bankBookYN }}</li>
                 <li> smssendYN (문자 자동승인 여부) : {{ statement.smssendYN }}</li>
                 <!-- <li> autoAcceptYN (발행시 자동승인 여부) : {{ statement.autoAcceptYN }}</li> -->
-                
+
                 {% for detailList in statement.detailList %}
                     <fieldset class="fieldset2">
                         <legend> 전자명세서 상세항목 [{{ forloop.counter }}]</legend>
