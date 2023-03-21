@@ -1568,9 +1568,11 @@ def getSettleResult(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 정산코드
+        SettleCode = "202303070000000052"
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = kakaoService.getSettleResult(CorpNum, UserID)
+        response = kakaoService.getSettleResult(CorpNum, SettleCode, UserID)
 
         return render(request, "paymentHistory.html", {"response": response})
     except PopbillException as PE:
@@ -1990,8 +1992,8 @@ def cancelReservebyRCV(request):
     """
     try:
         CorpNum = settings.testCorpNum
-        receiptNum = ""
-        receiveNum = ""
+        receiptNum = "023011114473900001"
+        receiveNum = "01011112222"
         UserID = settings.testUserID
         response = kakaoService.CancelReservebyRCV(
             CorpNum, receiptNum, receiveNum, UserID
@@ -2015,8 +2017,8 @@ def cancelReserveRNbyRCV(request):
     """
     try:
         CorpNum = settings.testCorpNum
-        requestNum = ""
-        receiveNum = ""
+        requestNum = "20230111_ats_23"
+        receiveNum = "01022223333"
         UserID = settings.testUserID
         response = kakaoService.CancelReserveRNbyRCV(
             CorpNum, requestNum, receiveNum, UserID

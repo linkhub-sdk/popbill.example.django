@@ -240,9 +240,11 @@ def getSettleResult(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 정산코드
+        SettleCode = "202303070000000052"
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = bizInfoCheckService.getSettleResult(CorpNum, UserID)
+        response = bizInfoCheckService.getSettleResult(CorpNum, SettleCode, UserID)
 
         return render(request, "paymentHistory.html", {"response": response})
     except PopbillException as PE:
