@@ -48,42 +48,47 @@ def registBankAccount(request):
             # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
             # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
             BankCode="",
+
             # 계좌번호 하이픈('-') 제외
             AccountNumber="",
+
             # 계좌비밀번호
             AccountPWD="",
+
             # 계좌유형, "법인" 또는 "개인" 입력
             AccountType="",
+
             # 예금주 식별정보 ('-' 제외)
             # 계좌유형이 "법인"인 경우 : 사업자번호(10자리)
             # 계좌유형이 "개인"인 경우 : 예금주 생년월일 (6자리-YYMMDD)
             IdentityNumber="",
+
             # 계좌 별칭
             AccountName="",
+
             # 인터넷뱅킹 아이디 (국민은행 필수)
             BankID="",
+
             # 조회전용 계정 아이디 (대구은행, 신협, 신한은행 필수)
             FastID="",
+
             # 조회전용 계정 비밀번호 (대구은행, 신협, 신한은행 필수
             FastPWD="",
+
             # 결제기간(개월), 1~12 입력가능, 미기재시 기본값(1) 처리
             # - 파트너 과금방식의 경우 입력값에 관계없이 1개월 처리
             UsePeriod="1",
+
             # 메모
             Memo="",
         )
 
         response = easyFinBankService.registBankAccount(CorpNum, infoObj)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def updateBankAccount(request):
@@ -101,33 +106,35 @@ def updateBankAccount(request):
             # SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
             # 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
             BankCode="",
+
             # 계좌번호 하이픈('-') 제외
             AccountNumber="",
+
             # 계좌비밀번호
             AccountPWD="",
+
             # 계좌 별칭
             AccountName="",
+
             # 인터넷뱅킹 아이디 (국민은행 필수)
             BankID="",
+
             # 조회전용 계정 아이디 (대구은행, 신협, 신한은행 필수)
             FastID="",
+
             # 조회전용 계정 비밀번호 (대구은행, 신협, 신한은행 필수
             FastPWD="",
+
             # 메모
             Memo="",
         )
 
         response = easyFinBankService.updateBankAccount(CorpNum, infoObj)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getBankAccountInfo(request):
@@ -148,17 +155,12 @@ def getBankAccountInfo(request):
         # 계좌번호
         AccountNumber = ""
 
-        response = easyFinBankService.getBankAccountInfo(
-            CorpNum, BankCode, AccountNumber
-        )
+        response = easyFinBankService.getBankAccountInfo(CorpNum, BankCode, AccountNumber)
 
-        return render(
-            request, "EasyFinBank/GetBankAccountInfo.html", {"response": response}
-        )
+        return render(request, "EasyFinBank/GetBankAccountInfo.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def listBankAccount(request):
@@ -172,14 +174,10 @@ def listBankAccount(request):
 
         bankAccountList = easyFinBankService.listBankAccount(CorpNum)
 
-        return render(
-            request, "EasyFinBank/ListBankAccount.html", {"list": bankAccountList}
-        )
+        return render(request, "EasyFinBank/ListBankAccount.html", {"list": bankAccountList})
 
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getBankAccountMgtURL(request):
@@ -198,10 +196,9 @@ def getBankAccountMgtURL(request):
         url = easyFinBankService.getBankAccountMgtURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def closeBankAccount(request):
@@ -228,19 +225,12 @@ def closeBankAccount(request):
         # └ 중도일 경우, 정액제 잔여기간은 일할로 계산되어 포인트 환불(무료 이용기간에 해지하면 전액 환불)
         CloseType = "중도"
 
-        response = easyFinBankService.closeBankAccount(
-            CorpNum, BankCode, AccountNumber, CloseType
-        )
+        response = easyFinBankService.closeBankAccount(CorpNum, BankCode, AccountNumber, CloseType)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def revokeCloseBankAccount(request):
@@ -261,19 +251,12 @@ def revokeCloseBankAccount(request):
         # 계좌번호 하이픈('-') 제외
         AccountNumber = ""
 
-        response = easyFinBankService.revokeCloseBankAccount(
-            CorpNum, BankCode, AccountNumber
-        )
+        response = easyFinBankService.revokeCloseBankAccount(CorpNum, BankCode, AccountNumber)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def deleteBankAccount(request):
@@ -294,19 +277,12 @@ def deleteBankAccount(request):
         # 계좌번호 하이픈('-') 제외
         AccountNumber = ""
 
-        response = easyFinBankService.deleteBankAccount(
-            CorpNum, BankCode, AccountNumber
-        )
+        response = easyFinBankService.deleteBankAccount(CorpNum, BankCode, AccountNumber)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def requestJob(request):
@@ -332,15 +308,12 @@ def requestJob(request):
         # 종료일자, 날짜형식(yyyyMMdd)
         EDate = "20220731"
 
-        result = easyFinBankService.requestJob(
-            CorpNum, BankCode, AccountNumber, SDate, EDate
-        )
+        result = easyFinBankService.requestJob(CorpNum, BankCode, AccountNumber, SDate, EDate)
 
         return render(request, "result.html", {"result": result})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getJobState(request):
@@ -364,10 +337,9 @@ def getJobState(request):
         response = easyFinBankService.getJobState(CorpNum, jobID)
 
         return render(request, "EasyFinBank/GetJobState.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def listActiveJob(request):
@@ -383,10 +355,9 @@ def listActiveJob(request):
         response = easyFinBankService.listActiveJob(CorpNum)
 
         return render(request, "EasyFinBank/ListActiveJob.html", {"list": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def search(request):
@@ -421,15 +392,12 @@ def search(request):
         # 정렬방향 [D-내림차순 / A-오름차순]
         Order = "D"
 
-        response = easyFinBankService.search(
-            CorpNum, JobID, TradeType, SearchString, Page, PerPage, Order
-        )
+        response = easyFinBankService.search(CorpNum, JobID, TradeType, SearchString, Page, PerPage, Order)
 
         return render(request, "EasyFinBank/Search.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def summary(request):
@@ -459,10 +427,9 @@ def summary(request):
         response = easyFinBankService.summary(CorpNum, JobID, TradeType, SearchString)
 
         return render(request, "EasyFinBank/Summary.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def saveMemo(request):
@@ -482,15 +449,10 @@ def saveMemo(request):
 
         response = easyFinBankService.saveMemo(CorpNum, TID, Memo)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getFlatRatePopUpURL(request):
@@ -509,10 +471,9 @@ def getFlatRatePopUpURL(request):
         url = easyFinBankService.getFlatRatePopUpURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getFlatRateState(request):
@@ -530,19 +491,12 @@ def getFlatRateState(request):
         # 계좌번호
         AccountNumber = ""
 
-        flatRateState = easyFinBankService.getFlatRateState(
-            CorpNum, BankCode, AccountNumber
-        )
+        flatRateState = easyFinBankService.getFlatRateState(CorpNum, BankCode, AccountNumber)
 
-        return render(
-            request,
-            "EasyFinBank/GetFlatRateState.html",
-            {"flatRateState": flatRateState},
-        )
+        return render(request,"EasyFinBank/GetFlatRateState.html",{"flatRateState": flatRateState})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getBalance(request):
@@ -557,10 +511,9 @@ def getBalance(request):
         result = easyFinBankService.getBalance(CorpNum)
 
         return render(request, "result.html", {"result": result})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getChargeURL(request):
@@ -579,10 +532,9 @@ def getChargeURL(request):
         url = easyFinBankService.getChargeURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getPaymentURL(request):
@@ -601,10 +553,9 @@ def getPaymentURL(request):
         url = easyFinBankService.getPaymentURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getUseHistoryURL(request):
@@ -623,10 +574,9 @@ def getUseHistoryURL(request):
         url = easyFinBankService.getUseHistoryURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getPartnerBalance(request):
@@ -641,10 +591,9 @@ def getPartnerBalance(request):
         result = easyFinBankService.getPartnerBalance(CorpNum)
 
         return render(request, "result.html", {"result": result})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getPartnerURL(request):
@@ -663,10 +612,9 @@ def getPartnerURL(request):
         url = easyFinBankService.getPartnerURL(CorpNum, TOGO)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getChargeInfo(request):
@@ -681,10 +629,9 @@ def getChargeInfo(request):
         response = easyFinBankService.getChargeInfo(CorpNum)
 
         return render(request, "getChargeInfo.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def paymentRequest(request):
@@ -695,27 +642,34 @@ def paymentRequest(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 무통장입금 요청 객체
         paymentForm = PaymentForm(
             # 담당자명
             settlerName = "담당자 이름",
+
             # 담당자 이메일
             settlerEmail = "popbill_django_test@email.com",
+
             # 담당자 휴대폰
             notifyHP = "01012341234",
+
             # 입금자명
             paymentName = "입금자",
+
             # 결제금액
             settleCost = "10000",
         )
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
+
         response = easyFinBankService.paymentRequest(CorpNum,paymentForm, UserID)
+
         return render(request, "paymentResponse.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getSettleResult(request):
@@ -726,17 +680,19 @@ def getSettleResult(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 정산코드
         SettleCode = "202303070000000052"
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
+
         response = easyFinBankService.getSettleResult(CorpNum, SettleCode, UserID)
 
         return render(request, "paymentHistory.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getPaymentHistory(request):
@@ -747,25 +703,28 @@ def getPaymentHistory(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
         SDate = "20230101"
+
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
         EDate = "20230131"
+
         # 목록 페이지번호 (기본값 1)
         Page = 1
+
         # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = easyFinBankService.getPaymentHistory(
-            CorpNum, SDate, EDate, Page, PerPage, UserID
-        )
+        response = easyFinBankService.getPaymentHistory(CorpNum, SDate, EDate, Page, PerPage, UserID)
+
         return render(request, "paymentHistoryResult.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getUseHistory(request):
@@ -776,26 +735,31 @@ def getUseHistory(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
         SDate = "20230101"
+
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
         EDate = "20230110"
+
         # 목록 페이지번호 (기본값 1)
         Page = 1
+
         # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+
         # 거래일자를 기준으로 하는 목록 정렬 방향 : "D" / "A" 중 택 1
         Order = "D"
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = easyFinBankService.getUseHistory(
-            CorpNum, SDate, EDate, Page, PerPage, Order, UserID
-        )
+
+        response = easyFinBankService.getUseHistory(CorpNum, SDate, EDate, Page, PerPage, Order, UserID)
+
         return render(request, "useHistoryResult.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def refund(request):
@@ -806,35 +770,40 @@ def refund(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 환불신청 객체정보
         refundForm = RefundForm(
             # 담당자명
             contactname="환불신청테스트",
+
             # 담당자 연락처
             tel="01077777777",
+
             # 환불 신청 포인트
             requestpoint="10",
+
             # 은행명
             accountbank="국민",
+
             # 계좌번호
             accountnum="123123123-123",
+
             # 예금주명
             accountname="예금주",
+
             # 환불사유
             reason="테스트 환불 사유",
         )
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = easyFinBankService.refund(CorpNum, refundForm, UserID)
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+
+        response =  easyFinBankService.refund(CorpNum, refundForm, UserID)
+
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getRefundHistory(request):
@@ -845,19 +814,22 @@ def getRefundHistory(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 목록 페이지번호 (기본값 1)
         Page = 1
+
         # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
         response = easyFinBankService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+
         return render(request, "refundHistoryResult.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def checkIsMember(request):
@@ -871,15 +843,10 @@ def checkIsMember(request):
 
         response = easyFinBankService.checkIsMember(CorpNum)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def checkID(request):
@@ -893,15 +860,10 @@ def checkID(request):
 
         response = easyFinBankService.checkID(memberID)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def joinMember(request):
@@ -914,40 +876,45 @@ def joinMember(request):
         newMember = JoinForm(
             # 아이디 (6자 이상 50자 미만)
             ID="join_id_test",
+
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
+
             # 사업자번호 "-" 제외
             CorpNum="0000000000",
+
             # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
+
             # 상호 (최대 200자)
             CorpName="테스트가입상호",
+
             # 주소 (최대 300자)
             Addr="테스트회사주소",
+
             # 업태 (최대 100자)
             BizType="테스트업태",
+
             # 종목 (최대 100자)
             BizClass="테스트업종",
+
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
+
             # 담당자 이메일주소 (최대 100자)
             ContactEmail="",
+
             # 담당자 연락처 (최대 20자)
             ContactTEL="",
         )
 
         response = easyFinBankService.joinMember(newMember)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getAccessURL(request):
@@ -966,10 +933,9 @@ def getAccessURL(request):
         url = easyFinBankService.getAccessURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getCorpInfo(request):
@@ -984,10 +950,9 @@ def getCorpInfo(request):
         response = easyFinBankService.getCorpInfo(CorpNum)
 
         return render(request, "getCorpInfo.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def updateCorpInfo(request):
@@ -1003,27 +968,26 @@ def updateCorpInfo(request):
         corpInfo = CorpInfo(
             # 대표자 성명 (최대 100자)
             ceoname="대표자_성명",
+
             # 상호 (최대 200자)
             corpName="상호",
+
             # 주소 (최대 300자)
             addr="주소",
+
             # 업태 (최대 100자)
             bizType="업태",
+
             # 종목 (최대 100자)
             bizClass="종목",
         )
 
         response = easyFinBankService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def registContact(request):
@@ -1039,30 +1003,30 @@ def registContact(request):
         newContact = ContactInfo(
             # 아이디 (6자 이상 50자 미만)
             id="popbill_test_id",
+
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
+
             # 담당자명 (최대 100자)
             personName="담당자명",
+
             # 담당자 연락처 (최대 20자)
             tel="",
+
             # 담당자 이메일 (최대 100자)
             email="",
+
             # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
         )
 
         response = easyFinBankService.registContact(CorpNum, newContact)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getContactInfo(request):
@@ -1080,10 +1044,9 @@ def getContactInfo(request):
         contactInfo = easyFinBankService.getContactInfo(CorpNum, contactID)
 
         return render(request, "getContactInfo.html", {"contactInfo": contactInfo})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def listContact(request):
@@ -1098,10 +1061,9 @@ def listContact(request):
         listContact = easyFinBankService.listContact(CorpNum)
 
         return render(request, "listContact.html", {"listContact": listContact})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def updateContact(request):
@@ -1120,24 +1082,23 @@ def updateContact(request):
         updateInfo = ContactInfo(
             # 담당자 아이디
             id=UserID,
+
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
+
             # 담당자 연락처 (최대 20자)
             tel="",
+
             # 담당자 메일주소 (최대 100자)
             email="",
+
             # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
         )
 
         response = easyFinBankService.updateContact(CorpNum, updateInfo)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})

@@ -46,13 +46,10 @@ def checkBizInfo(request):
 
         bizCheckInfo = bizInfoCheckService.checkBizInfo(CorpNum, targetCorpNum)
 
-        return render(
-            request, "BizInfoCheck/CheckBizInfo.html", {"bizCheckInfo": bizCheckInfo}
-        )
+        return render(request, "BizInfoCheck/CheckBizInfo.html", {"bizCheckInfo": bizCheckInfo})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getBalance(request):
@@ -67,10 +64,9 @@ def getBalance(request):
         result = bizInfoCheckService.getBalance(CorpNum)
 
         return render(request, "result.html", {"result": result})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getChargeURL(request):
@@ -89,10 +85,9 @@ def getChargeURL(request):
         url = bizInfoCheckService.getChargeURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getPaymentURL(request):
@@ -111,10 +106,9 @@ def getPaymentURL(request):
         url = bizInfoCheckService.getPaymentURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getUseHistoryURL(request):
@@ -133,10 +127,9 @@ def getUseHistoryURL(request):
         url = bizInfoCheckService.getUseHistoryURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getPartnerBalance(request):
@@ -151,10 +144,9 @@ def getPartnerBalance(request):
         result = bizInfoCheckService.getPartnerBalance(CorpNum)
 
         return render(request, "result.html", {"result": result})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getPartnerURL(request):
@@ -173,10 +165,9 @@ def getPartnerURL(request):
         url = bizInfoCheckService.getPartnerURL(CorpNum, TOGO)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getUnitCost(request):
@@ -191,10 +182,9 @@ def getUnitCost(request):
         result = bizInfoCheckService.getUnitCost(CorpNum)
 
         return render(request, "result.html", {"result": result})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getChargeInfo(request):
@@ -209,10 +199,9 @@ def getChargeInfo(request):
         response = bizInfoCheckService.getChargeInfo(CorpNum)
 
         return render(request, "getChargeInfo.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def paymentRequest(request):
@@ -223,27 +212,33 @@ def paymentRequest(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 무통장입금 요청 객체
         paymentForm = PaymentForm(
             # 담당자명
             settlerName = "담당자 이름",
+
             # 담당자 이메일
             settlerEmail = "popbill_django_test@email.com",
+
             # 담당자 휴대폰
             notifyHP = "01012341234",
+
             # 입금자명
             paymentName = "입금자",
+
             # 결제금액
             settleCost = "10000",
         )
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
+
         response = bizInfoCheckService.paymentRequest(CorpNum, paymentForm , UserID)
         return render(request, "paymentResponse.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getSettleResult(request):
@@ -254,17 +249,19 @@ def getSettleResult(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 정산코드
         SettleCode = "202303070000000052"
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
+
         response = bizInfoCheckService.getSettleResult(CorpNum, SettleCode, UserID)
 
         return render(request, "paymentHistory.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getPaymentHistory(request):
@@ -275,25 +272,28 @@ def getPaymentHistory(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
         SDate = "20230101"
+
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
         EDate = "20230131"
+
         # 목록 페이지번호 (기본값 1)
         Page = 1
+
         # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = bizInfoCheckService.getPaymentHistory(
-            CorpNum, SDate, EDate, Page, PerPage, UserID
-        )
+        response = bizInfoCheckService.getPaymentHistory(CorpNum, SDate, EDate, Page, PerPage, UserID)
+
         return render(request, "paymentHistoryResult.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getUseHistory(request):
@@ -304,26 +304,31 @@ def getUseHistory(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
         SDate = "20230101"
+
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
         EDate = "20230110"
+
         # 목록 페이지번호 (기본값 1)
         Page = 1
+
         # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+
         # 거래일자를 기준으로 하는 목록 정렬 방향 : "D" / "A" 중 택 1
         Order = "D"
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = bizInfoCheckService.getUseHistory(
-            CorpNum, SDate, EDate, Page, PerPage, Order, UserID
-        )
+
+        response = bizInfoCheckService.getUseHistory(CorpNum, SDate, EDate, Page, PerPage, Order, UserID)
+
         return render(request, "useHistoryResult.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def refund(request):
@@ -334,35 +339,39 @@ def refund(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 환불신청 객체정보
         refundForm = RefundForm(
             # 담당자명
             contactname="환불신청테스트",
+
             # 담당자 연락처
             tel="01077777777",
+
             # 환불 신청 포인트
             requestpoint="10",
+
             # 은행명
             accountbank="국민",
+
             # 계좌번호
             accountnum="123123123-123",
+
             # 예금주명
             accountname="예금주",
+
             # 환불사유
             reason="테스트 환불 사유",
         )
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
+
         response = bizInfoCheckService.refund(CorpNum, refundForm, UserID)
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getRefundHistory(request):
@@ -373,19 +382,22 @@ def getRefundHistory(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+
         # 목록 페이지번호 (기본값 1)
         Page = 1
+
         # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
         PerPage = 500
+
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
         response = bizInfoCheckService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+
         return render(request, "refundHistoryResult.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def checkIsMember(request):
@@ -399,15 +411,10 @@ def checkIsMember(request):
 
         response = bizInfoCheckService.checkIsMember(CorpNum)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def checkID(request):
@@ -421,15 +428,10 @@ def checkID(request):
 
         response = bizInfoCheckService.checkID(memberID)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def joinMember(request):
@@ -442,40 +444,45 @@ def joinMember(request):
         newMember = JoinForm(
             # 아이디 (6자 이상 50자 미만)
             ID="join_id_test",
+
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
+
             # 사업자번호 "-" 제외
             CorpNum="0000000000",
+
             # 대표자성명 (최대 100자)
             CEOName="테스트대표자성명",
+
             # 상호 (최대 200자)
             CorpName="테스트가입상호",
+
             # 주소 (최대 300자)
             Addr="테스트회사주소",
+
             # 업태 (최대 100자)
             BizType="테스트업태",
+
             # 종목 (최대 100자)
             BizClass="테스트업종",
+
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
+
             # 담당자 이메일주소 (최대 100자)
             ContactEmail="",
+
             # 담당자 연락처 (최대 20자)
             ContactTEL="",
         )
 
         response = bizInfoCheckService.joinMember(newMember)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getAccessURL(request):
@@ -494,10 +501,9 @@ def getAccessURL(request):
         url = bizInfoCheckService.getAccessURL(CorpNum, UserID)
 
         return render(request, "url.html", {"url": url})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getCorpInfo(request):
@@ -512,10 +518,9 @@ def getCorpInfo(request):
         response = bizInfoCheckService.getCorpInfo(CorpNum)
 
         return render(request, "getCorpInfo.html", {"response": response})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def updateCorpInfo(request):
@@ -531,27 +536,26 @@ def updateCorpInfo(request):
         corpInfo = CorpInfo(
             # 대표자 성명 (최대 100자)
             ceoname="대표자_성명",
+
             # 상호 (최대 200자)
             corpName="상호",
+
             # 주소 (최대 300자)
             addr="주소",
+
             # 업태 (최대 100자)
             bizType="업태",
+
             # 종목 (최대 100자)
             bizClass="종목",
         )
 
         response = bizInfoCheckService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def registContact(request):
@@ -567,30 +571,30 @@ def registContact(request):
         newContact = ContactInfo(
             # 아이디 (6자 이상 50자 미만)
             id="popbill_test_id",
+
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
             Password="password123!@#",
+
             # 담당자명 (최대 100자)
             personName="담당자명",
+
             # 담당자 연락처 (최대 20자)
             tel="",
+
             # 담당자 이메일 (최대 100자)
             email="",
+
             # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
         )
 
         response = bizInfoCheckService.registContact(CorpNum, newContact)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getContactInfo(request):
@@ -608,10 +612,9 @@ def getContactInfo(request):
         contactInfo = bizInfoCheckService.getContactInfo(CorpNum, contactID)
 
         return render(request, "getContactInfo.html", {"contactInfo": contactInfo})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def listContact(request):
@@ -626,10 +629,9 @@ def listContact(request):
         listContact = bizInfoCheckService.listContact(CorpNum)
 
         return render(request, "listContact.html", {"listContact": listContact})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def updateContact(request):
@@ -648,24 +650,23 @@ def updateContact(request):
         updateInfo = ContactInfo(
             # 담당자 아이디
             id=UserID,
+
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
+
             # 담당자 연락처 (최대 20자)
             tel="",
+
             # 담당자 메일주소 (최대 100자)
             email="",
+
             # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
         )
 
         response = bizInfoCheckService.updateContact(CorpNum, updateInfo)
 
-        return render(
-            request,
-            "response.html",
-            {"code": response.code, "message": response.message},
-        )
+        return render(request,"response.html",{"code": response.code, "message": response.message})
+
     except PopbillException as PE:
-        return render(
-            request, "exception.html", {"code": PE.code, "message": PE.message}
-        )
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
