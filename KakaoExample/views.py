@@ -7,6 +7,7 @@ from popbill import (
     KakaoButton,
     KakaoReceiver,
     KakaoService,
+    PaymentForm,
     PopbillException,
     RefundForm,
 )
@@ -1550,9 +1551,22 @@ def paymentRequest(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 무통장입금 요청 객체
+        paymentForm = PaymentForm(
+            # 담당자명
+            settlerName = "담당자 이름",
+            # 담당자 이메일
+            settlerEmail = "popbill_django_test@email.com",
+            # 담당자 휴대폰
+            notifyHP = "01012341234",
+            # 입금자명
+            paymentName = "입금자",
+            # 결제금액
+            settleCost = "10000",
+        )
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = kakaoService.paymentRequest(CorpNum, UserID)
+        response = kakaoService.paymentRequest(CorpNum,paymentForm, UserID)
         return render(request, "paymentResponse.html", {"response": response})
     except PopbillException as PE:
         return render(
@@ -1592,7 +1606,7 @@ def getPaymentHistory(request):
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
         SDate = "20230101"
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230110"
+        EDate = "20230131"
         # 목록 페이지번호 (기본값 1)
         Page = 1
         # 페이지당 표시할 목록 개수 (기본값 500, 최대 1,000)
@@ -1671,7 +1685,7 @@ def refund(request):
         return render(
             request,
             "response.html",
-            {"response": response.code, "message": response.message},
+            {"code": response.code, "message": response.message},
         )
     except PopbillException as PE:
         return render(
@@ -1991,9 +2005,13 @@ def cancelReservebyRCV(request):
     - https://developers.popbill.com/reference/kakaotalk/java/api/send#CancelReservebyRCV
     """
     try:
+        # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+        # 카카오톡 예약전송 접수시 팝빌로부터 반환 받은 접수번호
         receiptNum = "023011114473900001"
+        # 카카오톡 예약전송 접수시 팝빌로 요청한 수신번호
         receiveNum = "01011112222"
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = kakaoService.CancelReservebyRCV(
             CorpNum, receiptNum, receiveNum, UserID
@@ -2016,9 +2034,13 @@ def cancelReserveRNbyRCV(request):
     - https://developers.popbill.com/reference/kakaotalk/java/api/send#CancelReserveRNbyRCV
     """
     try:
+        # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+        # 카카오톡 예약전송 접수시 파트너가 할당한 전송 요청번호
         requestNum = "20230111_ats_23"
+        # 카카오톡 예약전송 접수시 팝빌로 요청한 수신번호
         receiveNum = "01022223333"
+        # 팝빌회원 아이디
         UserID = settings.testUserID
         response = kakaoService.CancelReserveRNbyRCV(
             CorpNum, requestNum, receiveNum, UserID

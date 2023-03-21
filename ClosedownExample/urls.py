@@ -18,6 +18,12 @@ urlpatterns = [
     url(r"^GetPartnerURL$", views.getPartnerURL, name="GetPartnerURL"),
     url(r"^GetUnitCost$", views.getUnitCost, name="GetUnitCost"),
     url(r"^GetChargeInfo$", views.getChargeInfo, name="GetChargeInfo"),
+    url(r"^PaymentRequest$", views.paymentRequest, name="PaymentRequest"),
+    url(r"^GetSettleResult$", views.getSettleResult, name="GetSettleResult"),
+    url(r"^GetPaymentHistory$", views.getPaymentHistory, name="GetPaymentHistory"),
+    url(r"^GetUseHistory$", views.getUseHistory, name="GetUseHistory"),
+    url(r"^Refund$", views.refund, name="Refund"),
+    url(r"^GetRefundHistory$", views.getRefundHistory, name="GetRefundHistory"),
     # 회원정보
     url(r"^CheckIsMember$", views.checkIsMember, name="CheckIsMember"),
     url(r"^CheckID$", views.checkID, name="CheckID"),

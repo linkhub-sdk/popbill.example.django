@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime, timedelta
 from django.shortcuts import render
 from popbill import (
     Cashbill,
@@ -8,6 +9,7 @@ from popbill import (
     JoinForm,
     PopbillException,
     RefundForm,
+    PaymentForm
 )
 
 from config import settings
@@ -80,7 +82,7 @@ def registIssue(request):
         # 현금영수증 정보
         cashbill = Cashbill(
             # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="20220805-001",
+            mgtKey="202220805-021",
             # 문서형태, 승인거래 기재
             tradeType="승인거래",
             # 과세형태 (과세, 비과세) 중 기재
@@ -132,7 +134,7 @@ def registIssue(request):
             smssendYN=False,
             # 거래일시, 날짜(yyyyMMddHHmmss)
             # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
-            tradeDT="20221108000000",
+            tradeDT="20230320",
         )
 
         response = cashbillService.registIssue(
@@ -147,7 +149,6 @@ def registIssue(request):
                 "message": response.message,
                 "confirmNum": response.confirmNum,
                 "tradeDate": response.tradeDate,
-                "tradeDT": response.tradeDT,
             },
         )
     except PopbillException as PE:
@@ -1160,9 +1161,22 @@ def paymentRequest(request):
     try:
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
+        # 무통장입금 요청 객체
+        paymentForm = PaymentForm(
+            # 담당자명
+            settlerName = "담당자 이름",
+            # 담당자 이메일
+            settlerEmail = "popbill_django_test@email.com",
+            # 담당자 휴대폰
+            notifyHP = "01012341234",
+            # 입금자명
+            paymentName = "입금자",
+            # 결제금액
+            settleCost = "10000",
+        )
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = cashbillService.paymentRequest(CorpNum, UserID)
+        response = cashbillService.paymentRequest(CorpNum, paymentForm, UserID)
         return render(request, "paymentResponse.html", {"response": response})
     except PopbillException as PE:
         return render(
@@ -1281,7 +1295,7 @@ def refund(request):
         return render(
             request,
             "response.html",
-            {"response": response.code, "message": response.message},
+            {"code": response.code, "message": response.message},
         )
     except PopbillException as PE:
         return render(
