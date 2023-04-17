@@ -692,3 +692,46 @@ def updateContact(request):
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+def QuitRequest(request):
+    """
+    - https://developers.popbill.com/reference/closedown/python/api/member#QuitRequest
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        QuitReason = ""
+        UserID = settings.testUserID
+
+        response = closedownService.QuitRequest(CorpNum, QuitReason, UserID)
+        return render(request, 'response.html', {"code": response.code, "message": response.message})
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+def GetRefundResult(request):
+    """
+    환불 요청의 결과를 조회합니다.
+    - https://developers.popbill.com/reference/closedown/python/api/member#GetRefundResult
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        RefundCode = ""
+        UserID = settings.testUserID
+
+        response = closedownService.GetRefundableResult(CorpNum,RefundCode,UserID)
+        return render(request, 'response.html', {"code": response.code, "message": response.message})
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+def GetRefundablePoint(request):
+    """
+    회원 탈퇴 시, 환불 가능한 포인트를 확인합니다.
+    - https://developers.popbill.com/reference/closedown/python/api/member#GetRefundablePoint
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+
+        response = closedownService.GetRefundablePoint(CorpNum, UserID)
+        return render(request, 'response.html', {"code": response.code, "message": response.message})
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})

@@ -49,7 +49,8 @@ urlpatterns = [
     url(r"^SendFAX$", views.sendFAX, name="SendFAX"),
     url(r"^AttachStatement$", views.attachStatement, name="AttachStatement"),
     url(r"^DetachStatement$", views.detachStatement, name="DetachStatement"),
-    url(r"^GetEmailPublicKeys$", views.getEmailPublicKeys, name="GetEmailPublicKeys"),
+    url(r"^GetEmailPublicKeys$", views.getEmailPublicKeys,
+        name="GetEmailPublicKeys"),
     url(r"^AssignMgtKey", views.assignMgtKey, name="AssignMgtKey"),
     url(r"^ListEmailConfig", views.listEmailConfig, name="ListEmailConfig"),
     url(r"^UpdateEmailConfig", views.updateEmailConfig, name="UpdateEmailConfig"),
@@ -61,7 +62,8 @@ urlpatterns = [
         views.getCertificateExpireDate,
         name="GetCertificateExpireDate",
     ),
-    url(r"^CheckCertValidation", views.checkCertValidation, name="CheckCertValidation"),
+    url(r"^CheckCertValidation", views.checkCertValidation,
+        name="CheckCertValidation"),
     url(r"^GetTaxCertInfo", views.getTaxCertInfo, name="GetTaxCertInfo"),
     # 포인트 관리
     url(r"^GetUnitCost$", views.getUnitCost, name="GetUnitCost"),
@@ -78,6 +80,8 @@ urlpatterns = [
     url(r"^GetRefundHistory$", views.getRefundHistory, name="GetRefundHistory"),
     url(r"^GetPartnerBalance$", views.getPartnerBalance, name="GetPartnerBalance"),
     url(r"^GetPartnerURL$", views.getPartnerURL, name="GetPartnerURL"),
+    url(r"^GetRefundResult$", views.GetRefundResult, "GetRefundResult"),
+    url(r"^GetRefundablePoint$", views.GetRefundablePoint, "GetRefundablePoint"),
     # 회원정보
     url(r"^CheckIsMember$", views.checkIsMember, name="CheckIsMember"),
     url(r"^CheckID$", views.checkID, name="CheckID"),
@@ -88,4 +92,5 @@ urlpatterns = [
     url(r"^GetContactInfo$", views.getContactInfo, name="GetContactInfo"),
     url(r"^ListContact$", views.listContact, name="ListContact"),
     url(r"^UpdateContact$", views.updateContact, name="UpdateContact"),
+    url(r"^QuitRequest$", views.QuitRequest, "QuitRequest"),
 ]

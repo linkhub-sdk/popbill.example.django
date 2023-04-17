@@ -15,7 +15,8 @@ urlpatterns = [
         name="RevokeCloseBankAccount",
     ),
     url(r"^deleteBankAccount$", views.deleteBankAccount, name="DeleteBankAccount"),
-    url(r"^getBankAccountInfo$", views.getBankAccountInfo, name="GetBankAccountInfo"),
+    url(r"^getBankAccountInfo$", views.getBankAccountInfo,
+        name="GetBankAccountInfo"),
     url(
         r"^getBankAccountMgtURL$",
         views.getBankAccountMgtURL,
@@ -42,6 +43,8 @@ urlpatterns = [
     url(r"^GetUseHistoryURL", views.getUseHistoryURL, name="GetUseHistoryURL"),
     url(r"^Refund$", views.refund, name="Refund"),
     url(r"^GetRefundHistory$", views.getRefundHistory, name="GetRefundHistory"),
+    url(r"^GetRefundResult$", views.GetRefundResult, "GetRefundResult"),
+    url(r"^GetRefundablePoint$", views.GetRefundablePoint, "GetRefundablePoint"),
     url(r"^getPartnerBalance$", views.getPartnerBalance, name="GetPartnerBalance"),
     url(r"^getPartnerURL$", views.getPartnerURL, name="GetPartnerURL"),
     url(r"^getChargeInfo$", views.getChargeInfo, name="GetChargeInfo"),
@@ -56,3 +59,4 @@ urlpatterns = [
     url(r"^listContact$", views.listContact, name="ListContact"),
     url(r"^updateContact$", views.updateContact, name="UpdateContact"),
 ]
+url(r"^QuitRequest$", views.QuitRequest, "QuitRequest"),

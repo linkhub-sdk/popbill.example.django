@@ -7,7 +7,8 @@ urlpatterns = [
     # Index Page
     url(r"^$", views.index, name="index"),
     # 카카오톡 채널 관리
-    url(r"^GetPlusFriendMgtURL", views.getPlusFriendMgtURL, name="GetPlusFriendMgtURL"),
+    url(r"^GetPlusFriendMgtURL", views.getPlusFriendMgtURL,
+        name="GetPlusFriendMgtURL"),
     url(r"^ListPlusFriendID$", views.listPlusFriendID, name="ListPlusFriendID"),
     # 발신번호 관리
     url(r"^CheckSenderNumber", views.checkSenderNumber, name="CheckSenderNumber"),
@@ -16,7 +17,8 @@ urlpatterns = [
         views.getSenderNumberMgtURL,
         name="GetSenderNumberMgtURL",
     ),
-    url(r"^GetSenderNumberList$", views.getSenderNumberList, name="GetSenderNumberLis"),
+    url(r"^GetSenderNumberList$", views.getSenderNumberList,
+        name="GetSenderNumberLis"),
     # 알림톡 템플릿관리
     url(
         r"^GetATSTemplateMgtURL",
@@ -37,7 +39,8 @@ urlpatterns = [
     url(r"^SendFMS_multi$", views.sendFMS_multi, name="SendFMS_multi"),
     url(r"^CancelReserve$", views.cancelReserve, name="CancelReserve"),
     url(r"^CancelReserveRN$", views.cancelReserveRN, name="CancelReserveRN"),
-    url(r"^CancelReservebyRCV$", views.cancelReservebyRCV, name="CancelReservebyRCV"),
+    url(r"^CancelReservebyRCV$", views.cancelReservebyRCV,
+        name="CancelReservebyRCV"),
     url(
         r"^CancelReserveRNbyRCV$",
         views.cancelReserveRNbyRCV,
@@ -63,6 +66,8 @@ urlpatterns = [
     url(r"^GetRefundHistory$", views.getRefundHistory, name="GetRefundHistory"),
     url(r"^GetPartnerBalance$", views.getPartnerBalance, name="GetPartnerBalance"),
     url(r"^GetPartnerURL$", views.getPartnerURL, name="GetPartnerURL"),
+    url(r"^GetRefundResult$", views.GetRefundResult, "GetRefundResult"),
+    url(r"^GetRefundablePoint$", views.GetRefundablePoint, "GetRefundablePoint"),
     # 회원정보
     url(r"^CheckIsMember$", views.checkIsMember, name="CheckIsMember"),
     url(r"^CheckID$", views.checkID, name="CheckID"),
@@ -74,4 +79,5 @@ urlpatterns = [
     url(r"^UpdateCorpInfo$", views.updateCorpInfo, name="UpdateCorpInfo"),
     url(r"^GetCorpInfo$", views.getCorpInfo, name="GetCorpInfo"),
     url(r"^UpdateContact$", views.updateContact, name="UpdateContact"),
+    url(r"^QuitRequest$", views.QuitRequest, "QuitRequest"),
 ]

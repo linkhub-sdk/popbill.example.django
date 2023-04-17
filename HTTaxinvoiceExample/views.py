@@ -60,7 +60,8 @@ def requestJob(request):
         # 종료일자, 날짜형식(yyyyMMdd)
         EDate = "20220731"
 
-        result = htTaxinvoiceService.requestJob(CorpNum, Type, DType, SDate, EDate)
+        result = htTaxinvoiceService.requestJob(
+            CorpNum, Type, DType, SDate, EDate)
 
         return render(request, "result.html", {"result": result})
 
@@ -170,7 +171,8 @@ def search(request):
         # - 미입력시 전체조회
         SearchString = ""
 
-        response = htTaxinvoiceService.search(CorpNum,JobID,Type,TaxType,PurposeType,TaxRegIDType,TaxRegIDYN,TaxRegID,Page,PerPage,Order,UserID,SearchString)
+        response = htTaxinvoiceService.search(CorpNum, JobID, Type, TaxType, PurposeType,
+                                              TaxRegIDType, TaxRegIDYN, TaxRegID, Page, PerPage, Order, UserID, SearchString)
 
         return render(request, "HTTaxinvoice/Search.html", {"response": response})
 
@@ -228,7 +230,8 @@ def summary(request):
         # - 미입력시 전체조회
         SearchString = ""
 
-        response = htTaxinvoiceService.summary(CorpNum,JobID,Type,TaxType,PurposeType,TaxRegIDType,TaxRegIDYN,TaxRegID,UserID,SearchString)
+        response = htTaxinvoiceService.summary(
+            CorpNum, JobID, Type, TaxType, PurposeType, TaxRegIDType, TaxRegIDYN, TaxRegID, UserID, SearchString)
 
         return render(request, "HTTaxinvoice/Summary.html", {"response": response})
 
@@ -251,7 +254,8 @@ def getTaxinvoice(request):
         taxinvoice = htTaxinvoiceService.getTaxinvoice(CorpNum, NTSConfirmNum)
 
         return render(
-            request, "HTTaxinvoice/GetTaxinvoice.html", {"taxinvoice": taxinvoice}
+            request, "HTTaxinvoice/GetTaxinvoice.html", {
+                "taxinvoice": taxinvoice}
         )
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -377,7 +381,7 @@ def checkCertValidation(request):
 
         response = htTaxinvoiceService.checkCertValidation(CorpNum)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -398,9 +402,10 @@ def registDeptUser(request):
         # 홈택스 부서사용자 계정비밀번호
         DeptUserPWD = "deptuserpwd"
 
-        response = htTaxinvoiceService.registDeptUser(CorpNum, DeptUserID, DeptUserPWD)
+        response = htTaxinvoiceService.registDeptUser(
+            CorpNum, DeptUserID, DeptUserPWD)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -417,7 +422,7 @@ def checkDeptUser(request):
 
         response = htTaxinvoiceService.checkDeptUser(CorpNum)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -434,7 +439,7 @@ def checkLoginDeptUser(request):
 
         response = htTaxinvoiceService.checkLoginDeptUser(CorpNum)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -451,7 +456,7 @@ def deleteDeptUser(request):
 
         response = htTaxinvoiceService.deleteDeptUser(CorpNum)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -645,25 +650,26 @@ def paymentRequest(request):
         # 무통장입금 요청 객체
         paymentForm = PaymentForm(
             # 담당자명
-            settlerName = "담당자 이름",
+            settlerName="담당자 이름",
 
             # 담당자 이메일
-            settlerEmail = "popbill_django_test@email.com",
+            settlerEmail="popbill_django_test@email.com",
 
             # 담당자 휴대폰
-            notifyHP = "01012341234",
+            notifyHP="01012341234",
 
             # 입금자명
-            paymentName = "입금자",
+            paymentName="입금자",
 
             # 결제금액
-            settleCost = "10000",
+            settleCost="10000",
         )
 
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = htTaxinvoiceService.paymentRequest(CorpNum,paymentForm, UserID)
+        response = htTaxinvoiceService.paymentRequest(
+            CorpNum, paymentForm, UserID)
 
         return render(request, "paymentResponse.html", {"response": response})
 
@@ -686,7 +692,8 @@ def getSettleResult(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = htTaxinvoiceService.getSettleResult(CorpNum, SettleCode, UserID)
+        response = htTaxinvoiceService.getSettleResult(
+            CorpNum, SettleCode, UserID)
 
         return render(request, "paymentHistory.html", {"response": response})
 
@@ -718,7 +725,8 @@ def getPaymentHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = htTaxinvoiceService.getPaymentHistory(CorpNum, SDate, EDate, Page, PerPage, UserID)
+        response = htTaxinvoiceService.getPaymentHistory(
+            CorpNum, SDate, EDate, Page, PerPage, UserID)
 
         return render(request, "paymentHistoryResult.html", {"response": response})
 
@@ -753,7 +761,8 @@ def getUseHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = htTaxinvoiceService.getUseHistory(CorpNum, SDate, EDate, Page, PerPage, Order, UserID)
+        response = htTaxinvoiceService.getUseHistory(
+            CorpNum, SDate, EDate, Page, PerPage, Order, UserID)
 
         return render(request, "useHistoryResult.html", {"response": response})
 
@@ -798,7 +807,7 @@ def refund(request):
 
         response = htTaxinvoiceService.refund(CorpNum, refundForm, UserID)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -822,7 +831,8 @@ def getRefundHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = htTaxinvoiceService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+        response = htTaxinvoiceService.getRefundHistory(
+            CorpNum, Page, PerPage, UserID)
 
         return render(request, "refundHistoryResult.html", {"response": response})
 
@@ -841,7 +851,7 @@ def checkIsMember(request):
 
         response = htTaxinvoiceService.checkIsMember(CorpNum)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -858,7 +868,7 @@ def checkID(request):
 
         response = htTaxinvoiceService.checkID(memberID)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -909,7 +919,7 @@ def joinMember(request):
 
         response = htTaxinvoiceService.joinMember(newMember)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -982,7 +992,7 @@ def updateCorpInfo(request):
 
         response = htTaxinvoiceService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1021,7 +1031,7 @@ def registContact(request):
 
         response = htTaxinvoiceService.registContact(CorpNum, newContact)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1096,7 +1106,54 @@ def updateContact(request):
 
         response = htTaxinvoiceService.updateContact(CorpNum, updateInfo)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+
+def QuitRequest(request):
+    """
+    - https://developers.popbill.com/reference/httaxinvoice/python/api/member#QuitRequest
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        QuitReason = ""
+        UserID = settings.testUserID
+
+        response = htTaxinvoiceService.QuitRequest(CorpNum, QuitReason, UserID)
+        return render(request, 'response.html', {"code": response.code, "message": response.message})
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+
+def GetRefundResult(request):
+    """
+    환불 요청의 결과를 조회합니다.
+    - https://developers.popbill.com/reference/httaxinvoice/python/api/member#GetRefundResult
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        RefundCode = ""
+        UserID = settings.testUserID
+
+        response = htTaxinvoiceService.GetRefundableResult(
+            CorpNum, RefundCode, UserID)
+        return render(request, 'response.html', {"code": response.code, "message": response.message})
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+
+def GetRefundablePoint(request):
+    """
+    회원 탈퇴 시, 환불 가능한 포인트를 확인합니다.
+    - https://developers.popbill.com/reference/httaxinvoice/python/api/member#GetRefundablePoint
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+
+        response = htTaxinvoiceService.GetRefundablePoint(CorpNum, UserID)
+        return render(request, 'response.html', {"code": response.code, "message": response.message})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
