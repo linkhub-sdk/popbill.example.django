@@ -2977,29 +2977,33 @@ def updateContact(request):
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
-def QuitRequest(request):
+def QuitMember(request):
     """
-    - https://developers.popbill.com/reference/taxinvoice/python/api/member#QuitRequest
+    가입된 연동회원의 탈퇴를 요청합니다.
+    회원탈퇴 신청과 동시에 팝빌의 모든 서비스 이용이 불가하며, 관리자를 포함한 모든 담당자 계정도 일괄탈퇴 됩니다.
+    회원탈퇴로 삭제된 데이터는 복원이 불가능합니다.
+    관리자 계정만 사용 가능합니다.
+    - https://developers.popbill.com/reference/taxinvoice/python/api/member#QuitMember
     """
     try:
         CorpNum = settings.testCorpNum
-        QuitReason = ""
+        QuitReason = "테스트 탈퇴 사유"
         UserID = settings.testUserID
 
-        response = taxinvoiceService.QuitRequest(CorpNum, QuitReason, UserID)
+        response = taxinvoiceService.QuitMember(CorpNum, QuitReason, UserID)
         return render(request, 'response.html', {"code": response.code, "message": response.message})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
-def GetRefundResult(request):
+def GetRefundInfo(request):
     """
-    환불 요청의 결과를 조회합니다.
-    - https://developers.popbill.com/reference/taxinvoice/python/api/member#GetRefundResult
+    포인트 환불에 대한 상세정보 1건을 확인합니다.
+    - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetRefundInfo
     """
     try:
         CorpNum = settings.testCorpNum
-        RefundCode = ""
+        RefundCode = "023040000017"
         UserID = settings.testUserID
 
         response = taxinvoiceService.GetRefundableResult(
@@ -3009,16 +3013,16 @@ def GetRefundResult(request):
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
-def GetRefundablePoint(request):
+def GetRefundableBalance(request):
     """
-    회원 탈퇴 시, 환불 받을 수 있는 포인트를 확인합니다.
-    - https://developers.popbill.com/reference/taxinvoice/python/api/member#GetRefundablePoint
+    환불 가능한 포인트를 확인합니다. (보너스 포인트는 환불가능포인트에서 제외됩니다.)
+    - https://developers.popbill.com/reference/taxinvoice/python/api/point#GetRefundableBalance
     """
     try:
         CorpNum = settings.testCorpNum
         UserID = settings.testUserID
 
-        response = taxinvoiceService.GetRefundablePoint(CorpNum, UserID)
-        return render(request, 'response.html', {"code": response.code, "message": response.message})
+        refundableBalance = taxinvoiceService.GetRefundableBalance(CorpNum, UserID)
+        return render(request, 'getRefundableBalance.html', {"refundableBalance": refundableBalance})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})

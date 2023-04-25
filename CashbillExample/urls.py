@@ -62,8 +62,8 @@ urlpatterns = [
     url(r"^GetRefundHistory$", views.getRefundHistory, name="GetRefundHistory"),
     url(r"^GetPartnerBalance$", views.getPartnerBalance, name="GetPartnerBalance"),
     url(r"^GetPartnerURL$", views.getPartnerURL, name="GetPartnerURL"),
-    url(r"^GetRefundResult$", views.GetRefundResult, "GetRefundResult"),
-    url(r"^GetRefundablePoint$", views.GetRefundablePoint, "GetRefundablePoint"),
+    url(r"^GetRefundInfo$", views.GetRefundInfo, "GetRefundInfo"),
+    url(r"^GetRefundableBalance$", views.GetRefundableBalance, "GetRefundableBalance"),
     # 회원정보
     url(r"^CheckIsMember$", views.checkIsMember, name="CheckIsMember"),
     url(r"^CheckID$", views.checkID, name="CheckID"),
@@ -74,5 +74,5 @@ urlpatterns = [
     url(r"^GetContactInfo$", views.getContactInfo, name="GetContactInfo"),
     url(r"^ListContact$", views.listContact, name="ListContact"),
     url(r"^UpdateContact$", views.updateContact, name="UpdateContact"),
-    url(r"^QuitRequest$", views.QuitRequest, "QuitRequest")
+    url(r"^QuitMember$", views.QuitMember, "QuitMember")
 ]

@@ -43,8 +43,8 @@ urlpatterns = [
     url(r"^GetUseHistoryURL", views.getUseHistoryURL, name="GetUseHistoryURL"),
     url(r"^Refund$", views.refund, name="Refund"),
     url(r"^GetRefundHistory$", views.getRefundHistory, name="GetRefundHistory"),
-    url(r"^GetRefundResult$", views.GetRefundResult, "GetRefundResult"),
-    url(r"^GetRefundablePoint$", views.GetRefundablePoint, "GetRefundablePoint"),
+    url(r"^GetRefundInfo$", views.GetRefundInfo, "GetRefundInfo"),
+    url(r"^GetRefundableBalance$", views.GetRefundableBalance, "GetRefundableBalance"),
     url(r"^getPartnerBalance$", views.getPartnerBalance, name="GetPartnerBalance"),
     url(r"^getPartnerURL$", views.getPartnerURL, name="GetPartnerURL"),
     url(r"^getChargeInfo$", views.getChargeInfo, name="GetChargeInfo"),
@@ -58,5 +58,5 @@ urlpatterns = [
     url(r"^GetContactInfo$", views.getContactInfo, name="GetContactInfo"),
     url(r"^listContact$", views.listContact, name="ListContact"),
     url(r"^updateContact$", views.updateContact, name="UpdateContact"),
+    url(r"^QuitMember$", views.QuitMember, "QuitMember"),
 ]
-url(r"^QuitRequest$", views.QuitRequest, "QuitRequest"),

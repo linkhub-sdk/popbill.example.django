@@ -48,7 +48,8 @@ def checkAccountInfo(request):
         # 조회할 기관의 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
         accountNumber = ""
 
-        accountInfo = accountCheckService.checkAccountInfo(CorpNum, bankCode, accountNumber)
+        accountInfo = accountCheckService.checkAccountInfo(
+            CorpNum, bankCode, accountNumber)
 
         return render(request, "AccountCheck/CheckAccountInfo.html", {"accountInfo": accountInfo})
 
@@ -81,9 +82,10 @@ def checkDepositorInfo(request):
         # 하이픈 '-' 제외하고 입력
         identityNum = ""
 
-        depositorInfo = accountCheckService.checkDepositorInfo(CorpNum, bankCode, accountNumber, identityNumType, identityNum)
+        depositorInfo = accountCheckService.checkDepositorInfo(
+            CorpNum, bankCode, accountNumber, identityNumType, identityNum)
 
-        return render(request,"AccountCheck/CheckDepositorInfo.html",{"depositorInfo": depositorInfo})
+        return render(request, "AccountCheck/CheckDepositorInfo.html", {"depositorInfo": depositorInfo})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -245,7 +247,8 @@ def getChargeInfo(request):
         # 서비스 유형, 계좌성명조회 - 성명 , 계좌실명조회 - 실명
         serviceType = "성명"
 
-        response = accountCheckService.getChargeInfo(CorpNum, UserID, serviceType)
+        response = accountCheckService.getChargeInfo(
+            CorpNum, UserID, serviceType)
 
         return render(request, "getChargeInfo.html", {"response": response})
 
@@ -265,23 +268,24 @@ def paymentRequest(request):
         # 무통장입금 요청 객체
         paymentForm = PaymentForm(
             # 담당자명
-            settlerName = "담당자 이름",
+            settlerName="담당자 이름",
 
             # 담당자 이메일
-            settlerEmail = "popbill_django_test@email.com",
+            settlerEmail="popbill_django_test@email.com",
 
             # 담당자 휴대폰
-            notifyHP = "01012341234",
+            notifyHP="01012341234",
 
             # 입금자명
-            paymentName = "입금자",
+            paymentName="입금자",
 
             # 결제금액
-            settleCost = "10000",
+            settleCost="10000",
         )
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = accountCheckService.paymentRequest(CorpNum, paymentForm, UserID)
+        response = accountCheckService.paymentRequest(
+            CorpNum, paymentForm, UserID)
         return render(request, "paymentResponse.html", {"response": response})
 
     except PopbillException as PE:
@@ -303,7 +307,8 @@ def getSettleResult(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = accountCheckService.getSettleResult(CorpNum, SettleCode, UserID)
+        response = accountCheckService.getSettleResult(
+            CorpNum, SettleCode, UserID)
 
         return render(request, "paymentHistory.html", {"response": response})
 
@@ -335,7 +340,8 @@ def getPaymentHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = accountCheckService.getPaymentHistory(CorpNum, SDate, EDate, Page, PerPage, UserID)
+        response = accountCheckService.getPaymentHistory(
+            CorpNum, SDate, EDate, Page, PerPage, UserID)
 
         return render(request, "paymentHistoryResult.html", {"response": response})
 
@@ -370,7 +376,8 @@ def getUseHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = accountCheckService.getUseHistory(CorpNum, SDate, EDate, Page, PerPage, Order, UserID)
+        response = accountCheckService.getUseHistory(
+            CorpNum, SDate, EDate, Page, PerPage, Order, UserID)
 
         return render(request, "useHistoryResult.html", {"response": response})
 
@@ -416,7 +423,7 @@ def refund(request):
 
         response = accountCheckService.refund(CorpNum, refundForm, UserID)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -440,7 +447,8 @@ def getRefundHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = accountCheckService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+        response = accountCheckService.getRefundHistory(
+            CorpNum, Page, PerPage, UserID)
 
         return render(request, "refundHistoryResult.html", {"response": response})
 
@@ -459,7 +467,7 @@ def checkIsMember(request):
 
         response = accountCheckService.checkIsMember(CorpNum)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -476,7 +484,7 @@ def checkID(request):
 
         response = accountCheckService.checkID(memberID)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -527,7 +535,7 @@ def joinMember(request):
 
         response = accountCheckService.joinMember(newMember)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -600,7 +608,7 @@ def updateCorpInfo(request):
 
         response = accountCheckService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -639,7 +647,7 @@ def registContact(request):
 
         response = accountCheckService.registContact(CorpNum, newContact)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -711,7 +719,58 @@ def updateContact(request):
 
         response = accountCheckService.updateContact(CorpNum, updateInfo)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+
+def QuitMember(request):
+    """
+    가입된 연동회원의 탈퇴를 요청합니다.
+    회원탈퇴 신청과 동시에 팝빌의 모든 서비스 이용이 불가하며, 관리자를 포함한 모든 담당자 계정도 일괄탈퇴 됩니다.
+    회원탈퇴로 삭제된 데이터는 복원이 불가능합니다.
+    관리자 계정만 사용 가능합니다.
+    - https://developers.popbill.com/reference/accountcheck/python/api/member#QuitMember
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        QuitReason = "테스트 탈퇴 사유"
+        UserID = settings.testUserID
+
+        response = accountCheckService.QuitMember(CorpNum, QuitReason, UserID)
+        return render(request, 'response.html', {"code": response.code, "message": response.message})
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+
+def GetRefundInfo(request):
+    """
+    포인트 환불에 대한 상세정보 1건을 확인합니다.
+    - https://developers.popbill.com/reference/accountcheck/python/api/point#GetRefundInfo
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        RefundCode = "023040000017"
+        UserID = settings.testUserID
+
+        response = accountCheckService.GetRefundableResult(
+            CorpNum, RefundCode, UserID)
+        return render(request, 'response.html', {"code": response.code, "message": response.message})
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+
+
+def GetRefundableBalance(request):
+    """
+    환불 가능한 포인트를 확인합니다. (보너스 포인트는 환불가능포인트에서 제외됩니다.)
+    - https://developers.popbill.com/reference/accountcheck/python/api/point#GetRefundableBalance
+    """
+    try:
+        CorpNum = settings.testCorpNum
+        UserID = settings.testUserID
+
+        refundableBalance = accountCheckService.GetRefundableBalance(CorpNum, UserID)
+        return render(request, 'getRefundableBalance.html', {"refundableBalance": refundableBalance})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})

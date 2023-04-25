@@ -71,7 +71,8 @@ def listPlusFriendID(request):
         response = kakaoService.listPlusFriendID(CorpNum)
 
         return render(
-            request, "Kakao/ListPlusFriendID.html", {"listPlusFriendID": response}
+            request, "Kakao/ListPlusFriendID.html", {
+                "listPlusFriendID": response}
         )
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -93,7 +94,7 @@ def checkSenderNumber(request):
 
         response = kakaoService.checkSenderNumber(CorpNum, senderNumber)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -778,7 +779,8 @@ def sendFTS_same(request):
         # 수신정보 배열 (최대 1000개 가능)
         KakaoMessages = []
         for x in range(0, 2):
-            KakaoMessages.append(KakaoReceiver(rcv="", rcvnm="팝친"))  # 수신번호  # 수신자 이름
+            KakaoMessages.append(KakaoReceiver(
+                rcv="", rcvnm="팝친"))  # 수신번호  # 수신자 이름
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
@@ -1107,7 +1109,8 @@ def sendFMS_same(request):
         # 수신정보 배열 (최대 1000개 가능)
         KakaoMessages = []
         for x in range(0, 10):
-            KakaoMessages.append(KakaoReceiver(rcv="", rcvnm="팝친"))  # 수신번호  # 수신자 이름
+            KakaoMessages.append(KakaoReceiver(
+                rcv="", rcvnm="팝친"))  # 수신번호  # 수신자 이름
 
         # 버튼 목록 (최대 5개)
         KakaoButtons = []
@@ -1512,23 +1515,23 @@ def paymentRequest(request):
         # 무통장입금 요청 객체
         paymentForm = PaymentForm(
             # 담당자명
-            settlerName = "담당자 이름",
+            settlerName="담당자 이름",
 
             # 담당자 이메일
-            settlerEmail = "popbill_django_test@email.com",
+            settlerEmail="popbill_django_test@email.com",
 
             # 담당자 휴대폰
-            notifyHP = "01012341234",
+            notifyHP="01012341234",
 
             # 입금자명
-            paymentName = "입금자",
+            paymentName="입금자",
 
             # 결제금액
-            settleCost = "10000",
+            settleCost="10000",
         )
         # 팝빌회원 아이디
         UserID = settings.testUserID
-        response = kakaoService.paymentRequest(CorpNum,paymentForm, UserID)
+        response = kakaoService.paymentRequest(CorpNum, paymentForm, UserID)
         return render(request, "paymentResponse.html", {"response": response})
 
     except PopbillException as PE:
@@ -1582,7 +1585,8 @@ def getPaymentHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = kakaoService.getPaymentHistory(CorpNum, SDate, EDate, Page, PerPage, UserID)
+        response = kakaoService.getPaymentHistory(
+            CorpNum, SDate, EDate, Page, PerPage, UserID)
 
         return render(request, "paymentHistoryResult.html", {"response": response})
 
@@ -1617,7 +1621,8 @@ def getUseHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = kakaoService.getUseHistory(CorpNum, SDate, EDate, Page, PerPage, Order, UserID)
+        response = kakaoService.getUseHistory(
+            CorpNum, SDate, EDate, Page, PerPage, Order, UserID)
 
         return render(request, "useHistoryResult.html", {"response": response})
 
@@ -1661,9 +1666,9 @@ def refund(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response =  kakaoService.refund(CorpNum, refundForm, UserID)
+        response = kakaoService.refund(CorpNum, refundForm, UserID)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1687,7 +1692,8 @@ def getRefundHistory(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = kakaoService.getRefundHistory(CorpNum, Page, PerPage, UserID)
+        response = kakaoService.getRefundHistory(
+            CorpNum, Page, PerPage, UserID)
 
         return render(request, "refundHistoryResult.html", {"response": response})
 
@@ -1706,7 +1712,7 @@ def checkIsMember(request):
 
         response = kakaoService.checkIsMember(CorpNum)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1723,7 +1729,7 @@ def checkID(request):
 
         response = kakaoService.checkID(memberID)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1774,7 +1780,7 @@ def joinMember(request):
 
         response = kakaoService.joinMember(newMember)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1847,7 +1853,7 @@ def updateCorpInfo(request):
 
         response = kakaoService.updateCorpInfo(CorpNum, corpInfo)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1886,7 +1892,7 @@ def registContact(request):
 
         response = kakaoService.registContact(CorpNum, newContact)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1961,7 +1967,7 @@ def updateContact(request):
 
         response = kakaoService.updateContact(CorpNum, updateInfo)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1985,9 +1991,10 @@ def cancelReservebyRCV(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = kakaoService.CancelReservebyRCV(CorpNum, receiptNum, receiveNum, UserID)
+        response = kakaoService.CancelReservebyRCV(
+            CorpNum, receiptNum, receiveNum, UserID)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -2012,53 +2019,61 @@ def cancelReserveRNbyRCV(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = kakaoService.CancelReserveRNbyRCV(CorpNum, requestNum, receiveNum, UserID)
+        response = kakaoService.CancelReserveRNbyRCV(
+            CorpNum, requestNum, receiveNum, UserID)
 
-        return render(request,"response.html",{"code": response.code, "message": response.message})
+        return render(request, "response.html", {"code": response.code, "message": response.message})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
-def QuitRequest(request):
+def QuitMember(request):
     """
-    - https://developers.popbill.com/reference/kakaotalk/python/api/member#QuitRequest
+    가입된 연동회원의 탈퇴를 요청합니다.
+    회원탈퇴 신청과 동시에 팝빌의 모든 서비스 이용이 불가하며, 관리자를 포함한 모든 담당자 계정도 일괄탈퇴 됩니다.
+    회원탈퇴로 삭제된 데이터는 복원이 불가능합니다.
+    관리자 계정만 사용 가능합니다.
+    - https://developers.popbill.com/reference/kakaotalk/python/api/member#QuitMember
     """
     try:
         CorpNum = settings.testCorpNum
-        QuitReason = ""
+        QuitReason = "테스트 탈퇴 사유"
         UserID = settings.testUserID
 
-        response = kakaoService.QuitRequest(CorpNum, QuitReason, UserID)
+        response = kakaoService.QuitMember(CorpNum, QuitReason, UserID)
         return render(request, 'response.html', {"code": response.code, "message": response.message})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
-def GetRefundResult(request):
+
+def GetRefundInfo(request):
     """
-    환불 요청의 결과를 조회합니다.
-    - https://developers.popbill.com/reference/kakaotalk/python/api/member#GetRefundResult
+    포인트 환불에 대한 상세정보 1건을 확인합니다.
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetRefundInfo
     """
     try:
         CorpNum = settings.testCorpNum
-        RefundCode = ""
+        RefundCode = "023040000017"
         UserID = settings.testUserID
 
-        response = kakaoService.GetRefundableResult(CorpNum,RefundCode,UserID)
-        return render(request, 'response.html', {"code": response.code, "message": response.message})
+        response = kakaoService.GetRefundableResult(
+            CorpNum, RefundCode, UserID)
+        return render(request, 'getRefundInfo.html', {"response": response})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
-def GetRefundablePoint(request):
+
+def GetRefundableBalance(request):
     """
-    회원 탈퇴 시, 환불 가능한 포인트를 확인합니다.
-    - https://developers.popbill.com/reference/kakaotalk/python/api/member#GetRefundablePoint
+    환불 가능한 포인트를 확인합니다. (보너스 포인트는 환불가능포인트에서 제외됩니다.)
+    - https://developers.popbill.com/reference/kakaotalk/python/api/point#GetRefundableBalance
     """
     try:
         CorpNum = settings.testCorpNum
         UserID = settings.testUserID
 
-        response = kakaoService.GetRefundablePoint(CorpNum, UserID)
-        return render(request, 'response.html', {"code": response.code, "message": response.message})
+        refundableBalance = kakaoService.GetRefundableBalance(CorpNum, UserID)
+        return render(request, 'getRefundableBalance.html', {"refundableBalance": refundableBalance})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})

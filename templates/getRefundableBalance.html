@@ -1,0 +1,18 @@
+{% load static %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/Example.css" %}" media="screen"/>
+    <title>팝빌 SDK Django Example.</title>
+</head>
+<body>
+    {% block contents %}
+    <fieldset class="fieldset1">
+        <legend>Refundable Balance (환불 가능 포인트)</legend>
+        <ul>
+            <li>refundableBalance (환불 가능 포인트) : {{refundableBalance}}</li>
+        </ul>
+    </fieldset>
+    {% endblock contents %}
+</body>
+</html>
