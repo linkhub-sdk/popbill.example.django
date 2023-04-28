@@ -2102,7 +2102,7 @@ def quitMember(request):
         QuitReason = "테스트 탈퇴 사유"
         UserID = settings.testUserID
 
-        response = statementService.QuitMember(CorpNum, QuitReason, UserID)
+        response = statementService.quitMember(CorpNum, QuitReason, UserID)
         return render(request, 'response.html', {"code": response.code, "message": response.message})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -2117,7 +2117,7 @@ def getRefundInfo(request):
         RefundCode = "023040000017"
         UserID = settings.testUserID
 
-        response = statementService.GetRefundableResult(CorpNum,RefundCode,UserID)
+        response = statementService.getRefundableResult(CorpNum,RefundCode,UserID)
         return render(request, 'response.html', {"code": response.code, "message": response.message})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -2131,7 +2131,7 @@ def getRefundableBalance(request):
         CorpNum = settings.testCorpNum
         UserID = settings.testUserID
 
-        refundableBalance = statementService.GetRefundableBalance(CorpNum, UserID)
+        refundableBalance = statementService.getRefundableBalance(CorpNum, UserID)
         return render(request, 'getRefundableBalance.html', {"refundableBalance": refundableBalance})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
