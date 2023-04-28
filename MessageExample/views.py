@@ -1466,7 +1466,7 @@ def checkAutoDenyNumber(request):
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
-def QuitMember(request):
+def quitMember(request):
     """
     가입된 연동회원의 탈퇴를 요청합니다.
     회원탈퇴 신청과 동시에 팝빌의 모든 서비스 이용이 불가하며, 관리자를 포함한 모든 담당자 계정도 일괄탈퇴 됩니다.
@@ -1485,7 +1485,7 @@ def QuitMember(request):
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
-def GetRefundInfo(request):
+def getRefundInfo(request):
     """
     포인트 환불에 대한 상세정보 1건을 확인합니다.
     - https://developers.popbill.com/reference/sms/python/api/point#GetRefundInfo
@@ -1502,7 +1502,7 @@ def GetRefundInfo(request):
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
-def GetRefundableBalance(request):
+def getRefundableBalance(request):
     """
     환불 가능한 포인트를 확인합니다. (보너스 포인트는 환불가능포인트에서 제외됩니다.)
     - https://developers.popbill.com/reference/sms/python/api/point#GetRefundableBalance
