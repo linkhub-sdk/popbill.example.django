@@ -1475,8 +1475,13 @@ def quitMember(request):
     - https://developers.popbill.com/reference/sms/python/api/member#QuitMember
     """
     try:
+        # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
+        # 탈퇴 사유
         QuitReason = "테스트 탈퇴 사유"
+
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
         response = messageService.quitMember(CorpNum, QuitReason, UserID)
@@ -1491,8 +1496,13 @@ def getRefundInfo(request):
     - https://developers.popbill.com/reference/sms/python/api/point#GetRefundInfo
     """
     try:
+        # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
+        # 환불코드
         RefundCode = "023040000017"
+
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
         response = messageService.getRefundableResult(
@@ -1508,7 +1518,10 @@ def getRefundableBalance(request):
     - https://developers.popbill.com/reference/sms/python/api/point#GetRefundableBalance
     """
     try:
+        # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
+
+        # 팝빌회원 아이디
         UserID = settings.testUserID
 
         refundableBalance = messageService.getRefundableBalance(
