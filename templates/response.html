@@ -23,6 +23,9 @@
                 {% if tradeDT != None %}
                     <li>거래일시 (Response.tradeDT) : {{ tradeDT }}</li>
                 {% endif %}
+                {% if refundCode != None %}
+                    <li>환불코드 (Response.refundCode) : {{ refundCode }}</li>
+                {% endif %}
             </ul>
         </fieldset>
     </div>

@@ -1069,7 +1069,7 @@ def refund(request):
 
         response = faxService.refund(CorpNum, refundForm, UserID)
 
-        return render(request, "response.html", {"code": response.code, "message": response.message})
+        return render(request,"response.html",{"code": response.code, "message": response.message, "refundCode": response.refundCode})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
@@ -1412,8 +1412,8 @@ def getRefundInfo(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = faxService.getRefundableResult(CorpNum, RefundCode, UserID)
-        return render(request, 'response.html', {"code": response.code, "message": response.message})
+        response = faxService.getRefundInfo(CorpNum, RefundCode, UserID)
+        return render(request, 'getRefundInfo.html', {"code": response.code, "response": response})
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
