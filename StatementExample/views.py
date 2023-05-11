@@ -1781,25 +1781,25 @@ def refund(request):
         # 환불신청 객체정보
         refundForm = RefundForm(
             # 담당자명
-            contactname="환불신청테스트",
+            ContactName="환불신청테스트",
 
             # 담당자 연락처
-            tel="01077777777",
+            TEL="01077777777",
 
             # 환불 신청 포인트
-            requestpoint="10",
+            RequestPoint="10",
 
             # 은행명
-            accountbank="국민",
+            AccountBank="국민",
 
             # 계좌번호
-            accountnum="123123123-123",
+            AccountNum="123123123-123",
 
             # 예금주명
-            accountname="예금주",
+            AccountName="예금주",
 
             # 환불사유
-            reason="테스트 환불 사유",
+            Reason="테스트 환불 사유",
         )
 
         # 팝빌회원 아이디
