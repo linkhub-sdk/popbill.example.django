@@ -15,7 +15,7 @@
 
                 {% for refundHistory in response.list %}
                 <fieldset class="fieldset2">
-                    <legend>RefundHistory (사용내역) [ {{ forloop.counter }} ]</legend>
+                    <legend>RefundHistory (환불내역) [ {{ forloop.counter }} ]</legend>
                     <ul>
                         <li>reqDT (신청일시) : {{refundHistory.reqDT}}</li>
                         <li>requestPoint (환불 신청포인트) : {{refundHistory.requestPoint}}</li>
