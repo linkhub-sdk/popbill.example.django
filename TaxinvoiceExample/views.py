@@ -1951,8 +1951,11 @@ def attachFile(request):
         # 파일경로
         FilePath = "./TaxinvoiceExample/static/image/attachfile.png"
 
+        # 첨부파일명
+        DisplayName = "DisplayName.png"
+
         response = taxinvoiceService.attachFile(
-            CorpNum, MgtKeyType, MgtKey, FilePath)
+            CorpNum, MgtKeyType, MgtKey, FilePath, None, DisplayName)
 
         return render(request, "response.html", {"code": response.code, "message": response.message})
 

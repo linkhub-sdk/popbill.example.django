@@ -1015,7 +1015,10 @@ def attachFile(request):
         # 파일경로
         FilePath = "./StatementExample/static/image/attachfile.png"
 
-        response = statementService.attachFile(CorpNum, ItemCode, MgtKey, FilePath)
+        # 첨부파일명
+        DisplayName = "DisplayName.png"
+
+        response = statementService.attachFile(CorpNum, ItemCode, MgtKey, FilePath, None, DisplayName)
 
         return render(request,"response.html",{"code": response.code, "message": response.message})
 
