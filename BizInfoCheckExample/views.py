@@ -1,3 +1,10 @@
+"""
+팝빌 기업정보조회 API Python SDK Django Example
+
+Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/bizinfocheck/python/getting-started/tutorial
+연동 기술지원 연락처 : 1600-9854
+연동 기술지원 이메일 : code@linkhubcorp.com
+"""
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
@@ -15,16 +22,16 @@ from config import settings
 # config/settings.py 작성한 LinkID, SecretKey를 이용해 BizInfoCheckService 객체 생성
 bizInfoCheckService = BizInfoCheckService(settings.LinkID, settings.SecretKey)
 
-# 연동환경 설정값, 개발용(True), 상업용(False)
+# 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
 bizInfoCheckService.IsTest = settings.IsTest
 
-# 인증토큰 IP제한기능 사용여부, 권장(True)
+# 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
 bizInfoCheckService.IPRestrictOnOff = settings.IPRestrictOnOff
 
-# 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+# 통신 IP 고정, true-사용, false-미사용, (기본값:false)
 bizInfoCheckService.UseStaticIP = settings.UseStaticIP
 
-# 로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 bizInfoCheckService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 

@@ -1,3 +1,19 @@
+"""
+업데이트 일자 : 2024-02-26
+연동 기술지원 연락처 : 1600-9854
+연동 기술지원 이메일 : code@linkhubcorp.com
+        
+<테스트 연동개발 준비사항>
+1) API Key 변경 (연동신청 시 메일로 전달된 정보)
+    - LinkID : 링크허브에서 발급한 링크아이디
+    - SecretKey : 링크허브에서 발급한 비밀키
+2) SDK 환경설정 옵션 설정
+    - IsTest : 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+    - IPRestrictOnOff : 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
+    - UseStaticIP : 통신 IP 고정, true-사용, false-미사용, (기본값:false)
+    - UseLocalTimeYN : 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
+"""
+
 # -*- coding: utf-8 -*-
 import imp
 import os
@@ -9,31 +25,22 @@ try:
 except Exception as E:
     pass
 
-"""
-- 업데이트 일자 : 2022-11-09
-- 연동 기술지원 연락처 : 1600-9854 /
-- 연동 기술지원 이메일 : code@linkhub.co.kr
-
-<테스트 연동개발 준비사항>
-- 링크아이디(LinkID)와 비밀키(SecretKey)를 메일로 발급받은 인증정보를 참조하여 변경합니다.
-"""
-
 # 링크아이디
 LinkID = "TESTER"
 
-# 발급받은 비밀키, 유출에 주의하시기 바랍니다.
+# 비밀키
 SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 
-# 연동환경 설정값, 개발용(True), 상업용(False)
+# 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
 IsTest = True
 
-# 인증토큰 IP제한기능 사용여부, 권장(True)
+# 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
 IPRestrictOnOff = True
 
-# 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+# 통신 IP 고정, true-사용, false-미사용, (기본값:false)
 UseStaticIP = False
 
-# 로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true).
 UseLocalTimeYN = True
 
 # 팝빌회원 사업자번호

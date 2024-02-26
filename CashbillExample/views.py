@@ -1,3 +1,10 @@
+"""
+팝빌 현금영수증 API Python SDK Django Example
+
+Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/cashbill/python/getting-started/tutorial
+연동 기술지원 연락처 : 1600-9854
+연동 기술지원 이메일 : code@linkhubcorp.com
+"""
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
 from django.shortcuts import render
@@ -17,16 +24,16 @@ from config import settings
 # config/settings.py 작성한 LinkID, SecretKey를 이용해 CashbillService 객체 생성
 cashbillService = CashbillService(settings.LinkID, settings.SecretKey)
 
-# 연동환경 설정값, 개발용(True), 상업용(False)
+# 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
 cashbillService.IsTest = settings.IsTest
 
-# 인증토큰 IP제한기능 사용여부, 권장(True)
+# 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
 cashbillService.IPRestrictOnOff = settings.IPRestrictOnOff
 
-# 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+# 통신 IP 고정, true-사용, false-미사용, (기본값:false)
 cashbillService.UseStaticIP = settings.UseStaticIP
 
-# 로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 cashbillService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 
@@ -123,7 +130,7 @@ def registIssue(request):
             # 주문번호
             orderNumber="주문번호",
             # 이메일
-            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             email="",
             # 휴대폰
@@ -219,7 +226,7 @@ def bulkSubmit(request):
                     # 주문번호
                     orderNumber="주문번호",
                     # 이메일
-                    # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+                    # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
                     # 실제 거래처의 메일주소가 기재되지 않도록 주의
                     email="",
                     # 휴대폰
@@ -739,7 +746,7 @@ def sendEmail(request):
         MgtKey = "20220805-001"
 
         # 수신메일주소
-        # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         # 실제 거래처의 메일주소가 기재되지 않도록 주의
         Receiver = ""
 
@@ -811,7 +818,7 @@ def sendFAX(request):
 
 def assignMgtKey(request):
     """
-    팝빌 사이트를 통해 발행하여 문서번호가 부여되지 않은 현금영수증에 문서번호를 할당합니다.
+    팝빌 사이트를 통해 발행하여 문서번호가 할당되지 않은 현금영수증에 문서번호를 할당합니다.
     - https://developers.popbill.com/reference/cashbill/python/api/etc#AssignMgtKey
     """
     try:

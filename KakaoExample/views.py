@@ -1,3 +1,22 @@
+"""
+팝빌 카카오톡 API Python SDK Django Example
+
+Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/kakaotalk/python/getting-started/tutorial
+연동 기술지원 연락처 : 1600-9854
+연동 기술지원 이메일 : code@linkhubcorp.com
+
+<테스트 연동개발 준비사항>
+1) 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
+    - 1. 팝빌 사이트 로그인 > [문자/팩스] > [카카오톡] > [발신번호 사전등록] 메뉴에서 등록
+    - 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+2) 비즈니스 채널 등록 및 알림톡 템플릿을 신청합니다.
+    - 1. 비즈니스 채널 등록 (등록방법은 사이트/API 두가지 방식이 있습니다.)
+        └ 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '카카오톡 채널 관리' 메뉴에서 등록
+        └ GetPlusFriendMgtURL API 를 통해 반환된 URL을 이용하여 등록
+    - 2. 알림톡 템플릿 신청 (등록방법은 사이트/API 두가지 방식이 있습니다.)
+        └ 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '알림톡 템플릿 관리' 메뉴에서 등록
+        └ GetATSTemplateMgtURL API 를 통해 URL을 이용하여 등록
+"""
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
@@ -17,16 +36,16 @@ from config import settings
 # config/settings.py 작성한 LinkID, SecretKey를 이용해 KakaoService 객체 생성
 kakaoService = KakaoService(settings.LinkID, settings.SecretKey)
 
-# 연동환경 설정값, 개발용(True), 상업용(False)
+# 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
 kakaoService.IsTest = settings.IsTest
 
-# 인증토큰 IP제한기능 사용여부, 권장(True)
+# 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
 kakaoService.IPRestrictOnOff = settings.IPRestrictOnOff
 
-# 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+# 통신 IP 고정, true-사용, false-미사용, (기본값:false)
 kakaoService.UseStaticIP = settings.UseStaticIP
 
-# 로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 kakaoService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 # 알림톡/친구톡 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
@@ -249,7 +268,7 @@ def sendATS_one(request):
         receiverName = "partner"
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -379,7 +398,7 @@ def sendATS_multi(request):
             # KakaoMessages[x].btns = btns
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -473,7 +492,7 @@ def sendATS_same(request):
             )
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -581,7 +600,7 @@ def sendFTS_one(request):
         adsYN = False
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -712,7 +731,7 @@ def sendFTS_multi(request):
         adsYN = False
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -807,7 +826,7 @@ def sendFTS_same(request):
         adsYN = False
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -913,7 +932,7 @@ def sendFMS_one(request):
         adsYN = False
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -1030,7 +1049,7 @@ def sendFMS_multi(request):
         adsYN = False
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 
@@ -1137,7 +1156,7 @@ def sendFMS_same(request):
         adsYN = False
 
         # 전송요청번호
-        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        # 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         requestNum = ""
 

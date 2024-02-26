@@ -1,3 +1,10 @@
+"""
+팝빌 전자명세서 API Python SDK Django Example
+
+Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/statement/python/getting-started/tutorial
+연동 기술지원 연락처 : 1600-9854
+연동 기술지원 이메일 : code@linkhubcorp.com
+"""
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
@@ -17,16 +24,16 @@ from config import settings
 # config/settings.py 작성한 LinkID, SecretKey를 이용해 StatementService 객체 생성
 statementService = StatementService(settings.LinkID, settings.SecretKey)
 
-# 연동환경 설정, 개발용(True), 상업용(False)
+# 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
 statementService.IsTest = settings.IsTest
 
-# 인증토큰 IP제한기능 사용여부, 권장(True)
+# 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
 statementService.IPRestrictOnOff = settings.IPRestrictOnOff
 
-# 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+# 통신 IP 고정, true-사용, false-미사용, (기본값:false)
 statementService.UseStaticIP = settings.UseStaticIP
 
-# 로컬시스템 시간 사용여부, 권장(True)
+# 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 statementService.UseLocalTimeYN = settings.UseLocalTimeYN
 
 
@@ -136,7 +143,7 @@ def registIssue(request):
             # 수신자 담당자 성명
             receiverContactName="수신자 담당자명",
             # 수신자 메일주소
-            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             receiverEmail="",
             # 수신자 연락처
@@ -295,7 +302,7 @@ def register(request):
             # 수신자 담당자 성명
             receiverContactName="수신자 담당자명",
             # 수신자 메일주소
-            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             receiverEmail="",
             # 수신자 연락처
@@ -448,7 +455,7 @@ def update(request):
             # 수신자 담당자 성명
             receiverContactName="수신자 담당자명",
             # 수신자 메일주소
-            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             receiverEmail="",
             # 수신자 연락처
@@ -1263,7 +1270,7 @@ def FAXSend(request):
             receiverContactName="수신자 담당자명",
 
             # 수신자 메일주소
-            # 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             receiverEmail="",
 
