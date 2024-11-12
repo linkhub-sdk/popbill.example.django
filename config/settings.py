@@ -1,5 +1,5 @@
 """
-업데이트 일자 : 2024-02-26
+업데이트 일자 : 2024-11-12
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
         
@@ -75,7 +75,7 @@ INSTALLED_APPS = [
     "FaxExample",  # 팩스
     "HTTaxinvoiceExample",  # 홈택스 전자(세금)계산서 연동
     "HTCashbillExample",  # 홈택스 현금영수증 연동
-    "ClosedownExample",  # 휴폐업조회
+    "ClosedownExample",  # 사업자등록상태조회
     "BizInfoCheckExample",  # 기업정보조회
     "KakaoExample",  # 카카오톡(알림톡/친구톡)
     "EasyFinBankExample",  # 계좌조회

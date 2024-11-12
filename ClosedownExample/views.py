@@ -1,5 +1,5 @@
 """
-팝빌 휴폐업조회 API Python SDK Django Example
+팝빌 사업자등록상태조회 (휴폐업조회) API Python SDK Django Example
 
 Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/closedown/python/getting-started/tutorial
 연동 기술지원 연락처 : 1600-9854
@@ -41,7 +41,7 @@ def index(request):
 
 def checkCorpNum(request):
     """
-    사업자번호 1건에 대한 휴폐업정보를 확인합니다.
+    사업자번호 1건에 대한 사업자등록상태(휴폐업)를 확인합니다.
     - https://developers.popbill.com/reference/closedown/python/api/check#CheckCorpNum
     """
     try:
@@ -61,7 +61,7 @@ def checkCorpNum(request):
 
 def checkCorpNums(request):
     """
-    다수건의 사업자번호에 대한 휴폐업정보를 확인합니다. (최대 1,000건)
+    다수건의 사업자번호에 대한 사업자등록상태(휴폐업)를 확인합니다. (최대 1,000건)
     - https://developers.popbill.com/reference/closedown/python/api/check#CheckCorpNums
     """
     try:
@@ -200,7 +200,7 @@ def getPartnerURL(request):
 
 def getUnitCost(request):
     """
-    휴폐업 조회시 과금되는 포인트 단가를 확인합니다.
+    사업자등록상태(휴폐업) 조회시 과금되는 포인트 단가를 확인합니다.
     - https://developers.popbill.com/reference/closedown/python/api/point#GetUnitCost
     """
     try:
@@ -217,7 +217,7 @@ def getUnitCost(request):
 
 def getChargeInfo(request):
     """
-    팝빌 휴폐업조회 API 서비스 과금정보를 확인합니다.
+    팝빌 사업자등록상태조회(휴폐업조회) API 서비스 과금정보를 확인합니다.
     - https://developers.popbill.com/reference/closedown/python/api/point#GetChargeInfo
     """
     try:

@@ -13,7 +13,7 @@ urlpatterns = [
     # 홈택스 현금영수증 매입/매출 내역 수집 결과 조회
     url(r"^Search$", views.search, name="Search"),
     url(r"^Summary$", views.summary, name="Summary"),
-    # 홈택스연동 인증 관리
+    # 홈택스수집 인증 관리
     url(
         r"^GetCertificatePopUpURL",
         views.getCertificatePopUpURL,

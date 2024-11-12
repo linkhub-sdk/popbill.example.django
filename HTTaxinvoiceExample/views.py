@@ -7,8 +7,8 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/httaxin
 
 <테스트 연동개발 준비사항>
 1) 홈택스 로그인 인증정보를 등록합니다. (부서사용자등록 / 공동인증서 등록)
-    - 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴
-    - 홈택스연동 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL을 이용하여
+    - 팝빌로그인 > [홈택스수집] > [환경설정] > [인증 관리] 메뉴
+    - 홈택스수집 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL을 이용하여
       홈택스 인증 처리를 합니다.
 """
 # -*- coding: utf-8 -*-
@@ -40,10 +40,10 @@ htTaxinvoiceService.UseStaticIP = settings.UseStaticIP
 # 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 htTaxinvoiceService.UseLocalTimeYN = settings.UseLocalTimeYN
 
-# 홈택스 연동서비스를 이용하기 위해 팝빌에 인증정보를 등록 합니다. (인증방법은 부서사용자 인증 / 인증서 인증 방식이 있습니다.)
-# - 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴에서 [홈택스 부서사용자 등록] 혹은
+# 홈택스수집 서비스를 이용하기 위해 팝빌에 인증정보를 등록 합니다. (인증방법은 부서사용자 인증 / 인증서 인증 방식이 있습니다.)
+# - 팝빌로그인 > [홈택스수집] > [환경설정] > [인증 관리] 메뉴에서 [홈택스 부서사용자 등록] 혹은
 #   [홈택스 인증서 등록]을 통해 인증정보를 등록합니다.
-# - 홈택스연동 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL에 접속 하여
+# - 홈택스수집 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL에 접속 하여
 #   [홈택스 부서사용자 등록] 혹은 [홈택스 인증서 등록]을 통해 인증정보를 등록합니다.
 
 
@@ -344,7 +344,7 @@ def getPrintURL(request):
 
 def getCertificatePopUpURL(request):
     """
-    홈택스연동 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
+    홈택스수집 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://developers.popbill.com/reference/httaxinvoice/python/api/cert#GetCertificatePopUpURL
     """
@@ -402,7 +402,7 @@ def checkCertValidation(request):
 
 def registDeptUser(request):
     """
-    홈택스연동 인증을 위해 팝빌에 전자세금계산서용 부서사용자 계정을 등록합니다.
+    홈택스수집 인증을 위해 팝빌에 전자세금계산서용 부서사용자 계정을 등록합니다.
     - https://developers.popbill.com/reference/httaxinvoice/python/api/cert#RegistDeptUser
     """
     try:
@@ -426,7 +426,7 @@ def registDeptUser(request):
 
 def checkDeptUser(request):
     """
-    홈택스연동 인증을 위해 팝빌에 등록된 전자세금계산서용 부서사용자 계정을 확인합니다.
+    홈택스수집 인증을 위해 팝빌에 등록된 전자세금계산서용 부서사용자 계정을 확인합니다.
     - https://developers.popbill.com/reference/httaxinvoice/python/api/cert#CheckDeptUser
     """
     try:
@@ -477,7 +477,7 @@ def deleteDeptUser(request):
 
 def getFlatRatePopUpURL(request):
     """
-    홈택스연동 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
+    홈택스수집 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://developers.popbill.com/reference/httaxinvoice/python/api/point#GetFlatRatePopUpURL
     """
@@ -498,7 +498,7 @@ def getFlatRatePopUpURL(request):
 
 def getFlatRateState(request):
     """
-    홈택스연동 정액제 서비스 상태를 확인합니다.
+    홈택스수집 정액제 서비스 상태를 확인합니다.
     - https://developers.popbill.com/reference/httaxinvoice/python/api/point#GetFlatRateState
     """
     try:
@@ -636,7 +636,7 @@ def getPartnerURL(request):
 
 def getChargeInfo(request):
     """
-    팝빌 홈택스연동(세금) API 서비스 과금정보를 확인합니다.
+    팝빌 홈택스수집(세금) API 서비스 과금정보를 확인합니다.
     - https://developers.popbill.com/reference/httaxinvoice/python/api/point#GetChargeInfo
     """
     try:

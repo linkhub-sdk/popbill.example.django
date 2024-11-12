@@ -179,7 +179,7 @@ def getPartnerURL(request):
 
 def getUnitCost(request):
     """
-    휴폐업 조회시 과금되는 포인트 단가를 확인합니다.
+    사업자등록상태 (휴폐업) 조회시 과금되는 포인트 단가를 확인합니다.
     - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetUnitCost
     """
     try:
@@ -196,7 +196,7 @@ def getUnitCost(request):
 
 def getChargeInfo(request):
     """
-    팝빌 휴폐업조회 API 서비스 과금정보를 확인합니다.
+    팝빌 사업자등록상태조회 (휴폐업조회) API 서비스 과금정보를 확인합니다.
     - https://developers.popbill.com/reference/bizinfocheck/python/api/point#GetChargeInfo
     """
     try:

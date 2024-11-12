@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     # Index Page
     url(r"^$", views.index, name="index"),
-    # 휴폐업조회
+    # 사업자등록상태조회 (휴폐업조회)
     url(r"^CheckCorpNum$", views.checkCorpNum, name="CheckCorpNum"),
     url(r"^CheckCorpNums$", views.checkCorpNums, name="CheckCorpNums"),
     # 포인트 관리 / 정액제 신청
