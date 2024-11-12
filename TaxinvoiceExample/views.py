@@ -2279,7 +2279,7 @@ def updateEmailConfig(request):
         CorpNum = settings.testCorpNum
 
         # 메일 전송 유형
-        EmailType = "TAX_ISSUE"
+        EmailType = "TAX_ISSUE_INVOICER"
 
         # 전송 여부 (True = 전송, False = 미전송)
         SendYN = True
