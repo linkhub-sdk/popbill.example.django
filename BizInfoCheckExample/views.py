@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 팝빌 기업정보조회 API Python SDK Django Example
 
@@ -5,7 +6,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/bizinfo
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
 """
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
     BizInfoCheckService,

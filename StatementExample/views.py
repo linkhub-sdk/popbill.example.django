@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 팝빌 전자명세서 API Python SDK Django Example
 
@@ -5,7 +6,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/stateme
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
 """
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
     ContactInfo,
@@ -714,10 +714,10 @@ def search(request):
         DType = "W"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20220701"
+        SDate = "20241201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20220731"
+        EDate = "20241231"
 
         # 전자명세서 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         # - 미입력시 전체조회

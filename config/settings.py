@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 """
-업데이트 일자 : 2024-11-12
+업데이트 일자 : 2025-01-20
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
         
@@ -13,8 +14,6 @@
     - UseStaticIP : 통신 IP 고정, true-사용, false-미사용, (기본값:false)
     - UseLocalTimeYN : 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 """
-
-# -*- coding: utf-8 -*-
 import imp
 import os
 import sys

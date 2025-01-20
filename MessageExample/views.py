@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 팝빌 문자 API Python SDK Django Example
 
@@ -10,7 +11,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/sms/pyt
     - 1. 팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 메뉴에서 등록
     - 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
 """
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
     ContactInfo,
@@ -740,10 +740,10 @@ def search(request):
 
         # 최대 검색기간 : 6개월 이내
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20220701"
+        SDate = "20241201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20220731"
+        EDate = "20241231"
 
         # 전송상태 배열 ("1" , "2" , "3" , "4" 중 선택, 다중 선택 가능)
         # └ 1 = 대기 , 2 = 성공 , 3 = 실패 , 4 = 취소
@@ -755,16 +755,16 @@ def search(request):
         # - 미입력 시 전체조회
         Item = ["SMS", "LMS", "MMS"]
 
-        # 예약여부 (false , true 중 택 1)
-        # └ false = 전체조회, true = 예약전송건 조회
-        # - 미입력시 기본값 false 처리
-        ReserveYN = "0"
+        # 예약여부 (None, False , True 중 택 1)
+        # └ None = 전체조회, False = 즉시전송건 조회, True = 예약전송건 조회
+        # - 미입력 시 전체조회
+        ReserveYN = False
 
-        # 개인조회 여부 (false , true 중 택 1)
-        # false = 접수한 문자 전체 조회 (관리자권한)
-        # true = 해당 담당자 계정으로 접수한 문자만 조회 (개인권한)
-        # 미입력시 기본값 false 처리
-        SenderYN = "0"
+        # 개인조회 여부 (False , True 중 택 1)
+        # False = 접수한 문자 전체 조회 (관리자권한)
+        # True = 해당 담당자 계정으로 접수한 문자만 조회 (개인권한)
+        # 미입력시 기본값 False 처리
+        SenderYN = False
 
         # 페이지 번호
         Page = 1

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 팝빌 홈택스 현금영수증 API Python SDK Django Example
 
@@ -11,7 +12,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/htcashb
     - 홈택스수집 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL을 이용하여
       홈택스 인증 처리를 합니다.
 """
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
     ContactInfo,
@@ -64,10 +64,10 @@ def requestJob(request):
         Type = "SELL"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20220701"
+        SDate = "20241201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20220731"
+        EDate = "20241231"
 
         result = htCashbillService.requestJob(CorpNum, Type, SDate, EDate)
 

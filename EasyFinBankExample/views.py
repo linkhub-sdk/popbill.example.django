@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 팝빌 계좌조회 API Python SDK Django Example
 
@@ -5,7 +6,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/easyfin
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
 """
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
     BankAccountInfo,
@@ -310,10 +310,10 @@ def requestJob(request):
         AccountNumber = ""
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20220701"
+        SDate = "20241201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20220731"
+        EDate = "20241231"
 
         result = easyFinBankService.requestJob(CorpNum, BankCode, AccountNumber, SDate, EDate)
 

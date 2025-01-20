@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 팝빌 카카오톡 API Python SDK Django Example
 
@@ -17,7 +18,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/kakaota
         └ 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '알림톡 템플릿 관리' 메뉴에서 등록
         └ GetATSTemplateMgtURL API 를 통해 URL을 이용하여 등록
 """
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
     ContactInfo,
@@ -1279,10 +1279,10 @@ def search(request):
 
         # 최대 검색기간 : 6개월 이내
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20220701"
+        SDate = "20241201"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20220731"
+        EDate = "20241231"
 
         # 전송상태 배열 ("0" , "1" , "2" , "3" , "4" , "5" 중 선택, 다중 선택 가능)
         # └ 0 = 전송대기 , 1 = 전송중 , 2 = 전송성공 , 3 = 대체문자 전송 , 4 = 전송실패 , 5 = 전송취소
@@ -1299,11 +1299,11 @@ def search(request):
         # - 미입력 시 전체조회
         ReserveYN = "0"
 
-        # 사용자권한별 조회 (true / false 중 택 1)
-        # └ false = 접수한 카카오톡 전체 조회 (관리자권한)
-        # └ true = 해당 담당자 계정으로 접수한 카카오톡만 조회 (개인권한)
-        # 미입력시 기본값 false 처리
-        SenderYN = "0"
+        # 사용자권한별 조회 (True / False 중 택 1)
+        # └ False = 접수한 카카오톡 전체 조회 (관리자권한)
+        # └ True = 해당 담당자 계정으로 접수한 카카오톡만 조회 (개인권한)
+        # 미입력시 기본값 False 처리
+        SenderYN = False
 
         # 페이지 번호
         Page = 1

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 팝빌 예금주조회 API Python SDK Django Example
 
@@ -5,8 +6,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/account
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
 """
-
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
     AccountCheckService,
@@ -53,7 +52,7 @@ def checkAccountInfo(request):
         # 조회 가능한 금융기관 : [https://developers.popbill.com/reference/accountcheck/java/api#available-agency]
         bankCode = ""
 
-        # 조회할 기관의 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
+        # 조회할 기관의 계좌번호 (하이픈 '-' 제외 7자리 이상 14자리 이하)
         accountNumber = ""
 
         accountInfo = accountCheckService.checkAccountInfo(
@@ -78,7 +77,7 @@ def checkDepositorInfo(request):
         # 조회 가능한 금융기관 : [https://developers.popbill.com/reference/accountcheck/java/api#available-agency]
         bankCode = ""
 
-        # 조회할 기관의 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
+        # 조회할 기관의 계좌번호 (하이픈 '-' 제외 7자리 이상 14자리 이하)
         accountNumber = ""
 
         # 등록번호 유형 ( P / B 중 택 1 ,  P = 개인, B = 사업자)

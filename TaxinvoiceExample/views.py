@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 팝빌 전자세금계산서 API Python SDK Django Example
 
@@ -11,7 +12,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/taxinvo
     - 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리]
     - 공인인증서 등록 팝업 URL (GetTaxCertURL API)을 이용하여 등록
 """
-# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from popbill import (
     Contact,
@@ -1526,10 +1526,10 @@ def search(request):
         DType = "W"
 
         # 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20220701"
+        SDate = "20241201"
 
         # 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20220731"
+        EDate = "20241231"
 
         # 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         # - 미입력시 전체조회
@@ -1560,8 +1560,8 @@ def search(request):
         # - 미입력시 전체조회
         CloseDownState = ["N", "0", "1", "2", "3"]
 
-        # 지연발행 여부 (None , true , false 중 택 1)
-        # - None = 전체조회 , true = 지연발행 , false = 정상발행
+        # 지연발행 여부 (None , True , False 중 택 1)
+        # - None = 전체조회 , True = 지연발행 , False = 정상발행
         LateOnly = ""
 
         # 종사업장번호 유무 (None , "0" , "1" 중 택 1)
@@ -1578,7 +1578,7 @@ def search(request):
         # - 미입력시 전체조회
         TaxRegID = ""
 
-        # 페이지번호, 기본값 '1'
+        # 페이지번호, 기본값 1
         Page = 1
 
         # 페이지당 검색개수, 기본값 500, 최대 1000
