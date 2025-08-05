@@ -125,7 +125,7 @@ def registIssue(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
             # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-            writeDate="20220805",
+            writeDate="20250805",
             # 과금방향, {정과금} 기재
             chargeDirection="정과금",
             # 발행형태, {정발행, 위수탁} 중 기재
@@ -265,7 +265,7 @@ def registIssue(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220805",  # 거래일자, yyyyMMdd
+                purchaseDT="20250805",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -279,7 +279,7 @@ def registIssue(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220805",  # 거래일자, yyyyMMdd
+                purchaseDT="20250805",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -367,7 +367,7 @@ def bulkSubmit(request):
             taxinvoicelist.append(
                 Taxinvoice(
                     # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-                    writeDate="20220805",
+                    writeDate="20250805",
                     # 과금방향, [정과금(공급자)] 기재
                     chargeDirection="정과금",
                     # 발행형태, {정발행, 위수탁} 중 기재
@@ -492,7 +492,7 @@ def bulkSubmit(request):
                     detailList=[
                         TaxinvoiceDetail(
                             serialNum=1,
-                            purchaseDT="20220805",
+                            purchaseDT="20250805",
                             itemName="품목1",
                             spec="규격",
                             qty=1,
@@ -574,7 +574,7 @@ def register(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
             # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-            writeDate="20220805",
+            writeDate="20250805",
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
@@ -718,7 +718,7 @@ def register(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220805",  # 거래일자, yyyyMMdd
+                purchaseDT="20250805",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -732,7 +732,7 @@ def register(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220805",  # 거래일자, yyyyMMdd
+                purchaseDT="20250805",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -795,7 +795,7 @@ def update(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
             # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-            writeDate="20220805",
+            writeDate="20250805",
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
@@ -939,7 +939,7 @@ def update(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220805",  # 거래일자, yyyyMMdd
+                purchaseDT="20250805",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -953,7 +953,7 @@ def update(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220805",  # 거래일자, yyyyMMdd
+                purchaseDT="20250805",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1095,7 +1095,7 @@ def registRequest(request):
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
             # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-            writeDate="20220805",
+            writeDate="20250805",
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
@@ -1234,7 +1234,7 @@ def registRequest(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220805",  # 거래일자, yyyyMMdd
+                purchaseDT="20250805",  # 거래일자, yyyyMMdd
                 itemName="품목1",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1248,7 +1248,7 @@ def registRequest(request):
         taxinvoice.detailList.append(
             TaxinvoiceDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
-                purchaseDT="20220805",  # 거래일자, yyyyMMdd
+                purchaseDT="20250805",  # 거래일자, yyyyMMdd
                 itemName="품목2",  # 품목
                 spec="규격",  # 규격
                 qty=1,  # 수량
@@ -1526,10 +1526,10 @@ def search(request):
         DType = "W"
 
         # 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20241201"
+        SDate = "20250801"
 
         # 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20241231"
+        EDate = "20250831"
 
         # 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         # - 미입력시 전체조회

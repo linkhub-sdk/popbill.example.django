@@ -183,9 +183,9 @@ def bulkSubmit(request):
                     mgtKey=submitID + "-" + str(i),
                     # 문서형태, (승인거래, 취소거래) 중 기재
                     tradeType="승인거래",
-                    # # [취소거래시 필수] 원본 현금영수증 국세청승인번호
+                    # # [취소거래시 필수] 당초 승인 현금영수증 국세청승인번호
                     # orgConfirmNum="",
-                    # # [취소거래시 필수] 원본 현금영수증 거래일자
+                    # # [취소거래시 필수] 당초 승인 현금영수증 거래일자
                     # orgTradeDate="",
                     # 과세형태 (과세, 비과세) 중 기재
                     taxationType="과세",
@@ -352,7 +352,7 @@ def revokeRegistIssue_part(request):
 
         # 현금영수증 발행시 알림문자 전송여부 : true / false 중 택 1
         # └ true = 전송, false = 미전송
-        # └ 원본 현금영수증의 구매자(고객)의 휴대폰번호 문자 전송
+        # └ 당초 승인 현금영수증의 구매자(고객)의 휴대폰번호 문자 전송
         smssendYN = False
 
         # 현금영수증 상태 이력을 관리하기 위한 메모

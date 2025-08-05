@@ -93,7 +93,7 @@ def registIssue(request):
         # 전자명세서 정보
         statement = Statement(
             # 작성일자 yyyyMMdd
-            writeDate="20220805",
+            writeDate="20250805",
             # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
             # 과세형태, [과세 / 영세 / 면세] 중 기재
@@ -179,7 +179,7 @@ def registIssue(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20220805",  # 거래일자
+                purchaseDT="20250805",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -197,7 +197,7 @@ def registIssue(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20220805",  # 거래일자
+                purchaseDT="20250805",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -252,7 +252,7 @@ def register(request):
         # 전자명세서 정보
         statement = Statement(
             # 작성일자 yyyyMMdd
-            writeDate="20220805",
+            writeDate="20250805",
             # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
             # 과세형태, [과세 / 영세 / 면세] 중 기재
@@ -338,7 +338,7 @@ def register(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20220805",  # 거래일자
+                purchaseDT="20250805",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -356,7 +356,7 @@ def register(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20220805",  # 거래일자
+                purchaseDT="20250805",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -405,7 +405,7 @@ def update(request):
         # 전자명세서 정보
         statement = Statement(
             # 작성일자 yyyyMMdd
-            writeDate="20220805",
+            writeDate="20250805",
             # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
             # 과세형태, [과세 / 영세 / 면세] 중 기재
@@ -491,7 +491,7 @@ def update(request):
             StatementDetail(
                 serialNum=1,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20220805",  # 거래일자
+                purchaseDT="20250805",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -509,7 +509,7 @@ def update(request):
             StatementDetail(
                 serialNum=2,  # 일련번호, 1부터 순차기재
                 itemName="품목1",  # 품목
-                purchaseDT="20220805",  # 거래일자
+                purchaseDT="20250805",  # 거래일자
                 spec="BOX",  # 규격
                 unitCost="10000",  # 단가
                 qty=1,  # 수량
@@ -714,10 +714,10 @@ def search(request):
         DType = "W"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20241201"
+        SDate = "20250801"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20241231"
+        EDate = "20250830"
 
         # 전자명세서 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         # - 미입력시 전체조회
@@ -1195,7 +1195,7 @@ def FAXSend(request):
         # 전자명세서 정보
         statement = Statement(
             # 작성일자 yyyyMMdd
-            writeDate="20220805",
+            writeDate="20250805",
 
             # [영수 / 청구 / 없음] 중 기재
             purposeType="영수",
@@ -1320,7 +1320,7 @@ def FAXSend(request):
                 itemName="품목1",
 
                 # 거래일자
-                purchaseDT="20220805",
+                purchaseDT="20250805",
 
                 # 규격
                 spec="BOX",
@@ -1347,7 +1347,7 @@ def FAXSend(request):
                 itemName="품목1",
 
                 # 거래일자
-                purchaseDT="20220805",
+                purchaseDT="20250805",
 
                 # 규격
                 spec="BOX",
