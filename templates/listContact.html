@@ -12,12 +12,12 @@
                         <ul>
                             <li>id (아이디) : {{ listContact.id }}</li>
                             <li>personName (담당자 성명) : {{ listContact.personName }}</li>
-                            <li>email (담당자 이메일) : {{ listContact.email }}</li>
-                            <li>tel (담당자 연락처) : {{ listContact.tel }}</li>
+                            <li>tel (담당자 휴대폰) : {{ listContact.tel }}</li>
+                            <li>email (담당자 메일) : {{ listContact.email }}</li>
                             <li>regDT (등록일시) : {{ listContact.regDT }}</li>
-                            <li>searchRole (담당자 조회권한) : {{ listContact.searchRole }}</li>
-                            <li>mgrYN (관리자 여부): {{ listContact.mgrYN }}</li>
-                            <li>state (상태): {{ listContact.state }}</li>
+                            <li>searchRole (권한) : {{ listContact.searchRole }}</li>
+                            <li>mgrYN (역할): {{ listContact.mgrYN }}</li>
+                            <li>state (계정상태): {{ listContact.state }}</li>
                         </ul>
                     </fieldset>
                 {% endfor %}

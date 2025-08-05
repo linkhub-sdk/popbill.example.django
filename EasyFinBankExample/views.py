@@ -214,11 +214,9 @@ def closeBankAccount(request):
         # 계좌번호 하이픈('-') 제외
         AccountNumber = ""
 
-        # 해지유형, "일반", "중도" 중 택 1
+        # 해지유형, "일반"
         # - 일반(일반해지) - 해지 요청일이 포함된 정액제 이용기간 만료 후 해지
-        # - 중도(중도해지) - 해지 요청시 즉시 정지되고 팝빌 담당자가 승인시 해지
-        # └ 중도일 경우, 정액제 잔여기간은 일할로 계산되어 포인트 환불(무료 이용기간에 해지하면 전액 환불)
-        CloseType = "중도"
+        CloseType = "일반"
 
         response = easyFinBankService.closeBankAccount(CorpNum, BankCode, AccountNumber, CloseType)
 

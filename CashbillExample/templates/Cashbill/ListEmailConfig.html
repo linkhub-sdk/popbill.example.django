@@ -12,9 +12,6 @@
                             {% if info.emailType == "CSH_ISSUE" %}
                                 <li> {{ info.emailType }} (고객에게 현금영수증이 발행 되었음을 알려주는 메일 전송 여부) : {{ info.sendYN }} </li>
                             {% endif %}
-                            {% if info.emailType == "CSH_CANCEL" %}
-                                <li> {{ info.emailType }} (고객에게 현금영수증이 발행취소 되었음을 알려주는 메일 전송 여부) : {{ info.sendYN }} </li>
-                            {% endif %}
                         {% endfor %}
                     </ul>
                 </fieldset>

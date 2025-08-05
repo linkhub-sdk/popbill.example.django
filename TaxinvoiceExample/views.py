@@ -62,7 +62,7 @@ def checkMgtKeyInUse(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별로 중복되지 않도록 구성
@@ -97,7 +97,7 @@ def registIssue(request):
         CorpNum = settings.testCorpNum
 
         # 세금계산서 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-        MgtKey = "20220805-002"
+        MgtKey = "20250805-001"
 
         # 지연발행 강제여부  (true / false 중 택 1)
         # └ true = 가능 , false = 불가능
@@ -124,132 +124,173 @@ def registIssue(request):
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-            writeDate="20250805",
-            # 과금방향, {정과금} 기재
-            chargeDirection="정과금",
             # 발행형태, {정발행, 위수탁} 중 기재
             issueType="정발행",
-            # {영수, 청구, 없음} 중 기재
-            purposeType="영수",
+
             # 과세형태, {과세, 영세, 면세} 중 기재
             taxType="과세",
-            ######################################################################
-            #                             공급자 정보
-            ######################################################################
-            # 공급자 사업자번호 , '-' 없이 10자리 기재.
-            invoicerCorpNum=settings.testCorpNum,
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-            invoicerTaxRegID=None,
-            # 공급자 상호
-            invoicerCorpName="공급자 상호",
-            # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
-            # 사업자별로 중복되지 않도록 구성
-            invoicerMgtKey=MgtKey,
-            # 공급자 대표자 성명
-            invoicerCEOName="공급자 대표자 성명",
-            # 공급자 주소
-            invoicerAddr="공급자 주소",
-            # 공급자 종목
-            invoicerBizClass="공급자 종목",
-            # 공급자 업태
-            invoicerBizType="공급자 업태",
-            # 공급자 담당자 성명
-            invoicerContactName="공급자 담당자명",
-            # 공급자 담당자 메일주소
-            invoicerEmail="",
-            # 공급자 담당자 연락처
-            invoicerTEL="",
-            # 공급자 담당자 휴대폰 번호
-            invoicerHP="",
-            # 발행 안내 문자 전송여부 (true / false 중 택 1)
-            # └ true = 전송 , false = 미전송
-            # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
-            # - 전송 시 포인트 차감되며, 전송실패시 환불처리
-            invoicerSMSSendYN=False,
-            ######################################################################
-            #                            공급받는자 정보
-            ######################################################################
-            # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
-            invoiceeType="사업자",
-            # 공급받는자 사업자번호
-            # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
-            # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
-            # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
-            invoiceeCorpNum="8888888888",
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-            invoiceeTaxRegID=None,
-            # 공급받는자 상호
-            invoiceeCorpName="공급받는자 상호",
-            # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-            invoiceeMgtKey=None,
-            # 공급받는자 대표자 성명
-            invoiceeCEOName="공급받는자 대표자 성명",
-            # 공급받는자 주소
-            invoiceeAddr="공급받는자 주소",
-            # 공급받는자 종목
-            invoiceeBizClass="공급받는자 종목",
-            # 공급받는자 업태
-            invoiceeBizType="공급받는자 업태",
-            # 공급받는자 담당자 성명
-            invoiceeContactName1="공급받는자 담당자",
-            # 공급받는자 담당자 메일주소
-            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-            # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            invoiceeEmail1="",
-            # 공급받는자 연락처
-            invoiceeTEL1="",
-            # 공급받는자 담당자 휴대폰번호
-            invoiceeHP1="",
-            # 공급받는자 담당자 팩스번호
-            invoiceeFAX1="",
-            ######################################################################
-            #                          세금계산서 기재정보
-            ######################################################################
-            # 공급가액 합계
-            supplyCostTotal="100000",
-            # 세액 합계
-            taxTotal="10000",
-            # 합계금액, 공급가액 합계 + 세액 합계
-            totalAmount="110000",
+
+            # 과금방향, {정과금} 기재
+            chargeDirection="정과금",
+
             # 기재상 '일련번호' 항목
             serialNum="123",
+
+            # 기재상 '권' 항목, 최대값 32767, 미기재시 kwon=None,
+            kwon=1,
+
+            # 기재상 '호' 항목, 최대값 32767, 미기재시 ho=None,
+            ho=2,
+
+            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+            writeDate="20250805",
+
+            # {영수, 청구, 없음} 중 기재
+            purposeType="영수",
+
+            # 공급가액 합계
+            supplyCostTotal="100000",
+
+            # 세액 합계
+            taxTotal="10000",
+
+            # 합계금액, 공급가액 합계 + 세액 합계
+            totalAmount="110000",
+
             # 기재상 '현금' 항목
             cash=None,
+
             # 기재상 '수표' 항목
             chkBill=None,
-            # 기재상 '어음' 항목
-            note=None,
+
             # 기재상 '외상미수금' 항목
             credit="",
+
+            # 기재상 '어음' 항목
+            note=None,
+
             # 비고
             # {invoiceeType}이 "외국인" 이면 remark1 필수
             # - 외국인 등록번호 또는 여권번호 입력
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-            # 기재상 '권' 항목, 최대값 32767
-            # 미기재시 kwon=None,
-            kwon=1,
-            # 기재상 '호' 항목, 최대값 32767
-            # 미기재시 ho=None,
-            ho=2,
+
+            ######################################################################
+            #                             공급자 정보
+            ######################################################################
+
+            # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            invoicerMgtKey=MgtKey,
+
+            # 공급자 사업자번호 , '-' 없이 10자리 기재.
+            invoicerCorpNum=settings.testCorpNum,
+
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoicerTaxRegID=None,
+
+            # 공급자 상호
+            invoicerCorpName="공급자 상호",
+
+            # 공급자 대표자 성명
+            invoicerCEOName="공급자 대표자 성명",
+
+            # 공급자 주소
+            invoicerAddr="공급자 주소",
+
+            # 공급자 업태
+            invoicerBizType="공급자 업태",
+
+            # 공급자 종목
+            invoicerBizClass="공급자 종목",
+
+
+            # 공급자 담당자 성명
+            invoicerContactName="공급자 담당자명",
+
+            # 공급자 담당자 메일주소
+            invoicerEmail="",
+
+            # 공급자 담당자 연락처
+            invoicerTEL="",
+
+            # 공급자 담당자 휴대폰 번호
+            invoicerHP="",
+
+            # 발행 안내 문자 전송여부 (true / false 중 택 1)
+            # └ true = 전송 , false = 미전송
+            # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
+            # - 전송 시 포인트 차감되며, 전송실패시 환불처리
+            invoicerSMSSendYN=False,
+
+            ######################################################################
+            #                            공급받는자 정보
+            ######################################################################
+
+            # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            invoiceeMgtKey=None,
+
+            # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
+            invoiceeType="사업자",
+
+            # 공급받는자 사업자번호
+            # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+            # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+            # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
+            invoiceeCorpNum="8888888888",
+
+            # 공급받는자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoiceeTaxRegID=None,
+
+            # 공급받는자 상호
+            invoiceeCorpName="공급받는자 상호",
+
+            # 공급받는자 대표자 성명
+            invoiceeCEOName="공급받는자 대표자 성명",
+
+            # 공급받는자 주소
+            invoiceeAddr="공급받는자 주소",
+
+            # 공급받는자 업태
+            invoiceeBizType="공급받는자 업태",
+
+            # 공급받는자 종목
+            invoiceeBizClass="공급받는자 종목",
+
+            # 공급받는자 담당자 성명
+            invoiceeContactName1="공급받는자 담당자",
+
+            # 공급받는자 연락처
+            invoiceeTEL1="",
+
+            # 공급받는자 담당자 휴대폰번호
+            invoiceeHP1="",
+
+            # 공급받는자 담당자 메일주소
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 실제 거래처의 메일주소가 기재되지 않도록 주의
+            invoiceeEmail1="",
+
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
+
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
+
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
             # - [참고] 수정세금계산서 작성방법 안내 - https://developers.popbill.com/guide/taxinvoice/python/introduction/modified-taxinvoice
             ######################################################################
+
             # 수정세금계산서 정보 수정사유별로 1~6중 선택기재
             # 수정사유코드
             modifyCode=None,
+
             # 원본세금계산서 국세청승인번호 기재
             orgNTSConfirmNum=None,
         )
@@ -366,127 +407,167 @@ def bulkSubmit(request):
         for i in range(0, 20):
             taxinvoicelist.append(
                 Taxinvoice(
-                    # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-                    writeDate="20250805",
-                    # 과금방향, [정과금(공급자)] 기재
-                    chargeDirection="정과금",
+
                     # 발행형태, {정발행, 위수탁} 중 기재
                     issueType="정발행",
-                    # {영수, 청구, 없음} 중 기재
-                    purposeType="영수",
+
                     # 과세형태, {과세, 영세, 면세} 중 기재
                     taxType="과세",
-                    ######################################################################
-                    #                             공급자 정보
-                    ######################################################################
-                    # 공급자 사업자번호 , '-' 없이 10자리 기재.
-                    invoicerCorpNum=settings.testCorpNum,
-                    # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-                    invoicerTaxRegID=None,
-                    # 공급자 상호
-                    invoicerCorpName="공급자 상호",
-                    # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로
-                    # 사업자별로 중복되지 않도록 구성
-                    invoicerMgtKey=submitID + "-" + str(i),
-                    # 공급자 대표자 성명
-                    invoicerCEOName="공급자 대표자 성명",
-                    # 공급자 주소
-                    invoicerAddr="공급자 주소",
-                    # 공급자 종목
-                    invoicerBizClass="공급자 종목",
-                    # 공급자 업태
-                    invoicerBizType="공급자 업태",
-                    # 공급자 담당자 성명
-                    invoicerContactName="공급자 담당자명",
-                    # 공급자 담당자 메일주소
-                    invoicerEmail="",
-                    # 공급자 담당자 연락처
-                    invoicerTEL="",
-                    # 공급자 담당자 휴대폰 번호
-                    invoicerHP="",
-                    # 발행 안내 문자 전송여부 (true / false 중 택 1)
-                    # └ true = 전송 , false = 미전송
-                    # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
-                    # - 전송 시 포인트 차감되며, 전송실패시 환불처리
-                    invoicerSMSSendYN=False,
-                    ######################################################################
-                    #                            공급받는자 정보
-                    ######################################################################
-                    # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
-                    invoiceeType="사업자",
-                    # 공급받는자 사업자번호
-                    # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
-                    # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
-                    # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
-                    invoiceeCorpNum="8888888888",
-                    # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-                    invoiceeTaxRegID=None,
-                    # 공급받는자 상호
-                    invoiceeCorpName="BulkTEST 상호",
-                    # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-                    invoiceeMgtKey=None,
-                    # 공급받는자 대표자 성명
-                    invoiceeCEOName="BulkTEST 대표자 성명",
-                    # 공급받는자 주소
-                    invoiceeAddr="BulkTEST 주소",
-                    # 공급받는자 종목
-                    invoiceeBizClass="BulkTEST 종목",
-                    # 공급받는자 업태
-                    invoiceeBizType="BulkTEST 업태",
-                    # 공급받는자 담당자 성명
-                    invoiceeContactName1="BulkTEST 담당자",
-                    # 공급받는자 담당자 메일주소
-                    # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-                    # 실제 거래처의 메일주소가 기재되지 않도록 주의
-                    invoiceeEmail1="",
-                    # 공급받는자 연락처
-                    invoiceeTEL1="",
-                    # 공급받는자 담당자 휴대폰번호
-                    invoiceeHP1="",
-                    # 공급받는자 담당자 팩스번호
-                    invoiceeFAX1="",
-                    ######################################################################
-                    #                          세금계산서 기재정보
-                    ######################################################################
-                    # 공급가액 합계
-                    supplyCostTotal="100000",
-                    # 세액 합계
-                    taxTotal="10000",
-                    # 합계금액, 공급가액 합계 + 세액 합계
-                    totalAmount="110000",
+
+                    # 과금방향, [정과금(공급자)] 기재
+                    chargeDirection="정과금",
+
                     # 기재상 '일련번호' 항목
                     serialNum="123",
+
+                    # 기재상 '권' 항목, 최대값 32767, 미기재시 kwon=None,
+                    kwon=1,
+
+                    # 기재상 '호' 항목, 최대값 32767, 미기재시 ho=None,
+                    ho=2,
+
+                    # 작성일자, 날짜형식(yyyyMMdd)
+                    writeDate="20250805",
+
+                    # {영수, 청구, 없음} 중 기재
+                    purposeType="영수",
+
+                    # 공급가액 합계
+                    supplyCostTotal="100000",
+
+                    # 세액 합계
+                    taxTotal="10000",
+
+                    # 합계금액, 공급가액 합계 + 세액 합계
+                    totalAmount="110000",
+
                     # 기재상 '현금' 항목
                     cash=None,
+
                     # 기재상 '수표' 항목
                     chkBill=None,
-                    # 기재상 '어음' 항목
-                    note=None,
+
                     # 기재상 '외상미수금' 항목
                     credit="",
+
+                    # 기재상 '어음' 항목
+                    note=None,
+
                     # 비고
                     # {invoiceeType}이 "외국인" 이면 remark1 필수
                     # - 외국인 등록번호 또는 여권번호 입력
                     remark1="비고1",
                     remark2="비고2",
                     remark3="비고3",
-                    # 기재상 '권' 항목, 최대값 32767
-                    # 미기재시 kwon=None,
-                    kwon=1,
-                    # 기재상 '호' 항목, 최대값 32767
-                    # 미기재시 ho=None,
-                    ho=2,
+
+                    ######################################################################
+                    #                             공급자 정보
+                    ######################################################################
+
+                    # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+                    invoicerMgtKey=submitID + "-" + str(i),
+
+                    # 공급자 사업자번호 , '-' 없이 10자리 기재.
+                    invoicerCorpNum=settings.testCorpNum,
+
+                    # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+                    invoicerTaxRegID=None,
+
+                    # 공급자 상호
+                    invoicerCorpName="공급자 상호",
+
+                    # 공급자 대표자 성명
+                    invoicerCEOName="공급자 대표자 성명",
+
+                    # 공급자 주소
+                    invoicerAddr="공급자 주소",
+
+                    # 공급자 업태
+                    invoicerBizType="공급자 업태",
+
+                    # 공급자 종목
+                    invoicerBizClass="공급자 종목",
+
+                    # 공급자 담당자 성명
+                    invoicerContactName="공급자 담당자명",
+
+                    # 공급자 담당자 연락처
+                    invoicerTEL="",
+
+                    # 공급자 담당자 휴대폰 번호
+                    invoicerHP="",
+
+                    # 공급자 담당자 메일주소
+                    invoicerEmail="",
+
+                    # 발행 안내 문자 전송여부 (true / false 중 택 1)
+                    # └ true = 전송 , false = 미전송
+                    # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
+                    # - 전송 시 포인트 차감되며, 전송실패시 환불처리
+                    invoicerSMSSendYN=False,
+
+                    ######################################################################
+                    #                            공급받는자 정보
+                    ######################################################################
+
+                    # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+                    invoiceeMgtKey=None,
+
+                    # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
+                    invoiceeType="사업자",
+
+                    # 공급받는자 사업자번호
+                    # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+                    # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+                    # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
+                    invoiceeCorpNum="8888888888",
+
+                    # 공급받는자 종사업장 식별번호, 필요시 숫자 4자리 기재
+                    invoiceeTaxRegID=None,
+
+                    # 공급받는자 상호
+                    invoiceeCorpName="BulkTEST 상호",
+
+                    # 공급받는자 대표자 성명
+                    invoiceeCEOName="BulkTEST 대표자 성명",
+
+                    # 공급받는자 주소
+                    invoiceeAddr="BulkTEST 주소",
+
+                    # 공급받는자 업태
+                    invoiceeBizType="BulkTEST 업태",
+
+                    # 공급받는자 종목
+                    invoiceeBizClass="BulkTEST 종목",
+
+                    # 공급받는자 담당자 성명
+                    invoiceeContactName1="BulkTEST 담당자",
+
+                    # 공급받는자 연락처
+                    invoiceeTEL1="",
+
+                    # 공급받는자 담당자 휴대폰번호
+                    invoiceeHP1="",
+
+                    # 공급받는자 담당자 메일주소
+                    # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+                    # 실제 거래처의 메일주소가 기재되지 않도록 주의
+                    invoiceeEmail1="",
+
                     # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
                     # └ true = 첨부 , false = 미첨부(기본값)
                     # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
                     businessLicenseYN=False,
+
                     # 통장사본 이미지 첨부여부  (true / false 중 택 1)
                     # └ true = 첨부 , false = 미첨부(기본값)
                     # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
                     bankBookYN=False,
+
                     ######################################################################
                     #                           상세항목(품목) 정보
                     ######################################################################
+
                     # 상세항목 0~99개 까지 작성가능.
                     # 일련번호 (serialNum) 는 1부터 99까지 순차기재.
                     detailList=[
@@ -533,11 +614,9 @@ def getBulkResult(request):
         CorpNum = settings.testCorpNum
 
         # 제출아이디
-        # 최대 36자리 영문, 숫자, '-' 조합으로 구성
         submitID = "PYTHON-DJANGO-BULK"
 
-        bulkTaxinvoiceResult = taxinvoiceService.getBulkResult(
-            CorpNum, submitID)
+        bulkTaxinvoiceResult = taxinvoiceService.getBulkResult(CorpNum, submitID)
 
         return render(
             request,
@@ -573,136 +652,181 @@ def register(request):
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-            writeDate="20250805",
+
+            # 발행형태, {정발행, 역발행, 위수탁} 중 기재
+            issueType="정발행",
+
+            # 과세형태, {과세, 영세, 면세} 중 기재
+            taxType="과세",
+
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
-            # 발행형태, {정발행, 역발행, 위수탁} 중 기재
-            issueType="정발행",
-            # {영수, 청구, 없음} 중 기재
-            purposeType="영수",
-            # 과세형태, {과세, 영세, 면세} 중 기재
-            taxType="과세",
-            ######################################################################
-            #                             공급자 정보
-            ######################################################################
-            # 공급자 사업자번호 , '-' 없이 10자리 기재.
-            invoicerCorpNum=settings.testCorpNum,
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-            invoicerTaxRegID=None,
-            # 공급자 상호
-            invoicerCorpName="공급자 상호",
-            # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_')조합으로 사업자별로 중복되지 않도록 구성
-            invoicerMgtKey=MgtKey,
-            # 공급자 대표자 성명
-            invoicerCEOName="공급자 대표자 성명",
-            # 공급자 주소
-            invoicerAddr="공급자 주소",
-            # 공급자 종목
-            invoicerBizClass="공급자 종목",
-            # 공급자 업태
-            invoicerBizType="공급자 업태",
-            # 공급자 담당자 성명
-            invoicerContactName="공급자 담당자명",
-            # 공급자 담당자 메일주소
-            invoicerEmail="",
-            # 공급자 담당자 연락처
-            invoicerTEL="",
-            # 공급자 담당자 휴대폰 번호
-            invoicerHP="",
-            # 발행 안내 문자 전송여부 (true / false 중 택 1)
-            # └ true = 전송 , false = 미전송
-            # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
-            # - 전송 시 포인트 차감되며, 전송실패시 환불처리
-            invoicerSMSSendYN=False,
-            ######################################################################
-            #                            공급받는자 정보
-            ######################################################################
-            # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
-            invoiceeType="사업자",
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-            invoiceeTaxRegID=None,
-            # 공급받는자 사업자번호
-            # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
-            # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
-            # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
-            invoiceeCorpNum="8888888888",
-            # 공급받는자 상호
-            invoiceeCorpName="공급받는자 상호",
-            # [역발행시 필수] 공급받는자 문서번호, , 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-            invoiceeMgtKey=None,
-            # 공급받는자 대표자 성명
-            invoiceeCEOName="공급받는자 대표자 성명",
-            # 공급받는자 주소
-            invoiceeAddr="공급받는자 주소",
-            # 공급받는자 종목
-            invoiceeBizClass="공급받는자 종목",
-            # 공급받는자 업태
-            invoiceeBizType="공급받는자 업태",
-            # 공급받는자 담당자 성명
-            invoiceeContactName1="공급받는자 담당자",
-            # 공급받는자 담당자 메일주소
-            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-            # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            invoiceeEmail1="",
-            # 공급받는자 연락처
-            invoiceeTEL1="",
-            # 공급받는자 담당자 휴대폰번호
-            invoiceeHP1="",
-            # 공급받는자 담당자 팩스번호
-            invoiceeFAX1="",
-            # 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
-            # - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
-            # - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
-            invoiceeSMSSendYN=False,
-            ######################################################################
-            #                          세금계산서 기재정보
-            ######################################################################
-            # 공급가액 합계
-            supplyCostTotal="100000",
-            # 세액 합계
-            taxTotal="10000",
-            # 합계금액, 공급가액 합계 + 세액 합계
-            totalAmount="110000",
+
             # 기재상 '일련번호' 항목
             serialNum="123",
+
+            # 기재상 '권' 항목, 최대값 32767
+            # 미기재시 kwon=None,
+            kwon=1,
+
+            # 기재상 '호' 항목, 최대값 32767
+            # 미기재시 ho=None,
+            ho=2,
+
+            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+            writeDate="20250805",
+
+            # {영수, 청구, 없음} 중 기재
+            purposeType="영수",
+
+            # 공급가액 합계
+            supplyCostTotal="100000",
+
+            # 세액 합계
+            taxTotal="10000",
+
+            # 합계금액, 공급가액 합계 + 세액 합계
+            totalAmount="110000",
+
             # 기재상 '현금' 항목
             cash=None,
+
             # 기재상 '수표' 항목
             chkBill=None,
-            # 기재상 '어음' 항목
-            note=None,
+
             # 기재상 '외상미수금' 항목
             credit="",
+
+            # 기재상 '어음' 항목
+            note=None,
+
             # 비고
             # {invoiceeType}이 "외국인" 이면 remark1 필수
             # - 외국인 등록번호 또는 여권번호 입력
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-            # 기재상 '권' 항목, 최대값 32767
-            # 미기재시 kwon=None,
-            kwon=1,
-            # 기재상 '호' 항목, 최대값 32767
-            # 미기재시 ho=None,
-            ho=2,
+
+            ######################################################################
+            #                             공급자 정보
+            ######################################################################
+
+            # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_')조합으로 사업자별로 중복되지 않도록 구성
+            invoicerMgtKey=MgtKey,
+
+            # 공급자 사업자번호 , '-' 없이 10자리 기재.
+            invoicerCorpNum=settings.testCorpNum,
+
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoicerTaxRegID=None,
+
+            # 공급자 상호
+            invoicerCorpName="공급자 상호",
+
+            # 공급자 대표자 성명
+            invoicerCEOName="공급자 대표자 성명",
+
+            # 공급자 주소
+            invoicerAddr="공급자 주소",
+
+            # 공급자 업태
+            invoicerBizType="공급자 업태",
+
+            # 공급자 종목
+            invoicerBizClass="공급자 종목",
+
+            # 공급자 담당자 성명
+            invoicerContactName="공급자 담당자명",
+
+            # 공급자 담당자 연락처
+            invoicerTEL="",
+
+            # 공급자 담당자 휴대폰 번호
+            invoicerHP="",
+
+            # 공급자 담당자 메일주소
+            invoicerEmail="",
+
+            # 발행 안내 문자 전송여부 (true / false 중 택 1)
+            # └ true = 전송 , false = 미전송
+            # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
+            # - 전송 시 포인트 차감되며, 전송실패시 환불처리
+            invoicerSMSSendYN=False,
+
+            ######################################################################
+            #                            공급받는자 정보
+            ######################################################################
+
+            # [역발행시 필수] 공급받는자 문서번호, , 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            invoiceeMgtKey=None,
+
+            # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
+            invoiceeType="사업자",
+
+            # 공급받는자 사업자번호
+            # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+            # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+            # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
+            invoiceeCorpNum="8888888888",
+
+            # 공급받는자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoiceeTaxRegID=None,
+
+            # 공급받는자 상호
+            invoiceeCorpName="공급받는자 상호",
+
+            # 공급받는자 대표자 성명
+            invoiceeCEOName="공급받는자 대표자 성명",
+
+            # 공급받는자 주소
+            invoiceeAddr="공급받는자 주소",
+
+            # 공급받는자 업태
+            invoiceeBizType="공급받는자 업태",
+
+            # 공급받는자 종목
+            invoiceeBizClass="공급받는자 종목",
+
+            # 공급받는자 담당자 성명
+            invoiceeContactName1="공급받는자 담당자",
+
+            # 공급받는자 연락처
+            invoiceeTEL1="",
+
+            # 공급받는자 담당자 휴대폰번호
+            invoiceeHP1="",
+
+            # 공급받는자 담당자 메일주소
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 실제 거래처의 메일주소가 기재되지 않도록 주의
+            invoiceeEmail1="",
+
+            # 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
+            # - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
+            # - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+            invoiceeSMSSendYN=False,
+
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
+
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
+
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
             # - [참고] 수정세금계산서 작성방법 안내 - https://developers.popbill.com/guide/taxinvoice/python/introduction/modified-taxinvoice
             ######################################################################
+
             # 수정세금계산서 정보
             # 수정사유코드, 수정사유별로 1~6중 선택기재
             modifyCode=None,
+
             # 원본세금계산서 국세청승인번호 기재
             orgNTSConfirmNum=None,
         )
@@ -768,8 +892,7 @@ def register(request):
             )
         )
 
-        response = taxinvoiceService.register(
-            CorpNum, taxinvoice, writeSpecification)
+        response = taxinvoiceService.register(CorpNum, taxinvoice, writeSpecification)
 
         return render(request, "response.html", {"code": response.code, "message": response.message})
 
@@ -786,7 +909,7 @@ def update(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -794,136 +917,181 @@ def update(request):
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-            writeDate="20250805",
+
+            # 발행형태, {정발행, 역발행, 위수탁} 중 기재
+            issueType="정발행",
+
+            # 과세형태, {과세, 영세, 면세} 중 기재
+            taxType="과세",
+
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
-            # 발행형태, {정발행, 역발행, 위수탁} 중 기재
-            issueType="정발행",
-            # {영수, 청구, 없음} 중 기재
-            purposeType="영수",
-            # 과세형태, {과세, 영세, 면세} 중 기재
-            taxType="과세",
-            ######################################################################
-            #                             공급자 정보
-            ######################################################################
-            # 공급자 사업자번호 , '-' 없이 10자리 기재.
-            invoicerCorpNum=settings.testCorpNum,
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-            invoicerTaxRegID=None,
-            # 공급자 상호
-            invoicerCorpName="공급자 상호",
-            # 공급자 문서번호
-            invoicerMgtKey=MgtKey,
-            # 공급자 대표자 성명
-            invoicerCEOName="공급자 대표자 성명",
-            # 공급자 주소
-            invoicerAddr="공급자 주소_수정",
-            # 공급자 종목
-            invoicerBizClass="공급자 종목",
-            # 공급자 업태
-            invoicerBizType="공급자 업태",
-            # 공급자 담당자 성명
-            invoicerContactName="공급자 담당자명",
-            # 공급자 담당자 메일주소
-            invoicerEmail="",
-            # 공급자 담당자 연락처
-            invoicerTEL="",
-            # 공급자 담당자 휴대폰 번호
-            invoicerHP="",
-            # 발행 안내 문자 전송여부 (true / false 중 택 1)
-            # └ true = 전송 , false = 미전송
-            # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
-            # - 전송 시 포인트 차감되며, 전송실패시 환불처리
-            invoicerSMSSendYN=False,
-            ######################################################################
-            #                            공급받는자 정보
-            ######################################################################
-            # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
-            invoiceeType="사업자",
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-            invoiceeTaxRegID=None,
-            # 공급받는자 사업자번호
-            # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
-            # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
-            # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
-            invoiceeCorpNum="8888888888",
-            # 공급받는자 상호
-            invoiceeCorpName="공급받는자 상호",
-            # [역발행시 필수] 공급받는자 문서번호
-            invoiceeMgtKey=None,
-            # 공급받는자 대표자 성명
-            invoiceeCEOName="공급받는자 대표자 성명",
-            # 공급받는자 주소
-            invoiceeAddr="공급받는자 주소",
-            # 공급받는자 종목
-            invoiceeBizClass="공급받는자 종목",
-            # 공급받는자 업태
-            invoiceeBizType="공급받는자 업태",
-            # 공급받는자 담당자 성명
-            invoiceeContactName1="공급받는자 담당자",
-            # 공급받는자 담당자 메일주소
-            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-            # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            invoiceeEmail1="",
-            # 공급받는자 연락처
-            invoiceeTEL1="",
-            # 공급받는자 담당자 휴대폰번호
-            invoiceeHP1="",
-            # 공급받는자 담당자 팩스번호
-            invoiceeFAX1="",
-            # 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
-            # - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
-            # - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
-            invoiceeSMSSendYN=False,
-            ######################################################################
-            #                          세금계산서 기재정보
-            ######################################################################
-            # 공급가액 합계
-            supplyCostTotal="100000",
-            # 세액 합계
-            taxTotal="10000",
-            # 합계금액, 공급가액 합계 + 세액 합계
-            totalAmount="110000",
+
             # 기재상 '일련번호' 항목
             serialNum="123",
+
+            # 기재상 '권' 항목, 최대값 32767
+            # 미기재시 kwon=None,
+            kwon=1,
+
+            # 기재상 '호' 항목, 최대값 32767
+            # 미기재시 ho=None,
+            ho=2,
+
+            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+            writeDate="20250805",
+
+            # {영수, 청구, 없음} 중 기재
+            purposeType="영수",
+
+            # 공급가액 합계
+            supplyCostTotal="100000",
+
+            # 세액 합계
+            taxTotal="10000",
+
+            # 합계금액, 공급가액 합계 + 세액 합계
+            totalAmount="110000",
+
             # 기재상 '현금' 항목
             cash=None,
+
             # 기재상 '수표' 항목
             chkBill=None,
-            # 기재상 '어음' 항목
-            note=None,
+
             # 기재상 '외상미수금' 항목
             credit="",
+
+            # 기재상 '어음' 항목
+            note=None,
+
             # 비고
             # {invoiceeType}이 "외국인" 이면 remark1 필수
             # - 외국인 등록번호 또는 여권번호 입력
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-            # 기재상 '권' 항목, 최대값 32767
-            # 미기재시 kwon=None,
-            kwon=1,
-            # 기재상 '호' 항목, 최대값 32767
-            # 미기재시 ho=None,
-            ho=2,
+
+            ######################################################################
+            #                             공급자 정보
+            ######################################################################
+
+            # 공급자 문서번호
+            invoicerMgtKey=MgtKey,
+
+            # 공급자 사업자번호 , '-' 없이 10자리 기재.
+            invoicerCorpNum=settings.testCorpNum,
+
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoicerTaxRegID=None,
+
+            # 공급자 상호
+            invoicerCorpName="공급자 상호",
+
+            # 공급자 대표자 성명
+            invoicerCEOName="공급자 대표자 성명",
+
+            # 공급자 주소
+            invoicerAddr="공급자 주소_수정",
+
+            # 공급자 업태
+            invoicerBizType="공급자 업태",
+
+            # 공급자 종목
+            invoicerBizClass="공급자 종목",
+
+            # 공급자 담당자 성명
+            invoicerContactName="공급자 담당자명",
+
+            # 공급자 담당자 연락처
+            invoicerTEL="",
+
+            # 공급자 담당자 휴대폰 번호
+            invoicerHP="",
+
+            # 공급자 담당자 메일주소
+            invoicerEmail="",
+
+            # 발행 안내 문자 전송여부 (true / false 중 택 1)
+            # └ true = 전송 , false = 미전송
+            # └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
+            # - 전송 시 포인트 차감되며, 전송실패시 환불처리
+            invoicerSMSSendYN=False,
+
+            ######################################################################
+            #                            공급받는자 정보
+            ######################################################################
+
+            # [역발행시 필수] 공급받는자 문서번호
+            invoiceeMgtKey=None,
+
+            # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
+            invoiceeType="사업자",
+
+            # 공급받는자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoiceeTaxRegID=None,
+
+            # 공급받는자 사업자번호
+            # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+            # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+            # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
+            invoiceeCorpNum="8888888888",
+
+            # 공급받는자 상호
+            invoiceeCorpName="공급받는자 상호",
+
+            # 공급받는자 대표자 성명
+            invoiceeCEOName="공급받는자 대표자 성명",
+
+            # 공급받는자 주소
+            invoiceeAddr="공급받는자 주소",
+
+            # 공급받는자 업태
+            invoiceeBizType="공급받는자 업태",
+
+            # 공급받는자 종목
+            invoiceeBizClass="공급받는자 종목",
+
+            # 공급받는자 담당자 성명
+            invoiceeContactName1="공급받는자 담당자",
+
+            # 공급받는자 연락처
+            invoiceeTEL1="",
+
+            # 공급받는자 담당자 휴대폰번호
+            invoiceeHP1="",
+
+            # 공급받는자 담당자 메일주소
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 실제 거래처의 메일주소가 기재되지 않도록 주의
+            invoiceeEmail1="",
+
+            # 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
+            # - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
+            # - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+            invoiceeSMSSendYN=False,
+
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
+
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
+
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
             # - [참고] 수정세금계산서 작성방법 안내 - https://developers.popbill.com/guide/taxinvoice/python/introduction/modified-taxinvoice
             ######################################################################
+
             # 수정세금계산서 정보
             # 수정사유코드, 수정사유별로 1~6중 선택기재
             modifyCode=None,
+
             # 원본세금계산서 국세청승인번호 기재
             orgNTSConfirmNum=None,
         )
@@ -989,8 +1157,7 @@ def update(request):
             )
         )
 
-        response = taxinvoiceService.update(
-            CorpNum, MgtKeyType, MgtKey, taxinvoice)
+        response = taxinvoiceService.update(CorpNum, MgtKeyType, MgtKey, taxinvoice)
 
         return render(request, "response.html", {"code": response.code, "message": response.message})
 
@@ -1012,7 +1179,7 @@ def issue(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1030,9 +1197,7 @@ def issue(request):
         # 발행(Issue API)을 호출할 수 있습니다.
         ForceIssue = False
 
-        response = taxinvoiceService.issue(
-            CorpNum, MgtKeyType, MgtKey, Memo, EmailSubject, ForceIssue
-        )
+        response = taxinvoiceService.issue(CorpNum, MgtKeyType, MgtKey, Memo, EmailSubject, ForceIssue)
 
         return render(
             request,
@@ -1057,7 +1222,7 @@ def cancelIssue(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1066,8 +1231,7 @@ def cancelIssue(request):
         # 메모
         Memo = "발행취소 메모"
 
-        response = taxinvoiceService.cancelIssue(
-            CorpNum, MgtKeyType, MgtKey, Memo)
+        response = taxinvoiceService.cancelIssue(CorpNum, MgtKeyType, MgtKey, Memo)
 
         return render(request, "response.html", {"code": response.code, "message": response.message})
 
@@ -1094,131 +1258,175 @@ def registRequest(request):
 
         # 세금계산서 정보
         taxinvoice = Taxinvoice(
-            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
-            writeDate="20250805",
+
+            # 발행형태, {역발행} 중 기재
+            issueType="역발행",
+
+            # 과세형태, {과세, 영세, 면세} 중 기재
+            taxType="과세",
+
             # 과금방향, [정과금(공급자), 역과금(공급받는자)]중 기재
             # 역과금의 경우 역발행세금계산서 발행시에만 사용가능
             chargeDirection="정과금",
-            # 발행형태, {역발행} 중 기재
-            issueType="역발행",
-            # {영수, 청구, 없음} 중 기재
-            purposeType="영수",
-            # 과세형태, {과세, 영세, 면세} 중 기재
-            taxType="과세",
-            ######################################################################
-            #                             공급자 정보
-            ######################################################################
-            # 공급자 사업자번호 , '-' 없이 10자리 기재.
-            invoicerCorpNum="8888888888",
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-            invoicerTaxRegID=None,
-            # 공급자 상호
-            invoicerCorpName="공급자 상호",
-            # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-            invoicerMgtKey="",
-            # 공급자 대표자 성명
-            invoicerCEOName="공급자 대표자 성명",
-            # 공급자 주소
-            invoicerAddr="공급자 주소",
-            # 공급자 종목
-            invoicerBizClass="공급자 종목",
-            # 공급자 업태
-            invoicerBizType="공급자 업태",
-            # 공급자 담당자 성명
-            invoicerContactName="공급자 담당자명",
-            # 공급자 담당자 메일주소
-            invoicerEmail="",
-            # 공급자 담당자 연락처
-            invoicerTEL="",
-            # 공급자 담당자 휴대폰 번호
-            invoicerHP="",
-            # 정발행시 공급받는자에게 발행안내문자 전송여부
-            invoicerSMSSendYN=False,
-            ######################################################################
-            #                            공급받는자 정보
-            ######################################################################
-            # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
-            invoiceeType="사업자",
-            # 공급받는자 사업자번호
-            # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
-            # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
-            # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
-            invoiceeCorpNum=CorpNum,
-            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
-            invoiceeTaxRegID=None,
-            # 공급받는자 상호
-            invoiceeCorpName="공급받는자 상호",
-            # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
-            invoiceeMgtKey=MgtKey,
-            # 공급받는자 대표자 성명
-            invoiceeCEOName="공급받는자 대표자 성명",
-            # 공급받는자 주소
-            invoiceeAddr="공급받는자 주소",
-            # 공급받는자 종목
-            invoiceeBizClass="공급받는자 종목",
-            # 공급받는자 업태
-            invoiceeBizType="공급받는자 업태",
-            # 공급받는자 담당자 성명
-            invoiceeContactName1="공급받는자 담당자",
-            # 공급받는자 담당자 메일주소
-            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-            # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            invoiceeEmail1="",
-            # 공급받는자 연락처
-            invoiceeTEL1="",
-            # 공급받는자 담당자 휴대폰번호
-            invoiceeHP1="",
-            # 공급받는자 담당자 팩스번호
-            invoiceeFAX1="",
-            # 역발행시 공급자에게 발행안내문자 전송여부
-            invoiceeSMSSendYN=False,
-            ######################################################################
-            #                          세금계산서 기재정보
-            ######################################################################
-            # 공급가액 합계
-            supplyCostTotal="100000",
-            # 세액 합계
-            taxTotal="10000",
-            # 합계금액, 공급가액 합계 + 세액 합계
-            totalAmount="110000",
+
             # 기재상 '일련번호' 항목
             serialNum="",
+
+            # 기재상 '권' 항목, 최대값 32767, 미기재시 kwon=None
+            kwon=1,
+
+            # 기재상 '호' 항목, 최대값 32767, 미기재시 ho=None
+            ho=2,
+
+            # 작성일자, 날짜형식(yyyyMMdd) ex)20220805
+            writeDate="20250805",
+
+            # {영수, 청구, 없음} 중 기재
+            purposeType="영수",
+
+            # 공급가액 합계
+            supplyCostTotal="100000",
+
+            # 세액 합계
+            taxTotal="10000",
+
+            # 합계금액, 공급가액 합계 + 세액 합계
+            totalAmount="110000",
+
             # 기재상 '현금' 항목
             cash=None,
+
             # 기재상 '수표' 항목
             chkBill=None,
-            # 기재상 '어음' 항목
-            note=None,
+
             # 기재상 '외상미수금' 항목
             credit="",
+
+            # 기재상 '어음' 항목
+            note=None,
+
             # 비고
             # {invoiceeType}이 "외국인" 이면 remark1 필수
             # - 외국인 등록번호 또는 여권번호 입력
             remark1="비고1",
             remark2="비고2",
             remark3="비고3",
-            # 기재상 '권' 항목, 최대값 32767
-            # 미기재시 kwon=None,
-            kwon=1,
-            # 기재상 '호' 항목, 최대값 32767
-            # 미기재시 ho=None,
-            ho=2,
+
+            ######################################################################
+            #                             공급자 정보
+            ######################################################################
+
+            # 공급자 문서번호, 1~24자리, (영문, 숫자, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            invoicerMgtKey="",
+
+            # 공급자 사업자번호 , '-' 없이 10자리 기재.
+            invoicerCorpNum="8888888888",
+
+            # 공급자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoicerTaxRegID=None,
+
+            # 공급자 상호
+            invoicerCorpName="공급자 상호",
+
+            # 공급자 대표자 성명
+            invoicerCEOName="공급자 대표자 성명",
+
+            # 공급자 주소
+            invoicerAddr="공급자 주소",
+
+            # 공급자 업태
+            invoicerBizType="공급자 업태",
+
+            # 공급자 종목
+            invoicerBizClass="공급자 종목",
+
+            # 공급자 담당자 성명
+            invoicerContactName="공급자 담당자명",
+
+            # 공급자 담당자 연락처
+            invoicerTEL="",
+
+            # 공급자 담당자 휴대폰 번호
+            invoicerHP="",
+
+            # 공급자 담당자 메일주소
+            invoicerEmail="",
+
+            # 정발행시 공급받는자에게 발행안내문자 전송여부
+            invoicerSMSSendYN=False,
+
+
+            ######################################################################
+            #                            공급받는자 정보
+            ######################################################################
+
+            # [역발행시 필수] 공급받는자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자별로 중복되지 않도록 구성
+            invoiceeMgtKey=MgtKey,
+
+            # 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
+            invoiceeType="사업자",
+
+            # 공급받는자 사업자번호
+            # - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+            # - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+            # - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
+            invoiceeCorpNum=CorpNum,
+
+            # 공급받는자 종사업장 식별번호, 필요시 숫자 4자리 기재
+            invoiceeTaxRegID=None,
+
+            # 공급받는자 상호
+            invoiceeCorpName="공급받는자 상호",
+
+            # 공급받는자 대표자 성명
+            invoiceeCEOName="공급받는자 대표자 성명",
+
+            # 공급받는자 주소
+            invoiceeAddr="공급받는자 주소",
+
+            # 공급받는자 업태
+            invoiceeBizType="공급받는자 업태",
+
+            # 공급받는자 종목
+            invoiceeBizClass="공급받는자 종목",
+
+            # 공급받는자 담당자 성명
+            invoiceeContactName1="공급받는자 담당자",
+
+            # 공급받는자 연락처
+            invoiceeTEL1="",
+
+            # 공급받는자 담당자 휴대폰번호
+            invoiceeHP1="",
+
+            # 공급받는자 담당자 메일주소
+            # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            # 실제 거래처의 메일주소가 기재되지 않도록 주의
+            invoiceeEmail1="",
+
+            # 역발행시 공급자에게 발행안내문자 전송여부
+            invoiceeSMSSendYN=False,
+
             # 사업자등록증 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             businessLicenseYN=False,
+
             # 통장사본 이미지 첨부여부  (true / false 중 택 1)
             # └ true = 첨부 , false = 미첨부(기본값)
             # - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             bankBookYN=False,
+
             ######################################################################
             #                 수정세금계산서 정보 (수정세금계산서 발행시에만 기재)
             # - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
             # - [참고] 수정세금계산서 작성방법 안내 - https://developers.popbill.com/guide/taxinvoice/python/introduction/modified-taxinvoice
             ######################################################################
+
             # 수정세금계산서 정보 수정사유별로 1~6중 선택기재
             # 수정사유코드
             modifyCode=None,
+
             # 원본세금계산서 국세청승인번호 기재
             orgNTSConfirmNum=None,
         )
@@ -1281,7 +1489,7 @@ def request(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "BUY"
 
         # 문서번호
@@ -1309,7 +1517,7 @@ def cancelRequest(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "BUY"
 
         # 문서번호
@@ -1336,7 +1544,7 @@ def refuse(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1364,7 +1572,7 @@ def delete(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1388,7 +1596,7 @@ def sendToNTS(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1413,18 +1621,16 @@ def getInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220805-002"
+        MgtKey = "20250805-001"
 
         taxinvoiceInfo = taxinvoiceService.getInfo(CorpNum, MgtKeyType, MgtKey)
 
-        return render(
-            request, "Taxinvoice/GetInfo.html", {
-                "taxinvoiceInfo": taxinvoiceInfo}
-        )
+        return render(request, "Taxinvoice/GetInfo.html", {"taxinvoiceInfo": taxinvoiceInfo})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -1440,12 +1646,12 @@ def getInfos(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20220805-001")
+        MgtKeyList.append("20250805-001")
         MgtKeyList.append("20220805-002")
 
         InfoList = taxinvoiceService.getInfos(CorpNum, MgtKeyType, MgtKeyList)
@@ -1465,19 +1671,17 @@ def getDetailInfo(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
-        MgtKey = "20220805-002"
+        MgtKey = "20250805-001"
 
         taxinvoice = taxinvoiceService.getDetailInfo(
             CorpNum, MgtKeyType, MgtKey)
 
-        return render(
-            request, "Taxinvoice/GetDetailInfo.html", {
-                "taxinvoice": taxinvoice}
-        )
+        return render(request, "Taxinvoice/GetDetailInfo.html", {"taxinvoice": taxinvoice})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -1491,7 +1695,7 @@ def getXML(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1499,9 +1703,8 @@ def getXML(request):
 
         taxinvoiceXML = taxinvoiceService.getXML(CorpNum, MgtKeyType, MgtKey)
 
-        return render(
-            request, "Taxinvoice/GetXML.html", {"taxinvoiceXML": taxinvoiceXML}
-        )
+        return render(request, "Taxinvoice/GetXML.html", {"taxinvoiceXML": taxinvoiceXML})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -1642,7 +1845,7 @@ def getLogs(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1694,7 +1897,7 @@ def getPopUpURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1722,7 +1925,7 @@ def getViewURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1749,14 +1952,13 @@ def getPrintURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
         MgtKey = "20220805-001"
 
-        url = taxinvoiceService.getPrintURL(
-            CorpNum, MgtKeyType, MgtKey, UserID)
+        url = taxinvoiceService.getPrintURL(CorpNum, MgtKeyType, MgtKey, UserID)
 
         return render(request, "url.html", {"url": url})
 
@@ -1779,7 +1981,7 @@ def getEPrintURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1807,7 +2009,7 @@ def getMassPrintURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 인쇄할 문서번호 배열, 최대 100건
@@ -1837,7 +2039,7 @@ def getMailURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1864,7 +2066,7 @@ def getPDFURL(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1929,7 +2131,7 @@ def attachFile(request):
         # 팝빌회원 아이디
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -1960,17 +2162,16 @@ def deleteFile(request):
         # 팝빌회원 아이디
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
         MgtKey = "20220805-001"
 
-        # 첨부파일 아이디, GetFiles API의 응답항목(attachedFile) 확인.
+        # 파일 식별번호, GetFiles API의 응답항목(attachedFile) 확인.
         FileID = "8D13F961-CD77-4856-9501-1FB59CAFEE9E.PBF"
 
-        response = taxinvoiceService.deleteFile(
-            CorpNum, MgtKeyType, MgtKey, FileID)
+        response = taxinvoiceService.deleteFile(CorpNum, MgtKeyType, MgtKey, FileID)
 
         return render(request, "response.html", {"code": response.code, "message": response.message})
 
@@ -1988,7 +2189,7 @@ def getFiles(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -2011,7 +2212,7 @@ def sendEmail(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -2020,8 +2221,7 @@ def sendEmail(request):
         # 수신메일주소
         ReceiverMail = ""
 
-        response = taxinvoiceService.sendEmail(
-            CorpNum, MgtKeyType, MgtKey, ReceiverMail)
+        response = taxinvoiceService.sendEmail(CorpNum, MgtKeyType, MgtKey, ReceiverMail)
 
         return render(request, "response.html", {"code": response.code, "message": response.message})
 
@@ -2040,7 +2240,7 @@ def sendSMS(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -2074,7 +2274,7 @@ def sendFAX(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 문서번호
@@ -2104,7 +2304,7 @@ def attachStatement(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 세금계산서 문서번호
@@ -2164,15 +2364,15 @@ def assignMgtKey(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 세금계산서 발행유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
+        # 문서번호 유형, SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
         MgtKeyType = "SELL"
 
         # 세금계산서 아이템키, 문서 목록조회(Search) API의 반환항목중 ItemKey 참조
-        ItemKey = "019011609280500001"
+        ItemKey = "025071616565000001"
 
         # 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
         # 사업자번호별 중복없는 고유번호 할당
-        MgtKey = "20220805-003"
+        MgtKey = "20250805-001"
 
         response = taxinvoiceService.assignMgtKey(
             CorpNum, MgtKeyType, ItemKey, MgtKey)
@@ -2204,33 +2404,8 @@ def updateEmailConfig(request):
     """
     세금계산서 관련 메일 항목에 대한 발송설정을 수정합니다.
     - https://developers.popbill.com/reference/taxinvoice/python/api/etc#UpdateEmailConfig
-
-    메일전송유형
-    [정발행]
-    TAX_ISSUE_INVOICER : 공급자에게 전자세금계산서 발행 사실을 안내하는 메일
-    TAX_CHECK : 공급자에게 전자세금계산서 수신확인 사실을 안내하는 메일
-    TAX_CANCEL_ISSUE : 공급받는자에게 전자세금계산서 발행취소 사실을 안내하는 메일
-
-    [역발행]
-    TAX_REQUEST : 공급받는자에게 전자세금계산서 발행취소 사실을 안내하는 메일
-    TAX_CANCEL_REQUEST : 공급받는자에게 전자세금계산서 취소 사실을 안내하는 메일
-    TAX_REFUSE : 공급받는자에게 전자세금계산서 거부 사실을 안내하는 메일
-    TAX_REVERSE_ISSUE : 공급받는자에게 전자세금계산서 발행 사실을 안내하는 메일
-
-    [위수탁발행]
-    TAX_TRUST_ISSUE : 공급받는자에게 전자세금계산서 발행 사실을 안내하는 메일
-    TAX_TRUST_ISSUE_TRUSTEE : 수탁자에게 전자세금계산서 발행 사실을 안내하는 메일
-    TAX_TRUST_ISSUE_INVOICER : 공급자에게 전자세금계산서 발행 사실을 안내하는 메일
-    TAX_TRUST_CANCEL_ISSUE : 공급받는자에게 전자세금계산서 발행취소 사실을 안내하는 메일
-    TAX_TRUST_CANCEL_ISSUE_INVOICER : 공급자에게 전자세금계산서 발행취소 사실을 안내하는 메일
-
-    [처리결과]
-    TAX_CLOSEDOWN : 거래처의 사업자등록상태(휴폐업)를 확인하여 안내하는 메일
-    TAX_NTSFAIL_INVOICER : 전자세금계산서 국세청 전송실패를 안내하는 메일
-
-    [정기발송]
-    ETC_CERT_EXPIRATION : 팝빌에 등록된 인증서의 만료예정을 안내하는 메일
     """
+
     try:
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
@@ -2569,10 +2744,10 @@ def getPaymentHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230131"
+        EDate = "20250830"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -2602,10 +2777,10 @@ def getUseHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230110"
+        EDate = "20250830"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -2769,10 +2944,10 @@ def joinMember(request):
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 이메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             ContactEmail="",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             ContactTEL="",
         )
 
@@ -2947,19 +3122,19 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-            # 담당자 아이디
+            # 아이디
             id=UserID,
 
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            # 권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
         )
 

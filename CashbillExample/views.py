@@ -860,10 +860,6 @@ def updateEmailConfig(request):
     """
     현금영수증 관련 메일 항목에 대한 발송설정을 수정합니다.
     - https://developers.popbill.com/reference/cashbill/python/api/etc#UpdateEmailConfig
-
-    메일전송유형
-    CSH_ISSUE : 고객에게 현금영수증이 발행 되었음을 알려주는 메일 입니다.
-    CSH_CANCEL : 고객에게 현금영수증이 발행취소 되었음을 알려주는 메일 입니다.
     """
     try:
         # 팝빌회원 사업자번호
