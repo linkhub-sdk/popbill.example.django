@@ -48,8 +48,7 @@ def checkAccountInfo(request):
         # 팝빌회원 사업자번호 ('-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        # 조회할 기관코드
-        # 조회 가능한 금융기관 : [https://developers.popbill.com/reference/accountcheck/java/api#available-agency]
+        # 기관코드
         bankCode = ""
 
         # 조회할 기관의 계좌번호 (하이픈 '-' 제외 7자리 이상 14자리 이하)
@@ -73,24 +72,22 @@ def checkDepositorInfo(request):
         # 팝빌회원 사업자번호 (하이픈 '-' 제외 10자리)
         CorpNum = settings.testCorpNum
 
-        # 조회할 기관코드
-        # 조회 가능한 금융기관 : [https://developers.popbill.com/reference/accountcheck/java/api#available-agency]
+        # 기관코드
         bankCode = ""
 
         # 조회할 기관의 계좌번호 (하이픈 '-' 제외 7자리 이상 14자리 이하)
         accountNumber = ""
 
-        # 등록번호 유형 ( P / B 중 택 1 ,  P = 개인, B = 사업자)
+        # 실명번호 유형 ( P / B 중 택 1 ,  P = 개인, B = 사업자)
         identityNumType = "P"
 
-        # 등록번호
-        # └ 등록번호 유형 값이 "B"인 경우 사업자번호(10 자리) 입력
-        # └ 등록번호 유형 값이 "P"인 경우 생년월일(6 자리) 입력 (형식 : YYMMDD)
+        # 실명번호
+        # └ 실명번호 유형 값이 "B"인 경우 사업자번호(10 자리) 입력
+        # └ 실명번호 유형 값이 "P"인 경우 생년월일(6 자리) 입력 (형식 : YYMMDD)
         # 하이픈 '-' 제외하고 입력
         identityNum = ""
 
-        depositorInfo = accountCheckService.checkDepositorInfo(
-            CorpNum, bankCode, accountNumber, identityNumType, identityNum)
+        depositorInfo = accountCheckService.checkDepositorInfo(CorpNum, bankCode, accountNumber, identityNumType, identityNum)
 
         return render(request, "AccountCheck/CheckDepositorInfo.html", {"depositorInfo": depositorInfo})
 
@@ -333,10 +330,10 @@ def getPaymentHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230131"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -366,10 +363,10 @@ def getUseHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230110"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -505,11 +502,10 @@ def joinMember(request):
     try:
         # 회원정보
         newMember = JoinForm(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             ID="join_id_test",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
             # 사업자번호 "-" 제외
@@ -533,10 +529,10 @@ def joinMember(request):
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 이메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             ContactEmail="",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             ContactTEL="",
         )
 
@@ -632,24 +628,23 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             id="popbill_test_id",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
-            # 담당자명 (최대 100자)
+            # 담당자 성명 (최대 100자)
             personName="담당자명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 이메일 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1,
+            # 권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=3,
         )
 
         response = accountCheckService.registContact(CorpNum, newContact)
@@ -729,20 +724,20 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-            # 담당자 아이디
+            # 아이디
             id="testkorea",
 
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1,
+            # 권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=3,
         )
 
         response = accountCheckService.updateContact(CorpNum, updateInfo)
@@ -772,7 +767,9 @@ def quitMember(request):
         UserID = settings.testUserID
 
         response = accountCheckService.quitMember(CorpNum, QuitReason, UserID)
+
         return render(request, 'response.html', {"code": response.code, "message": response.message})
+        
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -792,9 +789,10 @@ def getRefundInfo(request):
         # 팝빌회원 아이디
         UserID = settings.testUserID
 
-        response = accountCheckService.getRefundInfo(
-            CorpNum, RefundCode, UserID)
+        response = accountCheckService.getRefundInfo(CorpNum, RefundCode, UserID)
+
         return render(request, 'getRefundInfo.html', {"code": response.code, "response": response})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -812,6 +810,8 @@ def getRefundableBalance(request):
         UserID = settings.testUserID
 
         refundableBalance = accountCheckService.getRefundableBalance(CorpNum, UserID)
+
         return render(request, 'getRefundableBalance.html', {"refundableBalance": refundableBalance})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
