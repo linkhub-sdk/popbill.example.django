@@ -1764,32 +1764,6 @@ def getPrintURL(request):
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
-def getOldPrintURL(request):
-    """
-    세금계산서 1건을 구버전 양식으로 인쇄하기 위한 페이지의 팝업 URL을 반환하며, 페이지내에서 인쇄 설정값을 "공급자" / "공급받는자" / "공급자+공급받는자"용 중 하나로 지정할 수 있습니다..
-    - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-    - https://developers.popbill.com/reference/taxinvoice/python/api/view#GetOldPrintURL
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        # 팝빌회원 아이디
-        UserID = settings.testUserID
-
-        # 세금계산서 발행유형 , SELL : 매출 , BUY : 매입 , TRUSTEE : 수탁
-        MgtKeyType = "SELL"
-
-        # 문서번호
-        MgtKey = "20220805-001"
-
-        url = taxinvoiceService.getOldPrintURL(
-            CorpNum, MgtKeyType, MgtKey, UserID)
-
-        return render(request, "url.html", {"url": url})
-
-    except PopbillException as PE:
-        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 
 def getEPrintURL(request):
@@ -2176,23 +2150,6 @@ def detachStatement(request):
             CorpNum, MgtKeyType, MgtKey, ItemCode, StmtMgtKey)
 
         return render(request, "response.html", {"code": response.code, "message": response.message})
-
-    except PopbillException as PE:
-        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
-
-
-def getEmailPublicKeys(request):
-    """
-    전자세금계산서 유통사업자의 메일 목록을 확인합니다.
-    - https://developers.popbill.com/reference/taxinvoice/python/api/etc#GetEmailPublicKeys
-    """
-    try:
-        # 팝빌회원 사업자번호
-        CorpNum = settings.testCorpNum
-
-        aspList = taxinvoiceService.getEmailPublicKeys(CorpNum)
-
-        return render(request, "Taxinvoice/GetEmailPublicKeys.html", {"aspList": aspList})
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
