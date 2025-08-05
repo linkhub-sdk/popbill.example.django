@@ -10,21 +10,23 @@
                     <fieldset class="fieldset2">
                         <legend>팩스전송 상태정보 [{{ forloop.counter }}]</legend>
                         <ul>
-                            <li> state (전송상태 코드) : {{ faxInfo.state }}</li>
-                            <li> result (전송결과 코드) : {{ faxInfo.result }}</li>
+                            <li> state (상태코드) : {{ faxInfo.state }}</li>
+                            <li> result (결과코드) : {{ faxInfo.result }}</li>
                             <li> sendNum (발신번호) : {{ faxInfo.sendNum }}</li>
                             <li> senderName (발신자명) : {{ faxInfo.senderName }}</li>
                             <li> receiveNum (수신번호) : {{ faxInfo.receiveNum }}</li>
                             <li> receiveNumType (수신번호 유형) : {{ faxInfo.receiveNumType }}</li>
                             <li> receiveName (수신자명) : {{ faxInfo.receiveName }}</li>
+
                             <li> title (팩스제목) : {{ faxInfo.title }}</li>
                             <li> sendPageCnt (전체 페이지수) : {{ faxInfo.sendPageCnt }}</li>
                             <li> successPageCnt (성공 페이지수) : {{ faxInfo.successPageCnt }}</li>
                             <li> failPageCnt (실패 페이지수) : {{ faxInfo.failPageCnt }}</li>
                             <li> cancelPageCnt (취소 페이지수) : {{ faxInfo.cancelPageCnt }}</li>
+
                             <li> reserveDT (예약일시) : {{ faxInfo.reserveDT }}</li>
                             <li> receiptDT (접수일시) : {{ faxInfo.receiptDT }}</li>
-                            <li> sendDT (발송일시) : {{ faxInfo.sendDT }}</li>
+                            <li> sendDT (전송일시) : {{ faxInfo.sendDT }}</li>
                             <li> resultDT (전송결과 수신일시) : {{ faxInfo.resultDT }}</li>
                             <li> fileNames (전송 파일명 리스트) : {{ faxInfo.fileNames }}</li>
                             <li> receiptNum (접수번호) : {{ faxInfo.receiptNum }}</li>

@@ -45,7 +45,6 @@ def index(request):
 def checkSenderNumber(request):
     """
     팩스 발신번호 등록여부를 확인합니다.
-    - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
     - https://developers.popbill.com/reference/fax/python/api/sendnum#CheckSenderNumber
     """
 
@@ -657,10 +656,10 @@ def search(request):
 
         # 최대 검색기간 : 6개월 이내
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20241201"
+        SDate = "20250801"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20241231"
+        EDate = "20250831"
 
         # 전송상태 배열 ("1" , "2" , "3" , "4" 중 선택, 다중 선택 가능)
         # └ 1 = 대기 , 2 = 성공 , 3 = 실패 , 4 = 취소
@@ -723,7 +722,7 @@ def getSentListURL(request):
 
 def getPreviewURL(request):
     """
-    팩스 미리보기 팝업 URL을 반환하며, 팩스전송을 위한 TIF 포맷 변환 완료 후 호출 할 수 있습니다.
+    팩스 변환결과 확인 팝업 URL을 반환하며, 팩스전송을 위한 TIF 포맷 변환 완료 후 호출 할 수 있습니다.
     - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
     - https://developers.popbill.com/reference/fax/python/api/info#GetPreviewURL
     """
@@ -873,8 +872,8 @@ def getUnitCost(request):
         CorpNum = settings.testCorpNum
 
         # 수신번호 유형 : "일반" / "지능" 중 택 1
-        # └ 일반망 : 지능망을 제외한 번호
-        # └ 지능망 : 030*, 050*, 070*, 080*, 대표번호
+        # └ 일반 : 지능망을 제외한 번호
+        # └ 지능 : 030*, 050*, 070*, 080*, 대표번호
         receiveNumType = "지능"
 
         result = faxService.getUnitCost(CorpNum, receiveNumType)
@@ -980,10 +979,10 @@ def getPaymentHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230131"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -1013,10 +1012,10 @@ def getUseHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230110"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -1278,24 +1277,23 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             id="popbill_test_id",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
             # 담당자명 (최대 100자)
             personName="담당자명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 이메일 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1,
+            # 권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=3,
         )
 
         response = faxService.registContact(CorpNum, newContact)
@@ -1378,20 +1376,20 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-            # 담당자 아이디
+            # 아이디
             id=UserID,
 
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1,
+            # 권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=3,
         )
 
         response = faxService.updateContact(CorpNum, updateInfo)
@@ -1421,7 +1419,9 @@ def quitMember(request):
         UserID = settings.testUserID
 
         response = faxService.quitMember(CorpNum, QuitReason, UserID)
+
         return render(request, 'response.html', {"code": response.code, "message": response.message})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -1442,7 +1442,9 @@ def getRefundInfo(request):
         UserID = settings.testUserID
 
         response = faxService.getRefundInfo(CorpNum, RefundCode, UserID)
+
         return render(request, 'getRefundInfo.html', {"code": response.code, "response": response})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -1460,6 +1462,8 @@ def getRefundableBalance(request):
         UserID = settings.testUserID
 
         refundableBalance = faxService.getRefundableBalance(CorpNum, UserID)
+
         return render(request, 'getRefundableBalance.html', {"refundableBalance": refundableBalance})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
