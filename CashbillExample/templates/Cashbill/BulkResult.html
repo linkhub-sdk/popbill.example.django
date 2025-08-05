@@ -6,13 +6,15 @@
         <fieldset class="fieldset1">
             <legend>초대량 접수결과 확인</legend>
             <ul>
-                <li> code (요청에 대한 응답 상태코드) : {{ bulkCashbillResult.code }}</li>
-                <li> message (요청에 대한 응답 메시지) : {{ bulkCashbillResult.message }}</li>
+                <li> code (API 처리에 대한 응답코드) : {{ bulkCashbillResult.code }}</li>
+                <li> message (API 처리에 대한 응답메시지) : {{ bulkCashbillResult.message }}</li>
+
                 <li> submitID (제출아이디) : {{ bulkCashbillResult.submitID }}</li>
                 <li> submitCount (현금영수증 접수 건수) : {{ bulkCashbillResult.submitCount }}</li>
                 <li> successCount (현금영수증 발행 성공 건수) : {{ bulkCashbillResult.successCount }}</li>
                 <li> failCount (현금영수증 발행 실패 건수) : {{ bulkCashbillResult.failCount }}</li>
-                <li> txState (접수상태코드) : {{ bulkCashbillResult.txState }}</li>
+
+                <li> txState (접수상태) : {{ bulkCashbillResult.txState }}</li>
                 <li> txResultCode (접수 결과코드) : {{ bulkCashbillResult.txResultCode }}</li>
                 <li> txStartDT (발행처리 시작일시) : {{ bulkCashbillResult.txStartDT }}</li>
                 <li> txEndDT (발행처리 완료일시) : {{ bulkCashbillResult.txEndDT }}</li>

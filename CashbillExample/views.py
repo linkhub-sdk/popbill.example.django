@@ -55,6 +55,7 @@ def checkMgtKeyInUse(request):
         MgtKey = "20220805-001"
 
         bIsInUse = cashbillService.checkMgtKeyInUse(CorpNum, MgtKey)
+
         if bIsInUse:
             result = "사용중"
         else:
@@ -87,65 +88,86 @@ def registIssue(request):
 
         # 현금영수증 정보
         cashbill = Cashbill(
+
             # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
             mgtKey="20250805-01",
+
+            # 거래일시, 날짜(yyyyMMddHHmmss)
+            # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
+            tradeDT="",
+
             # 문서형태, 승인거래 기재
             tradeType="승인거래",
-            # 과세형태 (과세, 비과세) 중 기재
-            taxationType="과세",
+
+            # 거래구분 (소득공제용, 지출증빙용) 중 기재
+            tradeUsage="소득공제용",
+
             # 거래유형 (일반, 도서공연, 대중교통) 중 기재
             # - 미입력시 기본값 "일반" 처리
             tradeOpt="일반",
-            # 거래구분 (소득공제용, 지출증빙용) 중 기재
-            tradeUsage="소득공제용",
+
+            # 과세형태 (과세, 비과세) 중 기재
+            taxationType="과세",
+
+            # 거래금액, 공급가액+세액+봉사료
+            totalAmount="11000",
+
+            # 공급가액
+            supplyCost="10000",
+
+            # 세액
+            tax="1000",
+
+            # 봉사료
+            serviceFee="0",
+
+            # 가맹점 사업자번호
+            franchiseCorpNum=CorpNum,
+
+            # 가맹점 종사업장 식별번호
+            franchiseTaxRegID="",
+
+            # 가맹점 상호
+            franchiseCorpName="가맹점 상호",
+
+            # 가맹점 대표자성명
+            franchiseCEOName="발행 대표자 성명",
+
+            # 가맹점 주소
+            franchiseAddr="가맹점 주소",
+
+            # 가맹점 연락처
+            franchiseTEL="",
+
             # 식별번호, 거래구분에 따라 작성
             # └ 소득공제용 - 주민등록/휴대폰/카드번호(현금영수증 카드)/자진발급용 번호(010-000-1234) 기재가능
             # └ 지출증빙용 - 사업자번호/주민등록/휴대폰/카드번호(현금영수증 카드) 기재가능
             # └ 주민등록번호 13자리, 휴대폰번호 10~11자리, 카드번호 13~19자리, 사업자번호 10자리 입력 가능
             identityNum="010-000-1234",
-            # 공급가액
-            supplyCost="10000",
-            # 세액
-            tax="1000",
-            # 봉사료
-            serviceFee="0",
-            # 거래금액, 공급가액+세액+봉사료
-            totalAmount="11000",
-            # 가맹점 사업자번호
-            franchiseCorpNum=CorpNum,
-            # 가맹점 종사업장 식별번호
-            franchiseTaxRegID="",
-            # 가맹점 상호
-            franchiseCorpName="가맹점 상호",
-            # 가맹점 대표자성명
-            franchiseCEOName="발행 대표자 성명",
-            # 가맹점 주소
-            franchiseAddr="가맹점 주소",
-            # 가맹점 연락처
-            franchiseTEL="",
+
             # 주문자명
             customerName="주문자명",
+
             # 주문상품명
             itemName="주문상품명",
+
             # 주문번호
             orderNumber="주문번호",
+
             # 이메일
             # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
             email="code@linkhubcorp.com",
+
             # 휴대폰
             hp="01000000000",
+
             # 발행시 알림문자 전송여부
             # 문자전송시 포인트가 차감되며 전송실패시 환불처리됨.
             smssendYN=False,
-            # 거래일시, 날짜(yyyyMMddHHmmss)
-            # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
-            tradeDT="",
         )
 
-        response = cashbillService.registIssue(
-            CorpNum, cashbill, Memo, UserID, EmailSubject
-        )
+        response = cashbillService.registIssue(CorpNum, cashbill, Memo, UserID, EmailSubject)
 
         return render(
             request,
@@ -179,64 +201,89 @@ def bulkSubmit(request):
         for i in range(1, 101):
             cashbillList.append(
                 Cashbill(
+
                     # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
                     mgtKey=submitID + "-" + str(i),
+
+                    # 거래일시, 날짜(yyyyMMddHHmmss)
+                    # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
+                    tradeDT="",
+
                     # 문서형태, (승인거래, 취소거래) 중 기재
                     tradeType="승인거래",
+
+                    # 거래구분 (소득공제용, 지출증빙용) 중 기재
+                    tradeUsage="소득공제용",
+
+                    # 거래유형 (일반, 도서공연, 대중교통) 중 기재
+                    # - 미입력시 기본값 "일반" 처리
+                    tradeOpt="일반",
+
                     # # [취소거래시 필수] 당초 승인 현금영수증 국세청승인번호
                     # orgConfirmNum="",
                     # # [취소거래시 필수] 당초 승인 현금영수증 거래일자
                     # orgTradeDate="",
                     # 과세형태 (과세, 비과세) 중 기재
                     taxationType="과세",
-                    # 거래유형 (일반, 도서공연, 대중교통) 중 기재
-                    # - 미입력시 기본값 "일반" 처리
-                    tradeOpt="일반",
-                    # 거래구분 (소득공제용, 지출증빙용) 중 기재
-                    tradeUsage="소득공제용",
+
+                    # 거래금액, 공급가액+세액+봉사료
+                    totalAmount="11000",
+
+                    # 공급가액
+                    supplyCost="10000",
+
+                    # 세액
+                    tax="1000",
+
+                    # 봉사료
+                    serviceFee="0",
+
+                    # 가맹점 사업자번호
+                    franchiseCorpNum=CorpNum,
+
+                    # 가맹점 종사업장 식별번호
+                    franchiseTaxRegID="",
+
+                    # 가맹점 상호
+                    franchiseCorpName="가맹점 상호",
+
+                    # 가맹점 대표자성명
+                    franchiseCEOName="발행 대표자 성명",
+
+                    # 가맹점 주소
+                    franchiseAddr="가맹점 주소",
+
+                    # 가맹점 연락처
+                    franchiseTEL="",
+
                     # 식별번호, 거래구분에 따라 작성
                     # └ 소득공제용 - 주민등록/휴대폰/카드번호(현금영수증 카드)/자진발급용 번호(010-000-1234) 기재가능
                     # └ 지출증빙용 - 사업자번호/주민등록/휴대폰/카드번호(현금영수증 카드) 기재가능
                     # └ 주민등록번호 13자리, 휴대폰번호 10~11자리, 카드번호 13~19자리, 사업자번호 10자리 입력 가능
                     identityNum="010-000-1234",
-                    # 공급가액
-                    supplyCost="10000",
-                    # 세액
-                    tax="1000",
-                    # 봉사료
-                    serviceFee="0",
-                    # 거래금액, 공급가액+세액+봉사료
-                    totalAmount="11000",
-                    # 가맹점 사업자번호
-                    franchiseCorpNum=CorpNum,
-                    # 가맹점 종사업장 식별번호
-                    franchiseTaxRegID="",
-                    # 가맹점 상호
-                    franchiseCorpName="가맹점 상호",
-                    # 가맹점 대표자성명
-                    franchiseCEOName="발행 대표자 성명",
-                    # 가맹점 주소
-                    franchiseAddr="가맹점 주소",
-                    # 가맹점 연락처
-                    franchiseTEL="",
+
                     # 주문자명
                     customerName="주문자명",
+
                     # 주문상품명
                     itemName="주문상품명",
+
                     # 주문번호
                     orderNumber="주문번호",
+
                     # 이메일
                     # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
                     # 실제 거래처의 메일주소가 기재되지 않도록 주의
                     email="",
+
                     # 휴대폰
                     hp="",
+
                     # 발행시 알림문자 전송여부
                     # 문자전송시 포인트가 차감되며 전송실패시 환불처리됨.
                     smssendYN=False,
-                    # 거래일시, 날짜(yyyyMMddHHmmss)
-                    # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
-                    tradeDT="",
+
+
                 )
             )
         bulkResponse = cashbillService.bulkSubmit(CorpNum, submitID, cashbillList)
@@ -1101,10 +1148,10 @@ def getPaymentHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230110"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -1133,10 +1180,10 @@ def getUseHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230110"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -1270,11 +1317,10 @@ def joinMember(request):
     try:
         # 회원정보
         newMember = JoinForm(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             ID="join_id_test",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
             # 사업자번호 "-" 제외
@@ -1298,10 +1344,10 @@ def joinMember(request):
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 이메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             ContactEmail="",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             ContactTEL="",
         )
 
@@ -1376,24 +1422,23 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             id="popbill_test_id",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
-            # 담당자명 (최대 100자)
+            # 담당자 성명 (최대 100자)
             personName="담당자명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 이메일 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1,
+            # 권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=3,
         )
 
         response = cashbillService.registContact(CorpNum, newContact)
@@ -1476,20 +1521,20 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-            # 담당자 아이디
+            # 아이디
             id=UserID,
 
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1,
+            # 권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=3,
         )
 
         response = cashbillService.updateContact(CorpNum, updateInfo)
@@ -1538,7 +1583,9 @@ def getRefundInfo(request):
         UserID = settings.testUserID
 
         response = cashbillService.getRefundInfo(CorpNum,RefundCode,UserID)
+
         return render(request, 'getRefundInfo.html', {"code": response.code, "response": response})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -1555,6 +1602,8 @@ def getRefundableBalance(request):
         UserID = settings.testUserID
 
         refundableBalance = cashbillService.getRefundableBalance(CorpNum, UserID)
+
         return render(request, 'getRefundableBalance.html', {"refundableBalance": refundableBalance})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
