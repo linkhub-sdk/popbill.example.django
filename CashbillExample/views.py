@@ -88,7 +88,7 @@ def registIssue(request):
         # 현금영수증 정보
         cashbill = Cashbill(
             # 문서번호, 1~24자리, (영문,숫자,'-','_') 조합으로 사업자별 고유번호 생성
-            mgtKey="202220805-021",
+            mgtKey="20250805-01",
             # 문서형태, 승인거래 기재
             tradeType="승인거래",
             # 과세형태 (과세, 비과세) 중 기재
@@ -132,15 +132,15 @@ def registIssue(request):
             # 이메일
             # 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             # 실제 거래처의 메일주소가 기재되지 않도록 주의
-            email="",
+            email="code@linkhubcorp.com",
             # 휴대폰
-            hp="",
+            hp="01000000000",
             # 발행시 알림문자 전송여부
             # 문자전송시 포인트가 차감되며 전송실패시 환불처리됨.
             smssendYN=False,
             # 거래일시, 날짜(yyyyMMddHHmmss)
             # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
-            tradeDT="20230320",
+            tradeDT="",
         )
 
         response = cashbillService.registIssue(
@@ -236,7 +236,7 @@ def bulkSubmit(request):
                     smssendYN=False,
                     # 거래일시, 날짜(yyyyMMddHHmmss)
                     # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
-                    tradeDT="20221108000000",
+                    tradeDT="",
                 )
             )
         bulkResponse = cashbillService.bulkSubmit(CorpNum, submitID, cashbillList)
@@ -393,7 +393,7 @@ def revokeRegistIssue_part(request):
 
         # 거래일시, 날짜(yyyyMMddHHmmss)
         # 당일, 전일만 가능, 미입력시 기본값 발행일시 처리
-        tradeDT = "20221108000000"
+        tradeDT = ""
 
         response = cashbillService.revokeRegistIssue(CorpNum,mgtKey,orgConfirmNum,orgTradeDate,smssendYN,memo,UserID,isPartCancel,cancelType,supplyCost,tax,serviceFee,totalAmount,emailSubject,tradeDT)
 
@@ -415,7 +415,7 @@ def getInfo(request):
         CorpNum = settings.testCorpNum
 
         # 현금영수증 문서번호
-        MgtKey = "20220805-001"
+        MgtKey = "20250805-01"
 
         cashbillInfo = cashbillService.getInfo(CorpNum, MgtKey)
 
@@ -438,7 +438,7 @@ def getInfos(request):
 
         # 현금영수증 문서번호 배열, 최대 1000건
         MgtKeyList = []
-        MgtKeyList.append("20220805-001")
+        MgtKeyList.append("20250805-01")
         MgtKeyList.append("20220805-002")
         MgtKeyList.append("20220805-003")
 
@@ -486,10 +486,10 @@ def search(request):
         DType = "R"
 
         # 시작일자, 표시형식(yyyyMMdd)
-        SDate = "20241201"
+        SDate = "20250801"
 
         # 종료일자, 표시형식(yyyyMMdd)
-        EDate = "20241231"
+        EDate = "20250830"
 
         # 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         # - 미입력시 전체조회
