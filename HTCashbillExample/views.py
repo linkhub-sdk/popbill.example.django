@@ -6,11 +6,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/htcashb
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
 
-<테스트 연동개발 준비사항>
-1) 홈택스 로그인 인증정보를 등록합니다. (부서사용자등록 / 공동인증서 등록)
-    - 팝빌로그인 > [홈택스수집] > [환경설정] > [인증 관리] 메뉴
-    - 홈택스수집 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL을 이용하여
-      홈택스 인증 처리를 합니다.
 """
 from django.shortcuts import render
 from popbill import (
@@ -39,12 +34,6 @@ htCashbillService.UseStaticIP = settings.UseStaticIP
 
 # 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 htCashbillService.UseLocalTimeYN = settings.UseLocalTimeYN
-
-# 홈택스수집 서비스를 이용하기 위해 팝빌에 인증정보를 등록 합니다. (인증방법은 부서사용자 인증 / 인증서 인증 방식이 있습니다.)
-# - 팝빌로그인 > [홈택스수집] > [환경설정] > [인증 관리] 메뉴에서 [홈택스 부서사용자 등록] 혹은
-#   [홈택스 인증서 등록]을 통해 인증정보를 등록합니다.
-# - 홈택스수집 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL에 접속 하여
-#   [홈택스 부서사용자 등록] 혹은 [홈택스 인증서 등록]을 통해 인증정보를 등록합니다.
 
 
 def index(request):

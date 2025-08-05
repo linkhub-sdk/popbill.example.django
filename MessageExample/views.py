@@ -5,11 +5,6 @@
 Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/sms/python/getting-started/tutorial
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
-
-<테스트 연동개발 준비사항>
-1) 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
-    - 1. 팝빌 사이트 로그인 > [문자] > [발신번호 사전등록] 메뉴에서 등록
-    - 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
 """
 from django.shortcuts import render
 from popbill import (

@@ -6,11 +6,6 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/taxinvo
 연동 기술지원 연락처 : 1600-9854
 연동 기술지원 이메일 : code@linkhubcorp.com
 
-<테스트 연동개발 준비사항>
-1) 전자세금계산서 인증서 등록
-    - 전자세금계산서 발행을 위해 공인인증서를 등록합니다.
-    - 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리]
-    - 공인인증서 등록 팝업 URL (GetTaxCertURL API)을 이용하여 등록
 """
 from django.shortcuts import render
 from popbill import (
@@ -42,10 +37,6 @@ taxinvoiceService.UseStaticIP = settings.UseStaticIP
 
 # 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 taxinvoiceService.UseLocalTimeYN = settings.UseLocalTimeYN
-
-# 전자세금계산서 발행을 위해 인증서를 등록합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
-# 1. 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [인증서 관리] 메뉴에서 등록
-# 2. 인증서 등록 팝업 URL (getTaxCertURL API)을 이용하여 등록
 
 
 def index(request):
