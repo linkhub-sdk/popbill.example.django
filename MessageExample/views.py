@@ -8,7 +8,7 @@ Django 연동 튜토리얼 안내 : https://developers.popbill.com/guide/sms/pyt
 
 <테스트 연동개발 준비사항>
 1) 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
-    - 1. 팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 메뉴에서 등록
+    - 1. 팝빌 사이트 로그인 > [문자] > [발신번호 사전등록] 메뉴에서 등록
     - 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
 """
 from django.shortcuts import render
@@ -40,10 +40,6 @@ messageService.UseStaticIP = settings.UseStaticIP
 # 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
 messageService.UseLocalTimeYN = settings.UseLocalTimeYN
 
-# 문자를 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
-# 1. 팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 메뉴에서 등록
-# 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
-
 
 def index(request):
     return render(request, "Message/Index.html", {})
@@ -52,7 +48,6 @@ def index(request):
 def checkSenderNumber(request):
     """
     문자 발신번호 등록여부를 확인합니다.
-    - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
     - https://developers.popbill.com/reference/sms/python/api/sendnum#CheckSenderNumber
     """
 
@@ -103,10 +98,8 @@ def getSenderNumberList(request):
 
         senderList = messageService.getSenderNumberList(CorpNum)
 
-        return render(
-            request, "Message/GetSenderNumberList.html", {
-                "senderList": senderList}
-        )
+        return render(request, "Message/GetSenderNumberList.html", {"senderList": senderList})
+
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
@@ -150,8 +143,7 @@ def sendSMS(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendSMS(
-            CorpNum, Sender, ReceiverNum, ReceiverName, Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
+        receiptNum = messageService.sendSMS(CorpNum, Sender, ReceiverNum, ReceiverName, Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
 
         return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
 
@@ -215,8 +207,7 @@ def sendSMS_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendSMS_multi(
-            CorpNum, Sender, Contents, messages, reserveDT, adsYN, UserID, RequestNum)
+        receiptNum = messageService.sendSMS_multi(CorpNum, Sender, Contents, messages, reserveDT, adsYN, UserID, RequestNum)
 
         return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
 
@@ -266,8 +257,7 @@ def sendLMS(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendLMS(
-            CorpNum, Sender, ReceiverNum, ReceiverName, Subject, Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
+        receiptNum = messageService.sendLMS(CorpNum, Sender, ReceiverNum, ReceiverName, Subject, Contents, reserveDT, adsYN, UserID, SenderName, RequestNum)
 
         return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
 
@@ -337,8 +327,7 @@ def sendLMS_multi(request):
         # 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         RequestNum = ""
 
-        receiptNum = messageService.sendLMS_multi(
-            CorpNum, Sender, Subject, Contents, messages, reserveDT, adsYN, UserID, RequestNum)
+        receiptNum = messageService.sendLMS_multi(CorpNum, Sender, Subject, Contents, messages, reserveDT, adsYN, UserID, RequestNum)
 
         return render(request, "Message/ReceiptNum.html", {"receiptNum": receiptNum})
 
@@ -1057,10 +1046,10 @@ def getPaymentHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230131"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -1090,10 +1079,10 @@ def getUseHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230110"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -1229,11 +1218,10 @@ def joinMember(request):
     try:
         # 회원정보
         newMember = JoinForm(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             ID="join_id_test",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
             # 사업자번호 "-" 제외
@@ -1257,10 +1245,10 @@ def joinMember(request):
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 이메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             ContactEmail="",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             ContactTEL="",
         )
 
@@ -1356,23 +1344,22 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             id="popbill_test_id",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
-            # 담당자명 (최대 100자)
+            # 담당자 성명 (최대 100자)
             personName="담당자명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 이메일 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            # 권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
         )
 
@@ -1382,7 +1369,7 @@ def registContact(request):
 
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
-        
+
 def deleteContact(request):
     """
     연동회원 담당자를 삭제합니다.
@@ -1456,19 +1443,19 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-            # 담당자 아이디
+            # 아이디
             id=UserID,
 
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            # 권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
         )
 
