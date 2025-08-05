@@ -1916,7 +1916,28 @@ def registContact(request):
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
+def deleteContact(request):
+    """
+    연동회원 담당자를 삭제합니다.
+    - https://developers.popbill.com/reference/kakaotalk/python/common-api/member#DeleteContact
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
 
+        # 삭제할 담당자 아이디
+        TargetUserID = "testkorea20250805_01"
+
+        # 팝빌회원 관리자 아이디
+        UserID = settings.testUserID
+
+        response = kakaoService.deleteContact(CorpNum, TargetUserID, UserID)
+
+        return render(request, "response.html", {"code": response.code, "message": response.message})
+
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
+        
 def getContactInfo(request):
     """
     연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.

@@ -71,5 +71,6 @@ urlpatterns = [
     url(r"^UpdateCorpInfo$", views.updateCorpInfo, name="UpdateCorpInfo"),
     url(r"^GetCorpInfo$", views.getCorpInfo, name="GetCorpInfo"),
     url(r"^UpdateContact$", views.updateContact, name="UpdateContact"),
+    url(r"^DeleteContact$", views.deleteContact, name="DeleteContact"),
     url(r"^QuitMember$", views.quitMember, name="QuitMember"),
 ]

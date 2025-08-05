@@ -625,6 +625,27 @@ def registContact(request):
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
+def deleteContact(request):
+    """
+    연동회원 담당자를 삭제합니다.
+    - https://developers.popbill.com/reference/closedown/python/common-api/member#DeleteContact
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 삭제할 담당자 아이디
+        TargetUserID = "testkorea20250805_01"
+
+        # 팝빌회원 관리자 아이디
+        UserID = settings.testUserID
+
+        response = closedownService.deleteContact(CorpNum, TargetUserID, UserID)
+
+        return render(request, "response.html", {"code": response.code, "message": response.message})
+
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 def getContactInfo(request):
     """

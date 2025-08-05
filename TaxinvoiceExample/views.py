@@ -2891,7 +2891,7 @@ def registContact(request):
         # 담당자 정보
         newContact = ContactInfo(
             # 아이디 (6자 이상 50자 미만)
-            id="popbill_test_id",
+            id="testkorea20250805_01",
 
             # 비밀번호 (8자 이상 20자 미만)
             # 영문, 숫자, 특수문자 조합
@@ -2901,10 +2901,10 @@ def registContact(request):
             personName="담당자명",
 
             # 담당자 연락처 (최대 20자)
-            tel="",
+            tel="01000000000",
 
             # 담당자 이메일 (최대 100자)
-            email="",
+            email="test@test.com",
 
             # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
@@ -2954,6 +2954,27 @@ def listContact(request):
     except PopbillException as PE:
         return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
+def deleteContact(request):
+    """
+    연동회원 담당자를 삭제합니다.
+    - https://developers.popbill.com/reference/taxinvoice/python/common-api/member#DeleteContact
+    """
+    try:
+        # 팝빌회원 사업자번호
+        CorpNum = settings.testCorpNum
+
+        # 삭제할 담당자 아이디
+        TargetUserID = "testkorea20250805_01"
+
+        # 팝빌회원 관리자 아이디
+        UserID = settings.testUserID
+
+        response = taxinvoiceService.deleteContact(CorpNum, TargetUserID, UserID)
+
+        return render(request, "response.html", {"code": response.code, "message": response.message})
+
+    except PopbillException as PE:
+        return render(request, "exception.html", {"code": PE.code, "message": PE.message})
 
 def updateContact(request):
     """

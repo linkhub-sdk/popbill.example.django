@@ -36,6 +36,7 @@ urlpatterns = [
     url(r"^GetContactInfo$", views.getContactInfo, name="GetContactInfo"),
     url(r"^ListContact$", views.listContact, name="ListContact"),
     url(r"^UpdateContact$", views.updateContact, name="UpdateContact"),
+    url(r"^DeleteContact$", views.deleteContact, name="DeleteContact"),
     url(r"^GetAccessURL", views.getAccessURL, name="GetAccessURL"),
     url(r"^QuitMember$", views.quitMember, name="QuitMember"),
 ]

@@ -90,6 +90,7 @@ urlpatterns = [
     url(r"^GetCorpInfo$", views.getCorpInfo, name="GetCorpInfo"),
     url(r"^UpdateCorpInfo$", views.updateCorpInfo, name="UpdateCorpInfo"),
     url(r"^RegistContact$", views.registContact, name="RegistContact"),
+    url(r"^DeleteContact$", views.deleteContact, name="DeleteContact"),
     url(r"^GetContactInfo$", views.getContactInfo, name="GetContactInfo"),
     url(r"^ListContact$", views.listContact, name="ListContact"),
     url(r"^UpdateContact$", views.updateContact, name="UpdateContact"),
