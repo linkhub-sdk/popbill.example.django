@@ -48,17 +48,17 @@ def requestJob(request):
         # 팝빌회원 사업자번호
         CorpNum = settings.testCorpNum
 
-        # 전자세금계산서  발행유형 [SELL-매출 / BUY-매입 / TRUSTEE-위수탁]
+        # 전자세금계산서 유형 [SELL-매출 / BUY-매입 / TRUSTEE-위수탁]
         Type = "SELL"
 
         # 일자유형, [W-작성일자 / I-발행일자 / S-전송일자]
         DType = "S"
 
         # 시작일자, 날짜형식(yyyyMMdd)
-        SDate = "20241201"
+        SDate = "20250801"
 
         # 종료일자, 날짜형식(yyyyMMdd)
-        EDate = "20241231"
+        EDate = "20250831"
 
         result = htTaxinvoiceService.requestJob(
             CorpNum, Type, DType, SDate, EDate)
@@ -711,10 +711,10 @@ def getPaymentHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230131"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -744,10 +744,10 @@ def getUseHistory(request):
         CorpNum = settings.testCorpNum
 
         # 조회 기간의 시작일자 (형식 : yyyyMMdd)
-        SDate = "20230101"
+        SDate = "20250801"
 
         # 조회 기간의 종료일자 (형식 : yyyyMMdd)
-        EDate = "20230110"
+        EDate = "20250831"
 
         # 목록 페이지번호 (기본값 1)
         Page = 1
@@ -882,11 +882,10 @@ def joinMember(request):
     try:
         # 회원정보
         newMember = JoinForm(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             ID="join_id_test",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
             # 사업자번호 "-" 제외
@@ -910,10 +909,10 @@ def joinMember(request):
             # 담당자 성명 (최대 100자)
             ContactName="담당자성명",
 
-            # 담당자 이메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             ContactEmail="",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             ContactTEL="",
         )
 
@@ -1009,24 +1008,23 @@ def registContact(request):
 
         # 담당자 정보
         newContact = ContactInfo(
-            # 아이디 (6자 이상 50자 미만)
+            # 아이디
             id="popbill_test_id",
 
-            # 비밀번호 (8자 이상 20자 미만)
-            # 영문, 숫자, 특수문자 조합
+            # 비밀번호
             Password="password123!@#",
 
             # 담당자명 (최대 100자)
             personName="담당자명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 이메일 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
-            searchRole=1,
+            # 권한, 1(개인) 2(읽기) 3(회사)
+            searchRole=3,
         )
 
         response = htTaxinvoiceService.registContact(CorpNum, newContact)
@@ -1110,19 +1108,19 @@ def updateContact(request):
 
         # 담당자 정보
         updateInfo = ContactInfo(
-            # 담당자 아이디
+            # 아이디
             id=UserID,
 
             # 담당자 성명 (최대 100자)
             personName="담당자_성명",
 
-            # 담당자 연락처 (최대 20자)
+            # 담당자 휴대폰 (최대 20자)
             tel="",
 
-            # 담당자 메일주소 (최대 100자)
+            # 담당자 메일 (최대 100자)
             email="",
 
-            # 담당자 조회권한, 1(개인) 2(읽기) 3(회사)
+            # 권한, 1(개인) 2(읽기) 3(회사)
             searchRole=1,
         )
 
